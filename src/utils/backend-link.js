@@ -1,0 +1,9 @@
+import axios from "axios";
+
+export default axios.create({
+  baseURL: `${process.env.REACT_APP_SERVER_PORT}`, //process.env.REACT_APP_SERVER_PORT,
+  headers: {
+    "Content-type": "application/json",
+  },
+  withCredentials: true,
+});

@@ -7,7 +7,6 @@ import Navbar from "../../layouts/Navbar";
 // import Partners from "./Partners";
 import Subscribe from "../../layouts/Subscribe";
 import LinkMain from "../Link/LinkMain";
-import CardList from "../../components/CardList";
 
 const HomeMain = () => {
   const [getToggleFilter, setToggleFilter] = useState(false);

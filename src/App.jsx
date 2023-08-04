@@ -33,6 +33,7 @@ import About from "./pages/Static/About";
 import Contacts from "./pages/Static/Contacts";
 import Policy from "./pages/Static/Policy";
 import Sign from "./pages/Authentication/Sign";
+import SearchMain from "./pages/Search/SearchMain";
 
 const App = () => {
   const candidateIsAuthorized = Cookies.get("logged_in_candidate");
@@ -50,6 +51,7 @@ const App = () => {
             element={<HomeMain cand={candidateIsAuthorized} />}
           />
           <Route path="link" exact element={<LinkMain />} />
+          <Route path="search/:searchword" exact element={<SearchMain />} />
           <Route path="sign" exact element={<Sign />} />
           <Route path="details/:linkid" exact element={<LinkDetails />} />
           <Route exact element={<PrivateRouter />}>

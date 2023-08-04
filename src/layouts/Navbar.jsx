@@ -8,7 +8,13 @@ import Loader from "../components/Loader";
 import Sign from "../pages/Authentication/Sign";
 import Search from "../components/Search";
 
-const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
+const Navbar = ({
+  setIsSidebarOpen,
+  isSidebarOpen,
+  loading,
+  getError,
+  setIsAuthModalOpen,
+}) => {
   const [toggleProfile, setToggleProfile] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
 
@@ -16,6 +22,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const name = location.pathname.split("/")[1].toLowerCase();
+  console.log(name)
   const path = "candidates"; // User part only has candidates,
   const route = "/signin"; // User part only has candidates,
   const cook = "logged_in_candidate"; // User part only has candidates,
@@ -75,16 +82,21 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
   }, []);
 
   const [isOpen, setIsOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
 
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);
+  };
+
+  const toggleLanguage = () => {
+    setIsLangOpen((prevState) => !prevState);
   };
 
   return (
     <>
       <nav
         className={`sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 xl:-mx-0 px-4 md:px-10 xl:px-12 ${
-          scrolled
+          (scrolled || name === "search")
             ? "border border-white/80 bg-white text-slate-700 shadow-md"
             : "bg-transparent text-white"
         }`}
@@ -127,14 +139,13 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
             />
           </Link>
         </div>
-        {scrolled && (
+        {(scrolled || name === "search") && (
           <div className="w-full">
             <Search scrolled={scrolled} nav={"dfdf"} />
           </div>
         )}
 
         <div className="flex flex-row space-x-4 items-center whitespace-nowrap">
-          
           <div className="flex flex-row items-center space-x-6">
             <button
               type="button"
@@ -142,7 +153,9 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
               className={`raletive inline-flex items-center  font-semibold text-base transition duration-300 ease-in-out  px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                scrolled ? "text-slate-600 hover:bg-slate-100" : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
+                (scrolled || name === "search")
+                  ? "text-slate-600 hover:bg-slate-100"
+                  : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
               }`}
             >
               Explore{" "}
@@ -166,55 +179,621 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
             {isOpen && (
               <div
                 id="dropdown"
-                className="mt-[260px] absolute right-[300px] z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 shadow-2xl"
+                className="mt-[520px] absolute right-[300px] z-10 bg-white divide-y divide-gray-100 rounded-lg w-[840px] shadow-2xl"
               >
-                <div className="divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
-                  <div className="space-y-1 p-2">
-                    <Link
-                      role="menuitem"
-                      to="/profile"
-                      className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                    >
-                      <div className="flex flex-none items-center space-x-2">
-                        <span>Profile</span>
-                      </div>
-                    </Link>
-                    <Link
-                      role="menuitem"
-                      to="/profile"
-                      className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                    >
-                      <div className="flex flex-none items-center space-x-2">
-                        <span>Trending</span>
-                      </div>
-                    </Link>
-                    <Link
-                      role="menuitem"
-                      to="/profile"
-                      className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                    >
-                      <div className="flex flex-none items-center space-x-2">
-                        <span>Favorite</span>
-                      </div>
-                    </Link>
-                    <Link
-                      role="menuitem"
-                      to="/profile"
-                      className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                    >
-                      <div className="flex flex-none items-center space-x-2">
-                        <span>Newest</span>
-                      </div>
-                    </Link>
-                    <Link
-                      role="menuitem"
-                      to="/profile"
-                      className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                    >
-                      <div className="flex flex-none items-center space-x-2">
-                        <span>Oldest</span>
-                      </div>
-                    </Link>
+                <div className="flex flex-col divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
+                  <div className="flex flex-row justify-evenly">
+                    <div className="space-y-1 p-2 items-center">
+                      <p className="px-10 py-3 font-bold text-md text-gray-800">
+                        Collections
+                      </p>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-server"
+                          >
+                            <rect
+                              width="20"
+                              height="8"
+                              x="2"
+                              y="2"
+                              rx="2"
+                              ry="2"
+                            />
+                            <rect
+                              width="20"
+                              height="8"
+                              x="2"
+                              y="14"
+                              rx="2"
+                              ry="2"
+                            />
+                            <line x1="6" x2="6.01" y1="6" y2="6" />
+                            <line x1="6" x2="6.01" y1="18" y2="18" />
+                          </svg>
+                          <span>Backend</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className="flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-palette"
+                          >
+                            <circle cx="13.5" cy="6.5" r=".5" />
+                            <circle cx="17.5" cy="10.5" r=".5" />
+                            <circle cx="8.5" cy="7.5" r=".5" />
+                            <circle cx="6.5" cy="12.5" r=".5" />
+                            <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
+                          </svg>
+                          <span>Frontend</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-smartphone"
+                          >
+                            <rect
+                              width="14"
+                              height="20"
+                              x="5"
+                              y="2"
+                              rx="2"
+                              ry="2"
+                            />
+                            <path d="M12 18h.01" />
+                          </svg>
+                          <span>Mobile</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-brain-circuit"
+                          >
+                            <path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08 2.5 2.5 0 0 0 4.91.05L12 20V4.5Z" />
+                            <path d="M16 8V5c0-1.1.9-2 2-2" />
+                            <path d="M12 13h4" />
+                            <path d="M12 18h6a2 2 0 0 1 2 2v1" />
+                            <path d="M12 8h8" />
+                            <path d="M20.5 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+                            <path d="M16.5 13a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+                            <path d="M20.5 21a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+                            <path d="M18.5 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+                          </svg>
+                          <span>AI / ML / DS</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-braces"
+                          >
+                            <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />
+                            <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" />
+                          </svg>
+                          <span>Algorithms</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-graduation-cap"
+                          >
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                          </svg>
+                          <span>IT Courses</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="19"
+                            height="19"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-fingerprint"
+                          >
+                            <path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4" />
+                            <path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2" />
+                            <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
+                            <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
+                            <path d="M8.65 22c.21-.66.45-1.32.57-2" />
+                            <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
+                            <path d="M2 16h.01" />
+                            <path d="M21.8 16c.2-2 .131-5.354 0-6" />
+                            <path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2" />
+                          </svg>
+                          <span>Cyber Security</span>
+                        </div>
+                      </Link>
+                    </div>
+                    <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
+                    <div className="space-y-1 p-2">
+                      <p className="px-10 py-3 font-bold text-md text-gray-800">
+                        Discover
+                      </p>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Popular Searches</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Curated Collections</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Popular IT Courses</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Newest</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Oldest</span>
+                        </div>
+                      </Link>
+                    </div>
+                    <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
+                    <div className="space-y-1 p-2">
+                      <p className="px-10 py-3 font-bold text-md text-gray-800">
+                        Community
+                      </p>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Blog</span>
+                        </div>
+                      </Link>
+                    </div>
+                    <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
+                    <div className="space-y-1 p-2">
+                      <p className="px-10 py-3 font-bold text-md text-gray-800">
+                        About
+                      </p>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>About Us</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>FAQ</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Privacy Policy</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Report</span>
+                        </div>
+                      </Link>
+                      <Link
+                        role="menuitem"
+                        to="/profile"
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <span>Suggest a Link</span>
+                        </div>
+                      </Link>
+                      <button
+                        // role="menuitem"
+                        type="button"
+                        data-ripple-light="true"
+                        data-dialog-target="web-3-dialog"
+                        onClick={toggleLanguage}
+                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <img
+                            className="h-5 w-5"
+                            src={require("../assets/images/us.svg").default}
+                            alt=""
+                          />
+                          <span>English - EN</span>
+                        </div>
+                      </button>
+                      {isLangOpen && (
+                        <div
+                          data-dialog-backdrop="sign-in-dialog"
+                          data-dialog-backdrop-close="true"
+                          class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
+                        >
+                          <div
+                            data-dialog="sign-in-dialog"
+                            class="relative mx-auto flex w-full max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+                          >
+                            <button
+                              aria-label="Close panel"
+                              onClick={toggleLanguage}
+                              class="fixed z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md  right-[510px] bottom-[504px]"
+                            >
+                              <svg
+                                stroke="currentColor"
+                                fill="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                class="text-xl"
+                                height="1em"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"></path>
+                              </svg>
+                            </button>
+                            <div className="flex flex-col justify-center items-center">
+                              <div className="grid grid-cols-2 py-10">
+                                <div className="flex flex-col space-y-2">
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/us.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>English - EN</span>
+                                    </div>
+                                  </Link>
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className="flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/es.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>Español - ES</span>
+                                    </div>
+                                  </Link>
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/de.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>Deutsch - DE</span>
+                                    </div>
+                                  </Link>
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/il.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>עברית - HE</span>
+                                    </div>
+                                  </Link>
+                                </div>
+                                <div className="flex flex-col space-y-2">
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/cn.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>中国人 - ZH</span>
+                                    </div>
+                                  </Link>
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/fr.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>Français - FR</span>
+                                    </div>
+                                  </Link>
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/ru.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>Русский - RU</span>
+                                    </div>
+                                  </Link>
+                                  <Link
+                                    role="menuitem"
+                                    to="/profile"
+                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                                  >
+                                    <div className="flex flex-none items-center space-x-2">
+                                      <img
+                                        className="h-5 w-5"
+                                        src={
+                                          require("../assets/images/sa.svg")
+                                            .default
+                                        }
+                                        alt=""
+                                      />
+                                      <span>عربى - AR</span>
+                                    </div>
+                                  </Link>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="py-5 px-10 text-slate-700">
+                    <li className="flex flex-row justify-end space-x-6">
+                      <a href="/">
+                        <span className="group">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="lucide lucide-instagram group-hover:text-red-500 transition ease-in-out duration-300"
+                          >
+                            <rect
+                              width="20"
+                              height="20"
+                              x="2"
+                              y="2"
+                              rx="5"
+                              ry="5"
+                            />
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                            <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                          </svg>
+                        </span>
+                      </a>
+                      <a href="/">
+                        <span className="group">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-twitter group-hover:text-blue-500 transition ease-in-out duration-300"
+                          >
+                            <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
+                          </svg>
+                        </span>
+                      </a>
+                      <a href="/">
+                        <span className="group">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-linkedin group-hover:text-blue-400 transition ease-in-out duration-300"
+                          >
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                            <rect width="4" height="12" x="2" y="9" />
+                            <circle cx="4" cy="4" r="2" />
+                          </svg>
+                        </span>
+                      </a>
+                      <a href="/">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="lucide lucide-coffee transition ease-in-out duration-300"
+                        >
+                          <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+                          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
+                          <line x1="6" x2="6" y1="2" y2="4" />
+                          <line x1="10" x2="10" y1="2" y2="4" />
+                          <line x1="14" x2="14" y1="2" y2="4" />
+                        </svg>
+                      </a>
+                    </li>
                   </div>
                 </div>
               </div>
@@ -223,7 +802,9 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
           <div>
             <button
               className={`font-semibold text-base transition duration-300 ease-in-out px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                scrolled ? "text-slate-600 hover:bg-slate-100" : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
+                (scrolled || name === "search")
+                  ? "text-slate-600 hover:bg-slate-100"
+                  : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
               }`}
             >
               Log in
@@ -232,7 +813,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
           <div>
             <button
               className={`font-semibold text-base transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                scrolled
+                (scrolled || name === "search")
                   ? "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
                   : "text-white hover:ring-[1.1px] hover:ring-white"
               }`}
@@ -244,7 +825,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
             <div className="relative inline-flex self-center items-center space-x-10">
               <Link
                 className={`flex flex-row items-center space-x-2 border border-gray-300 rounded-full py-1 px-2 hover:shadow-md transition duration-300 ease-in-out ${
-                  scrolled ? "bg-white" : "bg-white/80"
+                  (scrolled || name === "search") ? "bg-white" : "bg-white/80"
                 }`}
                 type="button"
                 onClick={() => setToggleProfile((oldState) => !oldState)}
@@ -325,6 +906,29 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
                           height="17"
                           viewBox="0 0 24 24"
                           fill="none"
+                          stroke="currentColor"
+                          stroke-width="1.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="lucide lucide-bookmark"
+                        >
+                          <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+                        </svg>
+                        <span>Bookmark</span>
+                      </div>
+                    </Link>
+                    <Link
+                      role="menuitem"
+                      to="/profile"
+                      className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                    >
+                      <div className="flex flex-none items-center space-x-2">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="17"
+                          height="17"
+                          viewBox="0 0 24 24"
+                          fill="none"
                           stroke="#1f2937"
                           strokeWidth="1.5"
                           strokeLinecap="round"
@@ -335,37 +939,6 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading, getError }) => {
                           <circle cx="12" cy="7" r="4"></circle>
                         </svg>
                         <span>Profile</span>
-                      </div>
-                    </Link>
-                    <Link
-                      role="menuitem"
-                      to="/interview"
-                      className="group flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                    >
-                      <div className="flex flex-none items-center space-x-2">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="#1f2937"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          className="lucide lucide-calendar-clock"
-                        >
-                          <path d="M21 7.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h3.5"></path>
-                          <path d="M16 2v4"></path>
-                          <path d="M8 2v4"></path>
-                          <path d="M3 10h5"></path>
-                          <path d="M17.5 17.5 16 16.25V14"></path>
-                          <path d="M22 16a6 6 0 1 1-12 0 6 6 0 0 1 12 0Z"></path>
-                        </svg>
-                        <span>Interview</span>
-                      </div>
-                      <div className="ml-2 inline-flex rounded-full group-hover:bg-blue-200 bg-gray-200 px-2 py-1 text-sm font-semibold leading-4 group-hover:text-blue-700 text-gray-700">
-                        5
                       </div>
                     </Link>
 

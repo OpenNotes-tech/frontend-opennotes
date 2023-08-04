@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 
 import LinkCard from "./LinkCard";
-import Navbar from "../../layouts/Navbar";
 
 import LoaderSkeleton from "../../components/LoaderSkeleton";
 import IconNoResult from "../../components/IconNoResult";
@@ -11,7 +10,9 @@ const LinkMain = () => {
   const location = useLocation();
   const name = location.pathname.split("/")[1]?.toLowerCase();
   const [getLoad] = useState(false);
-  const [linkResults] = useState([1, 2, 3, 4, 5, 6, 7,8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21]);
+  const [linkResults] = useState([
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
+  ]);
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -42,8 +43,6 @@ const LinkMain = () => {
 
   return (
     <div className="container px-4 lg:px-0 mx-auto">
-      {name && <Navbar />}
-
       <div className="flex flex-col px-12 py-10 space-y-10">
         <div className="flex flex-row space-x-4 justify-center">
           <button className="px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2">
@@ -164,7 +163,7 @@ const LinkMain = () => {
         </div>
         <div className=" flex flex-col space-y-10">
           <div className="flex justify-between">
-            <div class="relative overflow-x-auto overflow-y-clip h-14">
+            {/* <div class="relative overflow-x-auto overflow-y-clip h-14">
               <div class="max-w-5xl mx-auto  shadow-xl min-w-0  dark:highlight-white/5">
                 <div class="overflow-x-auto overflow-y-hidden flex no-scrollbar items-center space-x-3">
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
@@ -239,7 +238,7 @@ const LinkMain = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className="flex flex-row items-center space-x-6">
               <div className="hidden h-[41px] w-[1px] bg-gray-300 lg:block"></div>
@@ -299,15 +298,6 @@ const LinkMain = () => {
                         className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
-                          <span>Profile</span>
-                        </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                      >
-                        <div className="flex flex-none items-center space-x-2">
                           <span>Trending</span>
                         </div>
                       </Link>
@@ -346,17 +336,22 @@ const LinkMain = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 md:gap-x-12 gap-y-12">
-            {linkResults &&
+            {!linkResults &&
               linkResults.map((linkElement, index) => (
                 <LinkCard key={index} linkElement={linkElement} />
               ))}
-            {getLoad && <LoaderSkeleton />}
+            
             {linkResults.length === 0 && (
               <div className="flex justify-center items-center md:ml-4 mb-10 w-full h-4/5 md:h-1/3 lg:h-2/6">
                 <IconNoResult />
               </div>
             )}
           </div>
+          {!getLoad && (
+              <div className="w-full">
+                <LoaderSkeleton />
+              </div>
+            )}
           <div className="flex w-full justify-center">
             <button
               class="middle none center rounded-lg bg-pink-500 py-3 px-10 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

@@ -3,163 +3,195 @@ import React from "react";
 const CardList = () => {
   return (
     <div
-      class="nc-Card11 relative flex flex-col group [ nc-box-has-hover ] [ nc-dark-box-bg-has-hover ] h-full"
-      data-nc-id="Card11"
+      class="fixed inset-0 z-50 overflow-y-auto"
+      id="headlessui-dialog-114"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="headlessui-dialog-title-118"
     >
-      <div class="block flex-shrink-0 relative w-full rounded-t-xl overflow-hidden aspect-w-4 aspect-h-3">
-        <div>
-          <div
-            class="nc-PostFeaturedMedia relative  w-full h-full "
-            data-nc-id="PostFeaturedMedia"
-          >
-            <div class="nc-NcImage absolute inset-0" data-nc-id="NcImage">
-              <img
-                src="https://images.unsplash.com/photo-1488036106564-87ecb155bb15?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1000&amp;q=80"
-                class="object-cover w-full h-full"
-                alt="nc-imgs"
-              />
-            </div>
-            <div class="absolute inset-0"></div>
-          </div>
-        </div>
-      </div>
-      <a class="absolute inset-0" href="/ncmaz/single/this-is-single-slug">
-        sd
-      </a>
-      <span class="absolute top-3 inset-x-3 z-10">
+      <div class="min-h-screen px-1 text-center md:px-4">
         <div
-          class="nc-CategoryBadgeList flex flex-wrap space-x-2"
-          data-nc-id="CategoryBadgeList"
-        >
-          <a
-            class="transition-colors hover:text-white duration-300 nc-Badge relative inline-flex px-2.5 py-1 rounded-full font-medium text-xs  text-pink-800 bg-pink-100 hover:bg-pink-800"
-            href="/ncmaz/archive/the-demo-archive-slug"
-          >
-            Tools
-          </a>
-        </div>
-      </span>
-      <div class="p-4 flex flex-col flex-grow space-y-3">
-        <div
-          class="nc-PostCardMeta inline-flex items-center flex-wrap text-neutral-800 dark:text-neutral-200 text-xs leading-none"
-          data-nc-id="PostCardMeta"
-        >
-          <a
-            class="relative flex items-center space-x-2"
-            href="/ncmaz/author/the-demo-author-slug"
-          >
-            <div class="wil-avatar relative flex-shrink-0 inline-flex items-center justify-center overflow-hidden text-neutral-100 uppercase font-semibold shadow-inner rounded-full h-7 w-7 text-sm ring-1 ring-white dark:ring-neutral-900">
-              <img
-                class="absolute inset-0 w-full h-full object-cover"
-                src="/ncmaz/src/data/avatars/4.jpg"
-                alt="Falconar Agnes"
-              />
-              <span class="wil-avatar__name">F</span>
-            </div>
-            <span class="block text-neutral-700 hover:text-black dark:text-neutral-300 dark:hover:text-white font-medium">
-              Falconar Agnes
-            </span>
-          </a>
-          <span class="text-neutral-500 dark:text-neutral-400 mx-[6px] font-medium">
-            ·
-          </span>
-          <span class="text-neutral-500 dark:text-neutral-400 font-normal">
-            May 20, 2021
-          </span>
-        </div>
-        <h2 class="nc-card-title block text-base font-semibold text-neutral-900 dark:text-neutral-100 ">
-          <a
-            class="line-clamp-2"
-            title="New ideas and energized employees fuel Microsoft’s ongoing efforts toward racial equity "
-            href="/ncmaz/single/this-is-single-slug"
-          >
-            New ideas and energized employees fuel Microsoft’s ongoing efforts
-            toward racial equity{" "}
-          </a>
-        </h2>
-        <div class="flex items-end justify-between mt-auto">
-          <div
-            class="nc-PostCardLikeAndComment flex items-center space-x-2 relative"
-            data-nc-id="PostCardLikeAndComment"
-          >
+          class="fixed inset-0 bg-neutral-900 bg-opacity-50 dark:bg-opacity-80"
+          id="headlessui-dialog-overlay-116"
+          aria-hidden="true"
+        ></div>
+        <span class="inline-block h-screen align-middle" aria-hidden="true">
+          &ZeroWidthSpace;
+        </span>
+        <div class="inline-block w-full my-5 overflow-hidden text-left align-middle transition-all transform bg-white border border-black border-opacity-5 shadow-xl rounded-2xl sm:my-8 dark:bg-neutral-800 dark:border-neutral-700 text-neutral-900 dark:text-neutral-300 max-w-screen-md">
+          <div class="py-4 px-6 text-center relative border-b border-neutral-100 dark:border-neutral-700 md:py-5">
             <button
-              class="nc-PostCardLikeAction relative min-w-[68px] flex items-center rounded-full leading-none group transition-colors px-3 h-8 text-xs focus:outline-none text-neutral-700 bg-neutral-50 dark:text-neutral-200 dark:bg-neutral-800 hover:bg-rose-50 dark:hover:bg-rose-100 hover:text-rose-600 dark:hover:text-rose-500"
-              title="Liked"
-              data-nc-id="PostCardLikeAction"
+              class="w-8 h-8 flex items-center justify-center rounded-full text-neutral-700 dark:text-neutral-300 hover:bg-neutral-100 dark:hover:bg-neutral-700 absolute left-2 top-1/2 transform -translate-y-1/2 sm:left-4 focus:outline-none"
+              tabindex="0"
             >
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
+              <span class="sr-only">Close</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                class="w-5 h-5"
+              >
                 <path
                   fill-rule="evenodd"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1"
-                  d="M11.995 7.23319C10.5455 5.60999 8.12832 5.17335 6.31215 6.65972C4.49599 8.14609 4.2403 10.6312 5.66654 12.3892L11.995 18.25L18.3235 12.3892C19.7498 10.6312 19.5253 8.13046 17.6779 6.65972C15.8305 5.18899 13.4446 5.60999 11.995 7.23319Z"
+                  d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                   clip-rule="evenodd"
                 ></path>
               </svg>
-              <span class="ml-1 text-neutral-900 dark:text-neutral-200">
-                3.1k
-              </span>
             </button>
-            <a
-              class="nc-PostCardCommentBtn relative items-center min-w-[68px] rounded-full text-neutral-6000 bg-neutral-50 transition-colors dark:text-neutral-200 dark:bg-neutral-800 hover:bg-teal-50 dark:hover:bg-teal-100 hover:text-teal-600 dark:hover:text-teal-500 hidden sm:flex  px-3 h-8 text-xs focus:outline-none"
-              title="Comments"
-              data-nc-id="PostCardCommentBtn"
-              href="/ncmaz/single/this-is-single-slug#comments"
+            <h3
+              class="text-base font-semibold text-neutral-900 lg:text-xl dark:text-neutral-200"
+              id="headlessui-dialog-title-118"
             >
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1"
-                  d="M4.75 6.75C4.75 5.64543 5.64543 4.75 6.75 4.75H17.25C18.3546 4.75 19.25 5.64543 19.25 6.75V14.25C19.25 15.3546 18.3546 16.25 17.25 16.25H14.625L12 19.25L9.375 16.25H6.75C5.64543 16.25 4.75 15.3546 4.75 14.25V6.75Z"
-                ></path>
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M9.5 11C9.5 11.2761 9.27614 11.5 9 11.5C8.72386 11.5 8.5 11.2761 8.5 11C8.5 10.7239 8.72386 10.5 9 10.5C9.27614 10.5 9.5 10.7239 9.5 11Z"
-                ></path>
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M12.5 11C12.5 11.2761 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.2761 11.5 11C11.5 10.7239 11.7239 10.5 12 10.5C12.2761 10.5 12.5 10.7239 12.5 11Z"
-                ></path>
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M15.5 11C15.5 11.2761 15.2761 11.5 15 11.5C14.7239 11.5 14.5 11.2761 14.5 11C14.5 10.7239 14.7239 10.5 15 10.5C15.2761 10.5 15.5 10.7239 15.5 11Z"
-                ></path>
-              </svg>
-              <span class="ml-1 text-neutral-900 dark:text-neutral-200">1</span>
-            </a>
+              Report Abuse
+            </h3>
           </div>
-          <div
-            class="nc-PostCardSaveAction flex items-center space-x-2 text-xs text-neutral-700 dark:text-neutral-300 relative"
-            data-nc-id="PostCardSaveAction"
-          >
-            <button
-              class="nc-NcBookmark relative rounded-full flex items-center justify-center focus:outline-none h-8 w-8 bg-neutral-50 hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
-              data-nc-id="NcBookmark"
-              data-nc-bookmark-post-id="DEMO_POSTS_18"
-              title="Save to reading list"
-            >
-              <svg width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path
-                  stroke="currentColor"
-                  aria-hidden="true"
-                  fill="none"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="1"
-                  d="M6.75 6.75C6.75 5.64543 7.64543 4.75 8.75 4.75H15.25C16.3546 4.75 17.25 5.64543 17.25 6.75V19.25L12 14.75L6.75 19.25V6.75Z"
-                ></path>
-              </svg>
-            </button>
+          <div class="py-4 px-6 md:py-5">
+            <form action="#">
+              <div
+                id="headlessui-radiogroup-119"
+                role="radiogroup"
+                aria-labelledby="headlessui-label-120"
+              >
+                <label class="sr-only" id="headlessui-label-120" role="none">
+                  Problem Plans
+                </label>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2" role="none">
+                  <div
+                    class="bg-white border-t border-neutral-50  relative shadow-lg rounded-lg px-3 py-3 cursor-pointer flex sm:px-5 sm:py-4 focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0"
+                    id="headlessui-radiogroup-option-121"
+                    role="radio"
+                    aria-checked="false"
+                    tabindex="-1"
+                    aria-labelledby="headlessui-label-122"
+                  >
+                    <div class="flex items-center justify-between w-full">
+                      <div class="flex items-center">
+                        <div class="text-sm">
+                          <p
+                            class="font-medium line-clamp-1 text-neutral-900"
+                            id="headlessui-label-122"
+                          >
+                            Violence
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="bg-white border-t border-neutral-50  relative shadow-lg rounded-lg px-3 py-3 cursor-pointer flex sm:px-5 sm:py-4 focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0"
+                    id="headlessui-radiogroup-option-123"
+                    role="radio"
+                    aria-checked="false"
+                    tabindex="-1"
+                    aria-labelledby="headlessui-label-124"
+                  >
+                    <div class="flex items-center justify-between w-full">
+                      <div class="flex items-center">
+                        <div class="text-sm">
+                          <p
+                            class="font-medium line-clamp-1 text-neutral-900"
+                            id="headlessui-label-124"
+                          >
+                            Trouble
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="bg-white border-t border-neutral-50  relative shadow-lg rounded-lg px-3 py-3 cursor-pointer flex sm:px-5 sm:py-4 focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0"
+                    id="headlessui-radiogroup-option-125"
+                    role="radio"
+                    aria-checked="false"
+                    tabindex="-1"
+                    aria-labelledby="headlessui-label-126"
+                  >
+                    <div class="flex items-center justify-between w-full">
+                      <div class="flex items-center">
+                        <div class="text-sm">
+                          <p
+                            class="font-medium line-clamp-1 text-neutral-900"
+                            id="headlessui-label-126"
+                          >
+                            Spam
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="bg-primary-6000 text-white dark:bg-primary-700 relative shadow-lg rounded-lg px-3 py-3 cursor-pointer flex sm:px-5 sm:py-4 focus:outline-none  focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0"
+                    id="headlessui-radiogroup-option-127"
+                    role="radio"
+                    aria-checked="true"
+                    tabindex="0"
+                    aria-labelledby="headlessui-label-128"
+                  >
+                    <div class="flex items-center justify-between w-full">
+                      <div class="flex items-center">
+                        <div class="text-sm">
+                          <p
+                            class="font-medium line-clamp-1 text-white"
+                            id="headlessui-label-128"
+                          >
+                            Other
+                          </p>
+                        </div>
+                      </div>
+                      <div class="flex-shrink-0 text-white">
+                        <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none">
+                          <circle
+                            cx="12"
+                            cy="12"
+                            r="12"
+                            fill="#fff"
+                            opacity="0.2"
+                          ></circle>
+                          <path
+                            d="M7 13l3 3 7-7"
+                            stroke="#fff"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-4">
+                <h4 class="text-lg font-semibold text-neutral-700 dark:text-neutral-200">
+                  Message
+                </h4>
+                <span class="text-sm text-neutral-6000 dark:text-neutral-400">
+                  Please provide any additional information or context that will
+                  help us understand and handle the situation.
+                </span>
+                <textarea
+                  class="block w-full text-sm rounded-xl border-neutral-200 focus:border-primary-300 focus:ring focus:ring-primary-200 focus:ring-opacity-50 bg-white dark:border-neutral-700 dark:focus:ring-primary-6000 dark:focus:ring-opacity-25 dark:bg-neutral-900 mt-3"
+                  rows="4"
+                  placeholder="..."
+                  required=""
+                  id="report-message"
+                ></textarea>
+              </div>
+              <div class="mt-4 space-x-3">
+                <button
+                  class="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base font-medium px-4 py-3 sm:px-6  ttnc-ButtonPrimary disabled:bg-opacity-70 bg-primary-6000 hover:bg-primary-700 text-neutral-50  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0"
+                  type="submit"
+                >
+                  Submit
+                </button>
+                <button
+                  class="nc-Button relative h-auto inline-flex items-center justify-center rounded-full transition-colors text-sm sm:text-base  px-4 py-3 sm:px-6  ttnc-ButtonSecondary font-medium border bg-white border-neutral-200 text-neutral-700 dark:bg-neutral-900 dark:text-neutral-300 dark:border-neutral-700 hover:bg-neutral-100 dark:hover:bg-neutral-800   focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-6000 dark:focus:ring-offset-0"
+                  type="button"
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

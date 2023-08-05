@@ -3,10 +3,12 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { logout } from "../store/features/editProfileSlice";
+import { openModal } from "../store/features/userAuthSlice";
 import Request from "../utils/API-router";
 import Loader from "../components/Loader";
 import Sign from "../pages/Authentication/Sign";
 import Search from "../components/Search";
+import UserReport from "../components/UserReport";
 
 const Navbar = ({
   setIsSidebarOpen,
@@ -22,7 +24,7 @@ const Navbar = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const name = location.pathname.split("/")[1].toLowerCase();
-  console.log(name)
+  console.log(name);
   const path = "candidates"; // User part only has candidates,
   const route = "/signin"; // User part only has candidates,
   const cook = "logged_in_candidate"; // User part only has candidates,
@@ -60,8 +62,7 @@ const Navbar = ({
   };
 
   const handleAuthModalToggle = () => {
-    Sign.setIsAuthModalOpen(!Sign.isAuthModalOpen);
-    console.log(Sign.isAuthModalOpen);
+    dispatch(openModal());
   };
 
   const [scrolled, setScrolled] = useState(false);
@@ -83,7 +84,11 @@ const Navbar = ({
 
   const [isOpen, setIsOpen] = useState(false);
   const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
 
+  const toggleReport = () => {
+    setIsReportOpen((prevState) => !prevState);
+  };
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);
   };
@@ -96,12 +101,13 @@ const Navbar = ({
     <>
       <nav
         className={`sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 xl:-mx-0 px-4 md:px-10 xl:px-12 ${
-          (scrolled || name === "search")
+          scrolled || name === "search"
             ? "border border-white/80 bg-white text-slate-700 shadow-md"
             : "bg-transparent text-white"
         }`}
       >
         {loading && <Loader />}
+        <Sign />
 
         <div className="items-center flex flex-row space-x-2 md:space-x-0 flex-nowrap">
           {name === "profile" && (
@@ -153,7 +159,7 @@ const Navbar = ({
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
               className={`raletive inline-flex items-center  font-semibold text-base transition duration-300 ease-in-out  px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                (scrolled || name === "search")
+                scrolled || name === "search"
                   ? "text-slate-600 hover:bg-slate-100"
                   : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
               }`}
@@ -494,15 +500,18 @@ const Navbar = ({
                           <span>Privacy Policy</span>
                         </div>
                       </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
+                      <button
+                        type="button"
+                        data-ripple-light="true"
+                        data-dialog-target="report-dialog"
+                        onClick={toggleReport}
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Report</span>
                         </div>
-                      </Link>
+                      </button>
+                      {isReportOpen && <UserReport />}
                       <Link
                         role="menuitem"
                         to="/profile"
@@ -516,7 +525,7 @@ const Navbar = ({
                         // role="menuitem"
                         type="button"
                         data-ripple-light="true"
-                        data-dialog-target="web-3-dialog"
+                        data-dialog-target="sign-in-dialog"
                         onClick={toggleLanguage}
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
@@ -557,6 +566,14 @@ const Navbar = ({
                                 <path d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"></path>
                               </svg>
                             </button>
+                            <div className="flex flex-row justify-center mt-5 -mb-3">
+                              <h3
+                                class="text-base font-semibold text-neutral-900 lg:text-2xl capital font-serif"
+                                id="headlessui-dialog-title-38"
+                              >
+                                Languages
+                              </h3>
+                            </div>
                             <div className="flex flex-col justify-center items-center">
                               <div className="grid grid-cols-2 py-10">
                                 <div className="flex flex-col space-y-2">
@@ -802,7 +819,7 @@ const Navbar = ({
           <div>
             <button
               className={`font-semibold text-base transition duration-300 ease-in-out px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                (scrolled || name === "search")
+                scrolled || name === "search"
                   ? "text-slate-600 hover:bg-slate-100"
                   : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
               }`}
@@ -813,7 +830,7 @@ const Navbar = ({
           <div>
             <button
               className={`font-semibold text-base transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                (scrolled || name === "search")
+                scrolled || name === "search"
                   ? "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
                   : "text-white hover:ring-[1.1px] hover:ring-white"
               }`}
@@ -825,7 +842,7 @@ const Navbar = ({
             <div className="relative inline-flex self-center items-center space-x-10">
               <Link
                 className={`flex flex-row items-center space-x-2 border border-gray-300 rounded-full py-1 px-2 hover:shadow-md transition duration-300 ease-in-out ${
-                  (scrolled || name === "search") ? "bg-white" : "bg-white/80"
+                  scrolled || name === "search" ? "bg-white" : "bg-white/80"
                 }`}
                 type="button"
                 onClick={() => setToggleProfile((oldState) => !oldState)}

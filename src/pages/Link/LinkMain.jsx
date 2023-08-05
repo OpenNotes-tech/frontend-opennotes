@@ -316,7 +316,7 @@ const LinkMain = () => {
                         className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
-                          <span>Newest</span>
+                          <span>Latest</span>
                         </div>
                       </Link>
                       <Link
@@ -336,22 +336,22 @@ const LinkMain = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 md:gap-x-12 gap-y-12">
-            {!linkResults &&
+            {linkResults &&
               linkResults.map((linkElement, index) => (
                 <LinkCard key={index} linkElement={linkElement} />
               ))}
-            
+
             {linkResults.length === 0 && (
               <div className="flex justify-center items-center md:ml-4 mb-10 w-full h-4/5 md:h-1/3 lg:h-2/6">
                 <IconNoResult />
               </div>
             )}
           </div>
-          {!getLoad && (
-              <div className="w-full">
-                <LoaderSkeleton />
-              </div>
-            )}
+          {getLoad && (
+            <div className="w-full">
+              <LoaderSkeleton />
+            </div>
+          )}
           <div className="flex w-full justify-center">
             <button
               class="middle none center rounded-lg bg-pink-500 py-3 px-10 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

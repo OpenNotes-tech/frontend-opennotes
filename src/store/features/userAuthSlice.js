@@ -6,6 +6,7 @@ const initialState = {
   email: "",
   fullName: "",
   _id: "",
+  isAuthModalOpen: false,
 };
 
 export const userAuthSlice = createSlice({
@@ -33,8 +34,14 @@ export const userAuthSlice = createSlice({
       state.fullName = null;
       state.email = null;
     },
+    openModal: (state) => {
+      state.isModalOpen = true;
+    },
+    closeModal: (state) => {
+      state.isModalOpen = false;
+    },
   },
 });
 
 export default userAuthSlice.reducer;
-export const { login, logout, signup } = userAuthSlice.actions;
+export const { login, logout, signup, openModal, closeModal} = userAuthSlice.actions;

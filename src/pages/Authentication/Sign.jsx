@@ -1,7 +1,17 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { closeModal } from "../../store/features/userAuthSlice";
+
 const Sign = () => {
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const isModalOpen = useSelector((state) => state.userAuth.isModalOpen);
+  const dispatch = useDispatch();
+  const modalRef = useRef();
+
+  const handleAuthModalToggle = () => {
+    dispatch(closeModal());
+  };
+
   const [passwordVisible1, setPasswordVisible1] = useState(false);
   const [passwordVisible2, setPasswordVisible2] = useState(false);
   const [passwordVisible3, setPasswordVisible3] = useState(false);
@@ -17,24 +27,28 @@ const Sign = () => {
     setPasswordVisible3(!passwordVisible3);
   };
 
-  const handleAuthModalToggle = () => {
-    setIsAuthModalOpen(!isAuthModalOpen);
-  };
+  // Close the modal when the user clicks outside of it
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (e.target === modalRef.current) {
+        dispatch(closeModal());
+      }
+    };
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [dispatch, isModalOpen]);
 
   return (
     <>
-      <button
-        class="select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-        type="button"
-        onClick={handleAuthModalToggle}
-        data-dialog-target="sign-in-dialog"
-      >
-        Sign In
-      </button>
-      {isAuthModalOpen && (
+      {isModalOpen && (
         <div
           data-dialog-backdrop="sign-in-dialog"
           data-dialog-backdrop-close="true"
+          ref={modalRef}
           class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
         >
           <div

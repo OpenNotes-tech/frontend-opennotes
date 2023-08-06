@@ -12,9 +12,6 @@ const Google = ({ setError, setLoad }) => {
   const location = useLocation();
   const dispatch = useDispatch();
 
-  const path = "candidates"; // User part only has candidates, 
-  const cook = "logged_in_candidate"; // User part only has candidates, 
-
   useEffect(() => {
     const start = () => {
       gapi.client.init({
@@ -28,41 +25,15 @@ const Google = ({ setError, setLoad }) => {
 
   const responseGoogle = (response) => {
     setLoad(true);
-    Request.googleLogin(path, { idToken: response.tokenId })
+    Request.googleLogin({ idToken: response.tokenId })
       .then((res) => {
         console.log(res);
-        Cookies.set(cook, "yes", {
+        Cookies.set("logged_in_candidate", "yes", {
           secure: true,
           expires: new Date(res.data.user.password),
         });
 
-        dispatch(
-          login({
-            _id: res?.data?.user?._id,
-            token: res?.data?.token,
-            fullName: res?.data?.user?.fullName,
-            email: res?.data?.user?.email,
-            skills: res?.data?.user?.skills,
-            opentoRoles: res?.data?.user?.opentoRoles,
-            country: res?.data?.user?.address?.country,
-            city: res?.data?.user?.address?.city,
-            phoneNumber: res?.data?.user?.address?.phoneNumber,
-            website: res?.data?.user?.socialLinks?.website,
-            linkedin: res?.data?.user?.socialLinks?.linkedin,
-            github: res?.data?.user?.socialLinks?.github,
-            achievement: res?.data?.user?.achievement,
-            bio: res?.data?.user?.bio,
-            salaryMax: res?.data?.user?.salaryMax,
-            salaryMin: res?.data?.user?.salaryMin,
-            photo: res?.data?.user?.photo,
-            primaryRole: res?.data?.user?.primaryRole,
-            resume: res?.data?.user?.resume,
-            yearofExperience: res?.data?.user?.yearofExperience,
-            education: res?.data?.user?.education,
-            experiences: res?.data?.user?.experiences,
-            applications: res?.data?.user?.applications,
-          })
-        );
+        dispatch(login(res?.data?.user));
 
         setLoad(false);
         setError("Successfully signed up!");
@@ -79,7 +50,7 @@ const Google = ({ setError, setLoad }) => {
   };
 
   return (
-    <div className="pb-3">
+    <div>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
         onSuccess={responseGoogle}
@@ -88,38 +59,40 @@ const Google = ({ setError, setLoad }) => {
           <button
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            className="flex items-center justify-center -mb-3 px-5 md:px-48 lg:px-24"
+            className="px-4 py-3 flex gap-1 bg-white-dark/30 text-black shadow-none hover:bg-slate-100 bg-slate-200 rounded-md sm:gap-2"
           >
             <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
+              class="h-5 w-5 sm:h-6 sm:w-6"
+              viewBox="0 0 256 193"
+              version="1.1"
               xmlns="http://www.w3.org/2000/svg"
+              xmlnsXlink="http://www.w3.org/1999/xlink"
+              preserveAspectRatio="xMidYMid"
             >
-              <path
-                d="M23.9875 12.2242C23.9875 11.2409 23.9059 10.5234 23.7292 9.7793H12.2393V14.2173H18.9836C18.8477 15.3202 18.1134 16.9811 16.4817 18.0972L16.4588 18.2458L20.0917 20.996L20.3434 21.0205C22.6549 18.9344 23.9875 15.8649 23.9875 12.2242Z"
-                fill="#4285F4"
-              />
-              <path
-                d="M12.2391 23.9178C15.5433 23.9178 18.3171 22.8548 20.3432 21.0211L16.4815 18.0978C15.4481 18.8021 14.0611 19.2937 12.2391 19.2937C9.00291 19.2937 6.25622 17.2076 5.2771 14.3242L5.13359 14.3361L1.35604 17.193L1.30664 17.3272C3.31906 21.2337 7.45272 23.9178 12.2391 23.9178Z"
-                fill="#34A853"
-              />
-              <path
-                d="M5.27727 14.3248C5.01892 13.5807 4.8694 12.7834 4.8694 11.9596C4.8694 11.1357 5.01892 10.3385 5.26367 9.5944L5.25683 9.43592L1.43194 6.5332L1.3068 6.59137C0.477385 8.21247 0.00146484 10.0329 0.00146484 11.9596C0.00146484 13.8863 0.477385 15.7066 1.3068 17.3277L5.27727 14.3248Z"
-                fill="#FBBC05"
-              />
-              <path
-                d="M12.2391 4.62403C14.5371 4.62403 16.0871 5.59402 16.971 6.40461L20.4248 3.10928C18.3036 1.1826 15.5433 0 12.2391 0C7.45272 0 3.31906 2.68406 1.30664 6.59057L5.26351 9.59359C6.25622 6.7102 9.00291 4.62403 12.2391 4.62403Z"
-                fill="#EB4335"
-              />
+              <g>
+                <path
+                  d="M58.1818182,192.049515 L58.1818182,93.1404244 L27.5066233,65.0770089 L0,49.5040608 L0,174.59497 C0,184.253152 7.82545455,192.049515 17.4545455,192.049515 L58.1818182,192.049515 Z"
+                  fill="#4285F4"
+                ></path>
+                <path
+                  d="M197.818182,192.049515 L238.545455,192.049515 C248.203636,192.049515 256,184.224061 256,174.59497 L256,49.5040608 L224.844415,67.3422767 L197.818182,93.1404244 L197.818182,192.049515 Z"
+                  fill="#34A853"
+                ></path>
+                <polygon
+                  fill="#EA4335"
+                  points="58.1818182 93.1404244 54.0077618 54.4932827 58.1818182 17.5040608 128 69.8676972 197.818182 17.5040608 202.487488 52.4960089 197.818182 93.1404244 128 145.504061"
+                ></polygon>
+                <path
+                  d="M197.818182,17.5040608 L197.818182,93.1404244 L256,49.5040608 L256,26.2313335 C256,4.64587897 231.36,-7.65957557 214.109091,5.28587897 L197.818182,17.5040608 Z"
+                  fill="#FBBC04"
+                ></path>
+                <path
+                  d="M0,49.5040608 L26.7588051,69.5731646 L58.1818182,93.1404244 L58.1818182,17.5040608 L41.8909091,5.28587897 C24.6109091,-7.65957557 0,4.64587897 0,26.2313335 L0,49.5040608 Z"
+                  fill="#C5221F"
+                ></path>
+              </g>
             </svg>
-            <span
-              className="pl-3 text-sm md:text-base leading-none text-gray-600"
-              data-config-id="google-action"
-            >
-              Continue with Google
-            </span>
+            Google
           </button>
         )}
         cookiePolicy={"single_host_origin"}

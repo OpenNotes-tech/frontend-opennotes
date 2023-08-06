@@ -24,7 +24,6 @@ const Navbar = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const name = location.pathname.split("/")[1].toLowerCase();
-  console.log(name);
   const path = "candidates"; // User part only has candidates,
   const route = "/signin"; // User part only has candidates,
   const cook = "logged_in_candidate"; // User part only has candidates,

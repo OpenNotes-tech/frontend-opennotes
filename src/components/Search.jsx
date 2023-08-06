@@ -1,49 +1,46 @@
+import { setSearchQuery, setSearchResult } from "../store/features/searchSlice";
+import { setLoading, setError } from "../store/features/errorSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
-// import { Link } from "react-router-dom";
-import FilterAPI from "../utils/Filter";
+import SearchAPI from "../utils/SearchAPI";
+import { FilterModal } from "./FilterModal";
 
-const Search = ({
-  filter,
-  setIsSidebarOpen,
-  isSidebarOpen,
-  setTitleSearch,
-  setJobResults,
-  setError,
-  setLoad,
-  setToggleFilter,
-  getToggleFilter,
-  scrolled,
-  nav,
-}) => {
-  const [Search, setSearch] = useState(
-    "" || localStorage.getItem("titleSearch")
-  );
+const Search = ({ nav }) => {
+  const { query, sort, category, tags } = useSelector((state) => state.Search);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const name = location.pathname.split("/")[1].toLowerCase();
   const [isInputFocused, setInputFocused] = useState(false);
+  const [getToggleFilter, setToggleFilter] = useState(false);
+
+  const handleInputChange = (event) => {
+    dispatch(setSearchQuery(event.target.value));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTitleSearch(Search);
-    if (Search.trim() === "") {
-      localStorage.removeItem("titleSearch");
-    } else {
-      localStorage.setItem("titleSearch", Search);
-    }
 
-    FilterAPI.filterJobCompanyCandidate()
-      .then((res) => {
-        console.log(res.data);
-        setJobResults(res.data.data.body);
-        setLoad(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setError(error?.response?.data?.message);
-        setLoad(false);
-      })
-      .finally((e) => {
-        setLoad(false);
-      });
+    if (!name) {
+      navigate("search");
+    } else {
+      SearchAPI.linkSearch(query, sort, category, tags)
+        .then((res) => {
+          dispatch(setSearchResult(res.data.data.body));
+          dispatch(setLoading(false));
+        })
+        .catch((error) => {
+          dispatch(setError(error?.response?.data?.message));
+          dispatch(setLoading(false));
+        })
+        .finally((e) => {
+          dispatch(setLoading(false));
+        });
+    }
   };
+
   const handleFilterToggle = () => {
     setToggleFilter(true);
   };
@@ -62,8 +59,8 @@ const Search = ({
             }`}
           >
             <input
-              value={Search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={query}
+              onChange={handleInputChange}
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
               type="search"
@@ -96,7 +93,7 @@ const Search = ({
               }`}
             ></div>
             <button
-              type="submit"
+              type="button"
               onClick={handleFilterToggle}
               className="absolute right-2  px-4 py-[10px]"
             >
@@ -120,6 +117,11 @@ const Search = ({
           </div>
         </form>
       </div>
+      {getToggleFilter ? (
+        <>
+          <FilterModal setToggleFilter={setToggleFilter} />
+        </>
+      ) : null}
     </>
   );
 };

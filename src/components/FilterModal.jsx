@@ -1,62 +1,38 @@
+import {
+  setCategoryOption,
+  setTags,
+  setSearchResult,
+} from "../store/features/searchSlice";
+import { SkillsOptions, LocationOptions } from "../constants/FilterData";
+import { setLoading, setError } from "../store/features/errorSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-
-import Switch from "./Switch";
+import SearchAPI from "../utils/SearchAPI";
 import Selector from "./Selector";
 
-import {
-  SkillsOptions,
-  LocationOptions,
-  CurrencyOptions,
-} from "../constants/FilterData";
-import CheckBox from "./CheckBox";
-
 export const FilterModal = ({ setToggleFilter }) => {
-  const [getCurrency, setCurrency] = useState(CurrencyOptions[0]);
+  const { query, sort, category, tags } = useSelector((state) => state.Search);
   const [debounceTimeout] = useState(null);
   const [getLocationSelector, setLocationSelector] = useState([]);
   const [getSkillsSelector, setSkillsSelector] = useState([]);
-  const [getSwitchRemote, setSwitchRemote] = useState(false);
-  const localStorageValue = localStorage.getItem("jobtype");
-  const localStorageLevel = localStorage.getItem("Level");
-  const [checked, setChecked] = useState({
-    fulltime: localStorageValue?.includes("fulltime"),
-    contract: localStorageValue?.includes("contract"),
-    internship: localStorageValue?.includes("internship"),
-    parttime: localStorageValue?.includes("parttime"),
-    newgrad: localStorageValue?.includes("newgrad"),
-  });
-  const [checkedLevel, setCheckedLevel] = useState({
-    Senior: localStorageLevel?.includes("Senior"),
-    Middle: localStorageLevel?.includes("Middle"),
-    Junior: localStorageLevel?.includes("Junior"),
-  });
 
-  const handleCheckbox = (e) => {
-    const { id, checked: isChecked } = e.target;
-    setChecked((prevState) => ({ ...prevState, [id]: isChecked }));
-  };
-  const handleLevelCheckbox = (e) => {
-    const { id, checked: isChecked } = e.target;
-    setCheckedLevel((prevState) => ({ ...prevState, [id]: isChecked }));
-  };
-  const handleCurrencySelector = (selectedCurrency) => {
-    setCurrency(selectedCurrency);
-  };
+  const dispatch = useDispatch();
+
   const handleLocationSelector = (selectedLocation) => {
     const selectedValues = selectedLocation.map((option) => option.value);
     setLocationSelector(selectedLocation);
     const commaSeparatedString = selectedValues.join(",");
     localStorage.setItem("Locations", commaSeparatedString);
+
+    dispatch(setCategoryOption(commaSeparatedString)); // this is added to redux
   };
   const handleSkillsSelector = (selectedSkills) => {
     const selectedValues = selectedSkills.map((option) => option.value);
     setSkillsSelector(selectedSkills);
     const commaSeparatedString = selectedValues.join(",");
     localStorage.setItem("Skills", commaSeparatedString);
-  };
-  const handleRemoteSwitcher = () => {
-    setSwitchRemote(!getSwitchRemote);
-    localStorage.setItem("Remote", JSON.stringify(!getSwitchRemote));
+
+    dispatch(setTags(commaSeparatedString)); // this adds data to redux
   };
 
   useEffect(() => {
@@ -68,39 +44,7 @@ export const FilterModal = ({ setToggleFilter }) => {
       );
       setLocationSelector(selectedOptions);
     }
-    const storedValue = localStorage.getItem("Remote");
-    if (storedValue) {
-      setSwitchRemote(JSON.parse(storedValue));
-    }
   }, []);
-  useEffect(() => {
-    // Get selected jobTypes as an array
-    const selectedJobTypes = Object.entries(checked)
-      .filter(([_, value]) => value)
-      .map(([key]) => key);
-    const selectedLevel = Object.entries(checkedLevel)
-      .filter(([_, value]) => value)
-      .map(([key]) => key);
-
-    // Save selected jobTypes to local storage
-    if (selectedJobTypes.length > 0) {
-      localStorage.setItem("jobtype", selectedJobTypes.join(","));
-    } else {
-      localStorage.removeItem("jobtype");
-    }
-    if (selectedLevel.length > 0) {
-      localStorage.setItem("Level", selectedLevel.join(","));
-    } else {
-      localStorage.removeItem("Level");
-    }
-  }, [
-    checked,
-    checkedLevel,
-    getCurrency,
-    getLocationSelector,
-    getSkillsSelector,
-    getSwitchRemote,
-  ]);
 
   useEffect(() => {
     return () => {
@@ -108,6 +52,23 @@ export const FilterModal = ({ setToggleFilter }) => {
       clearTimeout(debounceTimeout);
     };
   }, [debounceTimeout]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    SearchAPI.linkSearch(query, sort, category, tags)
+      .then((res) => {
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        dispatch(setError(error?.response?.data?.message));
+        dispatch(setLoading(false));
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
+  };
 
   return (
     <>
@@ -162,7 +123,7 @@ export const FilterModal = ({ setToggleFilter }) => {
               <button
                 className="transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black bg-black px-8 py-2 font-medium text-center text-white hover:border-blue-700 hover:bg-blue-700"
                 type="button"
-                onClick={() => setToggleFilter(false)}
+                onClick={handleSubmit}
               >
                 Apply
               </button>
@@ -170,7 +131,7 @@ export const FilterModal = ({ setToggleFilter }) => {
           </div>
         </div>
       </div>
-      <div className="fixed inset-0 z-40 bg-black opacity-25"></div>
+      <div className="fixed inset-0 z-40 bg-black opacity-30"></div>
     </>
   );
 };

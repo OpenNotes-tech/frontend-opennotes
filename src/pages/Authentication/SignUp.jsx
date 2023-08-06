@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import { useState } from "react";
-
+  
 import { signup } from "../../store/features/editProfileSlice";
 import Navbar from "../../layouts/Navbar";
 import Request from "../../utils/API-router";
@@ -34,41 +34,7 @@ const SignUp = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     setLoad(true);
-    if (getSignup.fullName.split(" ").length !== 2) {
-      setError("Full Name should consist of first name and last name!");
-      setLoad(false);
-      return;
-    }
-    Request.signup(path, getSignup)
-      .then((res) => {
-        Cookies.set(cook, "yes", {
-          secure: true,
-          expires: new Date(res.data.user.password),
-        });
-        dispatch(
-          signup({
-            email: res.data.user.email,
-            fullName: res.data.user.fullName,
-            token: res.data.token,
-            _id: res.data.user._id,
-          })
-        );
-        setError("Signed Up Successfully!");
-        setLoad(false);
-        // Redirect to main page after 3 seconds
-        setTimeout(() => {
-          location.state?.from
-            ? navigate(location.state.from)
-            : navigate("/job");
-        }, 2000);
-      })
-      .catch((error) => {
-        setError(error.response?.data?.message);
-        if (error.response?.data?.error?.code === 11000) {
-          setError("This email address already exists!");
-        }
-        setLoad(false);
-      });
+    
   };
   return (
     <>

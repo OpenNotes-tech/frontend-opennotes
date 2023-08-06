@@ -1,6 +1,10 @@
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const ErrorBar = (props) => {
+  const errorMessage = useSelector((state) => state.error.errorMessage);
+  const errorType = useSelector((state) => state.error.errorType);
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       props.setError("");

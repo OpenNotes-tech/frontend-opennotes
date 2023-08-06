@@ -51,8 +51,8 @@ const App = () => {
             element={<HomeMain cand={candidateIsAuthorized} />}
           />
           <Route path="link" exact element={<LinkMain />} />
-          <Route path="search/:searchword" exact element={<SearchMain />} />
-          <Route path="sign" exact element={<Sign />} />
+          <Route path="/:category/search" exact element={<SearchMain />} />
+          {/* <Route path="sign" exact element={<Sign />} /> */}
           <Route path="details/:linkid" exact element={<LinkDetails />} />
           <Route exact element={<PrivateRouter />}>
             <Route path="saved" exact element={<BookmarkMain />} />
@@ -105,8 +105,8 @@ const App = () => {
           {/* #########################################  
                       AUTHENTICATION  
         ############################################# */}
-          <Route exact path="/signin" element={<SignIn />} />
-          <Route exact path="/signup" element={<SignUp />} />
+          <Route exact path="/signin" element={<Sign />} />
+          <Route exact path="/signup" element={<Sign />} />
           <Route path="/forgot-password" exact element={<ForgotPassword />} />
 
           {/* ######################################   

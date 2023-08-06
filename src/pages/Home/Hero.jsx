@@ -1,7 +1,7 @@
 import Search from "../../components/Search";
 // import { useNavigate } from "react-router-dom";
 
-const Hero = ({ setToggleFilter, getToggleFilter }) => {
+const Hero = () => {
   // const navigate = useNavigate();
   // const handleSubmit = (e) => {
   //   e.preventDefault();
@@ -37,10 +37,7 @@ const Hero = ({ setToggleFilter, getToggleFilter }) => {
         </div>
 
         <div class="relative h-48 px-10 -mt-28 lg:h-64">
-          <Search
-            setToggleFilter={setToggleFilter}
-            getToggleFilter={getToggleFilter}
-          />
+          <Search />
         </div>
       </div>
     </>

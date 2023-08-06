@@ -5,8 +5,6 @@ import Cookies from "js-cookie";
 import PrivateRouter from "./utils/PrivateRouter";
 import ScrollToTop from "./utils/ScrollToTop";
 // Authentication Routes
-import SignUp from "./pages/Authentication/SignUp";
-import SignIn from "./pages/Authentication/SignIn";
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 // Home Pgage Routes
 import HomeMain from "./pages/Home/HomeMain";
@@ -50,9 +48,9 @@ const App = () => {
             exact
             element={<HomeMain cand={candidateIsAuthorized} />}
           />
-          <Route path="link" exact element={<LinkMain />} />
-          <Route path="/:category/search" exact element={<SearchMain />} />
-          {/* <Route path="sign" exact element={<Sign />} /> */}
+          <Route path="/:category?" element={<HomeMain />} />
+          <Route path="/link" exact element={<LinkMain />} />
+          <Route path="/search" exact element={<SearchMain />} />
           <Route path="details/:linkid" exact element={<LinkDetails />} />
           <Route exact element={<PrivateRouter />}>
             <Route path="saved" exact element={<BookmarkMain />} />
@@ -105,8 +103,6 @@ const App = () => {
           {/* #########################################  
                       AUTHENTICATION  
         ############################################# */}
-          <Route exact path="/signin" element={<Sign />} />
-          <Route exact path="/signup" element={<Sign />} />
           <Route path="/forgot-password" exact element={<ForgotPassword />} />
 
           {/* ######################################   

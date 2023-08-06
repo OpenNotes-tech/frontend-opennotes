@@ -77,10 +77,12 @@ const Sign = () => {
           setTimeout(() => {
             location.state?.from
               ? navigate(location.state.from)
-              : navigate("/job");
+              : navigate("/");
+            handleAuthModalToggle();
           }, 2000);
         })
         .catch((error) => {
+          console.log(error?.response);
           dispatch(
             setError({
               message: error?.response?.data?.message,
@@ -105,12 +107,14 @@ const Sign = () => {
           dispatch(
             setError({ message: "Logged In Successfully!", type: "success" })
           );
+          console.log("sdfsfds");
           setLoad(false);
           // Redirect to main page after 3 seconds
           setTimeout(() => {
             location.state?.from
               ? navigate(location.state.from)
-              : navigate("/job");
+              : navigate("/");
+            handleAuthModalToggle();
           }, 2000);
         })
         .catch((error) => {
@@ -270,6 +274,7 @@ const Sign = () => {
                     </div>
                     <div className="relative h-10 w-full min-w-[200px]">
                       <button
+                        type="button"
                         onClick={togglePasswordVisibility2}
                         className="absolute top-2/4 right-3 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500"
                       >
@@ -324,6 +329,7 @@ const Sign = () => {
                     </div>
                     <div className="relative h-10 w-full min-w-[200px]">
                       <button
+                        type="button"
                         onClick={togglePasswordVisibility3}
                         className="absolute top-2/4 right-3 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500"
                       >
@@ -395,6 +401,7 @@ const Sign = () => {
                     </div>
                     <div className="relative h-10 w-full min-w-[200px]">
                       <button
+                        type="button"
                         onClick={togglePasswordVisibility1}
                         className="absolute top-2/4 right-3 grid h-5 w-5 -translate-y-2/4 place-items-center text-blue-gray-500"
                       >

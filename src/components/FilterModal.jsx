@@ -29,10 +29,6 @@ export const FilterModal = ({ setToggleFilter }) => {
   const handleSkillsSelector = (selectedSkills) => {
     const selectedValues = selectedSkills.map((option) => option.value);
     setSkillsSelector(selectedSkills);
-    const commaSeparatedString = selectedValues.join(",");
-    localStorage.setItem("Skills", commaSeparatedString);
-
-    dispatch(setTags(commaSeparatedString)); // this adds data to redux
   };
 
   useEffect(() => {
@@ -56,6 +52,18 @@ export const FilterModal = ({ setToggleFilter }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Get the comma-separated string for tags and categories
+    const commaSeparatedTags = getSkillsSelector
+      .map((option) => option.value)
+      .join(",");
+    const commaSeparatedCategories = getLocationSelector
+      .map((option) => option.value)
+      .join(",");
+
+    // Dispatch the actions with the comma-separated strings
+    dispatch(setTags(commaSeparatedTags));
+    dispatch(setCategoryOption(commaSeparatedCategories));
+
     SearchAPI.linkSearch(query, sort, category, tags)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
@@ -68,6 +76,12 @@ export const FilterModal = ({ setToggleFilter }) => {
       .finally((e) => {
         dispatch(setLoading(false));
       });
+  };
+
+  const handleCancel = () => {
+    setSkillsSelector([]); // Clear selected skills
+    setLocationSelector([]); // Clear selected locations
+    setToggleFilter(false); // Close the modal
   };
 
   return (
@@ -115,7 +129,7 @@ export const FilterModal = ({ setToggleFilter }) => {
             <div className="flex items-center flex-row space-x-4 md:justify-end rounded-b border-t border-solid border-slate-200 py-4  justify-center md:py-4 px-6">
               <button
                 type="button"
-                onClick={() => setToggleFilter(false)}
+                onClick={handleCancel}
                 className="transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black px-8 md:px-8 py-2 md:py-2 text-center font-medium text-black hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700"
               >
                 Cancel

@@ -1,11 +1,56 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  setCategoryOption,
+  setTags,
+  setSearchResult,
+} from "../../store/features/searchSlice";
+import { setLoading, setError } from "../../store/features/errorSlice";
+import { useDispatch, useSelector } from "react-redux";
+import SearchAPI from "../../utils/SearchAPI";
 
 const SearchHero = () => {
+  const { query, sort, category, tags } = useSelector((state) => state.Search);
   const [isOpen, setIsOpen] = useState(false);
-
+  const dispatch = useDispatch();
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);
+  };
+
+  const handleTagsSubmit = (e) => {
+    e.preventDefault();
+    dispatch(setTags(isOpen));
+
+    SearchAPI.linkSearch(query, sort, category, tags)
+      .then((res) => {
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        dispatch(setError(error?.response?.data?.message));
+        dispatch(setLoading(false));
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
+  };
+
+  const handleCategorySubmit = (e) => {
+    e.preventDefault();
+    dispatch(setCategoryOption(e.target.value));
+
+    SearchAPI.linkSearch(query, sort, category, tags)
+      .then((res) => {
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        dispatch(setError(error?.response?.data?.message));
+        dispatch(setLoading(false));
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
   };
   return (
     <>

@@ -4,6 +4,7 @@ import { setLoading, setError } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LinkCard from "./LinkCard";
 import {
+  setSortOption,
   setCategoryOption,
   setTags,
   setSearchResult,
@@ -52,6 +53,7 @@ const LinkMain = () => {
 
   const handleTagsSubmit = (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
     dispatch(setTags(isOpen));
 
     SearchAPI.linkSearch(query, sort, category, tags)
@@ -70,7 +72,8 @@ const LinkMain = () => {
 
   const handleCategorySubmit = (e) => {
     e.preventDefault();
-    dispatch(setCategoryOption(e.target.value))
+    dispatch(setLoading(true));
+    dispatch(setCategoryOption(e.target.value));
 
     SearchAPI.linkSearch(query, sort, category, tags)
       .then((res) => {
@@ -86,13 +89,19 @@ const LinkMain = () => {
       });
   };
 
+  const handleSortChange = (result) => {
+    dispatch(setSortOption(result));
+  };
+
   return (
     <div className="container px-4 lg:px-0 mx-auto">
       <div className="flex flex-col px-12 py-10 space-y-10">
         <div className="flex flex-row space-x-4 justify-center">
-          <button
-            onClick={handleCategorySubmit}
-            className="px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2"
+          <Link
+            to={"/"}
+            className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+              name === "" && "bg-blue-100 text-blue-500"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -110,10 +119,12 @@ const LinkMain = () => {
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
             <p>Home</p>
-          </button>
-          <button
-            onClick={handleCategorySubmit}
-            className="px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2"
+          </Link>
+          <Link
+            to={"/frontend"}
+            className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+              name === "frontend" && "bg-blue-100 text-blue-500"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -134,10 +145,12 @@ const LinkMain = () => {
               <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
             </svg>{" "}
             <p>Frontend</p>
-          </button>
-          <button
-            onClick={handleCategorySubmit}
-            className="px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2"
+          </Link>
+          <Link
+            to={"/backend"}
+            className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+              name === "backend" && "bg-blue-100 text-blue-500"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -157,10 +170,12 @@ const LinkMain = () => {
               <line x1="6" x2="6.01" y1="18" y2="18" />
             </svg>{" "}
             <p>Backend</p>
-          </button>
-          <button
-            onClick={handleCategorySubmit}
-            className="px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2"
+          </Link>
+          <Link
+            to={"/mobile"}
+            className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+              name === "mobile" && "bg-blue-100 text-blue-500"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -178,10 +193,12 @@ const LinkMain = () => {
               <path d="M12 18h.01" />
             </svg>{" "}
             <p>Mobile</p>
-          </button>
-          <button
-            onClick={handleCategorySubmit}
-            className="px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2"
+          </Link>
+          <Link
+            to={"/courses"}
+            className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+              name === "courses" && "bg-blue-100 text-blue-500"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -199,10 +216,12 @@ const LinkMain = () => {
               <path d="M6 12v5c3 3 9 3 12 0v-5" />
             </svg>{" "}
             <p>Courses</p>
-          </button>
-          <button
-            onClick={handleCategorySubmit}
-            className="px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2"
+          </Link>
+          <Link
+            to={"/artificialintelligence"}
+            className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+              name === "artificialintelligence" && "bg-blue-100 text-blue-500"
+            }`}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -214,15 +233,20 @@ const LinkMain = () => {
               stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-newspaper"
+              class="lucide lucide-brain-circuit"
             >
-              <path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
-              <path d="M18 14h-8" />
-              <path d="M15 18h-5" />
-              <path d="M10 6h8v4h-8V6Z" />
+              <path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08 2.5 2.5 0 0 0 4.91.05L12 20V4.5Z" />
+              <path d="M16 8V5c0-1.1.9-2 2-2" />
+              <path d="M12 13h4" />
+              <path d="M12 18h6a2 2 0 0 1 2 2v1" />
+              <path d="M12 8h8" />
+              <path d="M20.5 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+              <path d="M16.5 13a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+              <path d="M20.5 21a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
+              <path d="M18.5 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
             </svg>{" "}
-            <p>Blogs</p>
-          </button>
+            <p>Data Science</p>
+          </Link>
         </div>
         <div className=" flex flex-col space-y-10">
           <div className="flex justify-between">
@@ -355,42 +379,42 @@ const LinkMain = () => {
                 >
                   <div className="divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
                     <div className="space-y-1 p-2">
-                      <Link
+                      <button
                         role="menuitem"
-                        to="/profile"
+                        onClick={() => handleSortChange("trending")}
                         className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Trending</span>
                         </div>
-                      </Link>
-                      <Link
+                      </button>
+                      <button
                         role="menuitem"
-                        to="/profile"
+                        onClick={() => handleSortChange("favorite")}
                         className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Favorite</span>
                         </div>
-                      </Link>
-                      <Link
+                      </button>
+                      <button
                         role="menuitem"
-                        to="/profile"
+                        onClick={() => handleSortChange("latest")}
                         className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Latest</span>
                         </div>
-                      </Link>
-                      <Link
+                      </button>
+                      <button
                         role="menuitem"
-                        to="/profile"
+                        onClick={() => handleSortChange("oldest")}
                         className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Oldest</span>
                         </div>
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>

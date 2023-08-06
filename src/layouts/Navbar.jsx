@@ -1,6 +1,6 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { logout } from "../store/features/editProfileSlice";
 import { openModal } from "../store/features/userAuthSlice";
@@ -10,27 +10,25 @@ import Sign from "../pages/Authentication/Sign";
 import Search from "../components/Search";
 import UserReport from "../components/UserReport";
 
-const Navbar = ({
-  setIsSidebarOpen,
-  isSidebarOpen,
-  loading,
-  getError,
-  setIsAuthModalOpen,
-}) => {
+const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
+  const errorMessage = useSelector((state) => state.Error.errorMessage);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
 
   const location = useLocation();
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const name = location.pathname.split("/")[1].toLowerCase();
   const path = "candidates"; // User part only has candidates,
-  const route = "/signin"; // User part only has candidates,
   const cook = "logged_in_candidate"; // User part only has candidates,
   const reduxData = logout(); // User part only has candidates,
 
   const refProfile = useRef();
   const refMenu = useRef();
+  const modalRef = useRef();
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const [isReportOpen, setIsReportOpen] = useState(false);
 
   const handleClickOutside = (toggleState, ref, setToggleState) => {
     const handleClick = (e) => {
@@ -57,7 +55,7 @@ const Navbar = ({
     dispatch(reduxData);
     Request.logout(path);
     Cookies.remove(cook);
-    navigate(route, { replace: true });
+    dispatch(openModal());
   };
 
   const handleAuthModalToggle = () => {
@@ -81,9 +79,20 @@ const Navbar = ({
     };
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLangOpen, setIsLangOpen] = useState(false);
-  const [isReportOpen, setIsReportOpen] = useState(false);
+  // Close the modal when the user clicks outside of it
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (e.target === modalRef.current) {
+        setIsOpen(false);
+      }
+    };
+    if (isOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isOpen]);
 
   const toggleReport = () => {
     setIsReportOpen((prevState) => !prevState);
@@ -183,6 +192,7 @@ const Navbar = ({
             </button>
             {isOpen && (
               <div
+                ref={modalRef}
                 id="dropdown"
                 className="mt-[520px] absolute right-[300px] z-10 bg-white divide-y divide-gray-100 rounded-lg w-[840px] shadow-2xl"
               >
@@ -817,6 +827,7 @@ const Navbar = ({
           </div>
           <div>
             <button
+              onClick={handleAuthModalToggle}
               className={`font-semibold text-base transition duration-300 ease-in-out px-4 py-[8px] text-center rounded-full focus:outline-none  ${
                 scrolled || name === "search"
                   ? "text-slate-600 hover:bg-slate-100"
@@ -828,6 +839,7 @@ const Navbar = ({
           </div>
           <div>
             <button
+              onClick={handleAuthModalToggle}
               className={`font-semibold text-base transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 px-4 py-[8px] text-center rounded-full focus:outline-none  ${
                 scrolled || name === "search"
                   ? "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
@@ -1060,7 +1072,7 @@ const Navbar = ({
         </div>
       </nav>
 
-      {getError && (
+      {errorMessage && (
         <div
           id="alert-border-2"
           className="sticky  top-14 flex p-4 mb-4 z-90 text-red-900 border-t-4  border-red-300 bg-red-50 "
@@ -1078,7 +1090,7 @@ const Navbar = ({
               clipRule="evenodd"
             ></path>
           </svg>
-          <div className="ml-3 text-sm font-medium">{getError}</div>
+          <div className="ml-3 text-sm font-medium">{errorMessage}</div>
           <button
             type="button"
             className="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 "

@@ -1,17 +1,51 @@
+import { useEffect, useRef } from "react";
+import { setError, setLoading } from "../store/features/errorSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { closeReportModal } from "../store/features/modalSlice";
+import Loader from "./Loader";
 const UserReport = () => {
+  const isReportModalOpen = useSelector(
+    (state) => state.Modal.isReportModalOpen
+  );
+  const loading = useSelector((state) => state.Error.loading);
+  const dispatch = useDispatch();
+  const modalRef = useRef();
+
+  // Close the modal when the user clicks outside of it
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (e.target === modalRef.current) {
+        dispatch(closeReportModal());
+      }
+    };
+    if (isReportModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [dispatch, isReportModalOpen]);
+
+  const handleAuthModalToggle = () => {
+    dispatch(closeReportModal());
+  };
+
   return (
     <div
       data-dialog-backdrop="sign-in-dialog"
       data-dialog-backdrop-close="true"
+      ref={modalRef}
       class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
     >
+      {loading && <Loader />}
       <div
         data-dialog="sign-in-dialog"
         class="relative mx-auto flex w-full max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
       >
         <button
           aria-label="Close panel"
-          class="fixed z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md  right-[510px] bottom-[504px]"
+          onClick={handleAuthModalToggle}
+          class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[465px] -top-3"
         >
           <svg
             stroke="currentColor"
@@ -138,6 +172,7 @@ const UserReport = () => {
           <div className="flex items-center flex-row space-x-4 md:justify-end rounded-b border-t border-solid border-slate-200  justify-center  px-6">
             <button
               type="button"
+              onClick={handleAuthModalToggle}
               className="transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black px-8 md:px-8 py-2 md:py-2 text-center font-medium text-black hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700"
             >
               Cancel

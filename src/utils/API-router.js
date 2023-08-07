@@ -12,16 +12,19 @@ class Request {
     return http.get(`/api/v1/user/logout`);
   }
   forgotPassword() {
-    return http.post(`/api/v1/user/forgotPassword`);
+    return http.post(`/api/v1/user/forgot-password`);
   }
   resetPassword() {
-    return http.post(`/api/v1/user/resetPassword/:token`);
+    return http.post(`/api/v1/user/reset-password/:token`);
   }
   googleLogin(data) {
     return http.post(`/api/v1/user/google-login`, data);
   }
-  facebookLogin(data) {
-    return http.post(`/api/v1/user/facebook-login`, data);
+  twitterLogin(data) {
+    return http.post(`/api/v1/user/twitter-login`, data);
+  }
+  githubLogin(data) {
+    return http.post(`/api/v1/user/github-login`, data);
   }
 
   //     ######  Profile   ########

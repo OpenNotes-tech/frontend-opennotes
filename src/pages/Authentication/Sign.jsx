@@ -1,7 +1,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { closeModal } from "../../store/features/userAuthSlice";
+import { closeAuthModal } from "../../store/features/modalSlice";
 import { login, signup } from "../../store/features/editProfileSlice";
-import { setError } from "../../store/features/errorSlice";
+import { setError, setLoading } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import Loader from "../../components/Loader";
@@ -10,7 +10,8 @@ import Cookies from "js-cookie";
 import Google from "./Google";
 
 const Sign = () => {
-  const isModalOpen = useSelector((state) => state.userAuth.isModalOpen);
+  const isAuthModalOpen = useSelector((state) => state.Modal.isAuthModalOpen);
+  const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,7 +21,6 @@ const Sign = () => {
   const [passwordVisible2, setPasswordVisible2] = useState(false);
   const [passwordVisible3, setPasswordVisible3] = useState(false);
   const [isAuthSliderOpen, setIsAuthSliderOpen] = useState(true);
-  const [getLoad, setLoad] = useState(false);
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -39,7 +39,7 @@ const Sign = () => {
   };
 
   const handleAuthModalToggle = () => {
-    dispatch(closeModal());
+    dispatch(closeAuthModal());
     navigate(location.pathname);
   };
 
@@ -52,7 +52,7 @@ const Sign = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    setLoad(true);
+    dispatch(setLoading(true));
 
     if (isAuthSliderOpen) {
       Request.signup(formData)
@@ -72,7 +72,7 @@ const Sign = () => {
           dispatch(
             setError({ message: "Signed Up Successfully!", type: "success" })
           );
-          setLoad(false);
+          dispatch(setLoading(false));
           // Redirect to main page after 3 seconds
           setTimeout(() => {
             location.state?.from
@@ -90,10 +90,10 @@ const Sign = () => {
             })
           );
 
-          setLoad(false);
+          dispatch(setLoading(false));
         })
         .finally((e) => {
-          setLoad(false);
+          dispatch(setLoading(false));
         });
     } else {
       Request.login(formData)
@@ -108,7 +108,7 @@ const Sign = () => {
             setError({ message: "Logged In Successfully!", type: "success" })
           );
           console.log("sdfsfds");
-          setLoad(false);
+          dispatch(setLoading(false));
           // Redirect to main page after 3 seconds
           setTimeout(() => {
             location.state?.from
@@ -124,10 +124,10 @@ const Sign = () => {
               type: "error",
             })
           );
-          setLoad(false);
+          dispatch(setLoading(false));
         })
         .finally((e) => {
-          setLoad(false);
+          dispatch(setLoading(false));
         });
     }
   };
@@ -136,35 +136,35 @@ const Sign = () => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (e.target === modalRef.current) {
-        dispatch(closeModal());
+        dispatch(closeAuthModal());
       }
     };
-    if (isModalOpen) {
+    if (isAuthModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
     }
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [dispatch, isModalOpen]);
+  }, [dispatch, isAuthModalOpen]);
 
   return (
     <>
-      {isModalOpen && (
+      {isAuthModalOpen && (
         <div
           data-dialog-backdrop="sign-in-dialog"
           data-dialog-backdrop-close="true"
           ref={modalRef}
-          class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
+          class="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
         >
           <div
             data-dialog="sign-in-dialog"
             class="relative mx-auto flex w-full max-w-[26rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
           >
-            {getLoad && <Loader />}
+            {loading && <Loader />}
             <button
               aria-label="Close panel"
               onClick={handleAuthModalToggle}
-              class="fixed z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md  right-[540px] bottom-[595px]"
+              class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[405px] -top-3"
             >
               <svg
                 stroke="currentColor"

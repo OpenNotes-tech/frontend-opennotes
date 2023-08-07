@@ -4,6 +4,7 @@ import userAuthSlice from "./features/userAuthSlice";
 import editLinkSlice from "./features/editLinkSlice";
 import errorSlice from "./features/errorSlice";
 import searchSlice from "./features/searchSlice";
+import modalSlice from "./features/modalSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     userAuth: userAuthSlice,
     Error: errorSlice,
     Search: searchSlice,
+    Modal: modalSlice,
   },
   devTools: true,
 });

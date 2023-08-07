@@ -6,8 +6,9 @@ import { gapi } from "gapi-script";
 import Cookies from "js-cookie";
 import { login } from "../../store/features/editProfileSlice";
 import Request from "../../utils/API-router";
+import { setError, setLoading } from "../../store/features/errorSlice";
 
-const Google = ({ setError, setLoad }) => {
+const Google = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
@@ -24,7 +25,7 @@ const Google = ({ setError, setLoad }) => {
   }, []);
 
   const responseGoogle = (response) => {
-    setLoad(true);
+    dispatch(setLoading(true));
     Request.googleLogin({ idToken: response.tokenId })
       .then((res) => {
         console.log(res);
@@ -35,8 +36,8 @@ const Google = ({ setError, setLoad }) => {
 
         dispatch(login(res?.data?.user));
 
-        setLoad(false);
-        setError("Successfully signed up!");
+        dispatch(setLoading(false));
+        dispatch(setError("Successfully signed up!"));
         setTimeout(() => {
           location.state?.from
             ? navigate(location.state.from)
@@ -44,8 +45,8 @@ const Google = ({ setError, setLoad }) => {
         }, 2000);
       })
       .catch((error) => {
-        setError(error.response?.message);
-        setLoad(false);
+        dispatch(setError(error.response?.message));
+        dispatch(setLoading(false));
       });
   };
 

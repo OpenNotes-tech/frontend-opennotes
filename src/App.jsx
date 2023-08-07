@@ -30,7 +30,6 @@ import NotFound from "./pages/Static/NotFound";
 import About from "./pages/Static/About";
 import Contacts from "./pages/Static/Contacts";
 import Policy from "./pages/Static/Policy";
-import Sign from "./pages/Authentication/Sign";
 import SearchMain from "./pages/Search/SearchMain";
 
 const App = () => {

@@ -375,46 +375,54 @@ const LinkMain = () => {
               {isOpen && (
                 <div
                   id="dropdown"
-                  className="mt-72 absolute origin-bottom-right z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 shadow-2xl"
+                  className="mt-64 absolute origin-bottom-right z-10 bg-white divide-y divide-gray-100 rounded-lg w-44 shadow-2xl"
                 >
                   <div className="divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
-                    <div className="space-y-1 p-2">
-                      <button
+                    <div className="space-y-1 p-2 flex flex-col justify-center">
+                      <Link
                         role="menuitem"
                         onClick={() => handleSortChange("trending")}
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className={` flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
+                          sort === "trending" && "bg-blue-100 text-blue-500"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Trending</span>
                         </div>
-                      </button>
-                      <button
+                      </Link>
+                      <Link
                         role="menuitem"
                         onClick={() => handleSortChange("favorite")}
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
+                          sort === "favorite" && "bg-blue-100 text-blue-500"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Favorite</span>
                         </div>
-                      </button>
-                      <button
+                      </Link>
+                      <Link
                         role="menuitem"
                         onClick={() => handleSortChange("latest")}
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
+                          sort === "latest" && "bg-blue-100 text-blue-500"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Latest</span>
                         </div>
-                      </button>
-                      <button
+                      </Link>
+                      <Link
                         role="menuitem"
                         onClick={() => handleSortChange("oldest")}
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
+                          sort === "oldest" && "bg-blue-100 text-blue-500"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Oldest</span>
                         </div>
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>

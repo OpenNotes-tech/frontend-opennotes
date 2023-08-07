@@ -3,32 +3,36 @@ import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
 import { logout } from "../store/features/editProfileSlice";
-import { openModal } from "../store/features/userAuthSlice";
+import {
+  openAuthModal,
+  openReportModal,
+  openLangModal,
+} from "../store/features/modalSlice";
 import Request from "../utils/API-router";
 import Loader from "../components/Loader";
 import Sign from "../pages/Authentication/Sign";
 import Search from "../components/Search";
 import UserReport from "../components/UserReport";
+import LangModal from "../components/LangModal";
 
 const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
   const errorMessage = useSelector((state) => state.Error.errorMessage);
+  const { isReportModalOpen, isLangModalOpen } = useSelector(
+    (state) => state.Modal
+  );
+
+  const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const location = useLocation();
   const dispatch = useDispatch();
   const name = location.pathname.split("/")[1].toLowerCase();
-  const path = "candidates"; // User part only has candidates,
-  const cook = "logged_in_candidate"; // User part only has candidates,
-  const reduxData = logout(); // User part only has candidates,
 
   const refProfile = useRef();
   const refMenu = useRef();
   const modalRef = useRef();
-
-  const [isOpen, setIsOpen] = useState(false);
-  const [isLangOpen, setIsLangOpen] = useState(false);
-  const [isReportOpen, setIsReportOpen] = useState(false);
 
   const handleClickOutside = (toggleState, ref, setToggleState) => {
     const handleClick = (e) => {
@@ -51,18 +55,21 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
     [toggleMenu]
   );
 
+  useEffect(
+    () => handleClickOutside(toggleExplore, modalRef, setToggleExplore),
+    [toggleExplore]
+  );
+
   const Logout = () => {
-    dispatch(reduxData);
-    Request.logout(path);
-    Cookies.remove(cook);
-    dispatch(openModal());
+    dispatch(logout());
+    Request.logout();
+    Cookies.remove("logged_in_candidate");
+    dispatch(openAuthModal());
   };
 
   const handleAuthModalToggle = () => {
-    dispatch(openModal());
+    dispatch(openAuthModal());
   };
-
-  const [scrolled, setScrolled] = useState(false);
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -79,30 +86,12 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
     };
   }, []);
 
-  // Close the modal when the user clicks outside of it
-  useEffect(() => {
-    const handleOutsideClick = (e) => {
-      if (e.target === modalRef.current) {
-        setIsOpen(false);
-      }
-    };
-    if (isOpen) {
-      document.addEventListener("mousedown", handleOutsideClick);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleOutsideClick);
-    };
-  }, [isOpen]);
-
   const toggleReport = () => {
-    setIsReportOpen((prevState) => !prevState);
-  };
-  const toggleDropdown = () => {
-    setIsOpen((prevState) => !prevState);
+    dispatch(openReportModal());
   };
 
   const toggleLanguage = () => {
-    setIsLangOpen((prevState) => !prevState);
+    dispatch(openLangModal());
   };
 
   return (
@@ -163,7 +152,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
           <div className="flex flex-row items-center space-x-6">
             <button
               type="button"
-              onClick={toggleDropdown}
+              onClick={() => setToggleExplore((oldState) => !oldState)}
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
               className={`raletive inline-flex items-center  font-semibold text-base transition duration-300 ease-in-out  px-4 py-[8px] text-center rounded-full focus:outline-none  ${
@@ -184,13 +173,13 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 className={`lucide lucide-chevron-down ml-2.5 ${
-                  isOpen ? "transform rotate-180" : ""
+                  toggleExplore ? "transform rotate-180" : ""
                 }`}
               >
                 <path d="m6 9 6 6 6-6" />
               </svg>
             </button>
-            {isOpen && (
+            {toggleExplore && (
               <div
                 ref={modalRef}
                 id="dropdown"
@@ -520,7 +509,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                           <span>Report</span>
                         </div>
                       </button>
-                      {isReportOpen && <UserReport />}
+                      {isReportModalOpen && <UserReport />}
                       <Link
                         role="menuitem"
                         to="/profile"
@@ -547,189 +536,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                           <span>English - EN</span>
                         </div>
                       </button>
-                      {isLangOpen && (
-                        <div
-                          data-dialog-backdrop="sign-in-dialog"
-                          data-dialog-backdrop-close="true"
-                          class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
-                        >
-                          <div
-                            data-dialog="sign-in-dialog"
-                            class="relative mx-auto flex w-full max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
-                          >
-                            <button
-                              aria-label="Close panel"
-                              onClick={toggleLanguage}
-                              class="fixed z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md  right-[510px] bottom-[504px]"
-                            >
-                              <svg
-                                stroke="currentColor"
-                                fill="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                class="text-xl"
-                                height="1em"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"></path>
-                              </svg>
-                            </button>
-                            <div className="flex flex-row justify-center mt-5 -mb-3">
-                              <h3
-                                class="text-base font-semibold text-neutral-900 lg:text-2xl capital font-serif"
-                                id="headlessui-dialog-title-38"
-                              >
-                                Languages
-                              </h3>
-                            </div>
-                            <div className="flex flex-col justify-center items-center">
-                              <div className="grid grid-cols-2 py-10">
-                                <div className="flex flex-col space-y-2">
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/us.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>English - EN</span>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className="flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/es.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>Español - ES</span>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/de.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>Deutsch - DE</span>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/il.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>עברית - HE</span>
-                                    </div>
-                                  </Link>
-                                </div>
-                                <div className="flex flex-col space-y-2">
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/cn.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>中国人 - ZH</span>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/fr.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>Français - FR</span>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/ru.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>Русский - RU</span>
-                                    </div>
-                                  </Link>
-                                  <Link
-                                    role="menuitem"
-                                    to="/profile"
-                                    className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                                  >
-                                    <div className="flex flex-none items-center space-x-2">
-                                      <img
-                                        className="h-5 w-5"
-                                        src={
-                                          require("../assets/images/sa.svg")
-                                            .default
-                                        }
-                                        alt=""
-                                      />
-                                      <span>عربى - AR</span>
-                                    </div>
-                                  </Link>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
+                      {isLangModalOpen && <LangModal />}
                     </div>
                   </div>
                   <div className="py-5 px-10 text-slate-700">
@@ -1011,7 +818,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                   </div>
                   <div className="space-y-1 p-2">
                     <div>
-                      {Cookies.get(cook) === "yes" ? (
+                      {Cookies.get("logged_in_candidate") === "yes" ? (
                         <button
                           onClick={Logout}
                           type="submit"

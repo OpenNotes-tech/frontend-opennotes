@@ -23,11 +23,25 @@ const Search = ({ nav }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name) {
-      navigate("search");
+    if (name !== "search") {
+      SearchAPI.linkSearch(query, sort, category, tags)
+        .then((res) => {
+          console.log(res);
+          dispatch(setSearchResult(res.data.data.body));
+          dispatch(setLoading(false));
+        })
+        .catch((error) => {
+          dispatch(setError(error?.response?.data?.message));
+          dispatch(setLoading(false));
+        })
+        .finally((e) => {
+          dispatch(setLoading(false));
+        });
+      navigate("/search");
     } else {
       SearchAPI.linkSearch(query, sort, category, tags)
         .then((res) => {
+          console.log(res);
           dispatch(setSearchResult(res.data.data.body));
           dispatch(setLoading(false));
         })
@@ -119,7 +133,7 @@ const Search = ({ nav }) => {
       </div>
       {getToggleFilter ? (
         <>
-          <FilterModal setToggleFilter={setToggleFilter} />
+          <FilterModal setToggleFilter={setToggleFilter} getToggleFilter={getToggleFilter} />
         </>
       ) : null}
     </>

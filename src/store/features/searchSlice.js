@@ -7,7 +7,7 @@ const searchSlice = createSlice({
     query: "",
     sort: "",
     category: "",
-    tags: [],
+    tags: "",
     result: [],
   },
   reducers: {
@@ -24,7 +24,7 @@ const searchSlice = createSlice({
       state.result = action.payload;
     },
     setTags(state, action) {
-      state.result = action.payload;
+      state.tags = action.payload;
     },
   },
 });

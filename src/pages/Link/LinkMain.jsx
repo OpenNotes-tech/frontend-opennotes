@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { setLoading, setError } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LinkCard from "./LinkCard";
@@ -13,11 +13,14 @@ import {
 import LoaderSkeleton from "../../components/LoaderSkeleton";
 import IconNoResult from "../../components/IconNoResult";
 import SearchAPI from "../../utils/SearchAPI";
+import Loader from "../../components/Loader";
 
 const LinkMain = () => {
   const { query, sort, category, tags } = useSelector((state) => state.Search);
+  const loading = useSelector((state) => state.Error.loading);
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const name = location.pathname.split("/")[1]?.toLowerCase();
   const [getLoad] = useState(false);
   const [linkResults] = useState([
@@ -70,13 +73,16 @@ const LinkMain = () => {
       });
   };
 
-  const handleCategorySubmit = (e) => {
+  const handleCategorySubmit = (e, navLink) => {
     e.preventDefault();
+    navigate(navLink);
     dispatch(setLoading(true));
-    dispatch(setCategoryOption(e.target.value));
+    dispatch(setCategoryOption(navLink.substring(1)));
+    console.log(navLink.substring(1));
 
-    SearchAPI.linkSearch(query, sort, category, tags)
+    SearchAPI.linkSearch(query, sort, navLink.substring(1), tags)
       .then((res) => {
+        console.log(res);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
       })
@@ -95,10 +101,11 @@ const LinkMain = () => {
 
   return (
     <div className="container px-4 lg:px-0 mx-auto">
+      {loading && <Loader />}
       <div className="flex flex-col px-12 py-10 space-y-10">
         <div className="flex flex-row space-x-4 justify-center">
-          <Link
-            to={"/"}
+          <button
+            onClick={(e) => handleCategorySubmit(e, "/")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
               name === "" && "bg-blue-100 text-blue-500"
             }`}
@@ -119,9 +126,9 @@ const LinkMain = () => {
               <polyline points="9 22 9 12 15 12 15 22" />
             </svg>
             <p>Home</p>
-          </Link>
-          <Link
-            to={"/frontend"}
+          </button>
+          <button
+            onClick={(e) => handleCategorySubmit(e, "/frontend")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
               name === "frontend" && "bg-blue-100 text-blue-500"
             }`}
@@ -145,9 +152,9 @@ const LinkMain = () => {
               <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
             </svg>{" "}
             <p>Frontend</p>
-          </Link>
-          <Link
-            to={"/backend"}
+          </button>
+          <button
+            onClick={(e) => handleCategorySubmit(e, "/backend")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
               name === "backend" && "bg-blue-100 text-blue-500"
             }`}
@@ -170,9 +177,9 @@ const LinkMain = () => {
               <line x1="6" x2="6.01" y1="18" y2="18" />
             </svg>{" "}
             <p>Backend</p>
-          </Link>
-          <Link
-            to={"/mobile"}
+          </button>
+          <button
+            onClick={(e) => handleCategorySubmit(e, "/mobile")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
               name === "mobile" && "bg-blue-100 text-blue-500"
             }`}
@@ -193,9 +200,9 @@ const LinkMain = () => {
               <path d="M12 18h.01" />
             </svg>{" "}
             <p>Mobile</p>
-          </Link>
-          <Link
-            to={"/courses"}
+          </button>
+          <button
+            onClick={(e) => handleCategorySubmit(e, "/courses")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
               name === "courses" && "bg-blue-100 text-blue-500"
             }`}
@@ -216,9 +223,39 @@ const LinkMain = () => {
               <path d="M6 12v5c3 3 9 3 12 0v-5" />
             </svg>{" "}
             <p>Courses</p>
-          </Link>
-          <Link
-            to={"/artificialintelligence"}
+          </button>
+          <button
+            onClick={(e) => handleCategorySubmit(e, "/cybersecurity")}
+            className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+              name === "cybersecurity" && "bg-blue-100 text-blue-500"
+            }`}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="lucide lucide-fingerprint"
+            >
+              <path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4" />
+              <path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2" />
+              <path d="M17.29 21.02c.12-.6.43-2.3.5-3.02" />
+              <path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4" />
+              <path d="M8.65 22c.21-.66.45-1.32.57-2" />
+              <path d="M14 13.12c0 2.38 0 6.38-1 8.88" />
+              <path d="M2 16h.01" />
+              <path d="M21.8 16c.2-2 .131-5.354 0-6" />
+              <path d="M9 6.8a6 6 0 0 1 9 5.2c0 .47 0 1.17-.02 2" />
+            </svg>{" "}
+            <p>Cyber Security</p>
+          </button>
+          <button
+            onClick={(e) => handleCategorySubmit(e, "/datascience")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
               name === "artificialintelligence" && "bg-blue-100 text-blue-500"
             }`}
@@ -246,7 +283,7 @@ const LinkMain = () => {
               <path d="M18.5 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
             </svg>{" "}
             <p>Data Science</p>
-          </Link>
+          </button>
         </div>
         <div className=" flex flex-col space-y-10">
           <div className="flex justify-between">

@@ -20,6 +20,7 @@ const Selector = ({
       className={`${className} w-full`}
       classNamePrefix="select"
       defaultValue={defaultValue}
+      // placeholder={'default: All'}
       components={animatedComponents}
     />
   );

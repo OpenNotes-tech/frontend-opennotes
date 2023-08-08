@@ -3,69 +3,44 @@ import {
   setTags,
   setSearchResult,
 } from "../store/features/searchSlice";
-import { SkillsOptions, LocationOptions } from "../constants/FilterData";
+import { SubTopicOptions, CategoryOptions } from "../constants/FilterData";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import SearchAPI from "../utils/SearchAPI";
 import Selector from "./Selector";
+import Loader from "./Loader";
 
-export const FilterModal = ({ setToggleFilter }) => {
+export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
   const { query, sort, category, tags } = useSelector((state) => state.Search);
+  const loading = useSelector((state) => state.Error.loading);
   const [debounceTimeout] = useState(null);
   const [getLocationSelector, setLocationSelector] = useState([]);
   const [getSkillsSelector, setSkillsSelector] = useState([]);
 
   const dispatch = useDispatch();
+  const modalRef = useRef();
 
   const handleLocationSelector = (selectedLocation) => {
     const selectedValues = selectedLocation.map((option) => option.value);
     setLocationSelector(selectedLocation);
     const commaSeparatedString = selectedValues.join(",");
-    localStorage.setItem("Locations", commaSeparatedString);
 
     dispatch(setCategoryOption(commaSeparatedString)); // this is added to redux
   };
   const handleSkillsSelector = (selectedSkills) => {
     const selectedValues = selectedSkills.map((option) => option.value);
     setSkillsSelector(selectedSkills);
+    const commaSeparatedString = selectedValues.join(",");
+    dispatch(setTags(commaSeparatedString));
   };
-
-  useEffect(() => {
-    const savedLocations = localStorage.getItem("Locations");
-    if (savedLocations) {
-      const selectedValues = savedLocations.split(",");
-      const selectedOptions = LocationOptions.filter((option) =>
-        selectedValues.includes(option.value)
-      );
-      setLocationSelector(selectedOptions);
-    }
-  }, []);
-
-  useEffect(() => {
-    return () => {
-      // Clear the timeout when the component unmounts
-      clearTimeout(debounceTimeout);
-    };
-  }, [debounceTimeout]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Get the comma-separated string for tags and categories
-    const commaSeparatedTags = getSkillsSelector
-      .map((option) => option.value)
-      .join(",");
-    const commaSeparatedCategories = getLocationSelector
-      .map((option) => option.value)
-      .join(",");
-
-    // Dispatch the actions with the comma-separated strings
-    dispatch(setTags(commaSeparatedTags));
-    dispatch(setCategoryOption(commaSeparatedCategories));
-
     SearchAPI.linkSearch(query, sort, category, tags)
       .then((res) => {
+        console.log(res);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
       })
@@ -75,6 +50,7 @@ export const FilterModal = ({ setToggleFilter }) => {
       })
       .finally((e) => {
         dispatch(setLoading(false));
+        setToggleFilter(false);
       });
   };
 
@@ -84,9 +60,55 @@ export const FilterModal = ({ setToggleFilter }) => {
     setToggleFilter(false); // Close the modal
   };
 
+  useEffect(() => {
+    if (category) {
+      const selectedValues = category.split(",");
+      const selectedOptions = CategoryOptions.filter((option) =>
+        selectedValues.includes(option.value)
+      );
+      setLocationSelector(selectedOptions);
+    }
+  }, [category]);
+
+  useEffect(() => {
+    if (tags) {
+      const selectedValues = tags.split(",");
+      const selectedOptions = SubTopicOptions.filter((option) =>
+        selectedValues.includes(option.value)
+      );
+      setSkillsSelector(selectedOptions);
+    }
+  }, [tags]);
+
+  useEffect(() => {
+    return () => {
+      // Clear the timeout when the component unmounts
+      clearTimeout(debounceTimeout);
+    };
+  }, [debounceTimeout]);
+
+  // Close the modal when the user clicks outside of it
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (e.target === modalRef.current) {
+        setToggleFilter(false);
+      }
+    };
+    if (getToggleFilter) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [getToggleFilter, setToggleFilter]);
+
   return (
     <>
-      <div className="fixed inset-0 h-screen z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none">
+      <div
+        ref={modalRef}
+        className="fixed inset-0 h-screen z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
+      >
+        {loading && <Loader />}
         <div className="relative mx-auto max-w-2xl w-full">
           {/*content*/}
           <div className="relative flex w-full flex-col  rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
@@ -100,12 +122,12 @@ export const FilterModal = ({ setToggleFilter }) => {
             <div className="grid md:grid-cols-2 h-96 gap-y-10 gap-x-14 px-10 md:px-8 py-4 ">
               <div className="px-10 md:px-0">
                 <div className="text-sm text-slate-800 font-semibold mb-3">
-                  Location
+                  Category
                 </div>
                 <Selector
-                  name="location"
+                  name="category"
                   className="basic-multi-select"
-                  options={LocationOptions}
+                  options={CategoryOptions}
                   isMulti={true}
                   value={getLocationSelector}
                   onChange={handleLocationSelector}
@@ -113,12 +135,12 @@ export const FilterModal = ({ setToggleFilter }) => {
               </div>
               <div className="px-10 md:px-0">
                 <div className="text-sm text-slate-800 font-semibold mb-3">
-                  Skills
+                  Tags
                 </div>
                 <Selector
-                  name="skill"
+                  name="tags"
                   className="basic-multi-select"
-                  options={SkillsOptions}
+                  options={SubTopicOptions}
                   isMulti={true}
                   value={getSkillsSelector}
                   onChange={handleSkillsSelector}

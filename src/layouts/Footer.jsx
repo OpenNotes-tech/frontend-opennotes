@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { openReportModal } from "../store/features/modalSlice";
 import UserReport from "../components/UserReport";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const isReportModalOpen = useSelector(
@@ -64,7 +65,11 @@ const Footer = () => {
             </li>
             <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
             <li className="flex flex-row space-x-4 ">
-              <a href="/">
+              <Link
+                to={"https://instagram.com/"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span className="group">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -83,8 +88,12 @@ const Footer = () => {
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                   </svg>
                 </span>
-              </a>
-              <a href="/">
+              </Link>
+              <Link
+                to={"https://twitter.com"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span className="group">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -101,8 +110,12 @@ const Footer = () => {
                     <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                   </svg>
                 </span>
-              </a>
-              <a href="/">
+              </Link>
+              <Link
+                to={"https://www.linkedin.com"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <span className="group">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -121,8 +134,12 @@ const Footer = () => {
                     <circle cx="4" cy="4" r="2" />
                   </svg>
                 </span>
-              </a>
-              <a href="/">
+              </Link>
+              <Link
+                to={"https://www.buymeacoffee.com"}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -141,7 +158,7 @@ const Footer = () => {
                   <line x1="10" x2="10" y1="2" y2="4" />
                   <line x1="14" x2="14" y1="2" y2="4" />
                 </svg>
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

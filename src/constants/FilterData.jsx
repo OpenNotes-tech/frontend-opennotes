@@ -220,19 +220,31 @@ export const SubTopicOptions = [
   { value: "Product Marketing Manager", label: "Product Marketing Manager" },
   { value: "Social Media Manager", label: "Social Media Manager" },
   { value: "Copywriter", label: "Copywriter" },
-  //   Management
+  //   Backend
   { value: "Management", label: "Management", isDisabled: true },
   { value: "CEO", label: "CEO" },
   { value: "CFO", label: "CFO" },
   { value: "CMO", label: "CMO" },
   { value: "COO", label: "COO" },
   { value: "CTO", label: "CTO" },
-  //   Other Engineering
+  //   Mobile
   { value: "Other Engineering", label: "Other Engineering", isDisabled: true },
   { value: "Hardware Engineer", label: "Hardware Engineer" },
   { value: "Mechanical Engineer", label: "Mechanical Engineer" },
   { value: "Systems Engineer", label: "Systems Engineer" },
-  //   Other
+  //   Algorithms
+  { value: "Other", label: "Other", isDisabled: true },
+  { value: "Business Analyst", label: "Business Analyst" },
+  { value: "Project Manager", label: "Project Manager" },
+  { value: "Attorney", label: "Attorney" },
+  { value: "Data Analyst", label: "Data Analyst" },
+  //   Data Science
+  { value: "Other", label: "Other", isDisabled: true },
+  { value: "Business Analyst", label: "Business Analyst" },
+  { value: "Project Manager", label: "Project Manager" },
+  { value: "Attorney", label: "Attorney" },
+  { value: "Data Analyst", label: "Data Analyst" },
+  //   Cyber Security
   { value: "Other", label: "Other", isDisabled: true },
   { value: "Business Analyst", label: "Business Analyst" },
   { value: "Project Manager", label: "Project Manager" },
@@ -240,14 +252,15 @@ export const SubTopicOptions = [
   { value: "Data Analyst", label: "Data Analyst" },
 ];
 
-export const CurrencyOptions = [
-  { value: "$", label: "All Currencies", isDisabled: true },
-  { value: "$", label: "United State Dollar $" },
-  { value: "₽", label: "Russian Ruble ₽" },
-  { value: "₸", label: "Kazakh Tenge ₸" },
-  { value: "₡", label: "Kyrgyz Som ₡" },
-  { value: "₴", label: "Uzbek Sum ₴" },
-  { value: "¢", label: "Tajik Somoni ¢" },
+export const CategoryOptions = [
+  { value: "All", label: "All Category" },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Mobile", label: "Mobile" },
+  { value: "Artifical Intelligence", label: "Artifical Intelligence" },
+  { value: "Algorithms", label: "Algorithms" },
+  { value: "IT Courses", label: "IT Courses" },
+  { value: "Cyber Security", label: "Cyber Security" },
 ];
 
 export const SkillsOptions = [

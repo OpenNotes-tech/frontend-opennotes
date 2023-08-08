@@ -541,7 +541,11 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                   </div>
                   <div className="py-5 px-10 text-slate-700">
                     <li className="flex flex-row justify-end space-x-6">
-                      <a href="/">
+                      <Link
+                        to={"https://instagram.com"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="group">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -567,8 +571,12 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                             <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                           </svg>
                         </span>
-                      </a>
-                      <a href="/">
+                      </Link>
+                      <Link
+                        to={"https://twitter.com"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="group">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -585,8 +593,12 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                             <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                           </svg>
                         </span>
-                      </a>
-                      <a href="/">
+                      </Link>
+                      <Link
+                        to={"https://www.linkedin.com"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <span className="group">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -605,8 +617,12 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                             <circle cx="4" cy="4" r="2" />
                           </svg>
                         </span>
-                      </a>
-                      <a href="/">
+                      </Link>
+                      <Link
+                        to={"https://www.buymeacoffee.com"}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="24"
@@ -625,7 +641,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
                           <line x1="10" x2="10" y1="2" y2="4" />
                           <line x1="14" x2="14" y1="2" y2="4" />
                         </svg>
-                      </a>
+                      </Link>
                     </li>
                   </div>
                 </div>
@@ -635,13 +651,26 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
           <div>
             <button
               onClick={handleAuthModalToggle}
-              className={`font-semibold text-base transition duration-300 ease-in-out px-4 py-[8px] text-center rounded-full focus:outline-none  ${
+              className={`group font-semibold text-base transition duration-300 ease-in-out px-2 py-[8px] text-center rounded-full focus:outline-none  ${
                 scrolled || name === "search"
                   ? "text-slate-600 hover:bg-slate-100"
                   : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
               }`}
             >
-              Log in
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-bookmark group-hover:fill-blue-500 transition duration-300 ease-in-out"
+              >
+                <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+              </svg>
             </button>
           </div>
           <div>

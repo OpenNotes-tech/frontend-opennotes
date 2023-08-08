@@ -20,7 +20,7 @@ export const errorSlice = createSlice({
       state.errorType = "";
     },
     setLoading: (state, action) => {
-      state.loading = action.payload?.loading;
+      state.loading = action.payload
     },
   },
 });

@@ -4,6 +4,8 @@ const initialState = {
   isLangModalOpen: false,
   isReportModalOpen: false,
   isDetailsModalOpen: false,
+  isBookmarkModalOpen: false,
+  isShareModalOpen: false,
 };
 
 export const modalSlice = createSlice({
@@ -34,11 +36,25 @@ export const modalSlice = createSlice({
     closeDetailsModal: (state) => {
       state.isDetailsModalOpen = false;
     },
+    openShareModal: (state) => {
+      state.isShareModalOpen = true;
+    },
+    closeShareModal: (state) => {
+      state.isShareModalOpen = false;
+    },
+    openBookmarkModal: (state) => {
+      state.isBookmarkModalOpen = true;
+    },
+    closeBookmarkModal: (state) => {
+      state.isBookmarkModalOpen = false;
+    },
   },
 });
 
 export default modalSlice.reducer;
 export const {
+  openShareModal,
+  closeShareModal,
   openAuthModal,
   closeAuthModal,
   openLangModal,
@@ -47,4 +63,6 @@ export const {
   closeReportModal,
   openDetailsModal,
   closeDetailsModal,
+  openBookmarkModal,
+  closeBookmarkModal,
 } = modalSlice.actions;

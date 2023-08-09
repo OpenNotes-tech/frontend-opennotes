@@ -99,6 +99,14 @@ const LinkMain = () => {
     dispatch(setSortOption(result));
   };
 
+  const handleMoreButton = () => {
+    if (name !== "search") {
+      navigate("/search");
+    } else {
+      console.log("hello world");
+    }
+  };
+
   return (
     <div className="container px-4 lg:px-0 mx-auto">
       {loading && <Loader />}
@@ -486,13 +494,14 @@ const LinkMain = () => {
           )}
           <div className="flex w-full justify-center">
             <button
+              onClick={handleMoreButton}
               class="middle none center rounded-lg bg-pink-500 py-3 px-10 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-ripple-light="true"
             >
               More
             </button>
           </div>
-          {isFilterSticky && (
+          {!isFilterSticky && (
             <button
               className="fixed bottom-24 md:bottom-10 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"
               onClick={handleScrollToTop}

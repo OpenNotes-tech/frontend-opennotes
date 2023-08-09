@@ -1,6 +1,30 @@
 // import { Link } from "react-router-dom";
 
+import BookmarkModal from "../../components/BookmarkModal";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  openBookmarkModal,
+  openShareModal,
+} from "../../store/features/modalSlice";
+import ShareModal from "../../components/ShareModal";
+import LinkDetailsModal from "./LinkDetailsModal";
+
 const LinkCard = ({ LinkElement }) => {
+  const { isBookmarkModalOpen, isShareModalOpen, isDetailsModalOpen } =
+    useSelector((state) => state.Modal);
+  const dispatch = useDispatch();
+
+  const handleBookmarkModal = () => {
+    dispatch(openBookmarkModal());
+  };
+  const handleShareModal = () => {
+    dispatch(openShareModal());
+  };
+
+  const handleDetailsModal = () => {
+    dispatch(openShareModal());
+  };
+
   return (
     <div class="max-w-sm text-left h-[480px] flex flex-col space-y-6 bg-white border border-gray-200 rounded-2xl shadow-2xl ">
       <div className="h-1/2">
@@ -32,11 +56,13 @@ const LinkCard = ({ LinkElement }) => {
             Open
           </button>
           <button
+            onClick={handleDetailsModal}
             className="transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black bg-black px-10 py-1 font-medium text-center text-white hover:border-blue-700 hover:bg-blue-700"
             type="button"
           >
             Details
           </button>
+          {isDetailsModalOpen && <LinkDetailsModal />}
         </div>
         <div class="flex items-end flex-row justify-between mt-auto px-4">
           <div
@@ -67,7 +93,7 @@ const LinkCard = ({ LinkElement }) => {
               </span>
             </button>
             <div>
-              <button>
+              <button onClick={handleShareModal}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -87,6 +113,7 @@ const LinkCard = ({ LinkElement }) => {
                   <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
                 </svg>
               </button>
+              {isShareModalOpen && <ShareModal />}
             </div>
           </div>
           <div
@@ -94,6 +121,7 @@ const LinkCard = ({ LinkElement }) => {
             data-nc-id="PostCardSaveAction"
           >
             <button
+              onClick={handleBookmarkModal}
               class="nc-NcBookmark relative rounded-full flex items-center justify-center focus:outline-none h-8 w-8 bg-neutral-50 hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
               data-nc-id="NcBookmark"
               data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
@@ -115,6 +143,7 @@ const LinkCard = ({ LinkElement }) => {
               </svg>
             </button>
           </div>
+          {isBookmarkModalOpen && <BookmarkModal />}
         </div>
       </div>
     </div>

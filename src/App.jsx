@@ -24,7 +24,7 @@ import ProfileChangePassword from "./pages/Profile/ProfileChangePassword";
 import ProfileChangeEmail from "./pages/Profile/ProfileChangeEmail";
 // Link Routes
 import LinkMain from "./pages/Link/LinkMain";
-import LinkDetails from "./pages/Link/LinkDetails";
+import LinkDetailsModal from "./pages/Link/LinkDetailsModal";
 // Static Routes
 import NotFound from "./pages/Static/NotFound";
 import About from "./pages/Static/About";
@@ -50,7 +50,7 @@ const App = () => {
           <Route path="/:category?" element={<HomeMain />} />
           <Route path="/link" exact element={<LinkMain />} />
           <Route path="/search" exact element={<SearchMain />} />
-          <Route path="details/:linkid" exact element={<LinkDetails />} />
+          <Route path="details/:linkid" exact element={<LinkDetailsModal />} />
           <Route exact element={<PrivateRouter />}>
             <Route path="saved" exact element={<BookmarkMain />} />
             <Route path="profile" exact element={<ProfileMain />}>

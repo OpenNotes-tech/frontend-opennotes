@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import { setError, setLoading } from "../../store/features/errorSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { closeReportModal } from "../../store/features/modalSlice";
-import Loader from "./../../components/Loader";
+import { closeDetailsModal } from "../../store/features/modalSlice";
+import Loader from "../../components/Loader";
 
-const LinkDetails = () => {
-  const isReportModalOpen = useSelector(
-    (state) => state.Modal.isReportModalOpen
+const LinkDetailsModal = () => {
+  const isDetailsModalOpen = useSelector(
+    (state) => state.Modal.isDetailsModalOpen
   );
   const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
@@ -16,19 +16,19 @@ const LinkDetails = () => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (e.target === modalRef.current) {
-        dispatch(closeReportModal());
+        dispatch(closeDetailsModal());
       }
     };
-    if (isReportModalOpen) {
+    if (isDetailsModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
     }
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [dispatch, isReportModalOpen]);
+  }, [dispatch, isDetailsModalOpen]);
 
-  const handleAuthModalToggle = () => {
-    dispatch(closeReportModal());
+  const handleDetailsModalToggle = () => {
+    dispatch(closeDetailsModal());
   };
 
   return (
@@ -45,7 +45,7 @@ const LinkDetails = () => {
       >
         <button
           aria-label="Close panel"
-          onClick={handleAuthModalToggle}
+          onClick={handleDetailsModalToggle}
           class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[465px] -top-3"
         >
           <svg
@@ -173,7 +173,7 @@ const LinkDetails = () => {
           <div className="flex items-center flex-row space-x-4 md:justify-end rounded-b border-t border-solid border-slate-200  justify-center  px-6">
             <button
               type="button"
-              onClick={handleAuthModalToggle}
+              onClick={handleDetailsModalToggle}
               className="transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black px-8 md:px-8 py-2 md:py-2 text-center font-medium text-black hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700"
             >
               Cancel
@@ -191,4 +191,4 @@ const LinkDetails = () => {
   );
 };
 
-export default LinkDetails;
+export default LinkDetailsModal;

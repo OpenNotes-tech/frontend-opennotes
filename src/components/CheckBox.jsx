@@ -1,5 +1,5 @@
 const CheckBox = ({ name, label, value, handleCheckbox }) => {
-  return (
+  return (  
     <div className="flex flex-row items-center space-x-3">
       <label
         className="relative flex cursor-pointer items-center rounded-full"

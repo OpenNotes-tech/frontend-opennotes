@@ -1,9 +1,14 @@
 import {
   setCategoryOption,
-  setTags,
+  setTagsOption,
+  setTypeOption,
   setSearchResult,
 } from "../store/features/searchSlice";
-import { SubTopicOptions, CategoryOptions } from "../constants/FilterData";
+import {
+  SubTopicOptions,
+  CategoryOptions,
+  TypeOptions,
+} from "../constants/FilterData";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
@@ -12,11 +17,13 @@ import Selector from "./Selector";
 import Loader from "./Loader";
 
 export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
-  const { query, sort, category, tags } = useSelector((state) => state.Search);
+  const { query, sort, category, tags, type } = useSelector(
+    (state) => state.Search
+  );
   const loading = useSelector((state) => state.Error.loading);
-  const [debounceTimeout] = useState(null);
   const [getLocationSelector, setLocationSelector] = useState([]);
   const [getSkillsSelector, setSkillsSelector] = useState([]);
+  const [getTypeSelector, setTypeSelector] = useState([]);
 
   const dispatch = useDispatch();
   const modalRef = useRef();
@@ -32,13 +39,21 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     const selectedValues = selectedSkills.map((option) => option.value);
     setSkillsSelector(selectedSkills);
     const commaSeparatedString = selectedValues.join(",");
-    dispatch(setTags(commaSeparatedString));
+    dispatch(setTagsOption(commaSeparatedString));
+  };
+
+  const handleTypeSelector = (selectedType) => {
+    const selectedValues = selectedType.map((option) => option.value);
+    setTypeSelector(selectedType);
+    const commaSeparatedString = selectedValues.join(",");
+    dispatch(setTypeOption(commaSeparatedString));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
 
-    SearchAPI.linkSearch(query, sort, category, tags)
+    SearchAPI.linkSearch(query, sort, category, tags, type)
       .then((res) => {
         console.log(res);
         dispatch(setSearchResult(res.data.data.body));
@@ -81,11 +96,14 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
   }, [tags]);
 
   useEffect(() => {
-    return () => {
-      // Clear the timeout when the component unmounts
-      clearTimeout(debounceTimeout);
-    };
-  }, [debounceTimeout]);
+    if (type) {
+      const selectedValues = type.split(",");
+      const selectedOptions = TypeOptions.filter((option) =>
+        selectedValues.includes(option.value)
+      );
+      setTypeSelector(selectedOptions);
+    }
+  }, [type]);
 
   // Close the modal when the user clicks outside of it
   useEffect(() => {
@@ -144,6 +162,19 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
                   isMulti={true}
                   value={getSkillsSelector}
                   onChange={handleSkillsSelector}
+                />
+              </div>
+              <div className="px-10 md:px-0">
+                <div className="text-sm text-slate-800 font-semibold mb-3">
+                  Type
+                </div>
+                <Selector
+                  name="type"
+                  className="basic-multi-select"
+                  options={TypeOptions}
+                  isMulti={true}
+                  value={getTypeSelector}
+                  onChange={handleTypeSelector}
                 />
               </div>
             </div>

@@ -101,7 +101,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
           scrolled || name === "search"
             ? "border border-white/80 bg-white text-slate-700 shadow-md"
             : "bg-transparent text-white"
-        }`}
+        }  ${loading ? "opacity-50 pointer-events-none" : ""}`}
       >
         {loading && <Loader />}
         <Sign />
@@ -149,7 +149,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
         )}
 
         <div className="flex flex-row space-x-4 items-center whitespace-nowrap">
-          <div className="flex flex-row items-center space-x-6">
+          <div ref={modalRef} className="flex flex-row items-center space-x-6">
             <button
               type="button"
               onClick={() => setToggleExplore((oldState) => !oldState)}
@@ -181,7 +181,6 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
             </button>
             {toggleExplore && (
               <div
-                ref={modalRef}
                 id="dropdown"
                 className="mt-[520px] absolute right-[300px] z-10 bg-white divide-y divide-gray-100 rounded-lg w-[840px] shadow-2xl"
               >

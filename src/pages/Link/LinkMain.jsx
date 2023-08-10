@@ -1,28 +1,32 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { setLoading, setError } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import LinkCard from "./LinkCard";
 import {
   setSortOption,
   setCategoryOption,
-  setTags,
+  setTagsOption,
   setSearchResult,
 } from "../../store/features/searchSlice";
-
+import ShareModal from "../../components/ShareModal";
 import LoaderSkeleton from "../../components/LoaderSkeleton";
 import IconNoResult from "../../components/IconNoResult";
 import SearchAPI from "../../utils/SearchAPI";
 import Loader from "../../components/Loader";
+import Slider from "../../components/Slider";
+import slides from '../../constants/mock.json';
 
 const LinkMain = () => {
-  const { query, sort, category, tags } = useSelector((state) => state.Search);
+  const { query, sort, category, tags, type } = useSelector(
+    (state) => state.Search
+  );
+  const { isShareModalOpen } = useSelector((state) => state.Modal);
   const loading = useSelector((state) => state.Error.loading);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const name = location.pathname.split("/")[1]?.toLowerCase();
-  const [getLoad] = useState(false);
   const [linkResults] = useState([
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
   ]);
@@ -57,9 +61,9 @@ const LinkMain = () => {
   const handleTagsSubmit = (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
-    dispatch(setTags(isOpen));
+    dispatch(setTagsOption(isOpen));
 
-    SearchAPI.linkSearch(query, sort, category, tags)
+    SearchAPI.linkSearch(query, sort, category, tags, type)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
@@ -80,7 +84,7 @@ const LinkMain = () => {
     dispatch(setCategoryOption(navLink.substring(1)));
     console.log(navLink.substring(1));
 
-    SearchAPI.linkSearch(query, sort, navLink.substring(1), tags)
+    SearchAPI.linkSearch(query, sort, navLink.substring(1), tags, type)
       .then((res) => {
         console.log(res);
         dispatch(setSearchResult(res.data.data.body));
@@ -95,8 +99,25 @@ const LinkMain = () => {
       });
   };
 
-  const handleSortChange = (result) => {
+  const handleSortChange = (e, result) => {
+    e.preventDefault();
     dispatch(setSortOption(result));
+    dispatch(setLoading(true));
+
+    SearchAPI.linkSearch(query, result, category, tags, type)
+      .then((res) => {
+        console.log(res);
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        console.log(error);
+        dispatch(setError(error?.response?.data?.message));
+        dispatch(setLoading(false));
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
   };
 
   const handleMoreButton = () => {
@@ -111,7 +132,11 @@ const LinkMain = () => {
     <div className="container px-4 lg:px-0 mx-auto">
       {loading && <Loader />}
       <div className="flex flex-col px-12 py-10 space-y-10">
-        <div className="flex flex-row space-x-4 justify-center">
+        <div
+          className={`flex flex-row space-x-4 justify-center ${
+            name === "search" ? "hidden" : "block"
+          }`}
+        >
           <button
             onClick={(e) => handleCategorySubmit(e, "/")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
@@ -371,6 +396,9 @@ const LinkMain = () => {
                 </div>
               </div>
             </div> */}
+            <div className="">
+            <Slider slides={slides}/>
+            </div>
 
             <div className="flex flex-row items-center space-x-6">
               <div className="hidden h-[41px] w-[1px] bg-gray-300 lg:block"></div>
@@ -424,9 +452,9 @@ const LinkMain = () => {
                 >
                   <div className="divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
                     <div className="space-y-1 p-2 flex flex-col justify-center">
-                      <Link
+                      <button
                         role="menuitem"
-                        onClick={() => handleSortChange("trending")}
+                        onClick={(e) => handleSortChange(e, "trending")}
                         className={` flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
                           sort === "trending" && "bg-blue-100 text-blue-500"
                         }`}
@@ -434,10 +462,10 @@ const LinkMain = () => {
                         <div className="flex flex-none items-center space-x-2">
                           <span>Trending</span>
                         </div>
-                      </Link>
-                      <Link
+                      </button>
+                      <button
                         role="menuitem"
-                        onClick={() => handleSortChange("favorite")}
+                        onClick={(e) => handleSortChange(e, "favorite")}
                         className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
                           sort === "favorite" && "bg-blue-100 text-blue-500"
                         }`}
@@ -445,10 +473,10 @@ const LinkMain = () => {
                         <div className="flex flex-none items-center space-x-2">
                           <span>Favorite</span>
                         </div>
-                      </Link>
-                      <Link
+                      </button>
+                      <button
                         role="menuitem"
-                        onClick={() => handleSortChange("latest")}
+                        onClick={(e) => handleSortChange(e, "latest")}
                         className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
                           sort === "latest" && "bg-blue-100 text-blue-500"
                         }`}
@@ -456,10 +484,10 @@ const LinkMain = () => {
                         <div className="flex flex-none items-center space-x-2">
                           <span>Latest</span>
                         </div>
-                      </Link>
-                      <Link
+                      </button>
+                      <button
                         role="menuitem"
-                        onClick={() => handleSortChange("oldest")}
+                        onClick={(e) => handleSortChange(e, "oldest")}
                         className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
                           sort === "oldest" && "bg-blue-100 text-blue-500"
                         }`}
@@ -467,7 +495,7 @@ const LinkMain = () => {
                         <div className="flex flex-none items-center space-x-2">
                           <span>Oldest</span>
                         </div>
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -487,7 +515,7 @@ const LinkMain = () => {
               </div>
             )}
           </div>
-          {getLoad && (
+          {loading && (
             <div className="w-full">
               <LoaderSkeleton />
             </div>
@@ -525,6 +553,7 @@ const LinkMain = () => {
           )}
         </div>
       </div>
+      {isShareModalOpen && <ShareModal />}
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { setError, setLoading } from "../store/features/errorSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { closeReportModal } from "../store/features/modalSlice";
 import Loader from "./Loader";
+
 const UserReport = () => {
   const isReportModalOpen = useSelector(
     (state) => state.Modal.isReportModalOpen
@@ -10,7 +11,7 @@ const UserReport = () => {
   const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
   const modalRef = useRef();
-
+    
   // Close the modal when the user clicks outside of it
   useEffect(() => {
     const handleOutsideClick = (e) => {

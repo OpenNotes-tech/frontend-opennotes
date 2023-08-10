@@ -56,12 +56,12 @@ const Footer = () => {
             </li>
             <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
             <li>
-              <a
-                href="/"
+              <Link
+                to="/contacts"
                 class="cursor-pointer relative after:absolute after:bg-gray-500 after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300"
               >
                 Contact
-              </a>
+              </Link>
             </li>
             <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
             <li className="flex flex-row space-x-4 ">

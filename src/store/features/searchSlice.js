@@ -8,6 +8,7 @@ const searchSlice = createSlice({
     sort: "",
     category: "",
     tags: "",
+    type: "",
     result: [],
   },
   reducers: {
@@ -20,11 +21,14 @@ const searchSlice = createSlice({
     setCategoryOption(state, action) {
       state.category = action.payload;
     },
+    setTagsOption(state, action) {
+      state.tags = action.payload;
+    },
+    setTypeOption(state, action) {
+      state.type = action.payload;
+    },
     setSearchResult(state, action) {
       state.result = action.payload;
-    },
-    setTags(state, action) {
-      state.tags = action.payload;
     },
   },
 });
@@ -34,7 +38,8 @@ export const {
   setSortOption,
   setCategoryOption,
   setSearchResult,
-  setTags,
+  setTypeOption,
+  setTagsOption,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

@@ -3,8 +3,7 @@ const Subscribe = () => {
     <section
       className="bg-top bg-no-repeat py-20"
       style={{
-        backgroundImage:
-          "url('https://shuffle.dev/metis-assets/elements/blob.svg')",
+        backgroundImage: "url('://shuffle.dev/metis-assets/elements/blob.svg')",
       }}
     >
       <div className="container mx-auto px-4">

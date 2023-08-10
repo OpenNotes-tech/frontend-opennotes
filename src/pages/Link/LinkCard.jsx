@@ -64,7 +64,7 @@ const LinkCard = ({ LinkElement }) => {
           </button>
           {isDetailsModalOpen && <LinkDetailsModal />}
         </div>
-        <div class="flex items-end flex-row justify-between mt-auto px-4">
+        <div class="flex items-end flex-row justify-between mt-auto px-4 border-t pt-3">
           <div
             class="nc-PostCardLikeAndComment flex items-center space-x-2 relative"
             data-nc-id="PostCardLikeAndComment"
@@ -76,8 +76,8 @@ const LinkCard = ({ LinkElement }) => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -96,8 +96,8 @@ const LinkCard = ({ LinkElement }) => {
               <button onClick={handleShareModal}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
@@ -113,7 +113,7 @@ const LinkCard = ({ LinkElement }) => {
                   <line x1="15.41" x2="8.59" y1="6.51" y2="10.49" />
                 </svg>
               </button>
-              {isShareModalOpen && <ShareModal />}
+              {/* {isShareModalOpen && <ShareModal />} */}
             </div>
           </div>
           <div
@@ -122,15 +122,15 @@ const LinkCard = ({ LinkElement }) => {
           >
             <button
               onClick={handleBookmarkModal}
-              class="nc-NcBookmark relative rounded-full flex items-center justify-center focus:outline-none h-8 w-8 bg-neutral-50 hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
+              class=" relative rounded-full flex items-center justify-center focus:outline-none h-8 w-8 bg-neutral-50 hover:bg-neutral-100 dark:bg-neutral-800 dark:hover:bg-neutral-700"
               data-nc-id="NcBookmark"
               data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
               title="Save to reading list"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
+                width="16"
+                height="16"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"

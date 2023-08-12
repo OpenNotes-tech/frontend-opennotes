@@ -14,11 +14,9 @@ import LoaderSkeleton from "../../components/LoaderSkeleton";
 import IconNoResult from "../../components/IconNoResult";
 import SearchAPI from "../../utils/SearchAPI";
 import Loader from "../../components/Loader";
-import Slider from "../../components/Slider";
-import slides from '../../constants/mock.json';
 
 const LinkMain = () => {
-  const { query, sort, category, tags, type } = useSelector(
+  const { query, sort, category, tags, type, result } = useSelector(
     (state) => state.Search
   );
   const { isShareModalOpen } = useSelector((state) => state.Modal);
@@ -78,15 +76,17 @@ const LinkMain = () => {
   };
 
   const handleCategorySubmit = (e, navLink) => {
-    e.preventDefault();
-    navigate(navLink);
+    if (e) {
+      e.preventDefault();
+    }
+    if (navLink.substring(1) !== name) {
+      navigate(navLink);
+    }
     dispatch(setLoading(true));
     dispatch(setCategoryOption(navLink.substring(1)));
-    console.log(navLink.substring(1));
 
     SearchAPI.linkSearch(query, sort, navLink.substring(1), tags, type)
       .then((res) => {
-        console.log(res);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
       })
@@ -98,6 +98,12 @@ const LinkMain = () => {
         dispatch(setLoading(false));
       });
   };
+
+  useEffect(() => {
+    if (result.length === 0) {
+      handleCategorySubmit(null, name);
+    }
+  }, []);
 
   const handleSortChange = (e, result) => {
     e.preventDefault();
@@ -116,7 +122,7 @@ const LinkMain = () => {
         dispatch(setLoading(false));
       })
       .finally((e) => {
-        dispatch(setLoading(false));
+        // dispatch(setLoading(false));
       });
   };
 
@@ -396,9 +402,6 @@ const LinkMain = () => {
                 </div>
               </div>
             </div> */}
-            <div className="">
-            <Slider slides={slides}/>
-            </div>
 
             <div className="flex flex-row items-center space-x-6">
               <div className="hidden h-[41px] w-[1px] bg-gray-300 lg:block"></div>

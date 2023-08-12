@@ -2,37 +2,37 @@ import http from "./backend-link";
 
 class Request {
   // Authentication
-  signup(data) {
+  async signup(data) {
     return http.post(`/api/v1/user/signup`, data);
   }
-  login(data) {
+  async login(data) {
     return http.post(`/api/v1/user/login`, data);
   }
-  logout() {
+  async logout() {
     return http.get(`/api/v1/user/logout`);
   }
-  forgotPassword() {
+  async forgotPassword() {
     return http.post(`/api/v1/user/forgot-password`);
   }
-  resetPassword() {
+  async resetPassword() {
     return http.post(`/api/v1/user/reset-password/:token`);
   }
-  googleLogin(data) {
+  async googleLogin(data) {
     return http.post(`/api/v1/user/google-login`, data);
   }
-  twitterLogin(data) {
+  async twitterLogin(data) {
     return http.post(`/api/v1/user/twitter-login`, data);
   }
-  githubLogin(data) {
+  async githubLogin(data) {
     return http.post(`/api/v1/user/github-login`, data);
   }
 
   //     ######  Profile   ########
-  patchProfile(id, data) {
+  async patchProfile(id, data) {
     return http.patch(`/api/v1/user/profile/${id}`, data);
   }
 
-  filterJobCompanyCandidate(term, field, limit) {
+  async filterJobCompanyCandidate(term, field, limit) {
     return http.get(
       `/api/v1/jobs/filter?text=${term}&route=searchNews&field=${field}&limit=${limit}`
     );

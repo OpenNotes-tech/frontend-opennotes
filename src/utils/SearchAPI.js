@@ -1,7 +1,7 @@
 import http from "./backend-link";
 
 class SearchAPI {
-  async linkSearch(query, sort, category, tags, type) {
+  linkSearch(query, sort, category, tags, type) {
     let queryParams = `/links/search?route=linksearch&field=searchText`;
 
     if (query) {

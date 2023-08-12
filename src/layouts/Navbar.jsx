@@ -15,8 +15,8 @@ import Search from "../components/Search";
 import UserReport from "../components/UserReport";
 import LangModal from "../components/LangModal";
 
-const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
-  const errorMessage = useSelector((state) => state.Error.errorMessage);
+const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+  const {errorMessage, loading} = useSelector((state) => state.Error);
   const { isReportModalOpen, isLangModalOpen } = useSelector(
     (state) => state.Modal
   );
@@ -85,7 +85,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
+  useEffect(() => {}, [loading]);
   const toggleReport = () => {
     dispatch(openReportModal());
   };
@@ -144,7 +144,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen, loading }) => {
         </div>
         {(scrolled || name === "search") && (
           <div className="w-full">
-            <Search scrolled={scrolled} nav={"dfdf"} />
+            <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
           </div>
         )}
 

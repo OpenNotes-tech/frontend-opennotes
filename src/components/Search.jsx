@@ -2,7 +2,7 @@ import { setSearchQuery, setSearchResult } from "../store/features/searchSlice";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchAPI from "../utils/SearchAPI";
 import { FilterModal } from "./FilterModal";
 
@@ -22,6 +22,12 @@ const Search = ({ nav }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(setLoading(true));
+
+
+    // if (name !== "search") {
+    // }
+    navigate("/search");
 
     if (name !== "search") {
       SearchAPI.linkSearch(query, sort, category, tags)
@@ -37,7 +43,6 @@ const Search = ({ nav }) => {
         .finally((e) => {
           dispatch(setLoading(false));
         });
-      navigate("/search");
     } else {
       SearchAPI.linkSearch(query, sort, category, tags)
         .then((res) => {
@@ -55,6 +60,7 @@ const Search = ({ nav }) => {
     }
   };
 
+
   const handleFilterToggle = () => {
     setToggleFilter(true);
   };
@@ -66,7 +72,7 @@ const Search = ({ nav }) => {
           nav === "dfdf" ? "" : "pt-24"
         }`}
       >
-        <form onSubmit={handleSubmit} className="">
+        <form onSubmit={handleSubmit}>
           <div
             className={`backdrop-blur-lg backdrop-saturate-900  bg-opacity-90   bg-white relative flex w-full items-center rounded-full border-2 border-gray-200 lg:w-auto lg:flex-1 lg:border-0 mr-8 ${
               nav === "dfdf" ? "h-10 focus:shadow-2xl" : "h-14 shadow-md"
@@ -133,7 +139,10 @@ const Search = ({ nav }) => {
       </div>
       {getToggleFilter ? (
         <>
-          <FilterModal setToggleFilter={setToggleFilter} getToggleFilter={getToggleFilter} />
+          <FilterModal
+            setToggleFilter={setToggleFilter}
+            getToggleFilter={getToggleFilter}
+          />
         </>
       ) : null}
     </>

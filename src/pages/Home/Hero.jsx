@@ -1,15 +1,6 @@
 import Search from "../../components/Search";
-// import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
-  // const navigate = useNavigate();
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   if (getToggleFilter === false) {
-  //     localStorage.setItem("titleSearch", titleSearch);
-  //     navigate("/job");
-  //   }
-  // };
   return (
     <>
       <div

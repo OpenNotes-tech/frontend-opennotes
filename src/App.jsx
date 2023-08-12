@@ -36,7 +36,7 @@ const App = () => {
   const candidateIsAuthorized = Cookies.get("logged_in_candidate");
   return (
     <BrowserRouter>
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <div className="bg-[#F3F4F6]">
         <Routes>
           {/* ##########################################    

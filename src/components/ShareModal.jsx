@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setError, setLoading } from "../store/features/errorSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { closeShareModal } from "../store/features/modalSlice";
@@ -8,6 +8,7 @@ const ShareModal = () => {
   const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
   const modalRef = useRef();
+  const [getCopy, setCopy] = useState(false);
 
   // Close the modal when the user clicks outside of it
   useEffect(() => {
@@ -26,6 +27,13 @@ const ShareModal = () => {
 
   const handleShareModalToggle = () => {
     dispatch(closeShareModal());
+  };
+
+  const handleCopy = () => {
+    setCopy(true);
+    setTimeout(() => {
+      setCopy(false);
+    }, 2000);
   };
 
   return (
@@ -193,29 +201,48 @@ const ShareModal = () => {
             Or share with link
           </h3>
           <div class="mt-4 flex w-full items-center justify-between gap-4 rounded-lg bg-gray-100 p-2 sm:py-4 sm:px-5 md:mt-7">
-            <p class="w-3/4 overflow-clip text-ellipsis   text-sm font-normal text-gray">
+            <p class="w-3/4 overflow-clip text-ellipsis italic text-sm font-normal text-gray">
               https://www.figma.com/file/NlfVhYygR9mAQasa
             </p>
             <button
               type="button"
               class="inline-flex items-center justify-center focus:outline-none transition duration-200 active:scale-95 p-0.5 w-7 h-7 rounded-md hover:text-gray-1000 focus:ring-gray-900/30 focus:!ring-0"
-              title="copy link"
+              onClick={handleCopy}
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-                class="h-6 w-6 text-gray"
-              >
-                <path
+              {getCopy ? (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#34d399"
+                  stroke-width="1.25"
                   stroke-linecap="round"
                   stroke-linejoin="round"
-                  d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75"
-                ></path>
-              </svg>
+                  class="lucide lucide-check-circle"
+                >
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                  <polyline points="22 4 12 14.01 9 11.01" />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.25"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-files"
+                >
+                  <path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5L15.5 2z" />
+                  <path d="M3 7.6v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8" />
+                  <path d="M15 2v5h5" />
+                </svg>
+              )}
             </button>
           </div>
         </div>

@@ -14,47 +14,24 @@ import LoaderSkeleton from "../../components/LoaderSkeleton";
 import IconNoResult from "../../components/IconNoResult";
 import SearchAPI from "../../utils/SearchAPI";
 import Loader from "../../components/Loader";
+import BookmarkModal from "../../components/BookmarkModal";
 
 const LinkMain = () => {
-  const { query, sort, category, tags, type, result } = useSelector(
-    (state) => state.Search
-  );
-  const { isShareModalOpen } = useSelector((state) => state.Modal);
-  const loading = useSelector((state) => state.Error.loading);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const name = location.pathname.split("/")[1]?.toLowerCase();
-  const [linkResults] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
-  ]);
-
-  const [isOpen, setIsOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setIsOpen((prevState) => !prevState);
-  };
   const filterRef = useRef(null);
+  const { query, sort, category, tags, type, result } = useSelector(
+    (state) => state.Search
+  );
+  const { isShareModalOpen, isBookmarkModalOpen } = useSelector(
+    (state) => state.Modal
+  );
+  const name = location.pathname.split("/")[1]?.toLowerCase();
+  const loading = useSelector((state) => state.Error.loading);
+  const [isOpen, setIsOpen] = useState(false);
   const [isFilterSticky, setIsFilterSticky] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Check if the filterRef is available before calling getBoundingClientRect
-      if (filterRef.current) {
-        const filterRect = filterRef.current.getBoundingClientRect();
-        setIsFilterSticky(filterRect.top <= 0);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
-
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+  const [linkResults, setLinkResults] = useState(result);
 
   const handleTagsSubmit = (e) => {
     e.preventDefault();
@@ -79,14 +56,15 @@ const LinkMain = () => {
     if (e) {
       e.preventDefault();
     }
-    if (navLink.substring(1) !== name) {
-      navigate(navLink);
-    }
     dispatch(setLoading(true));
     dispatch(setCategoryOption(navLink.substring(1)));
+    navigate(navLink);
+    // if (navLink.substring(1) !== name) {
+    // }
 
     SearchAPI.linkSearch(query, sort, navLink.substring(1), tags, type)
       .then((res) => {
+        setLinkResults(res.data.data.body);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
       })
@@ -98,28 +76,21 @@ const LinkMain = () => {
         dispatch(setLoading(false));
       });
   };
-
-  useEffect(() => {
-    if (result.length === 0) {
-      handleCategorySubmit(null, name);
-    }
-  }, []);
-
   const handleSortChange = (e, result) => {
     e.preventDefault();
-    dispatch(setSortOption(result));
-    dispatch(setLoading(true));
+    // dispatch(setSortOption(result));
+    // dispatch(setLoading(true));
 
     SearchAPI.linkSearch(query, result, category, tags, type)
       .then((res) => {
         console.log(res);
-        dispatch(setSearchResult(res.data.data.body));
-        dispatch(setLoading(false));
+        // dispatch(setSearchResult(res.data.data.body));
+        // dispatch(setLoading(false));
       })
       .catch((error) => {
         console.log(error);
-        dispatch(setError(error?.response?.data?.message));
-        dispatch(setLoading(false));
+        // dispatch(setError(error?.response?.data?.message));
+        // dispatch(setLoading(false));
       })
       .finally((e) => {
         // dispatch(setLoading(false));
@@ -133,6 +104,38 @@ const LinkMain = () => {
       console.log("hello world");
     }
   };
+  const toggleDropdown = () => {
+    setIsOpen((prevState) => !prevState);
+  };
+
+  const handleScrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    if (result.length === 0) {
+      handleCategorySubmit(null, name);
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if the filterRef is available before calling getBoundingClientRect
+      if (filterRef.current) {
+        const filterRect = filterRef.current.getBoundingClientRect();
+        setIsFilterSticky(filterRect.top <= 0);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  useEffect(() => {
+    setLinkResults(result);
+  }, [result]);
 
   return (
     <div className="container px-4 lg:px-0 mx-auto">
@@ -156,7 +159,7 @@ const LinkMain = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="1.5"
+              stroke-width="1.25"
               stroke-linecap="round"
               stroke-linejoin="round"
               class="lucide lucide-home"
@@ -189,7 +192,7 @@ const LinkMain = () => {
               <circle cx="8.5" cy="7.5" r=".5" />
               <circle cx="6.5" cy="12.5" r=".5" />
               <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z" />
-            </svg>{" "}
+            </svg>
             <p>Frontend</p>
           </button>
           <button
@@ -200,8 +203,8 @@ const LinkMain = () => {
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="22"
-              height="22"
+              width="20"
+              height="20"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
@@ -296,7 +299,7 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/datascience")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "artificialintelligence" && "bg-blue-100 text-blue-500"
+              name === "datascience" && "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -507,17 +510,17 @@ const LinkMain = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 md:gap-x-12 gap-y-12">
-            {linkResults &&
+            {!loading &&
+              linkResults &&
               linkResults.map((linkElement, index) => (
                 <LinkCard key={index} linkElement={linkElement} />
               ))}
-
-            {linkResults.length === 0 && (
-              <div className="flex justify-center items-center md:ml-4 mb-10 w-full h-4/5 md:h-1/3 lg:h-2/6">
-                <IconNoResult />
-              </div>
-            )}
           </div>
+          {!loading && linkResults.length === 0 && (
+            <div className="flex justify-center items-center">
+              <IconNoResult />
+            </div>
+          )}
           {loading && (
             <div className="w-full">
               <LoaderSkeleton />
@@ -526,10 +529,25 @@ const LinkMain = () => {
           <div className="flex w-full justify-center">
             <button
               onClick={handleMoreButton}
-              class="middle none center rounded-lg bg-pink-500 py-3 px-10 font-sans text-xs font-bold uppercase text-white shadow-md shadow-pink-500/20 transition-all hover:shadow-lg hover:shadow-pink-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+              class="flex flow-row space-x-8 mt-16 items-center justify-center rounded-lg bg-blue-500 py-3 px-10 font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               data-ripple-light="true"
             >
-              More
+              <p>More</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-move-right"
+              >
+                <path d="M18 8L22 12L18 16" />
+                <path d="M2 12H22" />
+              </svg>
             </button>
           </div>
           {!isFilterSticky && (
@@ -556,6 +574,7 @@ const LinkMain = () => {
           )}
         </div>
       </div>
+      {isBookmarkModalOpen && <BookmarkModal />}
       {isShareModalOpen && <ShareModal />}
     </div>
   );

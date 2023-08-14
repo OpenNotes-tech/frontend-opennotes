@@ -8,7 +8,7 @@ const searchSlice = createSlice({
     sort: "",
     category: "",
     tags: "",
-    type: "",
+    pricing: "",
     result: [],
   },
   reducers: {
@@ -24,8 +24,8 @@ const searchSlice = createSlice({
     setTagsOption(state, action) {
       state.tags = action.payload;
     },
-    setTypeOption(state, action) {
-      state.type = action.payload;
+    setPricingOption(state, action) {
+      state.pricing = action.payload;
     },
     setSearchResult(state, action) {
       state.result = action.payload;
@@ -38,7 +38,7 @@ export const {
   setSortOption,
   setCategoryOption,
   setSearchResult,
-  setTypeOption,
+  setPricingOption,
   setTagsOption,
 } = searchSlice.actions;
 

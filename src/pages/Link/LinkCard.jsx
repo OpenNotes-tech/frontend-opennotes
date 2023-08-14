@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {
   openBookmarkModal,
   openShareModal,
+  openDetailsModal,
 } from "../../store/features/modalSlice";
 import LinkDetailsModal from "./LinkDetailsModal";
 
@@ -21,18 +22,14 @@ const LinkCard = ({ linkElement }) => {
   };
 
   const handleDetailsModal = () => {
-    dispatch(openShareModal());
+    dispatch(openDetailsModal());
   };
 
   return (
     <div class="max-w-sm text-left h-[500px] flex flex-col space-y-6 bg-white border border-gray-200 rounded-2xl shadow-2xl ">
       <div className="h-1/2">
-        <img
-          class="rounded-t-2xl"
-          src={"https://flowbite.com/docs/images/blog/image-1.jpg"}
-          alt=""
-        />
-        <div class="p-5 ">
+        <img class="rounded-t-2xl" src={linkElement.photo} alt="" />
+        <div class="p-5">
           <h5 class="mb-2 text-xl  capitalize font-bold truncate tracking-wide text-gray-900 ">
             {linkElement.title}
           </h5>

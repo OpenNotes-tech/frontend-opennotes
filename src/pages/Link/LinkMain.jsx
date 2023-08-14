@@ -21,7 +21,7 @@ const LinkMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const filterRef = useRef(null);
-  const { query, sort, category, tags, type, result } = useSelector(
+  const { query, sort, category, tags, pricing, result } = useSelector(
     (state) => state.Search
   );
   const { isShareModalOpen, isBookmarkModalOpen } = useSelector(
@@ -33,46 +33,22 @@ const LinkMain = () => {
   const [isFilterSticky, setIsFilterSticky] = useState(false);
   const [linkResults, setLinkResults] = useState(result);
 
-  // const handleTagsSubmit = (e) => {
-  //   e.preventDefault();
-  //   dispatch(setLoading(true));
-  //   dispatch(setTagsOption(isOpen));
-
-  //   SearchAPI.linkSearch(query, sort, category, tags, type)
-  //     .then((res) => {
-  //       dispatch(setSearchResult(res.data.data.body));
-  //       dispatch(setLoading(false));
-  //     })
-  //     .catch((error) => {
-  //       dispatch(setError(error?.response?.data?.message));
-  //       dispatch(setLoading(false));
-  //     })
-  //     .finally((e) => {
-  //       dispatch(setLoading(false));
-  //     });
-  // };
-
   const handleCategorySubmit = (e, navLink) => {
     if (e) {
       e.preventDefault();
       navigate(navLink);
       navLink = navLink.substring(1);
     }
+    navLink = navLink.charAt(0).toUpperCase() + navLink.slice(1);
     dispatch(setLoading(true));
     dispatch(setCategoryOption(navLink));
 
-    SearchAPI.linkSearch(query, sort, navLink, tags, type)
+    SearchAPI.linkSearch(query, sort, navLink, tags, pricing)
       .then((res) => {
         console.log(res);
         setLinkResults(res.data.data.body);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
-        // dispatch(
-        //   setError({
-        //     message: "Signed Up Successfully!",
-        //     type: "success",
-        //   })
-        // );
       })
       .catch((error) => {
         dispatch(setError(error?.response?.data?.message));
@@ -94,7 +70,7 @@ const LinkMain = () => {
     dispatch(setLoading(true));
     setIsOpen((prevState) => !prevState);
 
-    SearchAPI.linkSearch(query, result, category, tags, type)
+    SearchAPI.linkSearch(query, result, category, tags, pricing)
       .then((res) => {
         console.log(res);
         dispatch(setSearchResult(res.data.data.body));
@@ -168,7 +144,7 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "" && "bg-blue-100 text-blue-500"
+              category?.split(",")[0] === "" && "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -191,7 +167,8 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/frontend")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "frontend" && "bg-blue-100 text-blue-500"
+              category?.split(",")[0] === "Frontend" &&
+              "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -217,7 +194,8 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/backend")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "backend" && "bg-blue-100 text-blue-500"
+              category?.split(",")[0] === "Backend" &&
+              "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -242,7 +220,8 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/mobile")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "mobile" && "bg-blue-100 text-blue-500"
+              category?.split(",")[0] === "Mobile" &&
+              "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -265,7 +244,8 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/courses")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "courses" && "bg-blue-100 text-blue-500"
+              category?.split(",")[0] === "Courses" &&
+              "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -288,7 +268,8 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/cybersecurity")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "cybersecurity" && "bg-blue-100 text-blue-500"
+              category?.split(",")[0] === "Cybersecurity" &&
+              "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -318,7 +299,8 @@ const LinkMain = () => {
           <button
             onClick={(e) => handleCategorySubmit(e, "/datascience")}
             className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-              name === "datascience" && "bg-blue-100 text-blue-500"
+              category?.split(",")[0] === "Datascience" &&
+              "bg-blue-100 text-blue-500"
             }`}
           >
             <svg
@@ -346,78 +328,120 @@ const LinkMain = () => {
             <p>Data Science</p>
           </button>
         </div>
-        <div className=" flex flex-col space-y-10">
+        <div className="flex flex-col space-y-10">
           <div className="flex justify-between">
             {/* <div class="relative overflow-x-auto overflow-y-clip h-14">
               <div class="max-w-5xl mx-auto  shadow-xl min-w-0  dark:highlight-white/5">
                 <div class="overflow-x-auto overflow-y-hidden flex no-scrollbar items-center space-x-3">
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #nature
                     </button>
                   </div>{" "}
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #wallpaper
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #background
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #sky
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #food
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #cat
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #summer
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #love
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #beach
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #flower
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #water
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #flowers
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #iphone
                     </button>
                   </div>
                   <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                    <button onclick={handleTagsSubmit} className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black">
+                    <button
+                      onclick={handleTagsSubmit}
+                      className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                    >
                       #wallpaper
                     </button>
                   </div>

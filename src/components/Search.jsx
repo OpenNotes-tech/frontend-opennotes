@@ -1,16 +1,19 @@
 import { setSearchQuery, setSearchResult } from "../store/features/searchSlice";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchAPI from "../utils/SearchAPI";
 import { FilterModal } from "./FilterModal";
 
 const Search = ({ nav }) => {
-  const { query, sort, category, tags } = useSelector((state) => state.Search);
+  const { query, sort, category, tags, pricing } = useSelector(
+    (state) => state.Search
+  );
   const dispatch = useDispatch();
 
   const [isInputFocused, setInputFocused] = useState(false);
   const [getToggleFilter, setToggleFilter] = useState(false);
+  const [getFilterChange, setFilterChange] = useState(false);
 
   const handleInputSubmit = (event) => {
     dispatch(setSearchQuery(event.target.value));
@@ -39,11 +42,19 @@ const Search = ({ nav }) => {
     setToggleFilter(true);
   };
 
+  useEffect(() => {
+    if (pricing.length > 0 || tags.length > 0) {
+      setFilterChange(true);
+    } else {
+      setFilterChange(false);
+    }
+  }, [category, tags, pricing]);
+
   return (
     <>
       <div
-        className={`w-full items-center lg:px-20 xl:px-40   ${
-          nav === "dfdf" ? "" : "pt-24"
+        className={`w-full items-center    ${
+          nav === "dfdf" ? "max-w-2xl" : "pt-24 lg:px-20 xl:px-40"
         }`}
       >
         <form onSubmit={handleSubmit}>
@@ -107,6 +118,14 @@ const Search = ({ nav }) => {
               >
                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
               </svg>
+              {getFilterChange && (
+                <div className="absolute top-2 right-3">
+                  <div className="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                  </div>
+                </div>
+              )}
             </button>
           </div>
         </form>

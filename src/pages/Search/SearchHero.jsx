@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   setCategoryOption,
   setTagsOption,
-  setTypeOption,
+  setPricingOption,
   setSearchResult,
 } from "../../store/features/searchSlice";
 import { SubTopicOptions } from "../../constants/FilterData";
@@ -13,7 +13,7 @@ import CheckBox from "../../components/CheckBox";
 import Selector from "../../components/Selector";
 
 const SearchHero = () => {
-  const { query, sort, category, tags, type } = useSelector(
+  const { query, sort, category, tags, pricing } = useSelector(
     (state) => state.Search
   );
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -22,9 +22,9 @@ const SearchHero = () => {
   const [getSkillsSelector, setSkillsSelector] = useState([]);
   const dispatch = useDispatch();
   const [checkedType, setCheckedType] = useState({
-    Free: type?.includes("Free"),
-    Paid: type?.includes("Paid"),
-    Freemium: type?.includes("Freemium"),
+    Free: pricing?.includes("Free"),
+    Paid: pricing?.includes("Paid"),
+    Freemium: pricing?.includes("Freemium"),
   });
 
   const [checkedCategory, setCheckedCategory] = useState({
@@ -98,7 +98,7 @@ const SearchHero = () => {
 
     // Save selected jobTypes to local storage
     dispatch(setCategoryOption(selectedCategory.join(",")));
-    dispatch(setTypeOption(selectedTypes.join(",")));
+    dispatch(setPricingOption(selectedTypes.join(",")));
   }, [checkedCategory, checkedType, dispatch]);
 
   const handleTagsSubmit = (e) => {

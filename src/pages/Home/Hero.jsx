@@ -1,13 +1,41 @@
+import { useSelector } from "react-redux";
 import Search from "../../components/Search";
+import { useEffect, useState } from "react";
 
 const Hero = () => {
+  const { category } = useSelector((state) => state.Search);
+  const [getPhoto, setPhoto] = useState(
+    "https://cdn.devdojo.com/images/december2020/couple-on-couch.jpeg"
+  );
+  useEffect(() => {
+    if (category?.split(",")[0] === "Frontend") {
+      setPhoto(
+        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+      );
+    } else if (category?.split(",")[0] === "Backend") {
+      setPhoto(
+        "https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+      );
+    } else if (category?.split(",")[0] === "Courses") {
+      setPhoto(
+        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+      );
+    } else if (category?.split(",")[0] === "Mobile") {
+      setPhoto(
+        "https://images.unsplash.com/photo-1604328698692-f76ea9498e76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+      );
+    } else {
+      setPhoto(
+        "https://cdn.devdojo.com/images/december2020/couple-on-couch.jpeg"
+      );
+    }
+  }, [category]);
   return (
     <>
       <div
         class="xl:px-16 -mx-4 -mt-16 xl:-mx-0 px-4 md:px-10 relative bg-top bg-cover md:bg-center py-16 overflow-hidden bg-no-repeat text-center h-[450px]"
         style={{
-          backgroundImage:
-            "url('https://cdn.devdojo.com/images/december2020/couple-on-couch.jpeg')",
+          backgroundImage: `url(${getPhoto})`,
         }}
       >
         <div class="absolute inset-0 w-full h-full bg-gray-900 opacity-25"></div>

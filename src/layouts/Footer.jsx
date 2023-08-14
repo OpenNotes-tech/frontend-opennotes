@@ -8,13 +8,13 @@ const Footer = () => {
     (state) => state.Modal.isReportModalOpen
   );
   const dispatch = useDispatch();
-  const handleAuthModalToggle = () => {
+  const handleReportModalToggle = () => {
     dispatch(openReportModal());
   };
 
   return (
-    <footer class=" shadow-xl bg-gradient-to-r from-gray-700 via-gray-900 to-black">
-      <div class="w-full max-w-screen-xl mx-auto py-4 md:py-8">
+    <footer class="flex flex-row items-center justify-between -mx-4 xl:-mx-0 px-4 md:px-10 xl:px-12 shadow-xl bg-gradient-to-r from-gray-700 via-gray-900 to-black">
+      <div class="w-full mx-auto py-4 md:py-8">
         <div class="sm:flex sm:items-center sm:justify-between">
           <a href="/" class="flex items-center mb-4 sm:mb-0">
             <img
@@ -23,13 +23,13 @@ const Footer = () => {
               alt="Flowbite Logo"
             />
             <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
-              oooklink
+              oootech
             </span>
           </a>
           <ul class="flex flex-wrap space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <button
-                onClick={handleAuthModalToggle}
+                onClick={handleReportModalToggle}
                 class="cursor-pointer relative after:absolute after:bg-gray-500 after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300"
               >
                 Suggest a Link
@@ -38,12 +38,12 @@ const Footer = () => {
             </li>
             <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
             <li>
-              <a
-                href="/"
+              <Link
+                to={"/privacy-policy"}
                 class="cursor-pointer relative after:absolute after:bg-gray-500 after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300"
               >
                 Privacy Policy
-              </a>
+              </Link>
             </li>
             <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
             <li>

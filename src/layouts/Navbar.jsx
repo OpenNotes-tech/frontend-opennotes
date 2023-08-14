@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Cookies from "js-cookie";
@@ -7,6 +7,7 @@ import {
   openAuthModal,
   openReportModal,
   openLangModal,
+  openBookmarkModal,
 } from "../store/features/modalSlice";
 import Request from "../utils/API-router";
 import Loader from "../components/Loader";
@@ -14,25 +15,69 @@ import Sign from "../pages/Authentication/Sign";
 import Search from "../components/Search";
 import UserReport from "../components/UserReport";
 import LangModal from "../components/LangModal";
+import "../assets/css/darkmode.css";
+import {
+  setCategoryOption,
+  setSearchResult,
+} from "../store/features/searchSlice";
+import { setLoading, setError } from "../store/features/errorSlice";
+import SearchAPI from "../utils/SearchAPI";
 
-const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+const Navbar = () => {
   const { errorMessage, loading } = useSelector((state) => state.Error);
   const { isReportModalOpen, isLangModalOpen } = useSelector(
     (state) => state.Modal
   );
-
+  const { query, sort, category, tags, pricing } = useSelector(
+    (state) => state.Search
+  );
   const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [toggleMenu, setToggleMenu] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const name = location.pathname.split("/")[1].toLowerCase();
 
   const refProfile = useRef();
   const refMenu = useRef();
   const modalRef = useRef();
+
+  const handleCategorySubmit = (e, navLink) => {
+    if (e) {
+      e.preventDefault();
+      navigate(navLink);
+      navLink = navLink.substring(1);
+    }
+    navLink = navLink.charAt(0).toUpperCase() + navLink.slice(1);
+    dispatch(setLoading(true));
+    dispatch(setCategoryOption(navLink));
+
+    SearchAPI.linkSearch(query, sort, navLink, tags, pricing)
+      .then((res) => {
+        console.log(res);
+        setSearchResult(res.data.data.body);
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setLoading(false));
+        // setToggleExplore(false);
+      })
+      .catch((error) => {
+        dispatch(setError(error?.response?.data?.message));
+        dispatch(setLoading(false));
+        dispatch(
+          setError({
+            message: error?.response?.data?.message,
+            type: "error",
+          })
+        );
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
+  };
 
   const handleClickOutside = (toggleState, ref, setToggleState) => {
     const handleClick = (e) => {
@@ -70,6 +115,9 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
   const handleAuthModalToggle = () => {
     dispatch(openAuthModal());
   };
+  const handleBookmarkModalToggle = () => {
+    dispatch(openBookmarkModal());
+  };
 
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -85,13 +133,18 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-  useEffect(() => {}, [loading]);
+
   const toggleReport = () => {
     dispatch(openReportModal());
   };
 
   const toggleLanguage = () => {
     dispatch(openLangModal());
+  };
+
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+    console.log(isChecked);
   };
 
   return (
@@ -101,51 +154,26 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
           scrolled || name === "search"
             ? "border border-white/80 bg-white text-slate-700 shadow-md"
             : "bg-transparent text-white"
-        }  ${loading ? "opacity-50 pointer-events-none" : ""}`}
+        }  ${loading ? " pointer-events-none" : ""}`}
       >
         {loading && <Loader />}
         <Sign />
 
-        <div className="items-center flex flex-row space-x-2 md:space-x-0 flex-nowrap">
-          {name === "profile" && (
-            <Link
-              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-              className="block md:hidden"
-              type="button"
-              data-drawer-target="drawer-navigation"
-              data-drawer-show="drawer-navigation"
-              aria-controls="drawer-navigation"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#18181b"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-menu"
-              >
-                <line x1="4" x2="20" y1="12" y2="12"></line>
-                <line x1="4" x2="20" y1="6" y2="6"></line>
-                <line x1="4" x2="20" y1="18" y2="18"></line>
-              </svg>
-            </Link>
-          )}
-          <Link to="/" className="flex h-8 items-center md:h-10">
+        <div>
+          <button
+            type="button"
+            onClick={(e) => handleCategorySubmit(e, "/")}
+            className="flex h-8 items-center md:h-10 w-full"
+          >
             <img
-              className="h-full block"
+              className="h-full block w-full"
               src={require("../assets/images/logo.svg").default}
               alt="Main Logo"
             />
-          </Link>
+          </button>
         </div>
-        {(scrolled || name === "search") && (
-          <div className="w-full">
-            <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
-          </div>
+        {scrolled && (
+          <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
         )}
 
         <div className="flex flex-row space-x-4 items-center whitespace-nowrap">
@@ -182,7 +210,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
             {toggleExplore && (
               <div
                 id="dropdown"
-                className="mt-[520px] absolute right-[300px] z-10 bg-white divide-y divide-gray-100 rounded-lg w-[840px] shadow-2xl"
+                className="mt-[520px] absolute right-[300px] z-[999] bg-white divide-y divide-gray-100 rounded-lg w-[840px] shadow-2xl"
               >
                 <div className="flex flex-col divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
                   <div className="flex flex-row justify-evenly">
@@ -190,10 +218,13 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       <p className="px-10 py-3 font-bold text-md text-gray-800">
                         Collections
                       </p>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      <button
+                        onClick={(e) => handleCategorySubmit(e, "/backend")}
+                        className={`w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200  focus:outline-none ${
+                          category?.split(",")[0] === "Backend"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -229,11 +260,14 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           </svg>
                           <span>Backend</span>
                         </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className="flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      </button>
+                      <button
+                        onClick={(e) => handleCategorySubmit(e, "/frontend")}
+                        className={`w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Frontend"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -256,11 +290,14 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           </svg>
                           <span>Frontend</span>
                         </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      </button>
+                      <button
+                        onClick={(e) => handleCategorySubmit(e, "/mobile")}
+                        className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Mobile"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -287,11 +324,14 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           </svg>
                           <span>Mobile</span>
                         </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      </button>
+                      <button
+                        onClick={(e) => handleCategorySubmit(e, "/datascience")}
+                        className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Datascience"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -318,11 +358,14 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           </svg>
                           <span>AI / ML / DS</span>
                         </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      </button>
+                      <button
+                        onClick={(e) => handleCategorySubmit(e, "/algorithms")}
+                        className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Algorithms"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -342,35 +385,17 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           </svg>
                           <span>Algorithms</span>
                         </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                      >
-                        <div className="flex flex-none items-center space-x-2">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="20"
-                            height="20"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-graduation-cap"
-                          >
-                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
-                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
-                          </svg>
-                          <span>IT Courses</span>
-                        </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      </button>
+
+                      <button
+                        onClick={(e) =>
+                          handleCategorySubmit(e, "/cybersecurity")
+                        }
+                        className={`flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Cybersecurity"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -397,7 +422,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           </svg>
                           <span>Cyber Security</span>
                         </div>
-                      </Link>
+                      </button>
                     </div>
                     <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
                     <div className="space-y-1 p-2">
@@ -406,7 +431,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       </p>
                       <Link
                         role="menuitem"
-                        to="/profile"
+                        to="/"
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
@@ -415,7 +440,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       </Link>
                       <Link
                         role="menuitem"
-                        to="/profile"
+                        to="/"
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
@@ -424,29 +449,11 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       </Link>
                       <Link
                         role="menuitem"
-                        to="/profile"
+                        to="/"
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Popular IT Courses</span>
-                        </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                      >
-                        <div className="flex flex-none items-center space-x-2">
-                          <span>Newest</span>
-                        </div>
-                      </Link>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-                      >
-                        <div className="flex flex-none items-center space-x-2">
-                          <span>Oldest</span>
                         </div>
                       </Link>
                     </div>
@@ -455,15 +462,63 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       <p className="px-10 py-3 font-bold text-md text-gray-800">
                         Community
                       </p>
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      <button
+                        type="button"
+                        onClick={(e) => handleCategorySubmit(e, "/blog")}
+                        className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Blog"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
                       >
                         <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.25"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-scroll-text"
+                          >
+                            <path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4" />
+                            <path d="M19 17V5a2 2 0 0 0-2-2H4" />
+                            <path d="M15 8h-5" />
+                            <path d="M15 12h-5" />
+                          </svg>
                           <span>Blog</span>
                         </div>
-                      </Link>
+                      </button>
+                      <button
+                        onClick={(e) => handleCategorySubmit(e, "/courses")}
+                        className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Courses"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-graduation-cap"
+                          >
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                            <path d="M6 12v5c3 3 9 3 12 0v-5" />
+                          </svg>
+                          <span>IT Courses</span>
+                        </div>
+                      </button>
                     </div>
                     <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
                     <div className="space-y-1 p-2">
@@ -472,7 +527,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       </p>
                       <Link
                         role="menuitem"
-                        to="/profile"
+                        to="/about"
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
@@ -481,7 +536,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       </Link>
                       <Link
                         role="menuitem"
-                        to="/profile"
+                        to="/faq"
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
@@ -490,7 +545,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                       </Link>
                       <Link
                         role="menuitem"
-                        to="/profile"
+                        to="/privacy-policy"
                         className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
@@ -502,22 +557,24 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                         data-ripple-light="true"
                         data-dialog-target="report-dialog"
                         onClick={toggleReport}
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Report</span>
                         </div>
                       </button>
                       {isReportModalOpen && <UserReport />}
-                      <Link
-                        role="menuitem"
-                        to="/profile"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      <button
+                        type="button"
+                        data-ripple-light="true"
+                        data-dialog-target="report-dialog"
+                        onClick={toggleReport}
+                        className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <span>Suggest a Link</span>
                         </div>
-                      </Link>
+                      </button>
                       <button
                         // role="menuitem"
                         type="button"
@@ -649,7 +706,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
           </div>
           <div>
             <button
-              onClick={handleAuthModalToggle}
+              onClick={handleBookmarkModalToggle}
               className={`group font-semibold text-base transition duration-300 ease-in-out px-2 py-[8px] text-center rounded-full focus:outline-none  ${
                 scrolled || name === "search"
                   ? "text-slate-600 hover:bg-slate-100"
@@ -675,10 +732,10 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
           <div>
             <button
               onClick={handleAuthModalToggle}
-              className={`font-semibold text-base transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                scrolled || name === "search"
-                  ? "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                  : "text-white hover:ring-[1.1px] hover:ring-white"
+              className={`font-semibold text-base transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 px-4  text-center rounded-full focus:outline-none  ${
+                scrolled
+                  ? "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black py-[7px]"
+                  : "text-white hover:ring-[1.1px] hover:ring-white py-[8px]"
               }`}
             >
               Join
@@ -746,7 +803,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                     </div>
                     <div className="grow text-sm">
                       <Link
-                        to="/profile"
+                        to="/"
                         className="font-semibold text-gray-800 hover:text-gray-500"
                       >
                         John Doe
@@ -759,7 +816,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                   <div className="space-y-1 p-2">
                     <Link
                       role="menuitem"
-                      to="/profile"
+                      to="/"
                       className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                     >
                       <div className="flex flex-none items-center space-x-2">
@@ -782,7 +839,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                     </Link>
                     <Link
                       role="menuitem"
-                      to="/profile"
+                      to="/"
                       className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                     >
                       <div className="flex flex-none items-center space-x-2">
@@ -830,21 +887,7 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                         <span>Help</span>
                       </div>
                     </Link>
-                    <div className="flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none">
-                      <label className="relative inline-flex cursor-pointer items-center">
-                        <input
-                          type="checkbox"
-                          // checked={value}
-                          // onChange={onChange}
-                          className="peer sr-only"
-                        />
-                        <div className="peer h-6 w-11 rounded-full bg-gray-300 after:absolute after:top-[2px] after:left-[2px] after:h-5 after:w-5 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-500 peer-checked:after:translate-x-full peer-checked:after:border-white peer-focus:outline-none"></div>
-                        {/* dark:border-gray-600 dark:bg-gray-700 dark:peer-focus:ring-blue-800 */}
-                        <span className="ml-3 ">Dark Mode</span>
-                      </label>
-                    </div>
-                  </div>
-                  <div className="space-y-1 p-2">
+
                     <div>
                       {Cookies.get("logged_in_candidate") === "yes" ? (
                         <button
@@ -898,6 +941,32 @@ const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                           <span>Login</span>
                         </button>
                       )}
+                    </div>
+                  </div>
+                  <div className="space-y-1 p-2">
+                    <div className="rounded py-5 px-3 text-sm font-medium ">
+                      <div class="toggleWrapper mt-[120px]">
+                        <input
+                          type="checkbox"
+                          class="dn"
+                          id="dn"
+                          checked={isChecked}
+                          onChange={handleToggle}
+                        />
+                        <label for="dn" class="toggle">
+                          <span class="toggle__handler">
+                            <span class="crater crater--1"></span>
+                            <span class="crater crater--2"></span>
+                            <span class="crater crater--3"></span>
+                          </span>
+                          <span class="star star--1"></span>
+                          <span class="star star--2"></span>
+                          <span class="star star--3"></span>
+                          <span class="star star--4"></span>
+                          <span class="star star--5"></span>
+                          <span class="star star--6"></span>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

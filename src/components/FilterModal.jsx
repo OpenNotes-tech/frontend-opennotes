@@ -1,7 +1,7 @@
 import {
   setCategoryOption,
   setTagsOption,
-  setTypeOption,
+  setPricingOption,
   setSearchResult,
 } from "../store/features/searchSlice";
 import {
@@ -17,7 +17,7 @@ import Selector from "./Selector";
 import Loader from "./Loader";
 
 export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
-  const { query, sort, category, tags, type } = useSelector(
+  const { query, sort, category, tags, pricing } = useSelector(
     (state) => state.Search
   );
   const loading = useSelector((state) => state.Error.loading);
@@ -41,19 +41,17 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     const commaSeparatedString = selectedValues.join(",");
     dispatch(setTagsOption(commaSeparatedString));
   };
-
   const handleTypeSelector = (selectedType) => {
     const selectedValues = selectedType.map((option) => option.value);
     setTypeSelector(selectedType);
     const commaSeparatedString = selectedValues.join(",");
-    dispatch(setTypeOption(commaSeparatedString));
+    dispatch(setPricingOption(commaSeparatedString));
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(setLoading(true));
 
-    SearchAPI.linkSearch(query, sort, category, tags, type)
+    SearchAPI.linkSearch(query, sort, category, tags, pricing)
       .then((res) => {
         console.log(res);
         dispatch(setSearchResult(res.data.data.body));
@@ -68,10 +66,9 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
         setToggleFilter(false);
       });
   };
-
   const handleCancel = () => {
-    setSkillsSelector([]); // Clear selected skills
-    setLocationSelector([]); // Clear selected locations
+    // setSkillsSelector([]); // Clear selected skills
+    // setLocationSelector([]); // Clear selected locations
     setToggleFilter(false); // Close the modal
   };
 
@@ -96,14 +93,14 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
   }, [tags]);
 
   useEffect(() => {
-    if (type) {
-      const selectedValues = type.split(",");
+    if (pricing) {
+      const selectedValues = pricing.split(",");
       const selectedOptions = TypeOptions.filter((option) =>
         selectedValues.includes(option.value)
       );
       setTypeSelector(selectedOptions);
     }
-  }, [type]);
+  }, [pricing]);
 
   // Close the modal when the user clicks outside of it
   useEffect(() => {
@@ -169,7 +166,7 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
                   Type
                 </div>
                 <Selector
-                  name="type"
+                  name="pricing"
                   className="basic-multi-select"
                   options={TypeOptions}
                   isMulti={true}

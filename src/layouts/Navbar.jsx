@@ -16,7 +16,7 @@ import UserReport from "../components/UserReport";
 import LangModal from "../components/LangModal";
 
 const Navbar = ({ setIsSidebarOpen, isSidebarOpen }) => {
-  const {errorMessage, loading} = useSelector((state) => state.Error);
+  const { errorMessage, loading } = useSelector((state) => state.Error);
   const { isReportModalOpen, isLangModalOpen } = useSelector(
     (state) => state.Modal
   );

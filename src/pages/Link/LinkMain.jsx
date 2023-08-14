@@ -33,44 +33,56 @@ const LinkMain = () => {
   const [isFilterSticky, setIsFilterSticky] = useState(false);
   const [linkResults, setLinkResults] = useState(result);
 
-  const handleTagsSubmit = (e) => {
-    e.preventDefault();
-    dispatch(setLoading(true));
-    dispatch(setTagsOption(isOpen));
+  // const handleTagsSubmit = (e) => {
+  //   e.preventDefault();
+  //   dispatch(setLoading(true));
+  //   dispatch(setTagsOption(isOpen));
 
-    SearchAPI.linkSearch(query, sort, category, tags, type)
-      .then((res) => {
-        dispatch(setSearchResult(res.data.data.body));
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        dispatch(setError(error?.response?.data?.message));
-        dispatch(setLoading(false));
-      })
-      .finally((e) => {
-        dispatch(setLoading(false));
-      });
-  };
+  //   SearchAPI.linkSearch(query, sort, category, tags, type)
+  //     .then((res) => {
+  //       dispatch(setSearchResult(res.data.data.body));
+  //       dispatch(setLoading(false));
+  //     })
+  //     .catch((error) => {
+  //       dispatch(setError(error?.response?.data?.message));
+  //       dispatch(setLoading(false));
+  //     })
+  //     .finally((e) => {
+  //       dispatch(setLoading(false));
+  //     });
+  // };
 
   const handleCategorySubmit = (e, navLink) => {
     if (e) {
       e.preventDefault();
+      navigate(navLink);
+      navLink = navLink.substring(1);
     }
     dispatch(setLoading(true));
-    dispatch(setCategoryOption(navLink.substring(1)));
-    navigate(navLink);
-    // if (navLink.substring(1) !== name) {
-    // }
+    dispatch(setCategoryOption(navLink));
 
-    SearchAPI.linkSearch(query, sort, navLink.substring(1), tags, type)
+    SearchAPI.linkSearch(query, sort, navLink, tags, type)
       .then((res) => {
+        console.log(res);
         setLinkResults(res.data.data.body);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
+        // dispatch(
+        //   setError({
+        //     message: "Signed Up Successfully!",
+        //     type: "success",
+        //   })
+        // );
       })
       .catch((error) => {
         dispatch(setError(error?.response?.data?.message));
         dispatch(setLoading(false));
+        dispatch(
+          setError({
+            message: error?.response?.data?.message,
+            type: "error",
+          })
+        );
       })
       .finally((e) => {
         dispatch(setLoading(false));
@@ -78,31 +90,38 @@ const LinkMain = () => {
   };
   const handleSortChange = (e, result) => {
     e.preventDefault();
-    // dispatch(setSortOption(result));
-    // dispatch(setLoading(true));
+    dispatch(setSortOption(result));
+    dispatch(setLoading(true));
+    setIsOpen((prevState) => !prevState);
 
     SearchAPI.linkSearch(query, result, category, tags, type)
       .then((res) => {
         console.log(res);
-        // dispatch(setSearchResult(res.data.data.body));
-        // dispatch(setLoading(false));
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setLoading(false));
+        // dispatch(
+        //   setError({
+        //     message: "Signed Up Successfully!",
+        //     type: "success",
+        //   })
+        // );
       })
       .catch((error) => {
-        console.log(error);
-        // dispatch(setError(error?.response?.data?.message));
-        // dispatch(setLoading(false));
+        dispatch(
+          setError({
+            message: error?.response?.data?.message,
+            type: "error",
+          })
+        );
+        dispatch(setLoading(false));
       })
       .finally((e) => {
-        // dispatch(setLoading(false));
+        dispatch(setLoading(false));
       });
   };
 
   const handleMoreButton = () => {
-    if (name !== "search") {
-      navigate("/search");
-    } else {
-      console.log("hello world");
-    }
+    console.log("hello world");
   };
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);
@@ -112,11 +131,11 @@ const LinkMain = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  useEffect(() => {
-    if (result.length === 0) {
-      handleCategorySubmit(null, name);
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (result.length === 0) {
+  //     handleCategorySubmit(null, name);
+  //   }
+  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {

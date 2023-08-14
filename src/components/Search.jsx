@@ -1,65 +1,39 @@
 import { setSearchQuery, setSearchResult } from "../store/features/searchSlice";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import SearchAPI from "../utils/SearchAPI";
 import { FilterModal } from "./FilterModal";
 
 const Search = ({ nav }) => {
   const { query, sort, category, tags } = useSelector((state) => state.Search);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
 
-  const name = location.pathname.split("/")[1].toLowerCase();
   const [isInputFocused, setInputFocused] = useState(false);
   const [getToggleFilter, setToggleFilter] = useState(false);
 
-  const handleInputChange = (event) => {
+  const handleInputSubmit = (event) => {
     dispatch(setSearchQuery(event.target.value));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     dispatch(setLoading(true));
-
-
-    // if (name !== "search") {
-    // }
-    navigate("/search");
-
-    if (name !== "search") {
-      SearchAPI.linkSearch(query, sort, category, tags)
-        .then((res) => {
-          console.log(res);
-          dispatch(setSearchResult(res.data.data.body));
-          dispatch(setLoading(false));
-        })
-        .catch((error) => {
-          dispatch(setError(error?.response?.data?.message));
-          dispatch(setLoading(false));
-        })
-        .finally((e) => {
-          dispatch(setLoading(false));
-        });
-    } else {
-      SearchAPI.linkSearch(query, sort, category, tags)
-        .then((res) => {
-          console.log(res);
-          dispatch(setSearchResult(res.data.data.body));
-          dispatch(setLoading(false));
-        })
-        .catch((error) => {
-          dispatch(setError(error?.response?.data?.message));
-          dispatch(setLoading(false));
-        })
-        .finally((e) => {
-          dispatch(setLoading(false));
-        });
-    }
+    SearchAPI.linkSearch(query, sort, category, tags)
+      .then((res) => {
+        console.log(res);
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        dispatch(setError(error?.response?.data?.message));
+        dispatch(setLoading(false));
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
   };
-
 
   const handleFilterToggle = () => {
     setToggleFilter(true);
@@ -80,7 +54,7 @@ const Search = ({ nav }) => {
           >
             <input
               value={query}
-              onChange={handleInputChange}
+              onChange={handleInputSubmit}
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
               type="search"

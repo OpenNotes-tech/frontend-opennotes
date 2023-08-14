@@ -82,7 +82,6 @@ const Sign = () => {
           }, 2000);
         })
         .catch((error) => {
-          console.log(error?.response);
           dispatch(
             setError({
               message: error?.response?.data?.message,

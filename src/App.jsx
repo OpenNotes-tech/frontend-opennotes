@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 // Functions
 import PrivateRouter from "./utils/PrivateRouter";
-import ScrollToTop from "./utils/ScrollToTop";
+// import ScrollToTop from "./utils/ScrollToTop";
 // Authentication Routes
 import ForgotPassword from "./pages/Authentication/ForgotPassword";
 // Home Pgage Routes
@@ -30,7 +30,7 @@ import NotFound from "./pages/Static/NotFound";
 import About from "./pages/Static/About";
 import Contacts from "./pages/Static/Contacts";
 import Policy from "./pages/Static/Policy";
-import SearchMain from "./pages/Search/SearchMain";
+// import SearchMain from "./pages/Search/SearchMain";
 
 const App = () => {
   const candidateIsAuthorized = Cookies.get("logged_in_candidate");
@@ -49,7 +49,7 @@ const App = () => {
           />
           <Route path="/:category?" element={<HomeMain />} />
           <Route path="/link" exact element={<LinkMain />} />
-          <Route path="/search" exact element={<SearchMain />} />
+          {/* <Route path="/search" exact element={<SearchMain />} /> */}
           <Route path="details/:linkid" exact element={<LinkDetailsModal />} />
           <Route exact element={<PrivateRouter />}>
             <Route path="saved" exact element={<BookmarkMain />} />

@@ -33,7 +33,7 @@ const Hero = () => {
   return (
     <>
       <div
-        class="xl:px-16 -mx-4 -mt-16 xl:-mx-0 px-4 md:px-10 relative bg-top bg-cover md:bg-center py-16 overflow-hidden bg-no-repeat text-center h-[450px]"
+        class="xl:px-16 -mx-4 -mt-16 xl:-mx-0 px-4 md:px-10 relative bg-top bg-cover md:bg-center py-16 overflow-hidden bg-no-repeat text-center h-[440px]"
         style={{
           backgroundImage: `url(${getPhoto})`,
         }}

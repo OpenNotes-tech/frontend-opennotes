@@ -5,9 +5,13 @@ import {
   setSearchResult,
 } from "../store/features/searchSlice";
 import {
-  SubTopicOptions,
+  FrontendOptions,
   CategoryOptions,
-  TypeOptions,
+  PricingOptions,
+  MobileOptions,
+  BackendOptions,
+  AIOptions,
+  SecurityOptions,
 } from "../constants/FilterData";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,7 +27,7 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
   const loading = useSelector((state) => state.Error.loading);
   const [getLocationSelector, setLocationSelector] = useState([]);
   const [getSkillsSelector, setSkillsSelector] = useState([]);
-  const [getTypeSelector, setTypeSelector] = useState([]);
+  const [getPricingSelector, setPricingSelector] = useState([]);
 
   const dispatch = useDispatch();
   const modalRef = useRef();
@@ -41,9 +45,9 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     const commaSeparatedString = selectedValues.join(",");
     dispatch(setTagsOption(commaSeparatedString));
   };
-  const handleTypeSelector = (selectedType) => {
-    const selectedValues = selectedType.map((option) => option.value);
-    setTypeSelector(selectedType);
+  const handlePricingSelector = (selectedPrice) => {
+    const selectedValues = selectedPrice.map((option) => option.value);
+    setPricingSelector(selectedPrice);
     const commaSeparatedString = selectedValues.join(",");
     dispatch(setPricingOption(commaSeparatedString));
   };
@@ -83,22 +87,12 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
   }, [category]);
 
   useEffect(() => {
-    if (tags) {
-      const selectedValues = tags.split(",");
-      const selectedOptions = SubTopicOptions.filter((option) =>
-        selectedValues.includes(option.value)
-      );
-      setSkillsSelector(selectedOptions);
-    }
-  }, [tags]);
-
-  useEffect(() => {
     if (pricing) {
       const selectedValues = pricing.split(",");
-      const selectedOptions = TypeOptions.filter((option) =>
+      const selectedOptions = PricingOptions.filter((option) =>
         selectedValues.includes(option.value)
       );
-      setTypeSelector(selectedOptions);
+      setPricingSelector(selectedOptions);
     }
   }, [pricing]);
 
@@ -116,6 +110,46 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
   }, [getToggleFilter, setToggleFilter]);
+
+  // Combine selected category options into one array
+  const categoryOptions = {
+    Mobile: MobileOptions,
+    Frontend: FrontendOptions,
+    Backend: BackendOptions,
+    "Artificial Intelligence": AIOptions,
+    "Cyber Security": SecurityOptions,
+  };
+
+  // Flatten category options and prioritize the options of the first selected category
+  const orderedSelectedOptions =
+    category.length > 0
+      ? category
+          ?.split(",")
+          ?.flatMap((category, index) => {
+            if (index === 0) {
+              return categoryOptions[category];
+            }
+            return [];
+          })
+          .concat(
+            Object.values(categoryOptions)?.flatMap((options) =>
+              options.filter(
+                (option) =>
+                  !categoryOptions[category?.split(",")[0]]?.includes(option)
+              )
+            )
+          )
+      : Object.values(categoryOptions)?.flat();
+
+  useEffect(() => {
+    if (tags) {
+      const selectedValues = tags.split(",");
+      const selectedOptions = orderedSelectedOptions.filter((option) =>
+        selectedValues.includes(option.value)
+      );
+      setSkillsSelector(selectedOptions);
+    }
+  }, [tags]);
 
   return (
     <>
@@ -155,7 +189,7 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
                 <Selector
                   name="tags"
                   className="basic-multi-select"
-                  options={SubTopicOptions}
+                  options={orderedSelectedOptions}
                   isMulti={true}
                   value={getSkillsSelector}
                   onChange={handleSkillsSelector}
@@ -163,15 +197,15 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
               </div>
               <div className="px-10 md:px-0">
                 <div className="text-sm text-slate-800 font-semibold mb-3">
-                  Type
+                  Pricing
                 </div>
                 <Selector
                   name="pricing"
                   className="basic-multi-select"
-                  options={TypeOptions}
+                  options={PricingOptions}
                   isMulti={true}
-                  value={getTypeSelector}
-                  onChange={handleTypeSelector}
+                  value={getPricingSelector}
+                  onChange={handlePricingSelector}
                 />
               </div>
             </div>

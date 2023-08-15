@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { SkillsOptions } from "../../constants/FilterData";
+import { BackendOptions } from "../../constants/FilterData";
 import Selector from "../../components/Selector";
 
 const ProfileChangeInfo = () => {
@@ -204,7 +204,7 @@ const ProfileChangeInfo = () => {
                 <Selector
                   name="skills"
                   className="basic-multi-select"
-                  options={SkillsOptions}
+                  options={BackendOptions}
                   isMulti={true}
                   value={getSkillsSelector}
                   onChange={handleSkillsSelector}
@@ -219,7 +219,7 @@ const ProfileChangeInfo = () => {
                 <Selector
                   name="skills"
                   className="basic-multi-select"
-                  options={SkillsOptions}
+                  options={BackendOptions}
                   isMulti={true}
                   value={getSkillsSelector}
                   onChange={handleSkillsSelector}

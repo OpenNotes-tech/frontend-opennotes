@@ -5,7 +5,7 @@ import {
   setPricingOption,
   setSearchResult,
 } from "../../store/features/searchSlice";
-import { SubTopicOptions } from "../../constants/FilterData";
+import { FrontendOptions } from "../../constants/FilterData";
 import { setLoading, setError } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import SearchAPI from "../../utils/SearchAPI";
@@ -243,7 +243,7 @@ const SearchHero = () => {
                   <Selector
                     name="tags"
                     className="basic-multi-select"
-                    options={SubTopicOptions}
+                    options={FrontendOptions}
                     isMulti={true}
                     value={getSkillsSelector}
                     onChange={handleSkillsSelector}

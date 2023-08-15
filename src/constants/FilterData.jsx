@@ -1,4 +1,4 @@
-export const SubTopicOptions = [
+export const FrontendOptions = [
   { value: "Frontend", label: "Frontend", isDisabled: true },
   { value: "Error Page", label: "Error Page" },
   { value: "Comments Section", label: "Comments Section" },
@@ -253,17 +253,45 @@ export const SubTopicOptions = [
 ];
 
 export const CategoryOptions = [
-  { value: "All", label: "All Category" },
   { value: "Frontend", label: "Frontend" },
   { value: "Backend", label: "Backend" },
   { value: "Mobile", label: "Mobile" },
-  { value: "Artifical Intelligence", label: "Artifical Intelligence" },
+  { value: "Artificial Intelligence", label: "Artificial Intelligence" },
   { value: "Algorithms", label: "Algorithms" },
   { value: "IT Courses", label: "IT Courses" },
   { value: "Cyber Security", label: "Cyber Security" },
 ];
 
-export const SkillsOptions = [
+export const MobileOptions = [
+  { value: "Mobile", label: "Mobile", isDisabled: true },
+  { value: "Python", label: "Python" },
+  { value: "JavaScript", label: "JavaScript" },
+  { value: "Java", label: "Java" },
+  { value: "Go", label: "Go" },
+  { value: "C++", label: "C++" },
+  { value: "PHP", label: "PHP" },
+];
+export const AIOptions = [
+  { value: "AI", label: "AI", isDisabled: true },
+  { value: "Python", label: "Python" },
+  { value: "JavaScript", label: "JavaScript" },
+  { value: "Java", label: "Java" },
+  { value: "Go", label: "Go" },
+  { value: "C++", label: "C++" },
+  { value: "PHP", label: "PHP" },
+];
+export const SecurityOptions = [
+  { value: "Cyber Security", label: "Cyber Security", isDisabled: true },
+  { value: "Python", label: "Python" },
+  { value: "JavaScript", label: "JavaScript" },
+  { value: "Java", label: "Java" },
+  { value: "Go", label: "Go" },
+  { value: "C++", label: "C++" },
+  { value: "PHP", label: "PHP" },
+];
+
+export const BackendOptions = [
+  { value: "Backend", label: "Backend", isDisabled: true },
   { value: "Python", label: "Python" },
   { value: "JavaScript", label: "JavaScript" },
   { value: "Java", label: "Java" },
@@ -444,8 +472,9 @@ export const SkillsOptions = [
   { value: "Docker", label: "Docker" },
 ];
 
-export const TypeOptions = [
+export const PricingOptions = [
   { value: "Free", label: "Free" },
   { value: "Paid", label: "Paid" },
   { value: "Freemium", label: "Freemium" },
+  { value: "Free+Paid", label: "Free+Paid" },
 ];

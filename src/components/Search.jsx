@@ -43,7 +43,7 @@ const Search = ({ nav }) => {
   };
 
   useEffect(() => {
-    if (pricing.length > 0 || tags.length > 0) {
+    if (category.length > 0 || pricing.length > 0 || tags.length > 0) {
       setFilterChange(true);
     } else {
       setFilterChange(false);

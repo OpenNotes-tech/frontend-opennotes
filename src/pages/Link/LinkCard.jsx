@@ -2,17 +2,18 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/shift-away.css";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   openBookmarkModal,
   openShareModal,
   openDetailsModal,
+  setModalValue,
 } from "../../store/features/modalSlice";
-import LinkDetailsModal from "./LinkDetailsModal";
 
 const LinkCard = ({ linkElement }) => {
-  const { isDetailsModalOpen } = useSelector((state) => state.Modal);
   const dispatch = useDispatch();
+
+  dispatch(setModalValue(linkElement));
 
   const handleBookmarkModal = () => {
     dispatch(openBookmarkModal());
@@ -88,7 +89,6 @@ const LinkCard = ({ linkElement }) => {
             </svg>
             <p>Details</p>
           </button>
-          {isDetailsModalOpen && <LinkDetailsModal />}
         </div>
         <div class="flex items-end flex-row justify-between mt-auto px-4 border-t pt-3">
           <div

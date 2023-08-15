@@ -17,6 +17,7 @@ import Loader from "../../components/Loader";
 import BookmarkModal from "../../components/BookmarkModal";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/skyblue";
+import LinkDetailsModal from "./LinkDetailsModal";
 
 const LinkMain = () => {
   const location = useLocation();
@@ -26,9 +27,8 @@ const LinkMain = () => {
   const { query, sort, category, tags, pricing, result } = useSelector(
     (state) => state.Search
   );
-  const { isShareModalOpen, isBookmarkModalOpen } = useSelector(
-    (state) => state.Modal
-  );
+  const { isShareModalOpen, isBookmarkModalOpen, isDetailsModalOpen } =
+    useSelector((state) => state.Modal);
   const name = location.pathname.split("/")[1]?.toLowerCase();
   const loading = useSelector((state) => state.Error.loading);
   const [isOpen, setIsOpen] = useState(false);
@@ -737,6 +737,7 @@ const LinkMain = () => {
       </div>
       {isBookmarkModalOpen && <BookmarkModal />}
       {isShareModalOpen && <ShareModal />}
+      {isDetailsModalOpen && <LinkDetailsModal />}
     </div>
   );
 };

@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeShareModal } from "../store/features/modalSlice";
 import Loader from "./Loader";
 const ShareModal = () => {
-  const isShareModalOpen = useSelector((state) => state.Modal.isShareModalOpen);
+  const { isShareModalOpen, modalValue } = useSelector((state) => state.Modal);
   const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
   const modalRef = useRef();
@@ -201,8 +201,8 @@ const ShareModal = () => {
             Or share with link
           </h3>
           <div class="mt-4 flex w-full items-center justify-between gap-4 rounded-lg bg-gray-100 p-2 sm:py-4 sm:px-5 md:mt-7">
-            <p class="w-3/4 overflow-clip text-ellipsis italic text-sm font-normal text-gray">
-              https://www.figma.com/file/NlfVhYygR9mAQasa
+            <p class="w-3/4 overflow-clip text-ellipsis italic  font-normal text-gray">
+              {modalValue.url}
             </p>
             <button
               type="button"

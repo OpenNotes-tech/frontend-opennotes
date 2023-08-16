@@ -3,6 +3,7 @@ import {
   setTagsOption,
   setPricingOption,
   setSearchResult,
+  setPagination,
 } from "../store/features/searchSlice";
 import {
   FrontendOptions,
@@ -12,6 +13,8 @@ import {
   BackendOptions,
   AIOptions,
   SecurityOptions,
+  BlogOptions,
+  AlgorithmsOptions,
 } from "../constants/FilterData";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -58,6 +61,7 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
       })
       .catch((error) => {
@@ -117,6 +121,8 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     Backend: BackendOptions,
     "Artificial Intelligence": AIOptions,
     "Cyber Security": SecurityOptions,
+    Blog: BlogOptions,
+    Algorithms: AlgorithmsOptions,
   };
 
   // Flatten category options and prioritize the options of the first selected category

@@ -19,6 +19,7 @@ import "../assets/css/darkmode.css";
 import {
   setCategoryOption,
   setSearchResult,
+  setPagination,
 } from "../store/features/searchSlice";
 import { setLoading, setError } from "../store/features/errorSlice";
 import SearchAPI from "../utils/SearchAPI";
@@ -54,13 +55,14 @@ const Navbar = () => {
     }
     navLink = navLink.charAt(0).toUpperCase() + navLink.slice(1);
     dispatch(setLoading(true));
-    dispatch(setCategoryOption(navLink));
+    dispatch(setCategoryOption(e.target.textContent.trim()));
 
     SearchAPI.linkSearch(query, sort, navLink, tags, pricing, pageNumber, 12)
       .then((res) => {
         console.log(res);
         setSearchResult(res.data.data.body);
         dispatch(setSearchResult(res.data.data.body));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
         // setToggleExplore(false);
       })
@@ -495,7 +497,7 @@ const Navbar = () => {
                       <button
                         onClick={(e) => handleCategorySubmit(e, "/courses")}
                         className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
-                          category?.split(",")[0] === "Courses"
+                          category?.split(",")[0] === "IT Courses"
                             ? "bg-blue-100 text-blue-500"
                             : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
                         }`}
@@ -517,6 +519,34 @@ const Navbar = () => {
                             <path d="M6 12v5c3 3 9 3 12 0v-5" />
                           </svg>
                           <span>IT Courses</span>
+                        </div>
+                      </button>
+                      <button
+                        onClick={(e) => handleCategorySubmit(e, "/courses")}
+                        className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+                          category?.split(",")[0] === "Podcasts"
+                            ? "bg-blue-100 text-blue-500"
+                            : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
+                        }`}
+                      >
+                        <div className="flex flex-none items-center space-x-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-mic"
+                          >
+                            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                            <line x1="12" x2="12" y1="19" y2="22" />
+                          </svg>
+                          <span>Podcasts</span>
                         </div>
                       </button>
                     </div>

@@ -39,10 +39,12 @@ export const modalSlice = createSlice({
       state.modalValue = null;
       state.isDetailsModalOpen = false;
     },
-    openShareModal: (state) => {
+    openShareModal: (state, action) => {
+      state.modalValue = action.payload;
       state.isShareModalOpen = true;
     },
     closeShareModal: (state) => {
+      state.modalValue = null;
       state.isShareModalOpen = false;
     },
     openBookmarkModal: (state) => {

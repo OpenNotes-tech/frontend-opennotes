@@ -1,4 +1,8 @@
-import { setSearchQuery, setSearchResult } from "../store/features/searchSlice";
+import {
+  setSearchQuery,
+  setSearchResult,
+  setPagination,
+} from "../store/features/searchSlice";
 import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
@@ -26,6 +30,7 @@ const Search = ({ nav }) => {
     SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
       })
       .catch((error) => {

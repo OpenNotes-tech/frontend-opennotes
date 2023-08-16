@@ -256,7 +256,32 @@ export const CategoryOptions = [
   { value: "Frontend", label: "Frontend" },
   { value: "Backend", label: "Backend" },
   { value: "Mobile", label: "Mobile" },
-  { value: "Artificial Intelligence", label: "Artificial Intelligence" },
+  { value: "Blogs", label: "Blogs" },
+  { value: "Podcasts", label: "Podcasts" },
+  { value: "Data Science", label: "Data Science" },
+  { value: "Algorithms", label: "Algorithms" },
+  { value: "IT Courses", label: "IT Courses" },
+  { value: "Cyber Security", label: "Cyber Security" },
+];
+export const BlogOptions = [
+  { value: "Blog", label: "Blog", isDisabled: true },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Mobile", label: "Mobile" },
+  { value: "Blog", label: "Blog" },
+  { value: "Data Science", label: "Data Science" },
+  { value: "Algorithms", label: "Algorithms" },
+  { value: "IT Courses", label: "IT Courses" },
+  { value: "Cyber Security", label: "Cyber Security" },
+];
+
+export const AlgorithmsOptions = [
+  { value: "Algorithms", label: "Algorithms", isDisabled: true },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Mobile", label: "Mobile" },
+  { value: "Blog", label: "Blog" },
+  { value: "Data Science", label: "Data Science" },
   { value: "Algorithms", label: "Algorithms" },
   { value: "IT Courses", label: "IT Courses" },
   { value: "Cyber Security", label: "Cyber Security" },

@@ -51,7 +51,7 @@ const LinkMain = () => {
       .then((res) => {
         setLinkResults(res.data.data.body);
         dispatch(setSearchResult(res.data.data.body));
-        dispatch(setPagination({ totalPages: res.data.totalPages }));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
       })
       .catch((error) => {
@@ -92,21 +92,13 @@ const LinkMain = () => {
     }
     navLink = navLink.charAt(0).toUpperCase() + navLink.slice(1);
     dispatch(setLoading(true));
-    dispatch(setCategoryOption(navLink));
+    dispatch(setCategoryOption(e.target.textContent.trim()));
 
-    SearchAPI.linkSearch(
-      query,
-      sort,
-      navLink,
-      tags,
-      tags,
-      pricing,
-      pageNumber,
-      12
-    )
+    SearchAPI.linkSearch(query, sort, navLink, tags, pricing, pageNumber, 12)
       .then((res) => {
         setLinkResults(res.data.data.body);
         dispatch(setSearchResult(res.data.data.body));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
       })
       .catch((error) => {
@@ -133,6 +125,7 @@ const LinkMain = () => {
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         // dispatch(
         //   setError({
         //     message: "Signed Up Successfully!",
@@ -232,7 +225,9 @@ const LinkMain = () => {
               <button
                 onClick={(e) => handleCategorySubmit(e, "/")}
                 className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-                  category?.split(",")[0] === "" && "bg-blue-100 text-blue-500"
+                  (category?.split(",")[0] === "Home" ||
+                    category?.split(",")[0] === "") &&
+                  "bg-blue-100 text-blue-500"
                 }`}
               >
                 <svg
@@ -340,7 +335,7 @@ const LinkMain = () => {
               <button
                 onClick={(e) => handleCategorySubmit(e, "/courses")}
                 className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-                  category?.split(",")[0] === "Courses" &&
+                  category?.split(",")[0] === "IT Courses" &&
                   "bg-blue-100 text-blue-500"
                 }`}
               >
@@ -359,14 +354,14 @@ const LinkMain = () => {
                   <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                   <path d="M6 12v5c3 3 9 3 12 0v-5" />
                 </svg>{" "}
-                <p>Courses</p>
+                <p>IT Courses</p>
               </button>
             </SplideSlide>
             <SplideSlide>
               <button
                 onClick={(e) => handleCategorySubmit(e, "/cybersecurity")}
                 className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 whitespace-nowrap ${
-                  category?.split(",")[0] === "Cybersecurity" &&
+                  category?.split(",")[0] === "Cyber Security" &&
                   "bg-blue-100 text-blue-500"
                 }`}
               >
@@ -399,7 +394,7 @@ const LinkMain = () => {
               <button
                 onClick={(e) => handleCategorySubmit(e, "/datascience")}
                 className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 whitespace-nowrap ${
-                  category?.split(",")[0] === "Datascience" &&
+                  category?.split(",")[0] === "Data Science" &&
                   "bg-blue-100 text-blue-500"
                 }`}
               >
@@ -734,62 +729,64 @@ const LinkMain = () => {
               <LoaderSkeleton />
             </div>
           )}
-          <div className="flex w-full justify-center">
-            <div className="flex flex-row space-x-2 items-center justify-center mt-20">
-              <button
-                onClick={gotoPrevious}
-                className="p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200 "
-              >
-                Previous
-              </button>
-              {pageNumber >= 2 && (
-                <span className="text-primary mt-4">. . .</span>
-              )}
-              {totalPages > 2
-                ? pages
-                    .slice(
-                      pageNumber === 0 ? 0 : pageNumber - 1,
-                      pageNumber + 2
-                    )
-                    .map((page, index) => {
-                      return (
-                        <button
-                          key={index}
-                          onClick={() => setPage(page)}
-                          className={` ${
-                            page === pageNumber
-                              ? "bg-primary text-white p-2 border-primary border-2 rounded-lg hover:bg-white hover:text-primary ease-linear duration-200"
-                              : "p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200"
-                          }`}
-                        >
-                          {page + 1}
-                        </button>
-                      );
-                    })
-                : pages.map((pageIndex) => (
-                    <button
-                      key={pageIndex}
-                      onClick={() => setPage(pageIndex)}
-                      className={` ${
-                        pageIndex === pageNumber
-                          ? "bg-primary text-white p-2 border-primary border-2 rounded-lg hover:bg-white hover:text-primary ease-linear duration-200"
-                          : "p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200"
-                      }`}
-                    >
-                      {pageIndex + 1}
-                    </button>
-                  ))}
-              {totalPages > 2 && totalPages !== pageNumber + 1 && (
-                <span className="text-primary mt-4">. . .</span>
-              )}
-              <button
-                onClick={gotoNext}
-                className="p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200 "
-              >
-                Next
-              </button>
+          {!loading && linkResults.length > 0 && (
+            <div className="flex w-full justify-center">
+              <div className="flex flex-row space-x-2 items-center justify-center mt-20">
+                <button
+                  onClick={gotoPrevious}
+                  className="p-2 border-black border-2 rounded-lg hover:bg-black hover:text-white text-black ease-linear duration-200 "
+                >
+                  Previous
+                </button>
+                {!pageNumber >= 2 && (
+                  <span className="text-black mt-4">. . .</span>
+                )}
+                {!totalPages > 2
+                  ? pages
+                      .slice(
+                        pageNumber === 0 ? 0 : pageNumber - 1,
+                        pageNumber + 2
+                      )
+                      .map((page, index) => {
+                        return (
+                          <button
+                            key={index}
+                            onClick={() => setPage(page)}
+                            className={` ${
+                              page === pageNumber
+                                ? "bg-black text-white p-2 border-black border-2 rounded-lg hover:bg-white hover:text-black ease-linear duration-200"
+                                : "p-2 border-black border-2 rounded-lg hover:bg-black hover:text-white text-black ease-linear duration-200"
+                            }`}
+                          >
+                            {page + 1}
+                          </button>
+                        );
+                      })
+                  : pages.map((pageIndex) => (
+                      <button
+                        key={pageIndex}
+                        onClick={() => setPage(pageIndex)}
+                        className={` ${
+                          pageIndex === pageNumber
+                            ? "bg-black text-white p-2 border-black border-2 rounded-lg hover:bg-white hover:text-black ease-linear duration-200"
+                            : "p-2 border-black border-2 rounded-lg hover:bg-black hover:text-white text-black ease-linear duration-200"
+                        }`}
+                      >
+                        {pageIndex + 1}
+                      </button>
+                    ))}
+                {totalPages > 2 && totalPages !== pageNumber + 1 && (
+                  <span className="text-black mt-4">. . .</span>
+                )}
+                <button
+                  onClick={gotoNext}
+                  className="p-2 border-black border-2 rounded-lg hover:bg-black hover:text-white text-black ease-linear duration-200 "
+                >
+                  Next
+                </button>
+              </div>
             </div>
-          </div>
+          )}
           {!isFilterSticky && (
             <button
               className="fixed bottom-24 md:bottom-10 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"

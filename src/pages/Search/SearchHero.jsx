@@ -4,6 +4,7 @@ import {
   setTagsOption,
   setPricingOption,
   setSearchResult,
+  setPagination,
 } from "../../store/features/searchSlice";
 import { FrontendOptions } from "../../constants/FilterData";
 import { setLoading, setError } from "../../store/features/errorSlice";
@@ -108,6 +109,7 @@ const SearchHero = () => {
     SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
       })
       .catch((error) => {
@@ -126,6 +128,7 @@ const SearchHero = () => {
     SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
+        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
       })
       .catch((error) => {

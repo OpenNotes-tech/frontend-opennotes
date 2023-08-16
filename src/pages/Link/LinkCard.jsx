@@ -16,7 +16,7 @@ const LinkCard = ({ linkElement }) => {
     dispatch(openBookmarkModal());
   };
   const handleShareModal = () => {
-    dispatch(openShareModal());
+    dispatch(openShareModal(linkElement));
   };
 
   const handleDetailsModal = () => {

@@ -1,0 +1,10 @@
+{
+    "home":[{"first":"first", "first":"first"}],
+    "frontend":[{"inspiration":"inspiration", "illustrations":"illustrations", "icons":"icons", "mockup":"mockup", "typography":"typography", "images":"images", "colors":"colors", "websiteBuilder":"websiteBuilder", "designTools":"designTools", "UXTools":"UXTools", "ProjectTools":"ProjectTools", "Web Performance":"Web Performance", "React.js":"React.js", "PWA":"PWA", "SEO":"SEO"}],
+    "backend":[{"first":"first", "first":"first"}],
+    "courses":[{"first":"first", "first":"first"}],
+    "datascience":[{"first":"first", "first":"first"}],
+    "blog":[{"first":"first", "first":"first"}],
+    "cybersecurity":[{"first":"first", "first":"first"}],
+    "mobile":[{"first":"first", "first":"first"}]
+}

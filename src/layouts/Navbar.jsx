@@ -28,7 +28,7 @@ const Navbar = () => {
   const { isReportModalOpen, isLangModalOpen } = useSelector(
     (state) => state.Modal
   );
-  const { query, sort, category, tags, pricing } = useSelector(
+  const { query, sort, category, tags, pricing, pageNumber } = useSelector(
     (state) => state.Search
   );
   const [toggleExplore, setToggleExplore] = useState(false);
@@ -56,7 +56,7 @@ const Navbar = () => {
     dispatch(setLoading(true));
     dispatch(setCategoryOption(navLink));
 
-    SearchAPI.linkSearch(query, sort, navLink, tags, pricing)
+    SearchAPI.linkSearch(query, sort, navLink, tags, pricing, pageNumber, 12)
       .then((res) => {
         console.log(res);
         setSearchResult(res.data.data.body);
@@ -814,10 +814,10 @@ const Navbar = () => {
                     </div>
                   </div>
                   <div className="space-y-1 p-2">
-                    <Link
+                    <button
                       role="menuitem"
-                      to="/"
-                      className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                      onClick={handleBookmarkModalToggle}
+                      className="w-full flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                     >
                       <div className="flex flex-none items-center space-x-2">
                         <svg
@@ -836,7 +836,7 @@ const Navbar = () => {
                         </svg>
                         <span>Bookmark</span>
                       </div>
-                    </Link>
+                    </button>
                     <Link
                       role="menuitem"
                       to="/"

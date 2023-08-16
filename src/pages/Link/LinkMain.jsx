@@ -8,6 +8,7 @@ import {
   setCategoryOption,
   setTagsOption,
   setSearchResult,
+  setPagination,
 } from "../../store/features/searchSlice";
 import ShareModal from "../../components/ShareModal";
 import LoaderSkeleton from "../../components/LoaderSkeleton";
@@ -24,9 +25,16 @@ const LinkMain = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const filterRef = useRef(null);
-  const { query, sort, category, tags, pricing, result } = useSelector(
-    (state) => state.Search
-  );
+  const {
+    query,
+    sort,
+    category,
+    tags,
+    pricing,
+    result,
+    pageNumber,
+    totalPages,
+  } = useSelector((state) => state.Search);
   const { isShareModalOpen, isBookmarkModalOpen, isDetailsModalOpen } =
     useSelector((state) => state.Modal);
   const name = location.pathname.split("/")[1]?.toLowerCase();
@@ -34,6 +42,47 @@ const LinkMain = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFilterSticky, setIsFilterSticky] = useState(false);
   const [linkResults, setLinkResults] = useState(result);
+
+  const pages = new Array(totalPages).fill(null).map((v, i) => i);
+
+  useEffect(() => {
+    dispatch(setLoading(true));
+    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
+      .then((res) => {
+        setLinkResults(res.data.data.body);
+        dispatch(setSearchResult(res.data.data.body));
+        dispatch(setPagination({ totalPages: res.data.totalPages }));
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        dispatch(setError(error?.response?.data?.message));
+        dispatch(setLoading(false));
+        dispatch(
+          setError({
+            message: error?.response?.data?.message,
+            type: "error",
+          })
+        );
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
+  }, [pageNumber]);
+
+  const gotoPrevious = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    dispatch(setPagination({ pageNumber: Math.max(0, pageNumber - 1) }));
+  };
+
+  const gotoNext = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    dispatch({ pageNumber: Math.min(totalPages - 1, pageNumber + 1) });
+  };
+
+  const setPage = (pageIndex) => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    dispatch(setPagination({ pageNumber: pageIndex }));
+  };
 
   const handleCategorySubmit = (e, navLink) => {
     if (e) {
@@ -45,9 +94,17 @@ const LinkMain = () => {
     dispatch(setLoading(true));
     dispatch(setCategoryOption(navLink));
 
-    SearchAPI.linkSearch(query, sort, navLink, tags, pricing)
+    SearchAPI.linkSearch(
+      query,
+      sort,
+      navLink,
+      tags,
+      tags,
+      pricing,
+      pageNumber,
+      12
+    )
       .then((res) => {
-        console.log(res);
         setLinkResults(res.data.data.body);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
@@ -72,9 +129,8 @@ const LinkMain = () => {
     dispatch(setLoading(true));
     setIsOpen((prevState) => !prevState);
 
-    SearchAPI.linkSearch(query, result, category, tags, pricing)
+    SearchAPI.linkSearch(query, result, category, tags, pricing, pageNumber, 12)
       .then((res) => {
-        console.log(res);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
         // dispatch(
@@ -102,9 +158,6 @@ const LinkMain = () => {
     console.log("hello world");
   };
 
-  const handleMoreButton = () => {
-    console.log("hello world");
-  };
   const toggleDropdown = () => {
     setIsOpen((prevState) => !prevState);
   };
@@ -112,12 +165,6 @@ const LinkMain = () => {
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
-  // useEffect(() => {
-  //   if (result.length === 0) {
-  //     handleCategorySubmit(null, name);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -387,9 +434,9 @@ const LinkMain = () => {
           <div className="flex justify-between">
             <div class="relative overflow-x-auto overflow-y-clip h-14">
               <div class="mx-auto  shadow-xl min-w-0  dark:highlight-white/5">
-                <div class="overflow-x-auto overflow-y-hidden flex no-scrollbar items-center space-x-3">
+                <div class="overflow-x-auto overflow-y-hidden flex no-scrollbar items-center space-x-3 italic">
                   <Splide
-                    className="flex flex-row space-x-4 justify-center"
+                    className="flex flex-row space-x-4 justify-center "
                     options={{
                       gap: "-2rem",
                       autoWidth: true,
@@ -397,7 +444,7 @@ const LinkMain = () => {
                       loop: false,
                       // speed: 700,
                       // grabCursor: false,
-                      mousewheel: true,
+                      // mousewheel: true,
                       // slidesPerView: 0,
                       // spaceBetween: 0,
                       // freeMode: false,
@@ -409,16 +456,16 @@ const LinkMain = () => {
                       // grabCursor: true,
                       // rewind: true,
                       height: "4rem",
-                      width: "70rem",
+                      width: "60rem",
                       // focus: "center",
                       // perPage: 6,
-                      wheel: true,
-                      releaseWheel: true,
+                      // wheel: true,
+                      // releaseWheel: true,
                       pagination: false,
-                      direction: "ltr",
-                      wheelSleep: 10,
+                      // direction: "ltr",
+                      // wheelSleep: 10,
 
-                      waitForTransition: true,
+                      // waitForTransition: true,
                     }}
                     aria-label="My Favorite Images"
                   >
@@ -688,28 +735,60 @@ const LinkMain = () => {
             </div>
           )}
           <div className="flex w-full justify-center">
-            <button
-              onClick={handleMoreButton}
-              class="flex flow-row space-x-8 mt-16 items-center justify-center rounded-lg bg-blue-500 py-3 px-10 font-sans text-sm font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-              data-ripple-light="true"
-            >
-              <p>More</p>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-move-right"
+            <div className="flex flex-row space-x-2 items-center justify-center mt-20">
+              <button
+                onClick={gotoPrevious}
+                className="p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200 "
               >
-                <path d="M18 8L22 12L18 16" />
-                <path d="M2 12H22" />
-              </svg>
-            </button>
+                Previous
+              </button>
+              {pageNumber >= 2 && (
+                <span className="text-primary mt-4">. . .</span>
+              )}
+              {totalPages > 2
+                ? pages
+                    .slice(
+                      pageNumber === 0 ? 0 : pageNumber - 1,
+                      pageNumber + 2
+                    )
+                    .map((page, index) => {
+                      return (
+                        <button
+                          key={index}
+                          onClick={() => setPage(page)}
+                          className={` ${
+                            page === pageNumber
+                              ? "bg-primary text-white p-2 border-primary border-2 rounded-lg hover:bg-white hover:text-primary ease-linear duration-200"
+                              : "p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200"
+                          }`}
+                        >
+                          {page + 1}
+                        </button>
+                      );
+                    })
+                : pages.map((pageIndex) => (
+                    <button
+                      key={pageIndex}
+                      onClick={() => setPage(pageIndex)}
+                      className={` ${
+                        pageIndex === pageNumber
+                          ? "bg-primary text-white p-2 border-primary border-2 rounded-lg hover:bg-white hover:text-primary ease-linear duration-200"
+                          : "p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200"
+                      }`}
+                    >
+                      {pageIndex + 1}
+                    </button>
+                  ))}
+              {totalPages > 2 && totalPages !== pageNumber + 1 && (
+                <span className="text-primary mt-4">. . .</span>
+              )}
+              <button
+                onClick={gotoNext}
+                className="p-2 border-primary border-2 rounded-lg hover:bg-primary hover:text-white text-primary ease-linear duration-200 "
+              >
+                Next
+              </button>
+            </div>
           </div>
           {!isFilterSticky && (
             <button

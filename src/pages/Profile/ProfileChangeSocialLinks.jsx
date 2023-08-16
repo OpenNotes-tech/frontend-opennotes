@@ -7,7 +7,6 @@ const ProfileChangeSocialLinks = () => {
   const dispatch = useDispatch();
   const UserData = useSelector((state) => state.UserProfile);
   const [getLinks, setLinks] = useState(UserData.socialLinks[0]);
-  console.log(getLinks);
 
   const onChangeHandler = (e) => {
     const { name, value } = e.target;
@@ -16,19 +15,18 @@ const ProfileChangeSocialLinks = () => {
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    Request.patchProfile("candidates", UserData._id, { socialLinks: [getLinks] })
+    Request.patchProfile("candidates", UserData._id, {
+      socialLinks: [getLinks],
+    })
       .then((res) => {
-        console.log(res.data.doc);
         dispatch(addSocialLinks(res.data.doc.socialLinks));
       })
       .catch((error) => {
-        console.log(error);
         if (error.response?.data.error.code === 11000) {
           // Handle duplicate key error
         }
       });
   };
-
 
   return (
     <div className="border-[0.6px] border-gray-200 shadow-md mb-28 rounded-lg bg-white">

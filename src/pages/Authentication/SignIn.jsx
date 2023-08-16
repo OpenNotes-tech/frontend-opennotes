@@ -18,8 +18,8 @@ const SignIn = () => {
   const [getError, setError] = useState("");
   const [getSignin, setSignin] = useState({ email: "", password: "" });
 
-  const path = "candidates"; // User part only has candidates, 
-  const cook = "logged_in_candidate"; // User part only has candidates, 
+  const path = "candidates"; // User part only has candidates,
+  const cook = "logged_in_candidate"; // User part only has candidates,
 
   const handleInput = (event) => {
     setSignin((values) => ({
@@ -34,7 +34,6 @@ const SignIn = () => {
 
     Request.login(path, getSignin)
       .then((res) => {
-        console.log(res);
         Cookies.set(cook, "yes", {
           secure: true,
           expires: new Date(res?.data?.user?.password),

@@ -97,7 +97,6 @@ const Sign = () => {
     } else {
       Request.login(formData)
         .then((res) => {
-          console.log(res);
           Cookies.set("logged_in_candidate", "yes", {
             secure: true,
             expires: new Date(res?.data?.user?.password),
@@ -106,7 +105,6 @@ const Sign = () => {
           dispatch(
             setError({ message: "Logged In Successfully!", type: "success" })
           );
-          console.log("sdfsfds");
           dispatch(setLoading(false));
           // Redirect to main page after 3 seconds
           setTimeout(() => {

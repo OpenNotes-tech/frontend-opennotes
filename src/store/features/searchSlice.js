@@ -1,4 +1,3 @@
-// reducers/searchSlice.js
 import { createSlice } from "@reduxjs/toolkit";
 
 const searchSlice = createSlice({
@@ -9,6 +8,8 @@ const searchSlice = createSlice({
     category: "",
     tags: "",
     pricing: "",
+    pageNumber: 0,
+    totalPages: 0,
     result: [],
   },
   reducers: {
@@ -30,6 +31,10 @@ const searchSlice = createSlice({
     setSearchResult(state, action) {
       state.result = action.payload;
     },
+    setPagination(state, action) {
+      state.pageNumber = action.payload?.pageNumber;
+      state.totalPages = action.payload?.totalPages;
+    },
   },
 });
 
@@ -40,6 +45,7 @@ export const {
   setSearchResult,
   setPricingOption,
   setTagsOption,
+  setPagination,
 } = searchSlice.actions;
 
 export default searchSlice.reducer;

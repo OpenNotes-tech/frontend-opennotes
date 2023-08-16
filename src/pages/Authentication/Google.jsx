@@ -28,7 +28,6 @@ const Google = () => {
     dispatch(setLoading(true));
     Request.googleLogin({ idToken: response.tokenId })
       .then((res) => {
-        console.log(res);
         Cookies.set("logged_in_candidate", "yes", {
           secure: true,
           expires: new Date(res.data.user.password),

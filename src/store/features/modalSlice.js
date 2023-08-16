@@ -31,10 +31,12 @@ export const modalSlice = createSlice({
     closeReportModal: (state) => {
       state.isReportModalOpen = false;
     },
-    openDetailsModal: (state) => {
+    openDetailsModal: (state, action) => {
+      state.modalValue = action.payload;
       state.isDetailsModalOpen = true;
     },
     closeDetailsModal: (state) => {
+      state.modalValue = null;
       state.isDetailsModalOpen = false;
     },
     openShareModal: (state) => {
@@ -48,9 +50,6 @@ export const modalSlice = createSlice({
     },
     closeBookmarkModal: (state) => {
       state.isBookmarkModalOpen = false;
-    },
-    setModalValue: (state, action) => {
-      state.modalValue = action.payload;
     },
   },
 });
@@ -69,5 +68,4 @@ export const {
   closeDetailsModal,
   openBookmarkModal,
   closeBookmarkModal,
-  setModalValue,
 } = modalSlice.actions;

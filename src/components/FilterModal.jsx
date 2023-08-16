@@ -21,7 +21,7 @@ import Selector from "./Selector";
 import Loader from "./Loader";
 
 export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
-  const { query, sort, category, tags, pricing } = useSelector(
+  const { query, sort, category, tags, pricing, pageNumber } = useSelector(
     (state) => state.Search
   );
   const loading = useSelector((state) => state.Error.loading);
@@ -55,9 +55,8 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     e.preventDefault();
     dispatch(setLoading(true));
 
-    SearchAPI.linkSearch(query, sort, category, tags, pricing)
+    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
-        console.log(res);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
       })

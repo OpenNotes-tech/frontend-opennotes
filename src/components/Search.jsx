@@ -6,7 +6,7 @@ import SearchAPI from "../utils/SearchAPI";
 import { FilterModal } from "./FilterModal";
 
 const Search = ({ nav }) => {
-  const { query, sort, category, tags, pricing } = useSelector(
+  const { query, sort, category, tags, pricing, pageNumber } = useSelector(
     (state) => state.Search
   );
   const dispatch = useDispatch();
@@ -23,9 +23,8 @@ const Search = ({ nav }) => {
     e.preventDefault();
 
     dispatch(setLoading(true));
-    SearchAPI.linkSearch(query, sort, category, tags)
+    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
-        console.log(res);
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
       })

@@ -1,9 +1,9 @@
-import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css/skyblue";
+// import { Splide, SplideSlide } from "@splidejs/react-splide";
+// import "@splidejs/react-splide/css/skyblue";
 const Contacts = () => {
   return (
     <div className="flex items-center justify-center h-screen">
-      <Splide
+      {/* <Splide
         className="px-10 "
         options={{
           gap: "1rem",
@@ -94,7 +94,7 @@ const Contacts = () => {
             alt=" 2"
           />
         </SplideSlide>
-      </Splide>
+      </Splide> */}
     </div>
   );
 };

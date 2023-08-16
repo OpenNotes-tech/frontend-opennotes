@@ -7,3 +7,4 @@
 5. [react-datepicker](https://www.npmjs.com/package/react-datepicker)
 6. [react-redux](https://react-redux.js.org/)
 7. [swiperjs](swiperjs.com/)
+    "@splidejs/react-splide": "^0.7.12",

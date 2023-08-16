@@ -13,7 +13,7 @@ import CheckBox from "../../components/CheckBox";
 import Selector from "../../components/Selector";
 
 const SearchHero = () => {
-  const { query, sort, category, tags, pricing } = useSelector(
+  const { query, sort, category, tags, pricing, pageNumber } = useSelector(
     (state) => state.Search
   );
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
@@ -105,7 +105,7 @@ const SearchHero = () => {
     e.preventDefault();
     dispatch(setTagsOption(isTagsOpen));
 
-    SearchAPI.linkSearch(query, sort, category, tags)
+    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));
@@ -123,7 +123,7 @@ const SearchHero = () => {
     e.preventDefault();
     dispatch(setCategoryOption(e.target.value));
 
-    SearchAPI.linkSearch(query, sort, category, tags)
+    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
       .then((res) => {
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setLoading(false));

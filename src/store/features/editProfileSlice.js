@@ -125,10 +125,7 @@ export const editProfileSlice = createSlice({
     },
 
     // editExperience: (state, action) => {
-    //   console.log("ss");
     //   if (action.type === "ADD") {
-    //     console.log(action.payload);
-    //     console.log(state.payload);
     //     return { ...state, experiences: [...action.payload] };
     //     // state.experiences = [...state.experiences, action.payload];
     //     // state.experiences.push(action.payload);

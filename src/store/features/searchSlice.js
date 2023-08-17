@@ -8,7 +8,7 @@ const searchSlice = createSlice({
     category: "",
     tags: "",
     pricing: "",
-    pageNumber: 0,
+    pageNumber: 1,
     totalPages: 0,
     result: [],
   },

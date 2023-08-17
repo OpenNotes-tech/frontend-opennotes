@@ -18,6 +18,7 @@ const HomeMain = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log(pageNumber);
     // Send a request to the backend here
     dispatch(setLoading(true));
     SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)

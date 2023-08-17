@@ -23,8 +23,8 @@ class Request {
   async twitterLogin(data) {
     return http.post(`/api/v1/user/twitter-login`, data);
   }
-  async githubLogin(data) {
-    return http.post(`/api/v1/user/github-login`, data);
+  async githubLogin(codeParam) {
+    return http.get(`/api/v1/user/github-login?code=${codeParam}`);
   }
 
   //     ######  Profile   ########

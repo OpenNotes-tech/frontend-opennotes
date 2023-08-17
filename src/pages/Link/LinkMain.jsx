@@ -19,12 +19,14 @@ import BookmarkModal from "../../components/BookmarkModal";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/skyblue";
 import LinkDetailsModal from "./LinkDetailsModal";
+import hashtags from "../../constants/tags.json";
 
 const LinkMain = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const filterRef = useRef(null);
+
   const {
     query,
     sort,
@@ -42,46 +44,49 @@ const LinkMain = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFilterSticky, setIsFilterSticky] = useState(false);
   const [linkResults, setLinkResults] = useState(result);
+  const [getHash, setHash] = useState(hashtags.Home);
 
   const pages = new Array(totalPages).fill(null).map((v, i) => i);
 
-  useEffect(() => {
-    dispatch(setLoading(true));
-    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
-      .then((res) => {
-        setLinkResults(res.data.data.body);
-        dispatch(setSearchResult(res.data.data.body));
-        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        dispatch(setError(error?.response?.data?.message));
-        dispatch(setLoading(false));
-        dispatch(
-          setError({
-            message: error?.response?.data?.message,
-            type: "error",
-          })
-        );
-      })
-      .finally((e) => {
-        dispatch(setLoading(false));
-      });
-  }, [pageNumber]);
+  // useEffect(() => {
+  //   dispatch(setLoading(true));
+  //   SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
+  //     .then((res) => {
+  //       setLinkResults(res.data.data.body);
+  //       dispatch(setSearchResult(res.data.data.body));
+  //       dispatch(setPagination({ totalPages: res.data.data.totalPages }));
+  //       dispatch(setLoading(false));
+  //     })
+  //     .catch((error) => {
+  //       dispatch(setError(error?.response?.data?.message));
+  //       dispatch(setLoading(false));
+  //       dispatch(
+  //         setError({
+  //           message: error?.response?.data?.message,
+  //           type: "error",
+  //         })
+  //       );
+  //     })
+  //     .finally((e) => {
+  //       dispatch(setLoading(false));
+  //     });
+  // }, [pageNumber]);
 
   const gotoPrevious = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(setPagination({ pageNumber: Math.max(0, pageNumber - 1) }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const gotoNext = () => {
+    dispatch(
+      setPagination({ pageNumber: Math.min(totalPages - 1, pageNumber + 1) })
+    );
     window.scrollTo({ top: 0, behavior: "smooth" });
-    dispatch({ pageNumber: Math.min(totalPages - 1, pageNumber + 1) });
   };
 
   const setPage = (pageIndex) => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
     dispatch(setPagination({ pageNumber: pageIndex }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleCategorySubmit = (e, navLink) => {
@@ -178,6 +183,12 @@ const LinkMain = () => {
     setLinkResults(result);
   }, [result]);
 
+  useEffect(() => {
+    if (category) {
+      setHash(hashtags[category]);
+    }
+  }, [category]);
+
   return (
     <div className="container px-4 lg:px-0 mx-auto">
       {loading && <Loader />}
@@ -225,8 +236,7 @@ const LinkMain = () => {
               <button
                 onClick={(e) => handleCategorySubmit(e, "/")}
                 className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-                  (category?.split(",")[0] === "Home" ||
-                    category?.split(",")[0] === "") &&
+                  category?.split(",")[0] === "Home" &&
                   "bg-blue-100 text-blue-500"
                 }`}
               >
@@ -464,146 +474,18 @@ const LinkMain = () => {
                     }}
                     aria-label="My Favorite Images"
                   >
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #nature
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #wallpaper
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #background
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #sky
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #food
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #cat
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #summer
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #love
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #beach
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #flower
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #water
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #flowers
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #iphone
-                        </button>
-                      </div>
-                    </SplideSlide>
-                    <SplideSlide>
-                      <div class="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
-                        <button
-                          onclick={handleTagsSubmit}
-                          className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
-                        >
-                          #wallpaper
-                        </button>
-                      </div>
-                    </SplideSlide>
+                    {getHash.map((tag, index) => (
+                      <SplideSlide key={index}>
+                        <div className="flex py-6 -mt-3 items-center first:pl-6 last:pr-6">
+                          <button
+                            onClick={() => handleTagsSubmit(tag)}
+                            className="text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                          >
+                            {tag}
+                          </button>
+                        </div>
+                      </SplideSlide>
+                    ))}
                   </Splide>
                 </div>
               </div>
@@ -729,7 +611,7 @@ const LinkMain = () => {
               <LoaderSkeleton />
             </div>
           )}
-          {!loading && linkResults.length > 0 && (
+          {/* {!loading && totalPages > 2 && (
             <div className="flex w-full justify-center">
               <div className="flex flex-row space-x-2 items-center justify-center mt-20">
                 <button
@@ -786,7 +668,7 @@ const LinkMain = () => {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
           {!isFilterSticky && (
             <button
               className="fixed bottom-24 md:bottom-10 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"

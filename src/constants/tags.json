@@ -1,10 +1,10 @@
 {
-    "home":[{"first":"first", "first":"first"}],
-    "frontend":[{"inspiration":"inspiration", "illustrations":"illustrations", "icons":"icons", "mockup":"mockup", "typography":"typography", "images":"images", "colors":"colors", "websiteBuilder":"websiteBuilder", "designTools":"designTools", "UXTools":"UXTools", "ProjectTools":"ProjectTools", "Web Performance":"Web Performance", "React.js":"React.js", "PWA":"PWA", "SEO":"SEO"}],
-    "backend":[{"first":"first", "first":"first"}],
-    "courses":[{"first":"first", "first":"first"}],
-    "datascience":[{"first":"first", "first":"first"}],
-    "blog":[{"first":"first", "first":"first"}],
-    "cybersecurity":[{"first":"first", "first":"first"}],
-    "mobile":[{"first":"first", "first":"first"}]
+    "Home":["#web", "#mobile", "#desktop", "#language", "#nocode"],
+    "Frontend":["#inspiration", "#illustrations", "#icons", "#mockup", "#typography", "#images", "#colors", "#websiteBuilder", "#designTools", "#UXTools", "#ProjectTools", "#WebPerformance", "#React.js", "#PWA", "#SEO"],
+    "Backend":["#optimization", "#golang", "#database", "#server", "#devops", "#network", "#system design", "#production", "#computer architecture", "#microservices", "#test", "#cheatsheet"],
+    "IT Courses":["#react.js", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js", "#django", "#flutter", "#swift", "#system design", "#performance optimization"],
+    "Data Science":["#nlp", "#generative model", "#cv", "#speech", "#ml", "#unsupervised learning"],
+    "Blogs":["#react.js", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js", "#django", "#flutter", "#swift", "#system design", "#performance optimization"],
+    "Cyber Security":["#hacker", "#linux", "#cisco"],
+    "Mobile":["#flutter", "#swift", "#reactnative", "#kotlin", "#android", "#ios", "performance"]
 }

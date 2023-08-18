@@ -1,11 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { setError, setLoading } from "../store/features/errorSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { closeShareModal } from "../store/features/modalSlice";
-import Loader from "./Loader";
 const ShareModal = () => {
   const { isShareModalOpen, modalValue } = useSelector((state) => state.Modal);
-  const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
   const modalRef = useRef();
   const [getCopy, setCopy] = useState(false);
@@ -54,7 +51,7 @@ const ShareModal = () => {
             <button
               type="button"
               onClick={handleShareModalToggle}
-              class="inline-flex items-center justify-center focus:outline-none transition duration-200 active:scale-95 p-0.5 w-7 h-7 rounded-md bg-transparent border border-gray-300 hover:enabled:border-gray-1000 focus:enabled:border-gray-1000 focus:ring-gray-900/30 border-none !p-0 focus:!ring-0"
+              class="inline-flex items-center justify-center focus:outline-none transition duration-200 active:scale-95 p-0.5 w-7 h-7 rounded-md bg-transparent border border-gray-300 hover:enabled:border-gray-1000 focus:enabled:border-gray-1000 focus:ring-gray-900/30 border-none  focus:!ring-0"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

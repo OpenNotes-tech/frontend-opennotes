@@ -174,18 +174,20 @@ const Navbar = () => {
             />
           </button>
         </div>
-        {scrolled && (
-          <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
-        )}
+        <span className="w-full hidden md:block">
+          {scrolled && (
+            <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
+          )}
+        </span>
 
         <div className="flex flex-row space-x-4 items-center whitespace-nowrap">
-          <div ref={modalRef} className="flex flex-row items-center space-x-6">
+          <div ref={modalRef} className="flex flex-row items-center space-x-6 ">
             <button
               type="button"
               onClick={() => setToggleExplore((oldState) => !oldState)}
               id="dropdownDefaultButton"
               data-dropdown-toggle="dropdown"
-              className={`raletive inline-flex items-center  font-semibold text-base transition duration-300 ease-in-out  px-4 py-[8px] text-center rounded-full focus:outline-none  ${
+              className={`raletive items-center hidden md:inline-flex  font-semibold text-base transition duration-300 ease-in-out  px-4 py-[8px] text-center rounded-full focus:outline-none  ${
                 scrolled || name === "search"
                   ? "text-slate-600 hover:bg-slate-100"
                   : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
@@ -212,7 +214,7 @@ const Navbar = () => {
             {toggleExplore && (
               <div
                 id="dropdown"
-                className="mt-[520px] absolute right-[300px] z-[999] bg-white divide-y divide-gray-100 rounded-lg w-[840px] shadow-2xl"
+                className="mt-[470px] absolute right-[10px] md:right-[270px] z-[999] bg-white divide-y divide-gray-100 rounded-lg w-[840px] shadow-2xl"
               >
                 <div className="flex flex-col divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
                   <div className="flex flex-row justify-evenly">
@@ -709,24 +711,12 @@ const Navbar = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="lucide lucide-coffee transition ease-in-out duration-300"
-                        >
-                          <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
-                          <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" />
-                          <line x1="6" x2="6" y1="2" y2="4" />
-                          <line x1="10" x2="10" y1="2" y2="4" />
-                          <line x1="14" x2="14" y1="2" y2="4" />
-                        </svg>
+                        <img
+                          src={require("../assets/images/bmc-logo.png")}
+                          alt=""
+                          srcset=""
+                          className="h-[22px]"
+                        />
                       </Link>
                     </li>
                   </div>
@@ -753,7 +743,7 @@ const Navbar = () => {
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className="lucide lucide-bookmark group-hover:fill-blue-500 transition duration-300 ease-in-out"
+                className="lucide lucide-bookmark group-hover:fill-blue-500 " //transition duration-300 ease-in-out
               >
                 <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
               </svg>

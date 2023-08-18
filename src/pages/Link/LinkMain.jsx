@@ -166,7 +166,7 @@ const LinkMain = () => {
 
   const getWidthAndHeight = () => {
     if (screenSize === "sm") {
-      return { width: "25rem", height: "5rem" };
+      return { width: "22rem", height: "5rem" };
     } else {
       return { width: "70rem", height: "5rem" };
     }
@@ -198,10 +198,10 @@ const LinkMain = () => {
   }, [category]);
 
   return (
-    <div className="container px-4 lg:px-0 mx-auto">
+    <div className="container px-2 md:px-4 lg:px-0 mx-auto">
       {loading && <Loader />}
-      <div className="flex flex-col px-12 py-10 space-y-4">
-        <div className="flex flex-row space-x-4 justify-center">
+      <div className="flex flex-col md:px-12 py-10 space-y-4">
+        <div className="flex flex-row space-x-4 justify-center w-full">
           <Splide
             className="flex flex-row space-x-4 justify-center group"
             options={{
@@ -680,7 +680,7 @@ const LinkMain = () => {
           )} */}
           {!isFilterSticky && (
             <button
-              className="fixed bottom-24 md:bottom-10 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"
+              className="fixed bottom-24 md:bottom-20 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"
               onClick={handleScrollToTop}
             >
               <svg

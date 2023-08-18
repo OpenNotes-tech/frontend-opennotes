@@ -57,7 +57,7 @@ const Search = ({ nav }) => {
   return (
     <>
       <div
-        className={`w-full items-center    ${
+        className={` w-full items-center    ${
           nav === "dfdf" ? "max-w-2xl" : "pt-24 lg:px-20 xl:px-40"
         }`}
       >

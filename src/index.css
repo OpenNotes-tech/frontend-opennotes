@@ -65,3 +65,6 @@ code {
 .custom-h {
   height: auto !important;
 }
+* {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}

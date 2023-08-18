@@ -65,11 +65,16 @@ const Hero = () => {
           <div class="flex flex-wrap text-white">
             <div class="relative w-full px-4 mx-auto  xl:flex-grow-0 xl:flex-shrink-0">
               <h1 class="mt-0 mb-2 text-lg font-bold text-white sm:text-5xl lg:text-4xl">
-                Stunning royalty-free images & royalty-free stock
+                Curated list of resources for designers & developers
               </h1>
-              <p class="mt-0 mb-4 text-base text-white sm:text-base lg:text-base">
-                Over 4.1 million+ high quality stock images, videos and music
-                shared by our talented community.
+              <p class="flex flex-col md:flex-row items-center justify-center mt-0 text-base text-white sm:text-base lg:text-base">
+                <p>
+                  Over 4.1 million+ high quality unique links shared by our
+                  talented community.
+                </p>
+                <p class="mt-4 md:mt-0 md:ml-8 italic border-2 rounded-full backdrop-saturate-0 drop-shadow-2xl  backdrop-opacity-100 bg-opacity-100 opacity-100 backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200 backdrop-grayscale backdrop-hue-rotate-30  transition-opacity duration-300 border-white w-36 pb-[2px] items-center text-center animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-sm font-black">
+                  BETA version
+                </p>
               </p>
             </div>
           </div>

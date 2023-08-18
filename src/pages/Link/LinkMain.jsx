@@ -20,7 +20,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/skyblue";
 import LinkDetailsModal from "./LinkDetailsModal";
 import hashtags from "../../constants/tags.json";
-
+import useScreenSize from "../../components/useScreenSize";
 const LinkMain = () => {
   const location = useLocation();
   const dispatch = useDispatch();
@@ -45,6 +45,7 @@ const LinkMain = () => {
   const [isFilterSticky, setIsFilterSticky] = useState(false);
   const [linkResults, setLinkResults] = useState(result);
   const [getHash, setHash] = useState(hashtags.Home);
+  const screenSize = useScreenSize();
 
   const pages = new Array(totalPages).fill(null).map((v, i) => i);
 
@@ -164,6 +165,14 @@ const LinkMain = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const getWidthAndHeight = () => {
+    if (screenSize === "sm") {
+      return { width: "25rem", height: "5rem" };
+    } else {
+      return { width: "70rem", height: "5rem" };
+    }
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       // Check if the filterRef is available before calling getBoundingClientRect
@@ -193,42 +202,43 @@ const LinkMain = () => {
     <div className="container px-4 lg:px-0 mx-auto">
       {loading && <Loader />}
       <div className="flex flex-col px-12 py-10 space-y-4">
-        <div
-          className={`flex flex-row space-x-4 justify-center ${
-            name === "search" ? "hidden" : "block"
-          }`}
-        >
+        <div className="flex flex-row space-x-4 justify-center">
           <Splide
-            className="flex flex-row space-x-4 justify-center"
+            className="flex flex-row space-x-4 justify-center group"
             options={{
+              pagination: false,
               gap: "1rem",
               autoWidth: true,
               arrows: false,
               loop: false,
-              speed: 700,
-              grabCursor: false,
-              mousewheel: true,
-              slidesPerView: 0,
-              spaceBetween: 0,
-              freeMode: false,
-              shortSwipes: true,
-              longSwipes: false,
+              // gap: "1rem",
+              // autoWidth: true,
+              // arrows: false,
+              // loop: false,
+              // speed: 700,
+              // grabCursor: false,
+              // mousewheel: true,
+              // slidesPerView: 0,
+              // spaceBetween: 0,
+              // freeMode: false,
+              // shortSwipes: true,
+              // longSwipes: false,
               // autoplay: true,
               // pauseOnHover: false,
               // resetProgress: false,
               // grabCursor: true,
               // rewind: true,
-              height: "4rem",
-              width: "70rem",
+              height: getWidthAndHeight().height,
+              width: getWidthAndHeight().width,
               // focus: "center",
               // perPage: 6,
-              wheel: true,
-              releaseWheel: true,
-              pagination: false,
-              direction: "ltr",
-              wheelSleep: 10,
+              // wheel: true,
+              // releaseWheel: true,
+              // pagination: false,
+              // direction: "ltr",
+              // wheelSleep: 10,
 
-              waitForTransition: true,
+              // waitForTransition: true,
             }}
             aria-label="My Favorite Images"
           >
@@ -436,7 +446,7 @@ const LinkMain = () => {
           </Splide>
         </div>
         <div className="flex flex-col space-y-10">
-          <div className="flex justify-between">
+          <div className="flex flex-col md:flex-row md:justify-between">
             <div class="relative overflow-x-auto overflow-y-clip h-14">
               <div class="mx-auto  shadow-xl min-w-0  dark:highlight-white/5">
                 <div class="overflow-x-auto overflow-y-hidden flex no-scrollbar items-center space-x-3 italic">
@@ -594,7 +604,7 @@ const LinkMain = () => {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 md:gap-x-12 gap-y-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-x-12 gap-y-12">
             {!loading &&
               linkResults &&
               linkResults.map((linkElement, index) => (

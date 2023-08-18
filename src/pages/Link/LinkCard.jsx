@@ -39,7 +39,7 @@ const LinkCard = ({ linkElement }) => {
           </div>
         </div>
         <div className="flex flex-col w-full pb-4 space-y-4 h-1/2">
-          <div className="flex items-end flex-row justify-between mt-auto px-4">
+          <div className="flex items-end flex-col md:flex-row justify-between mt-auto px-4">
             <Link
               to={linkElement.url}
               target="_blank"

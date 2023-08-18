@@ -32,6 +32,10 @@ class Request {
     return http.patch(`/api/v1/user/profile/${id}`, data);
   }
 
+  async postReport(data) {
+    return http.post(`/api/v1/user/report/`, data);
+  }
+
   async filterJobCompanyCandidate(term, field, limit) {
     return http.get(
       `/api/v1/jobs/filter?text=${term}&route=searchNews&field=${field}&limit=${limit}`

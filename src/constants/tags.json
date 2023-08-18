@@ -1,10 +1,12 @@
 {
-    "Home":["#web", "#mobile", "#desktop", "#language", "#nocode"],
+    "Home":["#web", "#mobile", "#desktop", "#language", "#nocode", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
     "Frontend":["#inspiration", "#illustrations", "#icons", "#mockup", "#typography", "#images", "#colors", "#websiteBuilder", "#designTools", "#UXTools", "#ProjectTools", "#WebPerformance", "#React.js", "#PWA", "#SEO"],
     "Backend":["#optimization", "#golang", "#database", "#server", "#devops", "#network", "#system design", "#production", "#computer architecture", "#microservices", "#test", "#cheatsheet"],
     "IT Courses":["#react.js", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js", "#django", "#flutter", "#swift", "#system design", "#performance optimization"],
-    "Data Science":["#nlp", "#generative model", "#cv", "#speech", "#ml", "#unsupervised learning"],
+    "AI / ML / DS":["#nlp", "#generative model", "#cv", "#speech", "#ml", "#unsupervised learning", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
     "Blogs":["#react.js", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js", "#django", "#flutter", "#swift", "#system design", "#performance optimization"],
-    "Cyber Security":["#hacker", "#linux", "#cisco"],
-    "Mobile":["#flutter", "#swift", "#reactnative", "#kotlin", "#android", "#ios", "performance"]
+    "Cyber Security":["#hacker", "#linux", "#cisco", "#penetration test", "#white hat", "#courses", "#blogs", "#awesome", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
+    "Mobile":["#flutter", "#swift", "#reactnative", "#kotlin", "#android", "#ios", "performance", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
+    "Podcasts":["#backend", "#frontend", "#mobile", "#full stack", "#learn", "#ios", "performance", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
+    "Algorithms":["#ICPC", "#faang/manga", "#resume", "#linkedin", "#interview", "#community", "#podcasts", "#blogs", "#newgrad", "#leetcode", "#courses", "#frontend", "#backend", "#mobile"]
 }

@@ -108,7 +108,6 @@ const LinkMain = () => {
         dispatch(setLoading(false));
       })
       .catch((error) => {
-        dispatch(setError(error?.response?.data?.message));
         dispatch(setLoading(false));
         dispatch(
           setError({
@@ -194,7 +193,7 @@ const LinkMain = () => {
 
   useEffect(() => {
     if (category) {
-      setHash(hashtags[category]);
+      setHash(hashtags[category.split(",")[0]]);
     }
   }, [category]);
 
@@ -414,7 +413,7 @@ const LinkMain = () => {
               <button
                 onClick={(e) => handleCategorySubmit(e, "/datascience")}
                 className={`px-4 py-2 hover:bg-gray-200 rounded-full flex flex-row space-x-2 whitespace-nowrap ${
-                  category?.split(",")[0] === "Data Science" &&
+                  category?.split(",")[0] === "AI / ML / DS" &&
                   "bg-blue-100 text-blue-500"
                 }`}
               >
@@ -440,7 +439,7 @@ const LinkMain = () => {
                   <path d="M20.5 21a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
                   <path d="M18.5 3a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z" />
                 </svg>{" "}
-                <p>Data Science</p>
+                <p>AI / ML / DS</p>
               </button>
             </SplideSlide>
           </Splide>

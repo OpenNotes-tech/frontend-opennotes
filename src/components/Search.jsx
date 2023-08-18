@@ -47,7 +47,7 @@ const Search = ({ nav }) => {
   };
 
   useEffect(() => {
-    if (category.length > 0 || pricing.length > 0 || tags.length > 0) {
+    if ((category.length > 0 || pricing.length > 0 || tags.length > 0) && category?.split(",")[0] !== "Home") {
       setFilterChange(true);
     } else {
       setFilterChange(false);

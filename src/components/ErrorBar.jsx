@@ -9,14 +9,14 @@ const ErrorBar = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(clearError());
-    }, 3000);
+    }, 3);
 
     return () => clearTimeout(timer);
   }, []);
 
   return (
     <>
-      {errorMessage && errorType && (
+      {/* {errorMessage && errorType && (
         <div
           id="alert-border-2"
           className={`sticky top-0 flex p-4  z-[999] border-t-4 ${
@@ -34,7 +34,7 @@ const ErrorBar = () => {
             aria-label="Close"
           ></button>
         </div>
-      )}
+      )} */}
     </>
   );
 };

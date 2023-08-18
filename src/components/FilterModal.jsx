@@ -121,7 +121,7 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     Backend: BackendOptions,
     "Artificial Intelligence": AIOptions,
     "Cyber Security": SecurityOptions,
-    Blog: BlogOptions,
+    Blogs: BlogOptions,
     Algorithms: AlgorithmsOptions,
   };
 

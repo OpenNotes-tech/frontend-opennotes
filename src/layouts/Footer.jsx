@@ -9,7 +9,7 @@ const Footer = () => {
   );
   const dispatch = useDispatch();
   const handleReportModalToggle = () => {
-    dispatch(openReportModal());
+    dispatch(openReportModal("link"));
   };
 
   return (

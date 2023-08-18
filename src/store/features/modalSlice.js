@@ -25,10 +25,12 @@ export const modalSlice = createSlice({
     closeLangModal: (state) => {
       state.isLangModalOpen = false;
     },
-    openReportModal: (state) => {
+    openReportModal: (state, action) => {
+      state.modalValue = action.payload;
       state.isReportModalOpen = true;
     },
     closeReportModal: (state) => {
+      state.modalValue = null;
       state.isReportModalOpen = false;
     },
     openDetailsModal: (state, action) => {

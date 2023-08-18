@@ -1,8 +1,8 @@
 import http from "./backend-link";
 
 class SearchAPI {
-  linkSearch(query, sort, category, tags, pricing, pageNumber, limit) {
-    let queryParams = `/links/search?route=linksearch&field=searchText&page=${pageNumber}&limit=${limit}`;
+  linkSearch(query, sort, category, tags, pricing,  limit) {
+    let queryParams = `/links/search?route=linksearch&field=searchText&limit=${limit}`;
 
     if (query) {
       queryParams += `&text=${query}`;

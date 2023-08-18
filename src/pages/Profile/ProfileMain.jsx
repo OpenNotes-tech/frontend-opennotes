@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Navbar from "../../layouts/Navbar";
-import Sidebar from "../../layouts/Sidebar";
+// import Sidebar from "../../layouts/Sidebar";
 import ProfileSidebar from "./ProfileSidebar";
 import { Outlet } from "react-router-dom";
 
@@ -15,9 +15,7 @@ const ProfileMain = () => {
       />
 
       <div className="flex flex-wrap mt-10">
-        <div className="md:w-1/6 w-full">
-          <Sidebar />
-        </div>
+        <div className="md:w-1/6 w-full">{/* <Sidebar /> */}</div>
         <div className="md:w-5/6 w-full space-y-10 lg:-ml-12 xl:-ml-20">
           <div className="md:ml-4 text-4xl font-semibold">
             <h1>Your Profile</h1>

@@ -56,6 +56,7 @@ const Navbar = () => {
     navLink = navLink.charAt(0).toUpperCase() + navLink.slice(1);
     dispatch(setLoading(true));
     dispatch(setCategoryOption(e.target.textContent.trim()));
+    setToggleExplore(false);
 
     SearchAPI.linkSearch(query, sort, navLink, tags, pricing, pageNumber, 12)
       .then((res) => {
@@ -64,7 +65,6 @@ const Navbar = () => {
         dispatch(setSearchResult(res.data.data.body));
         dispatch(setPagination({ totalPages: res.data.data.totalPages }));
         dispatch(setLoading(false));
-        // setToggleExplore(false);
       })
       .catch((error) => {
         dispatch(setError(error?.response?.data?.message));
@@ -136,8 +136,8 @@ const Navbar = () => {
     };
   }, []);
 
-  const toggleReport = () => {
-    dispatch(openReportModal());
+  const toggleReport = (data) => {
+    dispatch(openReportModal(data));
   };
 
   const toggleLanguage = () => {
@@ -330,7 +330,7 @@ const Navbar = () => {
                       <button
                         onClick={(e) => handleCategorySubmit(e, "/datascience")}
                         className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
-                          category?.split(",")[0] === "Datascience"
+                          category?.split(",")[0] === "AI / ML / DS"
                             ? "bg-blue-100 text-blue-500"
                             : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
                         }`}
@@ -394,7 +394,7 @@ const Navbar = () => {
                           handleCategorySubmit(e, "/cybersecurity")
                         }
                         className={`flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
-                          category?.split(",")[0] === "Cybersecurity"
+                          category?.split(",")[0] === "Cyber Security"
                             ? "bg-blue-100 text-blue-500"
                             : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
                         }`}
@@ -468,7 +468,7 @@ const Navbar = () => {
                         type="button"
                         onClick={(e) => handleCategorySubmit(e, "/blog")}
                         className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
-                          category?.split(",")[0] === "Blog"
+                          category?.split(",")[0] === "Blogs"
                             ? "bg-blue-100 text-blue-500"
                             : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
                         }`}
@@ -491,7 +491,7 @@ const Navbar = () => {
                             <path d="M15 8h-5" />
                             <path d="M15 12h-5" />
                           </svg>
-                          <span>Blog</span>
+                          <span>Blogs</span>
                         </div>
                       </button>
                       <button
@@ -522,7 +522,7 @@ const Navbar = () => {
                         </div>
                       </button>
                       <button
-                        onClick={(e) => handleCategorySubmit(e, "/courses")}
+                        onClick={(e) => handleCategorySubmit(e, "/podcasts")}
                         className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                           category?.split(",")[0] === "Podcasts"
                             ? "bg-blue-100 text-blue-500"
@@ -586,7 +586,7 @@ const Navbar = () => {
                         type="button"
                         data-ripple-light="true"
                         data-dialog-target="report-dialog"
-                        onClick={toggleReport}
+                        onClick={() => toggleReport("bug")}
                         className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
@@ -598,7 +598,7 @@ const Navbar = () => {
                         type="button"
                         data-ripple-light="true"
                         data-dialog-target="report-dialog"
-                        onClick={toggleReport}
+                        onClick={() => toggleReport("link")}
                         className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">

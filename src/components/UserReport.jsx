@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { setError, setLoading } from "../store/features/errorSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { closeReportModal } from "../store/features/modalSlice";
+import Request from "../utils/API-router";
 import Loader from "./Loader";
 
 const UserReport = () => {
@@ -9,9 +10,12 @@ const UserReport = () => {
     (state) => state.Modal.isReportModalOpen
   );
   const loading = useSelector((state) => state.Error.loading);
+  const { modalValue } = useSelector((state) => state.Modal);
   const dispatch = useDispatch();
   const modalRef = useRef();
-  const [getType, setType] = useState("bug");
+  const [getType, setType] = useState(modalValue);
+  const [getPlaceholder, setPlaceholder] = useState(modalValue);
+  const [getForm, setForm] = useState("");
 
   // Close the modal when the user clicks outside of it
   useEffect(() => {
@@ -28,12 +32,53 @@ const UserReport = () => {
     };
   }, [dispatch, isReportModalOpen]);
 
+  useEffect(() => {
+    setForm("");
+    if (getType === "bug") {
+      setPlaceholder("Report any bug to the admin");
+    } else if (getType === "link") {
+      setPlaceholder("Suggest a link to admin");
+    } else if (getType === "admin") {
+      setPlaceholder("communicate directly with admin");
+    } else if (getType === "other") {
+      setPlaceholder("Write any other topic to admin");
+    }
+  }, [getType]);
+
   const handleReportModalToggle = () => {
+    setForm("");
     dispatch(closeReportModal());
   };
 
-  const handleReportSubmit = () => {
-    console.log("sdfsdg");
+  const handleReportSubmit = (event) => {
+    event.preventDefault();
+
+    if (getForm.trim().length >= 1) {
+      dispatch(setLoading(true));
+
+      Request.postReport({ message: getForm, type: getType })
+        .then((res) => {
+          dispatch(
+            setError({
+              message: "Successfully Submitted",
+              type: "error",
+            })
+          );
+          dispatch(setLoading(false));
+        })
+        .catch((error) => {
+          dispatch(setLoading(false));
+          dispatch(
+            setError({
+              message: error?.response?.data?.message,
+              type: "error",
+            })
+          );
+        })
+        .finally((e) => {
+          dispatch(setLoading(false));
+        });
+    }
   };
 
   return (
@@ -205,10 +250,19 @@ const UserReport = () => {
           <form className="relative w-full min-w-[200px]">
             <textarea
               className="peer h-full w-full min-h-[150px] rounded-[7px] border placeholder-transparent placeholder:italic focus:placeholder-gray-400 border-gray-800 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-800 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-gray-800 placeholder-shown:border-t-gray-800 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-gray-800"
-              placeholder="10 Anson Road, International Plaza, #10-11, 079903 Singapore, Singapore"
+              placeholder={getPlaceholder}
+              value={getForm}
+              required
+              onChange={(e) => setForm(e.target.value)}
             />
             <label className="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[11px] font-normal leading-tight text-gray-400 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-gray-800 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-gray-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-blue-500 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
-              Address
+              {getType === "bug"
+                ? "Report Bug"
+                : getType === "link"
+                ? "Suggest Link"
+                : getType === "admin"
+                ? "Write to Admin"
+                : "Other Topic"}
             </label>
           </form>
           <div className="flex items-center flex-row space-x-4 md:justify-end rounded-b border-t border-solid border-slate-200  justify-center  px-6">

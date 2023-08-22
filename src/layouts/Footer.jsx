@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { openReportModal } from "../store/features/modalSlice";
-import UserReport from "../components/UserReport";
+import UserReport from "../components/modals/UserReport";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -13,10 +13,10 @@ const Footer = () => {
   };
 
   return (
-    <footer class="flex flex-row items-center justify-between -mx-4 xl:-mx-0 px-4 md:px-10 xl:px-12 shadow-xl bg-gradient-to-r from-gray-700 via-gray-900 to-black">
+    <footer class="flex flex-row items-center justify-between -mx-4 xl:-mx-0 pb-24 md:pb-0 md:px-10 xl:px-12 shadow-xl bg-gradient-to-r from-gray-700 via-gray-900 to-black">
       <div class="w-full mx-auto py-4 md:py-8">
-        <div class="sm:flex sm:items-center sm:justify-between">
-          <a href="/" class="flex items-center mb-4 sm:mb-0">
+        <div class="flex justify-center flex-col md:flex-row items-center space-y-10 md:space-y-0 md:justify-between">
+          <a href="/" class="flex items-center">
             <img
               src={require("../assets/images/logo.svg").default}
               class="h-8 mr-3"
@@ -26,7 +26,7 @@ const Footer = () => {
               oootech
             </span>
           </a>
-          <ul class="flex flex-wrap space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+          <ul class="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <button
                 onClick={handleReportModalToggle}
@@ -63,7 +63,8 @@ const Footer = () => {
                 Contact
               </Link>
             </li>
-            <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
+          </ul>
+          <ul className="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li className="flex flex-row space-x-4 ">
               <Link
                 to={"https://instagram.com/"}

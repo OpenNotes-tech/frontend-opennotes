@@ -4,7 +4,7 @@ import {
   setPricingOption,
   setSearchResult,
   setPagination,
-} from "../store/features/searchSlice";
+} from "../../store/features/searchSlice";
 import {
   FrontendOptions,
   CategoryOptions,
@@ -15,13 +15,13 @@ import {
   SecurityOptions,
   BlogOptions,
   AlgorithmsOptions,
-} from "../constants/FilterData";
-import { setLoading, setError } from "../store/features/errorSlice";
+} from "../../constants/FilterData";
+import { setLoading, setError } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import SearchAPI from "../utils/SearchAPI";
-import Selector from "./Selector";
-import Loader from "./Loader";
+import SearchAPI from "../../utils/SearchAPI";
+import Selector from "../Selector";
+import Loader from "../Loader";
 
 export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
   const { query, sort, category, tags, pricing, pageNumber } = useSelector(
@@ -68,7 +68,8 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
         dispatch(setError(error?.response?.data?.message));
         dispatch(setLoading(false));
       })
-      .finally((e) => {
+      .finally((error) => {
+        dispatch(setError(error?.response?.data?.message));
         dispatch(setLoading(false));
         setToggleFilter(false);
       });
@@ -160,14 +161,14 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     <>
       <div
         ref={modalRef}
-        className="fixed inset-0 h-screen z-50 flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
+        className="fixed bottom-0 inset-0 z-[999] flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
       >
-        {loading && <Loader />}
+        {loading === true && <Loader />}
         <div className="relative mx-auto max-w-2xl w-full">
           {/*content*/}
           <div className="relative flex w-full flex-col  rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
             {/*header*/}
-            <div className="border-b border-solid border-slate-200 pt-[500px] md:pt-4 p-4">
+            <div className="border-b border-solid border-slate-200 md:pt-4 p-4">
               <h1 className="text-2xl font-serif whitespace-nowrap text-center font-medium">
                 Filters
               </h1>
@@ -187,7 +188,7 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
                   onChange={handleLocationSelector}
                 />
               </div>
-              <div className="px-10 md:px-0">
+              <div className="px-10 md:px-0 ">
                 <div className="text-sm text-slate-800 font-semibold mb-3">
                   Tags
                 </div>

@@ -6,6 +6,7 @@ const initialState = {
   isDetailsModalOpen: false,
   isBookmarkModalOpen: false,
   isShareModalOpen: false,
+  isExploreModalOpen: false,
   modalValue: null,
 };
 
@@ -55,6 +56,12 @@ export const modalSlice = createSlice({
     closeBookmarkModal: (state) => {
       state.isBookmarkModalOpen = false;
     },
+    openExploreModal: (state) => {
+      state.isExploreModalOpen = true;
+    },
+    closeExploreModal: (state) => {
+      state.isExploreModalOpen = false;
+    },
   },
 });
 
@@ -72,4 +79,6 @@ export const {
   closeDetailsModal,
   openBookmarkModal,
   closeBookmarkModal,
+  closeExploreModal,
+  openExploreModal,
 } = modalSlice.actions;

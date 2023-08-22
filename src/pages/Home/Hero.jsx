@@ -1,46 +1,44 @@
-import { useSelector } from "react-redux";
 import Search from "../../components/Search";
 import { useEffect, useState } from "react";
 
-const Hero = () => {
-  const { category } = useSelector((state) => state.Search);
+const Hero = ({ category }) => {
   const [getPhoto, setPhoto] = useState(
     "https://cdn.devdojo.com/images/december2020/couple-on-couch.jpeg"
   );
   useEffect(() => {
-    if (category?.split(",")[0] === "Frontend") {
+    if (category?.split(",")[0] === "frontend") {
       setPhoto(
-        "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+        "https://cdn.discordapp.com/attachments/945077390839787570/1141938500535599134/aaron.g_who_is_a_topengineer_Frontend_backend_prompt_eng_225f3961-9b73-4270-973c-c1577e848393.png"
       );
-    } else if (category?.split(",")[0] === "Backend") {
+    } else if (category?.split(",")[0] === "backend") {
       setPhoto(
-        "https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
+        "https://cdn.discordapp.com/attachments/1008571105990160476/1132541745251500103/quan6416_simple_isometric_3d_process_of_development_and_designi_430123ad-6dcd-4d54-9e0b-9e7c21598464.png"
       );
-    } else if (category?.split(",")[0] === "IT Courses") {
+    } else if (category?.split(",")[0] === "courses") {
       setPhoto(
         "https://images.unsplash.com/photo-1682685797140-c17807f8f217?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
       );
-    } else if (category?.split(",")[0] === "Mobile") {
+    } else if (category?.split(",")[0] === "mobile") {
       setPhoto(
         "https://images.unsplash.com/photo-1604328698692-f76ea9498e76?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80"
       );
-    } else if (category?.split(",")[0] === "Cyber Security") {
+    } else if (category?.split(",")[0] === "cybersecurity") {
       setPhoto(
         "https://images.unsplash.com/photo-1691544931894-52f012e69000?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
       );
-    } else if (category?.split(",")[0] === "AI / ML / DS") {
+    } else if (category?.split(",")[0] === "datascience") {
       setPhoto(
         "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
       );
-    } else if (category?.split(",")[0] === "Algorithms") {
+    } else if (category?.split(",")[0] === "algorithms") {
       setPhoto(
         "https://images.unsplash.com/photo-1587620962725-abab7fe55159?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1631&q=80"
       );
-    } else if (category?.split(",")[0] === "Blogs") {
+    } else if (category?.split(",")[0] === "blogs") {
       setPhoto(
         "https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
       );
-    } else if (category?.split(",")[0] === "Podcasts") {
+    } else if (category?.split(",")[0] === "podcasts") {
       setPhoto(
         "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
       );

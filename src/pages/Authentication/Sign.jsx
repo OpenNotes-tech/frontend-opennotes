@@ -147,22 +147,22 @@ const Sign = () => {
 
   return (
     <>
-      {isAuthModalOpen && (
+      {isAuthModalOpen  && (
         <div
           data-dialog-backdrop="sign-in-dialog"
           data-dialog-backdrop-close="true"
           ref={modalRef}
-          class="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
+          class="raletive fixed inset-0 z-[999] grid h-screen w-screen md:place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
         >
           <div
             data-dialog="sign-in-dialog"
-            class="relative mx-auto flex w-full max-w-[26rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+            class="md:relative mx-auto flex w-full sticky top-[100vh] md:top-0 h-[500px] max-w-[26rem] flex-col rounded-t-xl md:rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
           >
             {loading && <Loader />}
             <button
               aria-label="Close panel"
               onClick={handleAuthModalToggle}
-              class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[405px] -top-3"
+              class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[180px] md:left-[405px] -top-6  md:-top-3"
             >
               <svg
                 stroke="currentColor"
@@ -178,7 +178,7 @@ const Sign = () => {
               </svg>
             </button>
             <div className="flex flex-col justify-center items-center">
-              <div className="md:rounded-full uppercase text-xs flex flex-row bg-gray-300 mt-6 py-5  items-center justify-center md:w-[290px] md:h-[20px]">
+              <div className="rounded-full uppercase text-xs flex flex-row bg-gray-300 mt-6 py-5  items-center justify-center w-[290px] h-[20px]">
                 <Link
                   onClick={() => setIsAuthSliderOpen(true)}
                   className={`cursor-pointer text-center rounded-full text-black px-12 py-2  font-medium  ${
@@ -196,7 +196,7 @@ const Sign = () => {
                   Log in
                 </Link>
               </div>
-              <ul class="flex justify-center gap-2 sm:gap-5 px-10 pt-10">
+              <ul class="flex justify-center gap-2 sm:gap-5 px-4 md:px-10 pt-10">
                 <li>
                   <Google />
                 </li>

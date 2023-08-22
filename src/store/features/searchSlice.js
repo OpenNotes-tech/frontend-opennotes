@@ -9,7 +9,7 @@ const searchSlice = createSlice({
     tags: "",
     pricing: "",
     pageNumber: 1,
-    totalPages: 0,
+    totalPages: 1,
     result: [],
   },
   reducers: {
@@ -31,8 +31,14 @@ const searchSlice = createSlice({
     setSearchResult(state, action) {
       state.result = action.payload;
     },
-    setPagination(state, action) {
+    setPageNumber(state, action) {
       state.pageNumber = action.payload?.pageNumber;
+    },
+    setTotalPages(state, action) {
+      state.totalPages = action.payload?.totalPages;
+    },
+
+    setPagination(state, action) {
       state.totalPages = action.payload?.totalPages;
     },
   },
@@ -45,6 +51,8 @@ export const {
   setSearchResult,
   setPricingOption,
   setTagsOption,
+  setPageNumber,
+  setTotalPages,
   setPagination,
 } = searchSlice.actions;
 

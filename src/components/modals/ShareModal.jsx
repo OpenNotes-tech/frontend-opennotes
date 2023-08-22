@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { closeShareModal } from "../store/features/modalSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { closeShareModal } from "../../store/features/modalSlice";
 const ShareModal = () => {
   const { isShareModalOpen, modalValue } = useSelector((state) => state.Modal);
   const dispatch = useDispatch();

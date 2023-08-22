@@ -1,8 +1,9 @@
 import { useEffect, useRef } from "react";
-import { setError, setLoading } from "../store/features/errorSlice";
+import { setError, setLoading } from "../../store/features/errorSlice";
 import { useSelector, useDispatch } from "react-redux";
-import { closeBookmarkModal } from "../store/features/modalSlice";
-import Loader from "./Loader";
+import { closeBookmarkModal } from "../../store/features/modalSlice";
+import Loader from "../Loader";
+
 const BookmarkModal = () => {
   const isBookmarkModalOpen = useSelector(
     (state) => state.Modal.isBookmarkModalOpen
@@ -40,12 +41,12 @@ const BookmarkModal = () => {
       {loading && <Loader />}
       <div
         data-dialog="sign-in-dialog"
-        class="relative mx-auto flex w-full max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+        class="relative mx-auto flex w-full max-w-[20rem] md:max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
       >
         <button
           aria-label="Close panel"
           onClick={handleBookmarkModalToggle}
-          class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[465px] -top-3"
+          class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[310px] md:left-[465px] -top-3"
         >
           <svg
             stroke="currentColor"

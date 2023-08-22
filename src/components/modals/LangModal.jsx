@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
-import { setError, setLoading } from "../store/features/errorSlice";
-import { closeLangModal } from "../store/features/modalSlice";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setError, setLoading } from "../../store/features/errorSlice";
+import { closeLangModal } from "../../store/features/modalSlice";
 import { Link } from "react-router-dom";
-import Loader from "./Loader";
-
+import Loader from "../Loader";
+  
 const LangModal = () => {
   const isLangModalOpen = useSelector((state) => state.Modal.isLangModalOpen);
   const loading = useSelector((state) => state.Error.loading);
@@ -29,6 +29,7 @@ const LangModal = () => {
   const handleLangModalToggle = () => {
     dispatch(closeLangModal());
   };
+
   return (
     <div
       data-dialog-backdrop="sign-in-dialog"
@@ -38,13 +39,13 @@ const LangModal = () => {
     >
       <div
         data-dialog="sign-in-dialog"
-        class="relative mx-auto flex w-full max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+        class="relative mx-auto flex w-10/12 max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
       >
         {loading && <Loader />}
         <button
           aria-label="Close panel"
           onClick={handleLangModalToggle}
-          class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md  left-[470px] -top-3"
+          class="absolute z-10 inline-flex items-center justify-center w-7 h-7 md:w-8 md:h-8 rounded-full bg-white text-gray-600 transition duration-200 focus:outline-none focus:text-gray-800 focus:shadow-md hover:text-gray-800 hover:shadow-md left-[300px] md:left-[470px] -top-3"
         >
           <svg
             stroke="currentColor"
@@ -68,7 +69,7 @@ const LangModal = () => {
           </h3>
         </div>
         <div className="flex flex-col justify-center items-center">
-          <div className="grid grid-cols-2 py-10">
+          <div className="grid md:grid-cols-2 py-10">
             <div className="flex flex-col space-y-2">
               <Link
                 role="menuitem"
@@ -78,7 +79,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/us.svg").default}
+                    src={require("../../assets/images/us.svg").default}
                     alt=""
                   />
                   <span>English - EN</span>
@@ -92,7 +93,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/es.svg").default}
+                    src={require("../../assets/images/es.svg").default}
                     alt=""
                   />
                   <span>Español - ES</span>
@@ -106,7 +107,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/de.svg").default}
+                    src={require("../../assets/images/de.svg").default}
                     alt=""
                   />
                   <span>Deutsch - DE</span>
@@ -120,7 +121,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/il.svg").default}
+                    src={require("../../assets/images/il.svg").default}
                     alt=""
                   />
                   <span>עברית - HE</span>
@@ -136,7 +137,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/cn.svg").default}
+                    src={require("../../assets/images/cn.svg").default}
                     alt=""
                   />
                   <span>中国人 - ZH</span>
@@ -150,7 +151,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/fr.svg").default}
+                    src={require("../../assets/images/fr.svg").default}
                     alt=""
                   />
                   <span>Français - FR</span>
@@ -164,7 +165,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/ru.svg").default}
+                    src={require("../../assets/images/ru.svg").default}
                     alt=""
                   />
                   <span>Русский - RU</span>
@@ -178,7 +179,7 @@ const LangModal = () => {
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../assets/images/sa.svg").default}
+                    src={require("../../assets/images/sa.svg").default}
                     alt=""
                   />
                   <span>عربى - AR</span>

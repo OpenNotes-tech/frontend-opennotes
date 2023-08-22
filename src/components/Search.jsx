@@ -7,7 +7,7 @@ import { setLoading, setError } from "../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import SearchAPI from "../utils/SearchAPI";
-import { FilterModal } from "./FilterModal";
+import { FilterModal } from "./modals/FilterModal";
 
 const Search = ({ nav }) => {
   const { query, sort, category, tags, pricing, pageNumber } = useSelector(
@@ -47,7 +47,10 @@ const Search = ({ nav }) => {
   };
 
   useEffect(() => {
-    if ((category.length > 0 || pricing.length > 0 || tags.length > 0) && category?.split(",")[0] !== "Home") {
+    if (
+      (category.length > 0 || pricing.length > 0 || tags.length > 0) &&
+      category?.split(",")[0] !== "Home"
+    ) {
       setFilterChange(true);
     } else {
       setFilterChange(false);
@@ -96,11 +99,7 @@ const Search = ({ nav }) => {
                 <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
               </svg>
             </button>
-            <div
-              className={`absolute right-16 w-[0.5px] bg-gray-500  ${
-                nav === "dfdf" ? "h-[40px]" : "h-[56px]"
-              }`}
-            ></div>
+            <div className="absolute right-16 w-[0.5px] bg-gray-500 h-full"></div>
             <button
               type="button"
               onClick={handleFilterToggle}

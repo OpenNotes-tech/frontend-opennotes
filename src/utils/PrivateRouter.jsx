@@ -9,7 +9,6 @@ const PrivateRouter = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [hasSignedIn, setHasSignedIn] = useState(false);
   const logged_in = Cookies.get("logged_in_candidate");
-  const location = useLocation();
   const dispatch = useDispatch();
   const isAuthModalOpen = useSelector((state) => state.Modal.isAuthModalOpen);
 

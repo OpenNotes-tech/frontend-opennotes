@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { setError, setLoading } from "../store/features/errorSlice";
-import { useSelector, useDispatch } from "react-redux";
-import { closeReportModal } from "../store/features/modalSlice";
-import Request from "../utils/API-router";
-import Loader from "./Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { setError, setLoading } from "../../store/features/errorSlice";
+import { closeReportModal } from "../../store/features/modalSlice";
+import Request from "../../utils/API-router";
+import Loader from "../Loader";
 
 const UserReport = () => {
   const isReportModalOpen = useSelector(
@@ -88,7 +88,7 @@ const UserReport = () => {
       ref={modalRef}
       class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
     >
-      {loading && <Loader />}
+      {loading === true && <Loader />}
       <div
         data-dialog="sign-in-dialog"
         class="relative mx-auto flex w-full max-w-[45rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"

@@ -47,7 +47,6 @@ const App = () => {
             exact
             element={<HomeMain cand={candidateIsAuthorized} />}
           />
-          <Route path="/:category?" element={<HomeMain />} />
           <Route path="/link" exact element={<LinkMain />} />
           {/* <Route path="/search" exact element={<SearchMain />} /> */}
           <Route path="details/:linkid" exact element={<LinkDetailsModal />} />

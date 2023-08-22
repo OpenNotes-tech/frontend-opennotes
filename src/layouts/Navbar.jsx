@@ -4,15 +4,12 @@ import ExploreModal from "../components/modals/ExploreModal";
 import { logout } from "../store/features/editProfileSlice";
 import {
   openAuthModal,
-  openReportModal,
-  openLangModal,
   openExploreModal,
   openBookmarkModal,
   closeExploreModal,
 } from "../store/features/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useRef, useEffect } from "react";
-import Sign from "../pages/Authentication/Sign";
 import Request from "../utils/API-router";
 import Loader from "../components/Loader";
 import Search from "../components/Search";
@@ -20,22 +17,17 @@ import Cookies from "js-cookie";
 import "../assets/css/darkmode.css";
 
 const Navbar = () => {
-  const { errorMessage, loading } = useSelector((state) => state.Error);
-  const { isReportModalOpen, isLangModalOpen, isExploreModalOpen } =
-    useSelector((state) => state.Modal);
-  const { query, sort, category, tags, pricing, pageNumber } = useSelector(
-    (state) => state.Search
-  );
+  const { loading } = useSelector((state) => state.Error);
+  const { isExploreModalOpen } = useSelector((state) => state.Modal);
   const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isSearch, setIsSearch] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [mobileSearchBar, setMobileSearchBar] = useState(false);
 
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const name = location.pathname.split("/")[1].toLowerCase();
 
   const refProfile = useRef();
   const modalRef = useRef();
@@ -107,26 +99,24 @@ const Navbar = () => {
   }, [dispatch, isExploreModalOpen, toggleExplore]);
 
   const handleToggle = () => {
-    setIsChecked(!isChecked);
-    console.log(isChecked);
+    setDarkMode(!darkMode);
   };
 
   const handleSearch = () => {
-    setIsSearch(!isSearch);
+    setMobileSearchBar(!mobileSearchBar);
   };
 
   return (
     <>
-      <Sign />
-      {!isSearch && (
+      {!mobileSearchBar && (
         <nav
           className={`sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 xl:-mx-0 px-4 md:px-10 xl:px-12 ${
-            scrolled || name === "search"
+            scrolled
               ? "border border-white/80 bg-white text-slate-700 shadow-md"
               : "bg-transparent text-white"
-          }  ${loading === true ? " pointer-events-none" : ""}`}
+          }  ${loading ? " pointer-events-none" : ""}`}
         >
-          {loading === true && <Loader />}
+          {loading && <Loader />}
 
           <div>
             <button
@@ -179,7 +169,7 @@ const Navbar = () => {
                 id="dropdownDefaultButton"
                 data-dropdown-toggle="dropdown"
                 className={`raletive items-center hidden md:inline-flex  font-semibold text-base transition duration-300 ease-in-out  px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                  scrolled || name === "search"
+                  scrolled
                     ? "text-slate-600 hover:bg-slate-100"
                     : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
                 }`}
@@ -208,7 +198,7 @@ const Navbar = () => {
               <button
                 onClick={handleBookmarkModalToggle}
                 className={`group font-semibold text-base transition duration-300 ease-in-out px-2 py-[8px] text-center rounded-full focus:outline-none  ${
-                  scrolled || name === "search"
+                  scrolled
                     ? "text-slate-600 hover:bg-slate-100"
                     : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
                 }`}
@@ -245,7 +235,7 @@ const Navbar = () => {
               <div className="relative inline-flex self-center items-center space-x-10">
                 <Link
                   className={`flex flex-row items-center space-x-2 border border-gray-300 rounded-full py-1 px-2 hover:shadow-md transition duration-300 ease-in-out ${
-                    scrolled || name === "search" ? "bg-white" : "bg-white/80"
+                    scrolled ? "bg-white" : "bg-white/80"
                   }`}
                   type="button"
                   onClick={() => setToggleProfile((oldState) => !oldState)}
@@ -450,7 +440,7 @@ const Navbar = () => {
                             type="checkbox"
                             class="dn"
                             id="dn"
-                            checked={isChecked}
+                            checked={darkMode}
                             onChange={handleToggle}
                           />
                           <label for="dn" class="toggle">
@@ -476,8 +466,7 @@ const Navbar = () => {
           </div>
         </nav>
       )}
-
-      {isSearch && (
+      {mobileSearchBar && (
         <div className="sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 px-3 space-x-3 border border-white/80 bg-white text-slate-700 shadow-md">
           <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
           <button onClick={handleSearch}>
@@ -499,49 +488,6 @@ const Navbar = () => {
           </button>
         </div>
       )}
-
-      {/* {errorMessage !== undefined && (
-        <div
-          id="alert-border-2"
-          className="sticky  top-14 flex p-4 mb-4 z-90 text-red-900 border-t-4  border-red-300 bg-red-50 "
-          role="alert"
-        >
-          <svg
-            className="flex-shrink-0 w-5 h-5"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fillRule="evenodd"
-              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-              clipRule="evenodd"
-            ></path>
-          </svg>
-          <div className="ml-3 text-sm font-medium">{errorMessage}</div>
-          <button
-            type="button"
-            className="ml-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 "
-            data-dismiss-target="#alert-border-2"
-            aria-label="Close"
-          >
-            <span className="sr-only">Dismiss</span>
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-          </button>
-        </div>
-      )} */}
     </>
   );
 };

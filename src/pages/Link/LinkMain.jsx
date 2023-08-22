@@ -1,55 +1,38 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setLoading, setError } from "../../store/features/errorSlice";
-import {
-  setSortOption,
-  setCategoryOption,
-  setTagsOption,
-  setSearchResult,
-  setPageNumber,
-  setTotalPages,
-} from "../../store/features/searchSlice";
 import SearchAPI from "../../utils/SearchAPI";
-import Loader from "../../components/Loader";
 import LinkCard from "./LinkCard";
-import ShareModal from "../../components/modals/ShareModal";
 import useScreenSize from "../../components/useScreenSize";
 import LoaderSkeleton from "../../components/LoaderSkeleton";
 import IconNoResult from "../../components/IconNoResult";
-import BookmarkModal from "../../components/modals/BookmarkModal";
-import LinkDetailsModal from "./LinkDetailsModal";
 import hashtags from "../../constants/tags.json";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/skyblue";
 import { generateLinkWithQuery } from "../../components/generateLinkWithQuery";
 
-const LinkMain = ({ fetchResult, setFetchResult }) => {
+const LinkMain = ({
+  fetchResult,
+  setFetchResult,
+  sort,
+  tags,
+  pricing,
+  category,
+  searchQuery,
+  pageNumber,
+  totalPages,
+}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const screenSize = useScreenSize();
-  const filterRef = useRef(null);
 
-  const queryParams = new URLSearchParams(location.search);
-
-  const sort = queryParams.get("sort_by");
-  const tags = decodeURIComponent(queryParams.get("tags")); // Decode the tags
-  const pricing = queryParams.get("pricing");
-  const category = queryParams.get("category");
-  const searchQuery = queryParams.get("search_query");
-  const pageNumber = sessionStorage.getItem("_PageNumber");
-  const totalPages = sessionStorage.getItem("_TotalPages");
-  const { isShareModalOpen, isBookmarkModalOpen, isDetailsModalOpen } =
-  useSelector((state) => state.Modal);
   const loading = useSelector((state) => state.Error.loading);
   const [isSortbyOpen, setSortbyOpen] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isFilterSticky, setIsFilterSticky] = useState(false);
   const [showTabs, setShowTabs] = useState(false);
   const [pressedTag, setPressedTag] = useState("");
   const [getHash, setHash] = useState(hashtags.home);
-
 
   const loadLinkResults = () => {
     if (pageNumber > totalPages) {
@@ -67,7 +50,7 @@ const LinkMain = ({ fetchResult, setFetchResult }) => {
           ]);
         }
         // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-        dispatch(setPageNumber({ pageNumber: pageNumber + 1 }));
+        // dispatch(setPageNumber({ pageNumber: pageNumber + 1 }));
         sessionStorage.setItem("_PageNumber", pageNumber + 1);
         dispatch(setLoading(false));
       })
@@ -85,24 +68,24 @@ const LinkMain = ({ fetchResult, setFetchResult }) => {
       });
   };
 
-  const debounce = (func, delay) => {
-    let timer;
-    return function () {
-      clearTimeout(timer);
-      timer = setTimeout(() => func.apply(this, arguments), delay);
-    };
-  };
+  // const debounce = (func, delay) => {
+  //   let timer;
+  //   return function () {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(() => func.apply(this, arguments), delay);
+  //   };
+  // };
 
-  const debouncedLoadLinkResults = debounce(loadLinkResults, 200);
+  // const debouncedLoadLinkResults = debounce(loadLinkResults, 200);
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + window.scrollY >=
-      document.body.scrollHeight - 100
-    ) {
-      debouncedLoadLinkResults();
-    }
-  };
+  // const handleScroll = () => {
+  //   if (
+  //     window.innerHeight + window.scrollY >=
+  //     document.body.scrollHeight - 100
+  //   ) {
+  //     debouncedLoadLinkResults();
+  //   }
+  // };
 
   const handleCategorySubmit = (e, navLink) => {
     const linkToPage = generateLinkWithQuery(location, { category: navLink });
@@ -125,16 +108,10 @@ const LinkMain = ({ fetchResult, setFetchResult }) => {
     setSortbyOpen((prevState) => !prevState);
   };
 
-  const handleBookmarkModalToggle = () => {
-    setIsOpen((prevState) => !prevState);
-  };
+  const handleBookmarkModalToggle = () => {};
 
   const handleExploreModalToggle = () => {
     sessionStorage.setItem("_IsExploreModalOpen", true);
-  };
-
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const getWidthAndHeight = () => {
@@ -152,27 +129,12 @@ const LinkMain = ({ fetchResult, setFetchResult }) => {
     loadLinkResults();
   }, []);
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [pageNumber, loading]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      // Check if the filterRef is available before calling getBoundingClientRect
-      if (filterRef.current) {
-        const filterRect = filterRef.current.getBoundingClientRect();
-        setIsFilterSticky(filterRect.top <= 0);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, [pageNumber, loading]);
 
   useEffect(() => {
     setFetchResult(fetchResult);
@@ -202,7 +164,6 @@ const LinkMain = ({ fetchResult, setFetchResult }) => {
   return (
     <>
       <div className="container md:px-4 lg:px-0 mx-auto justify-center scroll-smooth">
-        {loading === true && <Loader />}
         <div className="flex flex-col md:px-12 py-6 md:py-10 space-y-1 md:space-y-4 ">
           <div className="flex flex-row space-x-4 justify-center w-full snap-x">
             <Splide
@@ -613,7 +574,7 @@ const LinkMain = ({ fetchResult, setFetchResult }) => {
                   <LinkCard key={index} linkElement={linkElement} />
                 ))}
             </div>
-            {!loading === false && fetchResult.length === 0 && (
+            {!loading === true && fetchResult.length === 0 && (
               <div className="flex justify-center items-center">
                 <IconNoResult />
               </div>
@@ -623,34 +584,8 @@ const LinkMain = ({ fetchResult, setFetchResult }) => {
                 <LoaderSkeleton />
               </div>
             )}
-            {/* {!isFilterSticky && (
-            <button
-              className="fixed bottom-24 md:bottom-20 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"
-              onClick={handleScrollToTop}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#ffffff"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-arrow-up"
-              >
-                <line x1="12" x2="12" y1="19" y2="5"></line>
-                <polyline points="5 12 12 5 19 12"></polyline>
-              </svg>
-            </button>
-          )} */}
           </div>
         </div>
-
-        {isBookmarkModalOpen === true && <BookmarkModal />}
-        {isShareModalOpen === true && <ShareModal />}
-        {isDetailsModalOpen === true && <LinkDetailsModal />}
       </div>
       {showTabs && (
         <aside className="fixed bottom-0 z-50 w-full h-16 md:hidden shadow-[0_40px_60px_2px_rgba(0.9,0.9,0.9,0.9)]">

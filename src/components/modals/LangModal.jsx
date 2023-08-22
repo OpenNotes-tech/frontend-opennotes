@@ -1,13 +1,11 @@
 import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setError, setLoading } from "../../store/features/errorSlice";
+// import { setError, setLoading } from "../../store/features/errorSlice";
 import { closeLangModal } from "../../store/features/modalSlice";
 import { Link } from "react-router-dom";
-import Loader from "../Loader";
   
 const LangModal = () => {
   const isLangModalOpen = useSelector((state) => state.Modal.isLangModalOpen);
-  const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
   const modalRef = useRef();
 
@@ -41,7 +39,6 @@ const LangModal = () => {
         data-dialog="sign-in-dialog"
         class="relative mx-auto flex w-10/12 max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
       >
-        {loading && <Loader />}
         <button
           aria-label="Close panel"
           onClick={handleLangModalToggle}

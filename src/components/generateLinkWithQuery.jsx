@@ -9,8 +9,8 @@ export const generateLinkWithQuery = (location, newQueryParams) => {
     queryParams.set("pricing", newQueryParams.pricing);
   } else if (newQueryParams.category) {
     queryParams.set("category", newQueryParams.category);
-  } else if (newQueryParams.searchInput) {
-    queryParams.set("search_query", newQueryParams.searchInput);
+  } else if (newQueryParams.searchQuery) {
+    queryParams.set("search_query", newQueryParams.searchQuery);
   } else if (newQueryParams.pageNumber) {
     queryParams.set("page", newQueryParams.pageNumber);
   }

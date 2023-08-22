@@ -1,11 +1,4 @@
 import {
-  setCategoryOption,
-  setTagsOption,
-  setPricingOption,
-  setSearchResult,
-  setPagination,
-} from "../../store/features/searchSlice";
-import {
   FrontendOptions,
   CategoryOptions,
   PricingOptions,
@@ -13,21 +6,25 @@ import {
   BackendOptions,
   AIOptions,
   SecurityOptions,
+  CourseOptions,
   BlogOptions,
+  PodcastOptions,
   AlgorithmsOptions,
 } from "../../constants/FilterData";
-import { setLoading, setError } from "../../store/features/errorSlice";
+import { closeFilterModal } from "../../store/features/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
-import SearchAPI from "../../utils/SearchAPI";
 import Selector from "../Selector";
-import Loader from "../Loader";
+import { useLocation } from "react-router-dom";
 
-export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
-  const { query, sort, category, tags, pricing, pageNumber } = useSelector(
-    (state) => state.Search
-  );
-  const loading = useSelector((state) => state.Error.loading);
+export const FilterModal = () => {
+  const { isFilterModalOpen } = useSelector((state) => state.Modal);
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+
+  const tags = decodeURIComponent(queryParams.get("tags"));
+  const pricing = queryParams.get("pricing");
+  const category = queryParams.get("category");
   const [getLocationSelector, setLocationSelector] = useState([]);
   const [getSkillsSelector, setSkillsSelector] = useState([]);
   const [getPricingSelector, setPricingSelector] = useState([]);
@@ -39,45 +36,22 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
     const selectedValues = selectedLocation.map((option) => option.value);
     setLocationSelector(selectedLocation);
     const commaSeparatedString = selectedValues.join(",");
-
-    dispatch(setCategoryOption(commaSeparatedString)); // this is added to redux
   };
   const handleSkillsSelector = (selectedSkills) => {
     const selectedValues = selectedSkills.map((option) => option.value);
     setSkillsSelector(selectedSkills);
     const commaSeparatedString = selectedValues.join(",");
-    dispatch(setTagsOption(commaSeparatedString));
   };
   const handlePricingSelector = (selectedPrice) => {
     const selectedValues = selectedPrice.map((option) => option.value);
     setPricingSelector(selectedPrice);
     const commaSeparatedString = selectedValues.join(",");
-    dispatch(setPricingOption(commaSeparatedString));
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(setLoading(true));
-
-    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
-      .then((res) => {
-        dispatch(setSearchResult(res.data.data.body));
-        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        dispatch(setError(error?.response?.data?.message));
-        dispatch(setLoading(false));
-      })
-      .finally((error) => {
-        dispatch(setError(error?.response?.data?.message));
-        dispatch(setLoading(false));
-        setToggleFilter(false);
-      });
-  };
+  const handleSubmit = (e) => {};
   const handleCancel = () => {
     // setSkillsSelector([]); // Clear selected skills
     // setLocationSelector([]); // Clear selected locations
-    setToggleFilter(false); // Close the modal
+    dispatch(closeFilterModal());
   };
 
   useEffect(() => {
@@ -104,26 +78,28 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (e.target === modalRef.current) {
-        setToggleFilter(false);
+        dispatch(closeFilterModal());
       }
     };
-    if (getToggleFilter) {
+    if (isFilterModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
     }
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [getToggleFilter, setToggleFilter]);
+  }, [dispatch, isFilterModalOpen]);
 
   // Combine selected category options into one array
   const categoryOptions = {
-    Mobile: MobileOptions,
-    Frontend: FrontendOptions,
-    Backend: BackendOptions,
-    "Artificial Intelligence": AIOptions,
-    "Cyber Security": SecurityOptions,
-    Blogs: BlogOptions,
-    Algorithms: AlgorithmsOptions,
+    mobile: MobileOptions,
+    frontend: FrontendOptions,
+    backend: BackendOptions,
+    datascience: AIOptions,
+    cybersecurity: SecurityOptions,
+    blogs: BlogOptions,
+    algorithms: AlgorithmsOptions,
+    courses: CourseOptions,
+    podcasts: PodcastOptions,
   };
 
   // Flatten category options and prioritize the options of the first selected category
@@ -163,7 +139,6 @@ export const FilterModal = ({ setToggleFilter, getToggleFilter }) => {
         ref={modalRef}
         className="fixed bottom-0 inset-0 z-[999] flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
       >
-        {loading === true && <Loader />}
         <div className="relative mx-auto max-w-2xl w-full">
           {/*content*/}
           <div className="relative flex w-full flex-col  rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">

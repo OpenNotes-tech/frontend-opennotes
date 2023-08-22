@@ -1,8 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import LangModal from "../modals/LangModal";
-import UserReport from "../modals/UserReport";
 import { generateLinkWithQuery } from "../../components/generateLinkWithQuery";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   openReportModal,
   openLangModal,
@@ -14,9 +12,6 @@ const ExploreModal = () => {
   const dispatch = useDispatch();
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
-  const { isLangModalOpen, isReportModalOpen } = useSelector(
-    (state) => state.Modal
-  );
 
   const toggleReport = (data) => {
     dispatch(openReportModal(data));
@@ -392,7 +387,6 @@ const ExploreModal = () => {
                 <span>Report</span>
               </div>
             </button>
-            {isReportModalOpen && <UserReport />}
             <button
               type="button"
               data-ripple-light="true"
@@ -421,7 +415,6 @@ const ExploreModal = () => {
                 <span>English - EN</span>
               </div>
             </button>
-            {isLangModalOpen && <LangModal />}
           </div>
         </div>
         <div className="py-5 px-10 text-slate-700">

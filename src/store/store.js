@@ -2,7 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import editProfileSlice from "./features/editProfileSlice";
 import userAuthSlice from "./features/userAuthSlice";
 import editLinkSlice from "./features/editLinkSlice";
-import searchSlice from "./features/searchSlice";
+// import searchSlice from "./features/searchSlice";
 import modalSlice from "./features/modalSlice";
 import errorSlice from "./features/errorSlice";
 
@@ -11,7 +11,7 @@ export const store = configureStore({
     UserProfile: editProfileSlice,
     Link: editLinkSlice,
     userAuth: userAuthSlice,
-    Search: searchSlice,
+    // Search: searchSlice,
     Modal: modalSlice,
     Error: errorSlice,
   },

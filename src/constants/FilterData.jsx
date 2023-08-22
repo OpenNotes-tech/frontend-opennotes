@@ -251,17 +251,16 @@ export const FrontendOptions = [
   { value: "Attorney", label: "Attorney" },
   { value: "Data Analyst", label: "Data Analyst" },
 ];
-
 export const CategoryOptions = [
-  { value: "Frontend", label: "Frontend" },
-  { value: "Backend", label: "Backend" },
-  { value: "Mobile", label: "Mobile" },
-  { value: "Blogs", label: "Blogs" },
-  { value: "Podcasts", label: "Podcasts" },
-  { value: "AI / ML / DS", label: "AI / ML / DS" },
-  { value: "Algorithms", label: "Algorithms" },
-  { value: "IT Courses", label: "IT Courses" },
-  { value: "Cyber Security", label: "Cyber Security" },
+  { value: "frontend", label: "Frontend" },
+  { value: "backend", label: "Backend" },
+  { value: "mobile", label: "Mobile" },
+  { value: "blogs", label: "Blogs" },
+  { value: "podcasts", label: "Podcasts" },
+  { value: "datascience", label: "AI / ML / DS" },
+  { value: "algorithms", label: "Algorithms" },
+  { value: "courses", label: "IT Courses" },
+  { value: "cybersecurity", label: "Cyber Security" },
 ];
 export const BlogOptions = [
   { value: "Blogs", label: "Blogs", isDisabled: true },
@@ -274,7 +273,28 @@ export const BlogOptions = [
   { value: "IT Courses", label: "IT Courses" },
   { value: "Cyber Security", label: "Cyber Security" },
 ];
-
+export const CourseOptions = [
+  { value: "IT Courses", label: "IT Courses", isDisabled: true },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Mobile", label: "Mobile" },
+  { value: "Blog", label: "Blog" },
+  { value: "AI / ML / DS", label: "AI / ML / DS" },
+  { value: "Algorithms", label: "Algorithms" },
+  { value: "IT Courses", label: "IT Courses" },
+  { value: "Cyber Security", label: "Cyber Security" },
+];
+export const PodcastOptions = [
+  { value: "Podcasts", label: "Podcasts", isDisabled: true },
+  { value: "Frontend", label: "Frontend" },
+  { value: "Backend", label: "Backend" },
+  { value: "Mobile", label: "Mobile" },
+  { value: "Blog", label: "Blog" },
+  { value: "AI / ML / DS", label: "AI / ML / DS" },
+  { value: "Algorithms", label: "Algorithms" },
+  { value: "IT Courses", label: "IT Courses" },
+  { value: "Cyber Security", label: "Cyber Security" },
+];
 export const AlgorithmsOptions = [
   { value: "Algorithms", label: "Algorithms", isDisabled: true },
   { value: "Frontend", label: "Frontend" },
@@ -286,7 +306,6 @@ export const AlgorithmsOptions = [
   { value: "IT Courses", label: "IT Courses" },
   { value: "Cyber Security", label: "Cyber Security" },
 ];
-
 export const MobileOptions = [
   { value: "Mobile", label: "Mobile", isDisabled: true },
   { value: "Python", label: "Python" },
@@ -314,7 +333,6 @@ export const SecurityOptions = [
   { value: "C++", label: "C++" },
   { value: "PHP", label: "PHP" },
 ];
-
 export const BackendOptions = [
   { value: "Backend", label: "Backend", isDisabled: true },
   { value: "Python", label: "Python" },
@@ -496,7 +514,6 @@ export const BackendOptions = [
   { value: "Elasticsearch", label: "Elasticsearch" },
   { value: "Docker", label: "Docker" },
 ];
-
 export const PricingOptions = [
   { value: "Free", label: "Free" },
   { value: "Paid", label: "Paid" },

@@ -1,55 +1,43 @@
-import {
-  setSearchQuery,
-  setSearchResult,
-  setPagination,
-} from "../store/features/searchSlice";
-import { setLoading, setError } from "../store/features/errorSlice";
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import SearchAPI from "../utils/SearchAPI";
-import { FilterModal } from "./modals/FilterModal";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { generateLinkWithQuery } from "./generateLinkWithQuery";
+import { openFilterModal } from "../store/features/modalSlice";
+import { useDispatch } from "react-redux";
 const Search = ({ nav }) => {
-  const { query, sort, category, tags, pricing, pageNumber } = useSelector(
-    (state) => state.Search
-  );
+  const location = useLocation();
   const dispatch = useDispatch();
+  const queryParams = new URLSearchParams(location.search);
+
+  const tags = decodeURIComponent(queryParams.get("tags"));
+  const pricing = queryParams.get("pricing");
+  const category = queryParams.get("category");
+
+  const navigate = useNavigate();
 
   const [isInputFocused, setInputFocused] = useState(false);
-  const [getToggleFilter, setToggleFilter] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const [getFilterChange, setFilterChange] = useState(false);
 
   const handleInputSubmit = (event) => {
-    dispatch(setSearchQuery(event.target.value));
+    setSearchValue(event.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    dispatch(setLoading(true));
-    SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
-      .then((res) => {
-        dispatch(setSearchResult(res.data.data.body));
-        dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        dispatch(setError(error?.response?.data?.message));
-        dispatch(setLoading(false));
-      })
-      .finally((e) => {
-        dispatch(setLoading(false));
-      });
+    const linkToPage = generateLinkWithQuery(location, {
+      searchQuery: searchValue,
+    });
+    navigate(linkToPage);
   };
 
   const handleFilterToggle = () => {
-    setToggleFilter(true);
+    dispatch(openFilterModal());
   };
 
   useEffect(() => {
     if (
-      (category.length > 0 || pricing.length > 0 || tags.length > 0) &&
-      category?.split(",")[0] !== "Home"
+      (category?.length > 0 || pricing?.length > 0 || tags?.length > 0) &&
+      category?.split(",")[0] !== "home"
     ) {
       setFilterChange(true);
     } else {
@@ -71,7 +59,7 @@ const Search = ({ nav }) => {
             }`}
           >
             <input
-              value={query}
+              value={searchValue}
               onChange={handleInputSubmit}
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
@@ -133,14 +121,6 @@ const Search = ({ nav }) => {
           </div>
         </form>
       </div>
-      {getToggleFilter ? (
-        <>
-          <FilterModal
-            setToggleFilter={setToggleFilter}
-            getToggleFilter={getToggleFilter}
-          />
-        </>
-      ) : null}
     </>
   );
 };

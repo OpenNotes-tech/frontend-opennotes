@@ -22,15 +22,11 @@ import ProfileChangeResume from "./pages/Profile/ProfileChangeResume";
 import ProfileChangeSettings from "./pages/Profile/ProfileChangeSettings";
 import ProfileChangePassword from "./pages/Profile/ProfileChangePassword";
 import ProfileChangeEmail from "./pages/Profile/ProfileChangeEmail";
-// Link Routes
-import LinkMain from "./pages/Link/LinkMain";
-import LinkDetailsModal from "./pages/Link/LinkDetailsModal";
 // Static Routes
 import NotFound from "./pages/Static/NotFound";
 import About from "./pages/Static/About";
 import Contacts from "./pages/Static/Contacts";
 import Policy from "./pages/Static/Policy";
-// import SearchMain from "./pages/Search/SearchMain";
 
 const App = () => {
   const candidateIsAuthorized = Cookies.get("logged_in_candidate");
@@ -47,9 +43,6 @@ const App = () => {
             exact
             element={<HomeMain cand={candidateIsAuthorized} />}
           />
-          <Route path="/link" exact element={<LinkMain />} />
-          {/* <Route path="/search" exact element={<SearchMain />} /> */}
-          <Route path="details/:linkid" exact element={<LinkDetailsModal />} />
           <Route exact element={<PrivateRouter />}>
             <Route path="saved" exact element={<BookmarkMain />} />
             <Route path="profile" exact element={<ProfileMain />}>

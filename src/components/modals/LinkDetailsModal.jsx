@@ -1,12 +1,10 @@
 import { useEffect, useRef } from "react";
 import { useDispatch } from "react-redux";
-import Loader from "../../components/Loader";
 import { Link } from "react-router-dom";
 
 const LinkDetailsModal = () => {
   const isDetailsModalOpen = sessionStorage.getItem("_IsDetailsModalOpen");
   const modalValue = sessionStorage.getItem("_ModalValue");
-  const loading = sessionStorage.getItem("_Loader");
   const dispatch = useDispatch();
   const modalRef = useRef();
 
@@ -42,7 +40,6 @@ const LinkDetailsModal = () => {
             data-dialog="sign-in-dialog"
             class="relative mx-auto flex w-full max-w-[26rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
           >
-            {loading === true && <Loader />}
             <button
               aria-label="Close panel"
               onClick={handleDetailsModalToggle}

@@ -1,14 +1,12 @@
 import { useEffect, useRef } from "react";
-import { setError, setLoading } from "../../store/features/errorSlice";
+// import { setError, setLoading } from "../../store/features/errorSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { closeBookmarkModal } from "../../store/features/modalSlice";
-import Loader from "../Loader";
 
 const BookmarkModal = () => {
   const isBookmarkModalOpen = useSelector(
     (state) => state.Modal.isBookmarkModalOpen
   );
-  const loading = useSelector((state) => state.Error.loading);
   const dispatch = useDispatch();
   const modalRef = useRef();
 
@@ -38,7 +36,6 @@ const BookmarkModal = () => {
       ref={modalRef}
       class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
     >
-      {loading && <Loader />}
       <div
         data-dialog="sign-in-dialog"
         class="relative mx-auto flex w-full max-w-[20rem] md:max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"

@@ -15,42 +15,54 @@ import { closeFilterModal } from "../../store/features/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import Selector from "../Selector";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import { generateLinkWithQuery } from "../../components/generateLinkWithQuery";
 
 export const FilterModal = () => {
   const { isFilterModalOpen } = useSelector((state) => state.Modal);
   const location = useLocation();
+  const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
 
   const tags = decodeURIComponent(queryParams.get("tags"));
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
-  const [getLocationSelector, setLocationSelector] = useState([]);
-  const [getSkillsSelector, setSkillsSelector] = useState([]);
+  const [getCategorySelector, setCategorySelector] = useState([]);
+  const [getTagsSelector, setTagsSelector] = useState([]);
   const [getPricingSelector, setPricingSelector] = useState([]);
+  const [routeTags, setRouteTags] = useState("");
+  const [routeCategory, setRouteCategory] = useState("");
+
+  console.log(routeCategory);
+  console.log(routeTags);
 
   const dispatch = useDispatch();
   const modalRef = useRef();
 
-  const handleLocationSelector = (selectedLocation) => {
-    const selectedValues = selectedLocation.map((option) => option.value);
-    setLocationSelector(selectedLocation);
+  const handleCategorySelector = (selectedCategory) => {
+    const selectedValues = selectedCategory.map((option) => option.value);
+    setCategorySelector(selectedCategory);
     const commaSeparatedString = selectedValues.join(",");
+    setRouteCategory(commaSeparatedString);
   };
-  const handleSkillsSelector = (selectedSkills) => {
-    const selectedValues = selectedSkills.map((option) => option.value);
-    setSkillsSelector(selectedSkills);
+  const handleTagsSelector = (selectedTags) => {
+    const selectedValues = selectedTags.map((option) => option.value);
+    setTagsSelector(selectedTags);
     const commaSeparatedString = selectedValues.join(",");
+    setRouteTags(commaSeparatedString);
   };
   const handlePricingSelector = (selectedPrice) => {
     const selectedValues = selectedPrice.map((option) => option.value);
     setPricingSelector(selectedPrice);
     const commaSeparatedString = selectedValues.join(",");
   };
-  const handleSubmit = (e) => {};
+  const handleSubmit = (e) => {
+    const linkToPage = generateLinkWithQuery(location, { tags: tags });
+    navigate(linkToPage);
+  };
   const handleCancel = () => {
-    // setSkillsSelector([]); // Clear selected skills
-    // setLocationSelector([]); // Clear selected locations
+    // setTagsSelector([]); // Clear selected skills
+    // setCategorySelector([]); // Clear selected locations
     dispatch(closeFilterModal());
   };
 
@@ -60,7 +72,7 @@ export const FilterModal = () => {
       const selectedOptions = CategoryOptions.filter((option) =>
         selectedValues.includes(option.value)
       );
-      setLocationSelector(selectedOptions);
+      setCategorySelector(selectedOptions);
     }
   }, [category]);
 
@@ -129,7 +141,7 @@ export const FilterModal = () => {
       const selectedOptions = orderedSelectedOptions.filter((option) =>
         selectedValues.includes(option.value)
       );
-      setSkillsSelector(selectedOptions);
+      setTagsSelector(selectedOptions);
     }
   }, [tags]);
 
@@ -159,8 +171,8 @@ export const FilterModal = () => {
                   className="basic-multi-select"
                   options={CategoryOptions}
                   isMulti={true}
-                  value={getLocationSelector}
-                  onChange={handleLocationSelector}
+                  value={getCategorySelector}
+                  onChange={handleCategorySelector}
                 />
               </div>
               <div className="px-10 md:px-0 ">
@@ -172,8 +184,8 @@ export const FilterModal = () => {
                   className="basic-multi-select"
                   options={orderedSelectedOptions}
                   isMulti={true}
-                  value={getSkillsSelector}
-                  onChange={handleSkillsSelector}
+                  value={getTagsSelector}
+                  onChange={handleTagsSelector}
                 />
               </div>
               <div className="px-10 md:px-0">

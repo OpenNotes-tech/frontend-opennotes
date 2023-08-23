@@ -16,12 +16,13 @@ const HomeMain = () => {
 
   const queryParams = new URLSearchParams(location.search);
   const sort = queryParams.get("sortby");
-  const tags = decodeURIComponent(queryParams.get("tags"));
+  const tags = queryParams.get("tags");
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
   const searchQuery = queryParams.get("search_query");
   const pageNumber = sessionStorage.getItem("_PageNumber");
   const totalPages = sessionStorage.getItem("_TotalPages");
+
   useEffect(() => {
     dispatch(setLoading(true));
     SearchAPI.linkSearch(
@@ -36,6 +37,7 @@ const HomeMain = () => {
       .then((res) => {
         setFetchResult(res.data.data.body);
         // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
+        sessionStorage.setItem("_TotalPages", res.data.data.totalPages );
         dispatch(setLoading(false));
       })
       .catch((error) => {
@@ -76,6 +78,11 @@ const HomeMain = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [filterRef]);
+
+  useEffect(() => {
+    sessionStorage.setItem("_TotalPages", true);
+  }, [pricing]);
+
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

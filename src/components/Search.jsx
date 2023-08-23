@@ -3,16 +3,17 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { generateLinkWithQuery } from "./generateLinkWithQuery";
 import { openFilterModal } from "../store/features/modalSlice";
 import { useDispatch } from "react-redux";
+
 const Search = ({ nav }) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const queryParams = new URLSearchParams(location.search);
+  const navigate = useNavigate();
 
-  const tags = decodeURIComponent(queryParams.get("tags"));
+  const queryParams = new URLSearchParams(location.search);
+  const tags = queryParams.get("tags");
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
-
-  const navigate = useNavigate();
+  const hashtag = queryParams.get("hashtag");
 
   const [isInputFocused, setInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -25,7 +26,7 @@ const Search = ({ nav }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const linkToPage = generateLinkWithQuery(location, {
-      searchQuery: searchValue,
+      search_query: searchValue,
     });
     navigate(linkToPage);
   };
@@ -36,14 +37,16 @@ const Search = ({ nav }) => {
 
   useEffect(() => {
     if (
-      (category?.length > 0 || pricing?.length > 0 || tags?.length > 0) &&
-      category?.split(",")[0] !== "home"
+      category?.length > 0 ||
+      pricing?.length > 0 ||
+      tags?.length > 0 ||
+      hashtag?.length > 0
     ) {
       setFilterChange(true);
     } else {
       setFilterChange(false);
     }
-  }, [category, tags, pricing]);
+  }, [category, tags, pricing, hashtag]);
 
   return (
     <>

@@ -27,11 +27,12 @@ const LinkMain = ({
   const navigate = useNavigate();
   const location = useLocation();
   const screenSize = useScreenSize();
+  const queryParams = new URLSearchParams(location.search);
+  const hashtag = queryParams.get("hashtag");
 
   const loading = useSelector((state) => state.Error.loading);
   const [isSortbyOpen, setSortbyOpen] = useState(false);
   const [showTabs, setShowTabs] = useState(false);
-  const [pressedTag, setPressedTag] = useState("");
   const [getHash, setHash] = useState(hashtags.home);
 
   const loadLinkResults = () => {
@@ -68,24 +69,24 @@ const LinkMain = ({
       });
   };
 
-  // const debounce = (func, delay) => {
-  //   let timer;
-  //   return function () {
-  //     clearTimeout(timer);
-  //     timer = setTimeout(() => func.apply(this, arguments), delay);
-  //   };
-  // };
+  const debounce = (func, delay) => {
+    let timer;
+    return function () {
+      clearTimeout(timer);
+      timer = setTimeout(() => func.apply(this, arguments), delay);
+    };
+  };
 
-  // const debouncedLoadLinkResults = debounce(loadLinkResults, 200);
+  const debouncedLoadLinkResults = debounce(loadLinkResults, 200);
 
-  // const handleScroll = () => {
-  //   if (
-  //     window.innerHeight + window.scrollY >=
-  //     document.body.scrollHeight - 100
-  //   ) {
-  //     debouncedLoadLinkResults();
-  //   }
-  // };
+  const handleScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >=
+      document.body.scrollHeight - 100
+    ) {
+      debouncedLoadLinkResults();
+    }
+  };
 
   const handleCategorySubmit = (e, navLink) => {
     const linkToPage = generateLinkWithQuery(location, { category: navLink });
@@ -95,12 +96,11 @@ const LinkMain = ({
     // dispatch(setPageNumber({ pageNumber: 1 }));
   };
   const handleSortChange = (e, result) => {
-    const linkToPage = generateLinkWithQuery(location, { sort: result });
+    const linkToPage = generateLinkWithQuery(location, { sortby: result });
     navigate(linkToPage);
   };
   const handleTagsSubmit = (e, tag) => {
-    setPressedTag(tag);
-    const linkToPage = generateLinkWithQuery(location, { tags: tag });
+    const linkToPage = generateLinkWithQuery(location, { hashtag: tag });
     navigate(linkToPage);
   };
 
@@ -143,6 +143,8 @@ const LinkMain = ({
   useEffect(() => {
     if (category) {
       setHash(hashtags[category.split(",")[0]]);
+    } else {
+      setHash(hashtags.home);
     }
   }, [category]);
 
@@ -207,9 +209,9 @@ const LinkMain = ({
             >
               <SplideSlide>
                 <button
-                  onClick={(e) => handleCategorySubmit(e, "home")}
-                  className={`snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
-                    category?.split(",")[0] === "home" &&
+                  onClick={(e) => handleCategorySubmit(e, "")}
+                  className={`ml-2 mt-2 snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+                    category?.split(",")[0] === undefined &&
                     "bg-blue-100 text-blue-500"
                   }`}
                 >
@@ -234,7 +236,7 @@ const LinkMain = ({
               <SplideSlide>
                 <button
                   onClick={(e) => handleCategorySubmit(e, "frontend")}
-                  className={`snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+                  className={`mt-2 snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
                     category?.split(",")[0] === "frontend" &&
                     "bg-blue-100 text-blue-500"
                   }`}
@@ -263,7 +265,7 @@ const LinkMain = ({
               <SplideSlide>
                 <button
                   onClick={(e) => handleCategorySubmit(e, "backend")}
-                  className={`snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+                  className={`mt-2 snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
                     category?.split(",")[0] === "backend" &&
                     "bg-blue-100 text-blue-500"
                   }`}
@@ -291,7 +293,7 @@ const LinkMain = ({
               <SplideSlide>
                 <button
                   onClick={(e) => handleCategorySubmit(e, "mobile")}
-                  className={`snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+                  className={`mt-2 snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
                     category?.split(",")[0] === "mobile" &&
                     "bg-blue-100 text-blue-500"
                   }`}
@@ -317,7 +319,7 @@ const LinkMain = ({
               <SplideSlide>
                 <button
                   onClick={(e) => handleCategorySubmit(e, "courses")}
-                  className={`snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
+                  className={`mt-2 snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 ${
                     category?.split(",")[0] === "courses" &&
                     "bg-blue-100 text-blue-500"
                   }`}
@@ -343,7 +345,7 @@ const LinkMain = ({
               <SplideSlide>
                 <button
                   onClick={(e) => handleCategorySubmit(e, "cybersecurity")}
-                  className={`snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 whitespace-nowrap ${
+                  className={`mt-2 snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 whitespace-nowrap ${
                     category?.split(",")[0] === "cybersecurity" &&
                     "bg-blue-100 text-blue-500"
                   }`}
@@ -376,7 +378,7 @@ const LinkMain = ({
               <SplideSlide>
                 <button
                   onClick={(e) => handleCategorySubmit(e, "datascience")}
-                  className={`snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 whitespace-nowrap ${
+                  className={`mt-2 snap-normal snap-center px-4 py-2 lg:hover:bg-gray-200 rounded-full flex flex-row space-x-2 whitespace-nowrap ${
                     category?.split(",")[0] === "datascience" &&
                     "bg-blue-100 text-blue-500"
                   }`}
@@ -450,11 +452,13 @@ const LinkMain = ({
                       <div className="flex py-4 -mt-3 md:-mt-1 items-center">
                         <button
                           onClick={(e) => handleTagsSubmit(e, tag.slice(1))}
-                          className={`text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold    ${
-                            pressedTag === tag.slice(1)
+                          className={` text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold    ${
+                            hashtag === tag.slice(1)
                               ? "text-blue-500 ring-[1.1px] ring-blue-200  lg:hover:ring-blue-600 bg-blue-100"
                               : "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black bg-white/20"
-                          }`}
+                          }
+                          ${index === 0 && "ml-2"}
+                          `}
                         >
                           {tag}
                         </button>

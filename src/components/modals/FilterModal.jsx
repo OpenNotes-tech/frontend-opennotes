@@ -24,17 +24,18 @@ export const FilterModal = () => {
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
 
-  const tags = decodeURIComponent(queryParams.get("tags"));
+  const tags = queryParams.get("tags");
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
   const [getCategorySelector, setCategorySelector] = useState([]);
   const [getTagsSelector, setTagsSelector] = useState([]);
   const [getPricingSelector, setPricingSelector] = useState([]);
-  const [routeTags, setRouteTags] = useState("");
-  const [routeCategory, setRouteCategory] = useState("");
+  const [routeTags, setRouteTags] = useState(tags);
+  const [routeCategory, setRouteCategory] = useState(category);
+  const [routePricing, setRoutePricing] = useState(pricing);
 
-  console.log(routeCategory);
-  console.log(routeTags);
+  // console.log(routeCategory);
+  // console.log(routeTags);
 
   const dispatch = useDispatch();
   const modalRef = useRef();
@@ -55,10 +56,16 @@ export const FilterModal = () => {
     const selectedValues = selectedPrice.map((option) => option.value);
     setPricingSelector(selectedPrice);
     const commaSeparatedString = selectedValues.join(",");
+    setRoutePricing(commaSeparatedString);
   };
   const handleSubmit = (e) => {
-    const linkToPage = generateLinkWithQuery(location, { tags: tags });
+    const linkToPage = generateLinkWithQuery(location, {
+      tags: routeTags,
+      category: routeCategory,
+      pricing: routePricing,
+    });
     navigate(linkToPage);
+    dispatch(closeFilterModal());
   };
   const handleCancel = () => {
     // setTagsSelector([]); // Clear selected skills
@@ -67,24 +74,24 @@ export const FilterModal = () => {
   };
 
   useEffect(() => {
-    if (category) {
-      const selectedValues = category.split(",");
+    if (routeCategory) {
+      const selectedValues = routeCategory.split(",");
       const selectedOptions = CategoryOptions.filter((option) =>
         selectedValues.includes(option.value)
       );
       setCategorySelector(selectedOptions);
     }
-  }, [category]);
+  }, [routeCategory]);
 
   useEffect(() => {
-    if (pricing) {
-      const selectedValues = pricing.split(",");
+    if (routePricing) {
+      const selectedValues = routePricing.split(",");
       const selectedOptions = PricingOptions.filter((option) =>
         selectedValues.includes(option.value)
       );
       setPricingSelector(selectedOptions);
     }
-  }, [pricing]);
+  }, [routePricing]);
 
   // Close the modal when the user clicks outside of it
   useEffect(() => {
@@ -116,8 +123,8 @@ export const FilterModal = () => {
 
   // Flatten category options and prioritize the options of the first selected category
   const orderedSelectedOptions =
-    category.length > 0
-      ? category
+    routeCategory?.length > 0
+      ? routeCategory
           ?.split(",")
           ?.flatMap((category, index) => {
             if (index === 0) {
@@ -129,21 +136,23 @@ export const FilterModal = () => {
             Object.values(categoryOptions)?.flatMap((options) =>
               options.filter(
                 (option) =>
-                  !categoryOptions[category?.split(",")[0]]?.includes(option)
+                  !categoryOptions[routeCategory?.split(",")[0]]?.includes(
+                    option
+                  )
               )
             )
           )
       : Object.values(categoryOptions)?.flat();
 
   useEffect(() => {
-    if (tags) {
-      const selectedValues = tags.split(",");
+    if (routeTags) {
+      const selectedValues = routeTags.split(",");
       const selectedOptions = orderedSelectedOptions.filter((option) =>
         selectedValues.includes(option.value)
       );
       setTagsSelector(selectedOptions);
     }
-  }, [tags]);
+  }, [routeTags]);
 
   return (
     <>

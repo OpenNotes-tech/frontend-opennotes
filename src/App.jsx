@@ -27,9 +27,14 @@ import NotFound from "./pages/Static/NotFound";
 import About from "./pages/Static/About";
 import Contacts from "./pages/Static/Contacts";
 import Policy from "./pages/Static/Policy";
+import { useEffect } from "react";
 
 const App = () => {
   const candidateIsAuthorized = Cookies.get("logged_in_candidate");
+  useEffect(() => {
+    sessionStorage.setItem("_TotalPages", 0);
+    sessionStorage.setItem("_PageNumber", 0);
+  }, []);
   return (
     <BrowserRouter>
       {/* <ScrollToTop /> */}

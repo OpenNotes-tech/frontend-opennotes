@@ -1,22 +1,21 @@
 export const generateLinkWithQuery = (location, newQueryParams) => {
   const queryParams = new URLSearchParams(location.search);
 
-  if (newQueryParams.sort) {
-    queryParams.set("sort_by", newQueryParams.sort);
-  } else if (newQueryParams.tags) {
-    queryParams.set("tags", encodeURIComponent(newQueryParams.tags));
-  } else if (newQueryParams.pricing) {
-    queryParams.set("pricing", newQueryParams.pricing);
-  } else if (newQueryParams.category) {
-    queryParams.set("category", newQueryParams.category);
-  } else if (newQueryParams.searchQuery) {
-    queryParams.set("search_query", newQueryParams.searchQuery);
-  } else if (newQueryParams.pageNumber) {
-    queryParams.set("page", newQueryParams.pageNumber);
+  for (const key in newQueryParams) {
+    if (newQueryParams.hasOwnProperty(key)) {
+      const value = newQueryParams[key];
+      if (value !== undefined && value !== null && value !== "" ) {
+        queryParams.set(key, encodeURIComponent(value));
+      } else {
+        // If value is empty or undefined, remove the parameter
+        queryParams.delete(key);
+      }
+    }
   }
 
   const linkPath = `${location.pathname}`;
-  const queryString = queryParams.toString();
+  let queryString = queryParams.toString();
+  queryString = queryString.replace(/%252C/g, ",");
 
   return `${linkPath}${queryString ? "?" + queryString : ""}`;
 };

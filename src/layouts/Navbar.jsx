@@ -18,7 +18,6 @@ import "../assets/css/darkmode.css";
 
 const Navbar = () => {
   const { loading } = useSelector((state) => state.Error);
-  const { isExploreModalOpen } = useSelector((state) => state.Modal);
   const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -88,16 +87,6 @@ const Navbar = () => {
     };
   }, []);
 
-  useEffect(() => {
-    if (toggleExplore) {
-      dispatch(openExploreModal());
-      setToggleExplore(isExploreModalOpen);
-    } else {
-      dispatch(closeExploreModal());
-      setToggleExplore(isExploreModalOpen);
-    }
-  }, [dispatch, isExploreModalOpen, toggleExplore]);
-
   const handleToggle = () => {
     setDarkMode(!darkMode);
   };
@@ -110,7 +99,7 @@ const Navbar = () => {
     <>
       {!mobileSearchBar && (
         <nav
-          className={`sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 xl:-mx-0 px-4 md:px-10 xl:px-12 ${
+          className={`sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 md:mx-0 px-4 md:px-6 xl:px-12 ${
             scrolled
               ? "border border-white/80 bg-white text-slate-700 shadow-md"
               : "bg-transparent text-white"
@@ -118,7 +107,7 @@ const Navbar = () => {
         >
           {loading && <Loader />}
 
-          <div>
+          <div className="flex flex-row items-center space-x-8 md:space-x-16">
             <button
               type="button"
               onClick={(e) => handleCategorySubmit(e, "/")}
@@ -130,33 +119,33 @@ const Navbar = () => {
                 alt="Main Logo"
               />
             </button>
+            {scrolled && (
+              <div className="lg:hidden">
+                <button onClick={handleSearch}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-search"
+                  >
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
-          {scrolled && (
-            <div className="lg:hidden">
-              <button onClick={handleSearch}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-search"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.3-4.3" />
-                </svg>
-              </button>
-            </div>
-          )}
-          <span className="w-full hidden lg:block">
+          <div className="w-[600px] hidden lg:block">
             {scrolled && (
               <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
             )}
-          </span>
+          </div>
 
           <div className="flex flex-row space-x-4 items-center whitespace-nowrap">
             <div

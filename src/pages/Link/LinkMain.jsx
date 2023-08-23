@@ -2,6 +2,10 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { setLoading, setError } from "../../store/features/errorSlice";
+import {
+  openExploreModal,
+  openBookmarkModal,
+} from "../../store/features/modalSlice";
 import SearchAPI from "../../utils/SearchAPI";
 import LinkCard from "./LinkCard";
 import useScreenSize from "../../components/useScreenSize";
@@ -108,17 +112,19 @@ const LinkMain = ({
     setSortbyOpen((prevState) => !prevState);
   };
 
-  const handleBookmarkModalToggle = () => {};
+  const handleBookmarkModalToggle = () => {
+    dispatch(openBookmarkModal());
+  };
 
   const handleExploreModalToggle = () => {
-    sessionStorage.setItem("_IsExploreModalOpen", true);
+    dispatch(openExploreModal());
   };
 
   const getWidthAndHeight = () => {
     if (screenSize === "sm") {
       return { width: "22rem", height: "4rem" };
     } else if (screenSize === "md") {
-      return { width: "40rem", height: "5rem" };
+      return { width: "44rem", height: "4rem" };
     } else {
       return { width: "70rem", height: "5rem" };
     }
@@ -165,8 +171,8 @@ const LinkMain = ({
 
   return (
     <>
-      <div className="container md:px-4 lg:px-0 mx-auto justify-center scroll-smooth">
-        <div className="flex flex-col md:px-12 py-6 md:py-10 space-y-1 md:space-y-4 ">
+      <div className="container mx-auto justify-center scroll-smooth">
+        <div className="flex flex-col md:px-8 py-6 md:py-10 space-y-1 md:space-y-4 ">
           <div className="flex flex-row space-x-4 justify-center w-full snap-x">
             <Splide
               className="flex flex-row space-x-4 justify-center group snap-x"
@@ -410,9 +416,9 @@ const LinkMain = ({
               </SplideSlide>
             </Splide>
           </div>
-          <div className="lg:hidden h-[1px] w-full bg-gray-300 block -mt-4"></div>
+          <div className="lg:hidden h-[1px] w-full bg-gray-300 block"></div>
           <div className="flex flex-col space-y-10 pt-4 md:pt-0">
-            <div className="flex flex-col md:flex-row justify-center md:justify-between space-y-4 md:space-y-0">
+            <div className="flex flex-col md:flex-row justify-center md:justify-between space-y-4 md:space-x-3 md:space-y-0">
               <div class="relative overflow-x-auto overflow-y-clip h-14">
                 <Splide
                   options={{
@@ -455,7 +461,7 @@ const LinkMain = ({
                           className={` text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold    ${
                             hashtag === tag.slice(1)
                               ? "text-blue-500 ring-[1.1px] ring-blue-200  lg:hover:ring-blue-600 bg-blue-100"
-                              : "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black bg-white/20"
+                              : "text-slate-600 ring-[1.1px] ring-slate-300 lg:hover:ring-[1.1px] lg:hover:ring-black bg-white/20"
                           }
                           ${index === 0 && "ml-2"}
                           `}
@@ -469,11 +475,11 @@ const LinkMain = ({
               </div>
 
               <div className="flex flex-row items-center justify-center md:space-x-6">
-                <div className="hidden h-[41px] w-[1px] bg-gray-300 lg:block"></div>
+                <div className="hidden h-[41px] w-[1px] bg-gray-300 md:block"></div>
                 <button
                   id="dropdownDefaultButton"
                   data-dropdown-toggle="dropdown"
-                  className="raletive uppercase  focus:outline-none font-semibold text-xs transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 rounded-full justify-center w-full  md:px-5 py-2 md:py-2.5 text-center inline-flex items-center text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                  className="raletive uppercase  focus:outline-none font-semibold text-xs transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 rounded-full justify-center w-full whitespace-nowrap  md:px-5 py-2 md:py-2.5 text-center inline-flex items-center text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
                   type="button"
                   onClick={toggleDropdown}
                 >
@@ -599,6 +605,7 @@ const LinkMain = ({
                 className={`flex flex-col items-center space-y-1 hover:bg-blue-100 rounded-tr-xl py-3 px-5 w-full ${
                   category === "profile" && "bg-blue-100 text-blue-500"
                 }`}
+                onClick={handleBookmarkModalToggle}
                 to="/"
                 alt="sidebar button called interview"
               >
@@ -645,7 +652,7 @@ const LinkMain = ({
             <li>
               <button
                 className={`flex flex-col items-center space-y-1 hover:bg-blue-100 rounded-t-xl py-3 px-3 w-full ${
-                  category?.split(",")[0] === "Home" &&
+                  category?.split(",")[0] === undefined &&
                   "bg-blue-100 text-blue-500"
                 }`}
                 onClick={(e) => handleCategorySubmit(e, "/")}

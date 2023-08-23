@@ -170,7 +170,7 @@ export const FilterModal = () => {
               </h1>
             </div>
             {/*body*/}
-            <div className="grid md:grid-cols-2 h-96 gap-y-10 gap-x-14 px-10 md:px-8 py-4 ">
+            <div className="grid md:grid-cols-2 h-auto gap-y-10 gap-x-14 px-10 md:px-8 py-4 ">
               <div className="px-10 md:px-0">
                 <div className="text-sm text-slate-800 font-semibold mb-3">
                   Category

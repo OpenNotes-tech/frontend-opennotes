@@ -9,7 +9,7 @@ const Footer = () => {
   };
 
   return (
-    <footer class="flex flex-row items-center justify-between -mx-4 xl:-mx-0 pb-24 md:pb-0 md:px-10 xl:px-12 shadow-xl bg-gradient-to-r from-gray-700 via-gray-900 to-black">
+    <footer class="flex flex-row items-center justify-between -mx-4 md:-mx-0 xl:-mx-0 pb-24 md:pb-0 md:px-10 xl:px-12 shadow-xl bg-gradient-to-r from-gray-700 via-gray-900 to-black">
       <div class="w-full mx-auto py-4 md:py-8">
         <div class="flex justify-center flex-col md:flex-row items-center space-y-10 md:space-y-0 md:justify-between">
           <Link to={"/"} class="flex items-center">

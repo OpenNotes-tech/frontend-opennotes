@@ -38,9 +38,7 @@ const Google = () => {
         dispatch(setLoading(false));
         dispatch(setError("Successfully signed up!"));
         setTimeout(() => {
-          location.state?.from
-            ? navigate(location.state.from)
-            : navigate("/job");
+          location.state?.from ? navigate(location.state.from) : navigate("/");
         }, 2000);
       })
       .catch((error) => {
@@ -53,8 +51,8 @@ const Google = () => {
     <div>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
-        onSuccess={responseGoogle}
-        onFailure={responseGoogle}
+        // onSuccess={responseGoogle}
+        // onFailure={responseGoogle}
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}

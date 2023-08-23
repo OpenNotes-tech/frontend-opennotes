@@ -16,14 +16,7 @@ code {
     monospace;
 }
 
-.load-bar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 3px;
-  background-color: #fdba2c;
-}
+
 .bar {
   content: "";
   display: inline;

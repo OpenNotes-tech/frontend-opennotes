@@ -6,6 +6,7 @@ import LangModal from "./LangModal";
 import { useSelector } from "react-redux";
 import Sign from "../../pages/Authentication/Sign";
 import { FilterModal } from "./FilterModal";
+import ExploreModal from "./ExploreModal";
 
 const ModalMain = () => {
   const {
@@ -16,6 +17,7 @@ const ModalMain = () => {
     isReportModalOpen,
     isAuthModalOpen,
     isFilterModalOpen,
+    isExploreModalOpen,
   } = useSelector((state) => state.Modal);
   return (
     <>
@@ -26,6 +28,7 @@ const ModalMain = () => {
       {isLangModalOpen === true && <LangModal />}
       {isAuthModalOpen === true && <Sign />}
       {isFilterModalOpen === true && <FilterModal />}
+      {/* {isExploreModalOpen === true && <ExploreModal />} */}
     </>
   );
 };

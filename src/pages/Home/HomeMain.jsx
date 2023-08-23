@@ -37,7 +37,7 @@ const HomeMain = () => {
       .then((res) => {
         setFetchResult(res.data.data.body);
         // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-        sessionStorage.setItem("_TotalPages", res.data.data.totalPages );
+        sessionStorage.setItem("_TotalPages", res.data.data.totalPages);
         dispatch(setLoading(false));
       })
       .catch((error) => {
@@ -82,7 +82,6 @@ const HomeMain = () => {
   useEffect(() => {
     sessionStorage.setItem("_TotalPages", true);
   }, [pricing]);
-
 
   const handleScrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });

@@ -32,17 +32,17 @@ const ExploreModal = () => {
   return (
     <div
       id="dropdown"
-      className="mt-[380px] md:mt-[470px] absolute right-[10px] md:right-[270px] z-[999] bg-white divide-y divide-gray-100 rounded-lg md:w-[840px] shadow-2xl"
+      className="md:mt-[470px] absolute right-[10px] md:right-6 lg:right-[270px] z-[999] bg-white divide-y divide-gray-100 rounded-lg md:w-[720px] lg:w-[840px] shadow-2xl"
     >
       <div className="flex flex-col divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
         <div className="flex flow-col md:flex-row md:justify-evenly">
           <div className="space-y-1 p-2 items-center">
-            <p className="px-10 py-3 font-bold text-md text-gray-800">
+            <p className="px-5 lg:px-10 md:px-5 py-3 font-bold text-md text-gray-800">
               Collections
             </p>
             <button
               onClick={(e) => handleCategorySubmit(e, "backend")}
-              className={`w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200  focus:outline-none ${
+              className={`w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200  focus:outline-none ${
                 category?.split(",")[0] === "backend"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -71,7 +71,7 @@ const ExploreModal = () => {
             </button>
             <button
               onClick={(e) => handleCategorySubmit(e, "frontend")}
-              className={`w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "frontend"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -101,7 +101,7 @@ const ExploreModal = () => {
             </button>
             <button
               onClick={(e) => handleCategorySubmit(e, "mobile")}
-              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "mobile"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -128,7 +128,7 @@ const ExploreModal = () => {
             </button>
             <button
               onClick={(e) => handleCategorySubmit(e, "datascience")}
-              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "datascience"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -162,7 +162,7 @@ const ExploreModal = () => {
             </button>
             <button
               onClick={(e) => handleCategorySubmit(e, "algorithms")}
-              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "algorithms"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -189,7 +189,7 @@ const ExploreModal = () => {
             </button>
             <button
               onClick={(e) => handleCategorySubmit(e, "cybersecurity")}
-              className={`flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "cybersecurity"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -224,13 +224,13 @@ const ExploreModal = () => {
           </div>
           <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
           <div className="space-y-1 p-2">
-            <p className="px-10 py-3 font-bold text-md text-gray-800">
+            <p className="px-5 lg:px-10 md:px-5 py-3 font-bold text-md text-gray-800">
               Discover
             </p>
             <Link
               role="menuitem"
               to="/"
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>Popular Searches</span>
@@ -239,7 +239,7 @@ const ExploreModal = () => {
             <Link
               role="menuitem"
               to="/"
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>Curated Collections</span>
@@ -248,7 +248,7 @@ const ExploreModal = () => {
             <Link
               role="menuitem"
               to="/"
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>Popular IT Courses</span>
@@ -257,13 +257,13 @@ const ExploreModal = () => {
           </div>
           <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
           <div className="space-y-1 p-2">
-            <p className="px-10 py-3 font-bold text-md text-gray-800">
+            <p className="px-5 lg:px-10 md:px-5 py-3 font-bold text-md text-gray-800">
               Community
             </p>
             <button
               type="button"
               onClick={(e) => handleCategorySubmit(e, "blogs")}
-              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "blogs"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -292,7 +292,7 @@ const ExploreModal = () => {
             </button>
             <button
               onClick={(e) => handleCategorySubmit(e, "courses")}
-              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "courses"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -319,7 +319,7 @@ const ExploreModal = () => {
             </button>
             <button
               onClick={(e) => handleCategorySubmit(e, "podcasts")}
-              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
+              className={`w-full  flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium hover:bg-gray-200 focus:outline-none ${
                 category?.split(",")[0] === "podcasts"
                   ? "bg-blue-100 text-blue-500"
                   : "text-gray-800  hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900"
@@ -348,11 +348,13 @@ const ExploreModal = () => {
           </div>
           <div className="hidden w-[0.5px] bg-gray-500 lg:block"></div>
           <div className="space-y-1 p-2">
-            <p className="px-10 py-3 font-bold text-md text-gray-800">About</p>
+            <p className="px-5 lg:px-10 md:px-5 py-3 font-bold text-md text-gray-800">
+              About
+            </p>
             <Link
               role="menuitem"
               to="/about"
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>About Us</span>
@@ -361,7 +363,7 @@ const ExploreModal = () => {
             <Link
               role="menuitem"
               to="/faq"
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>FAQ</span>
@@ -370,7 +372,7 @@ const ExploreModal = () => {
             <Link
               role="menuitem"
               to="/privacy-policy"
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>Privacy Policy</span>
@@ -381,7 +383,7 @@ const ExploreModal = () => {
               data-ripple-light="true"
               data-dialog-target="report-dialog"
               onClick={() => toggleReport("bug")}
-              className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>Report</span>
@@ -392,7 +394,7 @@ const ExploreModal = () => {
               data-ripple-light="true"
               data-dialog-target="report-dialog"
               onClick={() => toggleReport("link")}
-              className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <span>Suggest a Link</span>
@@ -404,7 +406,7 @@ const ExploreModal = () => {
               data-ripple-light="true"
               data-dialog-target="sign-in-dialog"
               onClick={toggleLanguage}
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-10 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
             >
               <div className="flex flex-none items-center space-x-2">
                 <img
@@ -417,7 +419,7 @@ const ExploreModal = () => {
             </button>
           </div>
         </div>
-        <div className="py-5 px-10 text-slate-700">
+        <div className="py-5 px-5 lg:px-10 md:px-5 text-slate-700">
           <li className="flex flex-row justify-end space-x-6">
             <Link
               to={"https://instagram.com"}

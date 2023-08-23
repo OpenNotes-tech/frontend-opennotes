@@ -39,58 +39,58 @@ const LinkMain = ({
   const [showTabs, setShowTabs] = useState(false);
   const [getHash, setHash] = useState(hashtags.home);
 
-  const loadLinkResults = () => {
-    if (pageNumber > totalPages) {
-      return;
-    }
-    dispatch(setLoading(true));
-    SearchAPI.linkSearch(searchQuery, sort, category, tags, pricing, pageNumber)
-      .then((res) => {
-        if (pageNumber === 1) {
-          setFetchResult(res.data.data.body);
-        } else {
-          setFetchResult((prevResults) => [
-            ...prevResults,
-            ...res.data.data.body,
-          ]);
-        }
-        // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-        // dispatch(setPageNumber({ pageNumber: pageNumber + 1 }));
-        sessionStorage.setItem("_PageNumber", pageNumber + 1);
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        dispatch(setLoading(false));
-        dispatch(
-          setError({
-            message: error?.response?.data?.message,
-            type: "error",
-          })
-        );
-      })
-      .finally(() => {
-        dispatch(setLoading(false));
-      });
-  };
+  // const loadLinkResults = () => {
+  //   if (pageNumber > totalPages) {
+  //     return;
+  //   }
+  //   dispatch(setLoading(true));
+  //   SearchAPI.linkSearch(searchQuery, sort, category, tags, pricing, pageNumber)
+  //     .then((res) => {
+  //       if (pageNumber === 1) {
+  //         setFetchResult(res.data.data.body);
+  //       } else {
+  //         setFetchResult((prevResults) => [
+  //           ...prevResults,
+  //           ...res.data.data.body,
+  //         ]);
+  //       }
+  //       // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
+  //       // dispatch(setPageNumber({ pageNumber: pageNumber + 1 }));
+  //       sessionStorage.setItem("_PageNumber", pageNumber + 1);
+  //       dispatch(setLoading(false));
+  //     })
+  //     .catch((error) => {
+  //       dispatch(setLoading(false));
+  //       dispatch(
+  //         setError({
+  //           message: error?.response?.data?.message,
+  //           type: "error",
+  //         })
+  //       );
+  //     })
+  //     .finally(() => {
+  //       dispatch(setLoading(false));
+  //     });
+  // };
 
-  const debounce = (func, delay) => {
-    let timer;
-    return function () {
-      clearTimeout(timer);
-      timer = setTimeout(() => func.apply(this, arguments), delay);
-    };
-  };
+  // const debounce = (func, delay) => {
+  //   let timer;
+  //   return function () {
+  //     clearTimeout(timer);
+  //     timer = setTimeout(() => func.apply(this, arguments), delay);
+  //   };
+  // };
 
-  const debouncedLoadLinkResults = debounce(loadLinkResults, 200);
+  // const debouncedLoadLinkResults = debounce(loadLinkResults, 200);
 
-  const handleScroll = () => {
-    if (
-      window.innerHeight + window.scrollY >=
-      document.body.scrollHeight - 100
-    ) {
-      debouncedLoadLinkResults();
-    }
-  };
+  // const handleScroll = () => {
+  //   if (
+  //     window.innerHeight + window.scrollY >=
+  //     document.body.scrollHeight - 100
+  //   ) {
+  //     debouncedLoadLinkResults();
+  //   }
+  // };
 
   const handleCategorySubmit = (e, navLink) => {
     const linkToPage = generateLinkWithQuery(location, { category: navLink });
@@ -130,10 +130,10 @@ const LinkMain = ({
     }
   };
 
-  useEffect(() => {
-    // Load initial data
-    loadLinkResults();
-  }, []);
+  // useEffect(() => {
+  //   // Load initial data
+  //   loadLinkResults();
+  // }, []);
 
   // useEffect(() => {
   //   window.addEventListener("scroll", handleScroll);
@@ -455,7 +455,7 @@ const LinkMain = ({
                 >
                   {getHash?.map((tag, index) => (
                     <SplideSlide key={index}>
-                      <div className="flex py-4 -mt-3 md:-mt-1 items-center">
+                      <div className="flex py-1 items-center">
                         <button
                           onClick={(e) => handleTagsSubmit(e, tag.slice(1))}
                           className={` text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold    ${
@@ -577,7 +577,7 @@ const LinkMain = ({
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 md:gap-x-12 gap-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-12 gap-y-12">
               {!loading === false &&
                 fetchResult &&
                 fetchResult?.map((linkElement, index) => (

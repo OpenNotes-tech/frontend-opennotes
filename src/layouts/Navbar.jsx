@@ -457,6 +457,7 @@ const Navbar = () => {
       )}
       {mobileSearchBar && (
         <div className="sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 px-3 space-x-3 border border-white/80 bg-white text-slate-700 shadow-md">
+          {loading && <Loader />}
           <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
           <button onClick={handleSearch}>
             <svg

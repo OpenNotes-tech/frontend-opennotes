@@ -5,6 +5,8 @@ const initialState = {
   errorMessage: "",
   errorType: "", // New property to track the type of error
   loading: false,
+  pageNumber: 1,
+  totalPages: 1,
 };
 
 export const errorSlice = createSlice({
@@ -20,10 +22,14 @@ export const errorSlice = createSlice({
       state.errorType = "";
     },
     setLoading: (state, action) => {
-      state.loading = action.payload
+      state.loading = action.payload;
+    },
+    setTotalPages: (state, action) => {
+      state.totalPages = action.payload;
     },
   },
 });
 
-export const { setError, clearError, setLoading } = errorSlice.actions;
+export const { setError, clearError, setLoading, setTotalPages } =
+  errorSlice.actions;
 export default errorSlice.reducer;

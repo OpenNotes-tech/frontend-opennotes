@@ -1,6 +1,6 @@
 const LoaderSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-12 gap-y-12 -mt-12">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-12 gap-y-12 ">
       <div
         role="status"
         class="max-w-sm p-4 border border-gray-200 rounded-xl shadow animate-pulse md:p-6 "
@@ -114,7 +114,7 @@ const LoaderSkeleton = () => {
 
       <div
         role="status"
-        class="max-w-sm p-4 border border-gray-200 rounded-xl shadow animate-pulse md:p-6 "
+        class="max-w-sm lg:hidden xl:block p-4 border border-gray-200 rounded-xl shadow animate-pulse md:p-6 "
       >
         <div class="flex items-center justify-center h-48 mb-4 bg-gray-300 rounded ">
           <svg

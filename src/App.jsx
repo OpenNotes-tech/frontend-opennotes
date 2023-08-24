@@ -32,8 +32,8 @@ import { useEffect } from "react";
 const App = () => {
   const candidateIsAuthorized = Cookies.get("logged_in_candidate");
   useEffect(() => {
-    sessionStorage.setItem("_TotalPages", 0);
-    sessionStorage.setItem("_PageNumber", 0);
+    sessionStorage.setItem("_TotalPages", 1);
+    sessionStorage.setItem("_PageNumber", 1);
   }, []);
   return (
     <BrowserRouter>

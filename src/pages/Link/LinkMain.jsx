@@ -26,6 +26,8 @@ const LinkMain = ({
   searchQuery,
   pageNumber,
   totalPages,
+  setTotalPages,
+  setPageNumber,
 }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -37,61 +39,57 @@ const LinkMain = ({
   const loading = useSelector((state) => state.Error.loading);
   const [isSortbyOpen, setSortbyOpen] = useState(false);
   const [showTabs, setShowTabs] = useState(false);
+  const [hashLoad, setHashLoad] = useState(false);
   const [getHash, setHash] = useState(hashtags.home);
 
-  // const loadLinkResults = () => {
-  //   if (pageNumber > totalPages) {
-  //     return;
-  //   }
-  //   dispatch(setLoading(true));
-  //   SearchAPI.linkSearch(searchQuery, sort, category, tags, pricing, pageNumber)
-  //     .then((res) => {
-  //       if (pageNumber === 1) {
-  //         setFetchResult(res.data.data.body);
-  //       } else {
+  // useEffect(() => {
+  //   // dispatch(setLoading(true));
+  //   setTimeout(async () => {
+  //     SearchAPI.linkSearch(
+  //       searchQuery,
+  //       sort,
+  //       category,
+  //       tags,
+  //       pricing,
+  //       pageNumber,
+  //       12
+  //     )
+  //       .then((res) => {
   //         setFetchResult((prevResults) => [
   //           ...prevResults,
   //           ...res.data.data.body,
   //         ]);
-  //       }
-  //       // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-  //       // dispatch(setPageNumber({ pageNumber: pageNumber + 1 }));
-  //       sessionStorage.setItem("_PageNumber", pageNumber + 1);
-  //       dispatch(setLoading(false));
-  //     })
-  //     .catch((error) => {
-  //       dispatch(setLoading(false));
-  //       dispatch(
-  //         setError({
-  //           message: error?.response?.data?.message,
-  //           type: "error",
-  //         })
-  //       );
-  //     })
-  //     .finally(() => {
-  //       dispatch(setLoading(false));
-  //     });
-  // };
+  //         dispatch(setTotalPages(res.data.data.totalPages));
+  //         dispatch(setLoading(false));
+  //       })
+  //       .catch((error) => {
+  //         dispatch(setError(error?.response?.data?.message));
+  //         dispatch(setLoading(false));
+  //       })
+  //       .finally((e) => {
+  //         dispatch(setLoading(false));
+  //       });
+  //   }, 1500);
+  // }, [pageNumber]);
 
-  // const debounce = (func, delay) => {
-  //   let timer;
-  //   return function () {
-  //     clearTimeout(timer);
-  //     timer = setTimeout(() => func.apply(this, arguments), delay);
-  //   };
-  // };
+  // useEffect(() => {
+  //   window.addEventListener("scroll", handleScroll);
 
-  // const debouncedLoadLinkResults = debounce(loadLinkResults, 200);
-
-  // const handleScroll = () => {
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
+  // const handleScroll = async () => {
   //   if (
-  //     window.innerHeight + window.scrollY >=
-  //     document.body.scrollHeight - 100
+  //     window.innerHeight + document.documentElement.scrollTop + 1 >=
+  //     document.documentElement.scrollHeight
   //   ) {
-  //     debouncedLoadLinkResults();
+  //     dispatch(setLoading(true));
+  //     if (pageNumber + 1 < sessionStorage.getItem("_TotalPages")) {
+  //       console.log("TotalPages", sessionStorage.getItem("_TotalPages"));
+  //       console.log("pageNumber", pageNumber + 1);
+  //       setPageNumber((prev) => prev + 1);
+  //     }
   //   }
   // };
-
   const handleCategorySubmit = (e, navLink) => {
     const linkToPage = generateLinkWithQuery(location, { category: navLink });
     navigate(linkToPage);
@@ -129,6 +127,24 @@ const LinkMain = ({
       return { width: "70rem", height: "5rem" };
     }
   };
+  useEffect(() => {
+    setHashLoad(true); // Set loading state
+
+    // Simulate fetching data with a setTimeout
+    const fetchData = () => {
+      if (category) {
+        setHash(hashtags[category.split(",")[0]]);
+      } else {
+        setHash(hashtags.home);
+      }
+      setHashLoad(false); // Set loading state to false after fetching
+    };
+
+    // Simulate a delay before fetching data
+    const delay = setTimeout(fetchData, 1000); // Adjust the delay as needed
+
+    return () => clearTimeout(delay); // Clear the timeout on component unmount
+  }, [category]);
 
   // useEffect(() => {
   //   // Load initial data
@@ -142,17 +158,17 @@ const LinkMain = ({
   //   };
   // }, [pageNumber, loading]);
 
-  useEffect(() => {
-    setFetchResult(fetchResult);
-  }, [fetchResult, setFetchResult]);
+  // useEffect(() => {
+  //   setFetchResult(fetchResult);
+  // }, [fetchResult, setFetchResult]);
 
-  useEffect(() => {
-    if (category) {
-      setHash(hashtags[category.split(",")[0]]);
-    } else {
-      setHash(hashtags.home);
-    }
-  }, [category]);
+  // useEffect(() => {
+  //   if (category) {
+  //     setHash(hashtags[category.split(",")[0]]);
+  //   } else {
+  //     setHash(hashtags.home);
+  //   }
+  // }, [category]);
 
   const Scroll = () => {
     if (window.scrollY > 50) {
@@ -168,6 +184,12 @@ const LinkMain = ({
       window.removeEventListener("scroll", Scroll);
     };
   }, []);
+
+  const SkeletonLoader = () => (
+    <>
+      <div className="px-14 py-4 ml-5 mt-1 bg-gray-200 rounded-full animate-pulse"></div>
+    </>
+  );
 
   return (
     <>
@@ -453,24 +475,29 @@ const LinkMain = ({
                   }}
                   aria-label="My Favorite Images"
                 >
-                  {getHash?.map((tag, index) => (
-                    <SplideSlide key={index}>
-                      <div className="flex py-1 items-center">
-                        <button
-                          onClick={(e) => handleTagsSubmit(e, tag.slice(1))}
-                          className={` text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold    ${
-                            hashtag === tag.slice(1)
-                              ? "text-blue-500 ring-[1.1px] ring-blue-200  lg:hover:ring-blue-600 bg-blue-100"
-                              : "text-slate-600 ring-[1.1px] ring-slate-300 lg:hover:ring-[1.1px] lg:hover:ring-black bg-white/20"
-                          }
-                          ${index === 0 && "ml-2"}
-                          `}
-                        >
-                          {tag}
-                        </button>
-                      </div>
-                    </SplideSlide>
-                  ))}
+                  {hashLoad
+                    ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]?.map((_, index) => (
+                        <SkeletonLoader key={index} />
+                      ))
+                    : getHash?.map((tag, index) => (
+                        <SplideSlide key={index}>
+                          <div className="flex py-1 items-center">
+                            <button
+                              onClick={(e) => handleTagsSubmit(e, tag.slice(1))}
+                              className={` text-sm px-3 rounded-full py-[6px] text-center focus:outline-none font-semibold 
+                ${
+                  hashtag === tag.slice(1) || (hashtag === null && index === 0)
+                    ? "text-blue-500 ring-[1.1px] ring-blue-200  lg:hover:ring-blue-600 bg-blue-100"
+                    : "text-slate-600 ring-[1.1px] ring-slate-300 lg:hover:ring-[1.1px] lg:hover:ring-black bg-white/20"
+                }
+                ${index === 0 && "ml-2"}
+              `}
+                            >
+                              {tag}
+                            </button>
+                          </div>
+                        </SplideSlide>
+                      ))}
                 </Splide>
               </div>
 
@@ -529,8 +556,10 @@ const LinkMain = ({
                         <button
                           role="menuitem"
                           onClick={(e) => handleSortChange(e, "trending")}
-                          className={` flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
-                            sort === "trending" && "bg-blue-100 text-blue-500"
+                          className={` flex items-center text-center lg:hover:bg-gray-200 justify-center space-x-2 rounded py-2 px-12 text-sm font-medium  focus:outline-none ${
+                            sort === "trending" || sort === null
+                              ? "bg-blue-100 text-blue-500"
+                              : "text-gray-800 hover:bg-gray-100 hover:text-gray-900"
                           }`}
                         >
                           <div className="flex flex-none items-center space-x-2">
@@ -540,8 +569,10 @@ const LinkMain = ({
                         <button
                           role="menuitem"
                           onClick={(e) => handleSortChange(e, "favorite")}
-                          className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
-                            sort === "favorite" && "bg-blue-100 text-blue-500"
+                          className={`flex items-center text-center lg:hover:bg-gray-200 justify-center space-x-2 rounded py-2 px-12 text-sm font-medium focus:outline-none ${
+                            sort === "favorite"
+                              ? "bg-blue-100 text-blue-500"
+                              : "text-gray-800 hover:bg-gray-100 hover:text-gray-900"
                           }`}
                         >
                           <div className="flex flex-none items-center space-x-2">
@@ -551,8 +582,10 @@ const LinkMain = ({
                         <button
                           role="menuitem"
                           onClick={(e) => handleSortChange(e, "latest")}
-                          className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
-                            sort === "latest" && "bg-blue-100 text-blue-500"
+                          className={`flex items-center text-center lg:hover:bg-gray-200 justify-center space-x-2 rounded py-2 px-12 text-sm font-medium focus:outline-none ${
+                            sort === "latest"
+                              ? "bg-blue-100 text-blue-500"
+                              : "text-gray-800 hover:bg-gray-100 hover:text-gray-900"
                           }`}
                         >
                           <div className="flex flex-none items-center space-x-2">
@@ -562,8 +595,10 @@ const LinkMain = ({
                         <button
                           role="menuitem"
                           onClick={(e) => handleSortChange(e, "oldest")}
-                          className={`flex items-center text-center justify-center space-x-2 rounded py-2 px-12 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none ${
-                            sort === "oldest" && "bg-blue-100 text-blue-500"
+                          className={`flex items-center text-center lg:hover:bg-gray-200 justify-center space-x-2 rounded py-2 px-12 text-sm font-medium focus:outline-none ${
+                            sort === "oldest"
+                              ? "bg-blue-100 text-blue-500"
+                              : "text-gray-800 hover:bg-gray-100 hover:text-gray-900"
                           }`}
                         >
                           <div className="flex flex-none items-center space-x-2">
@@ -578,13 +613,12 @@ const LinkMain = ({
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-12 gap-y-12">
-              {!loading === false &&
-                fetchResult &&
-                fetchResult?.map((linkElement, index) => (
+              {fetchResult &&
+                fetchResult.map((linkElement, index) => (
                   <LinkCard key={index} linkElement={linkElement} />
                 ))}
             </div>
-            {!loading === true && fetchResult.length === 0 && (
+            {!loading === true && fetchResult?.length === 0 && (
               <div className="flex justify-center items-center">
                 <IconNoResult />
               </div>

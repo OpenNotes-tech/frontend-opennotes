@@ -32,11 +32,6 @@ export const BackendOptions = [
   { value: "hibernate", label: "Hibernate" },
   { value: "struts", label: "Struts" },
 
-  { value: "apache", label: "Apache" },
-  { value: "apachekafka", label: "Apache Kafka" },
-  { value: "apachespark", label: "Apache Spark" },
-  { value: "apachehadoop", label: "Apache Hadoop" },
-
   { value: "ruby", label: "Ruby" },
   { value: "rubyonrails", label: "Ruby on Rails" },
 
@@ -64,7 +59,7 @@ export const BackendOptions = [
   { value: "sqllite", label: "SQLlite" },
   { value: "cdn", label: "CDN" },
   { value: "storage", label: "Storage" },
-  { value: "streamingstorage", label: "Streaming Storage" },
+  { value: "datastreaming", label: "Data Streaming" },
   { value: "cache", label: "Cache" },
   { value: "database", label: "Database" },
   { value: "cloud", label: "Cloud" },
@@ -74,6 +69,8 @@ export const BackendOptions = [
   { value: "gcpcloud", label: "Google Cloud Platform (GCP)" },
   { value: "macloud", label: "Microsoft Azure (MA)" },
   { value: "elasticsearch", label: "ElasticSearch" },
+  { value: "realm", label: "Realm", color: "#3DDC84" },
+  { value: "serverless", label: "Serverless", color: "#3DDC84" },
 
   //   Coding Platforms
   { value: "vscode", label: "Visual Studio Code" },
@@ -96,6 +93,7 @@ export const BackendOptions = [
   { value: "circleci", label: "CircleCI" },
   { value: "travisci", label: "Travis CI" },
   { value: "virtualbox", label: "VirtualBox" },
+  { value: "mlops", label: "MLOps", color: "#9400D3" },
 
   //   Software Architecture
   { value: "computerarchitecture", label: "Computer Architecture" },

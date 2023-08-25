@@ -39,7 +39,6 @@ const Sign = () => {
 
   const handleAuthModalToggle = () => {
     dispatch(closeAuthModal());
-    navigate(location.pathname);
   };
 
   const handleInput = (event) => {

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   const dispatch = useDispatch();
-  const handleReportModalToggle = () => {
-    dispatch(openReportModal("link"));
+  const handleReportModalToggle = (data) => {
+    dispatch(openReportModal(data));
   };
 
   return (
@@ -25,7 +25,7 @@ const Footer = () => {
           <ul class="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <button
-                onClick={handleReportModalToggle}
+                onClick={() => handleReportModalToggle("link")}
                 class="cursor-pointer relative after:absolute after:bg-gray-500 after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300"
               >
                 Suggest a Link
@@ -51,12 +51,12 @@ const Footer = () => {
             </li>
             <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
             <li>
-              <Link
-                to="/contacts"
+              <button
+                onClick={() => handleReportModalToggle("admin")}
                 class="cursor-pointer relative after:absolute after:bg-gray-500 after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300"
               >
                 Contact
-              </Link>
+              </button>
             </li>
           </ul>
           <ul className="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">

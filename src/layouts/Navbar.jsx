@@ -110,7 +110,7 @@ const Navbar = () => {
           <div className="flex flex-row items-center space-x-8 md:space-x-16">
             <button
               type="button"
-              onClick={(e) => handleCategorySubmit(e, "/")}
+              onClick={(e) => handleCategorySubmit(e, "")}
               className="flex h-8 items-center md:h-10 w-full"
             >
               <img
@@ -222,7 +222,7 @@ const Navbar = () => {
             </div>
             <div className="relative inline-block" ref={refProfile}>
               <div className="relative inline-flex self-center items-center space-x-10">
-                <Link
+                <button
                   className={`flex flex-row items-center space-x-2 border border-gray-300 rounded-full py-1 px-2 hover:shadow-md transition duration-300 ease-in-out ${
                     scrolled ? "bg-white" : "bg-white/80"
                   }`}
@@ -263,7 +263,7 @@ const Navbar = () => {
                       />
                     </svg>
                   </div>
-                </Link>
+                </button>
               </div>
               {toggleProfile && (
                 <div

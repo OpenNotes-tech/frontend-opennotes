@@ -28,6 +28,13 @@ const HomeMain = () => {
   const category = queryParams.get("category");
   const searchQuery = queryParams.get("search_query");
   useEffect(() => {
+    sessionStorage.setItem("_TotalPages", 0);
+    sessionStorage.setItem("_PageNumber", 1);
+    setFetchResult([]);
+  }, [category, tags, sort, searchQuery, pricing]);
+
+  // Main Fetching
+  useEffect(() => {
     if (fetchResult) {
       dispatch(setLoading(true));
       SearchAPI.linkSearch(
@@ -40,10 +47,15 @@ const HomeMain = () => {
         12
       )
         .then((res) => {
-          setFetchResult((prevResults) => [
-            ...prevResults,
-            ...res.data.data.body,
-          ]);
+          if (parseInt(sessionStorage.getItem("_PageNumber")) === 1) {
+            setFetchResult(res.data.data.body);
+          } else {
+            setFetchResult((prevResults) => [
+              ...prevResults,
+              ...res.data.data.body,
+            ]);
+          }
+
           dispatch(setTotalPages(res.data.data.totalPages));
           // console.log(res);
           sessionStorage.setItem("_TotalPages", res.data.data.totalPages);
@@ -66,11 +78,7 @@ const HomeMain = () => {
     tags,
   ]);
 
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
+  // Infinite Scrolling
   const handleScroll = async () => {
     if (
       !loading &&
@@ -90,29 +98,13 @@ const HomeMain = () => {
       }
     }
   };
-
   const debouncedHandleScroll = debounce(handleScroll, 200);
-
   useEffect(() => {
     window.addEventListener("scroll", debouncedHandleScroll);
     return () => window.removeEventListener("scroll", debouncedHandleScroll);
   }, [loading]);
 
-  // const handleScroll = () => {
-  //   if (
-  //     window.innerHeight + document.documentElement.scrollTop + 1 >=
-  //     document.documentElement.scrollHeight
-  //   ) {
-  //     const nextPageNumber = parseInt(pageNumber) + 1;
-  //     console.log("Total Pages:", totalPages);
-  //     console.log("Next Page Number:", nextPageNumber);
-  //     if (nextPageNumber <= totalPages) {
-  //       console.log("NEXT");
-  //       setPageNumber(nextPageNumber);
-  //     }
-  //   }
-  // };
-
+  // Scroll to Top
   const filterRef = useRef(null);
   const [isFilterSticky, setIsFilterSticky] = useState(false);
   useEffect(() => {
@@ -154,8 +146,9 @@ const HomeMain = () => {
         setTotalPages={setTotalPages}
         setPageNumber={setPageNumber}
       />
-      {parseInt(sessionStorage.getItem("_PageNumber")) ===
-        parseInt(sessionStorage.getItem("_TotalPages")) && <Footer />}
+      {(parseInt(sessionStorage.getItem("_PageNumber")) ===
+        parseInt(sessionStorage.getItem("_TotalPages")) ||
+        fetchResult.length === 0) && <Footer />}
       <ModalMain />
       {isFilterSticky && (
         <button

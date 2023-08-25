@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { setLoading, setError } from "../../store/features/errorSlice";
 import {
   openExploreModal,
   openBookmarkModal,
 } from "../../store/features/modalSlice";
-import SearchAPI from "../../utils/SearchAPI";
 import LinkCard from "./LinkCard";
 import useScreenSize from "../../components/useScreenSize";
 import LoaderSkeleton from "../../components/LoaderSkeleton";
@@ -16,19 +14,7 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/skyblue";
 import { generateLinkWithQuery } from "../../components/generateLinkWithQuery";
 
-const LinkMain = ({
-  fetchResult,
-  setFetchResult,
-  sort,
-  tags,
-  pricing,
-  category,
-  searchQuery,
-  pageNumber,
-  totalPages,
-  setTotalPages,
-  setPageNumber,
-}) => {
+const LinkMain = ({ fetchResult, sort, category }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -42,54 +28,6 @@ const LinkMain = ({
   const [hashLoad, setHashLoad] = useState(false);
   const [getHash, setHash] = useState(hashtags.home);
 
-  // useEffect(() => {
-  //   // dispatch(setLoading(true));
-  //   setTimeout(async () => {
-  //     SearchAPI.linkSearch(
-  //       searchQuery,
-  //       sort,
-  //       category,
-  //       tags,
-  //       pricing,
-  //       pageNumber,
-  //       12
-  //     )
-  //       .then((res) => {
-  //         setFetchResult((prevResults) => [
-  //           ...prevResults,
-  //           ...res.data.data.body,
-  //         ]);
-  //         dispatch(setTotalPages(res.data.data.totalPages));
-  //         dispatch(setLoading(false));
-  //       })
-  //       .catch((error) => {
-  //         dispatch(setError(error?.response?.data?.message));
-  //         dispatch(setLoading(false));
-  //       })
-  //       .finally((e) => {
-  //         dispatch(setLoading(false));
-  //       });
-  //   }, 1500);
-  // }, [pageNumber]);
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, []);
-  // const handleScroll = async () => {
-  //   if (
-  //     window.innerHeight + document.documentElement.scrollTop + 1 >=
-  //     document.documentElement.scrollHeight
-  //   ) {
-  //     dispatch(setLoading(true));
-  //     if (pageNumber + 1 < sessionStorage.getItem("_TotalPages")) {
-  //       console.log("TotalPages", sessionStorage.getItem("_TotalPages"));
-  //       console.log("pageNumber", pageNumber + 1);
-  //       setPageNumber((prev) => prev + 1);
-  //     }
-  //   }
-  // };
   const handleCategorySubmit = (e, navLink) => {
     const linkToPage = generateLinkWithQuery(location, { category: navLink });
     navigate(linkToPage);
@@ -146,30 +84,6 @@ const LinkMain = ({
     return () => clearTimeout(delay); // Clear the timeout on component unmount
   }, [category]);
 
-  // useEffect(() => {
-  //   // Load initial data
-  //   loadLinkResults();
-  // }, []);
-
-  // useEffect(() => {
-  //   window.addEventListener("scroll", handleScroll);
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, [pageNumber, loading]);
-
-  // useEffect(() => {
-  //   setFetchResult(fetchResult);
-  // }, [fetchResult, setFetchResult]);
-
-  // useEffect(() => {
-  //   if (category) {
-  //     setHash(hashtags[category.split(",")[0]]);
-  //   } else {
-  //     setHash(hashtags.home);
-  //   }
-  // }, [category]);
-
   const Scroll = () => {
     if (window.scrollY > 50) {
       setShowTabs(true);
@@ -195,7 +109,11 @@ const LinkMain = ({
     <>
       <div className="container mx-auto justify-center scroll-smooth">
         <div className="flex flex-col md:px-8 py-6 md:py-10 space-y-1 md:space-y-4 ">
-          <div className="flex flex-row space-x-4 justify-center w-full snap-x">
+          <div
+            className={`flex flex-row space-x-4 justify-center w-full snap-x ${
+              loading ? " pointer-events-none" : ""
+            }`}
+          >
             <Splide
               className="flex flex-row space-x-4 justify-center group snap-x"
               options={{
@@ -440,7 +358,11 @@ const LinkMain = ({
           </div>
           <div className="lg:hidden h-[1px] w-full bg-gray-300 block"></div>
           <div className="flex flex-col space-y-10 pt-4 md:pt-0">
-            <div className="flex flex-col md:flex-row justify-center md:justify-between space-y-4 md:space-x-3 md:space-y-0">
+            <div
+              className={`flex flex-col md:flex-row justify-center md:justify-between space-y-4 md:space-x-3 md:space-y-0 ${
+                loading ? " pointer-events-none" : ""
+              }`}
+            >
               <div class="relative overflow-x-auto overflow-y-clip h-14">
                 <Splide
                   options={{
@@ -501,7 +423,7 @@ const LinkMain = ({
                 </Splide>
               </div>
 
-              <div className="flex flex-row items-center justify-center md:space-x-6">
+              <div className="flex flex-row items-center md:pb-4 justify-center md:space-x-6">
                 <div className="hidden h-[41px] w-[1px] bg-gray-300 md:block"></div>
                 <button
                   id="dropdownDefaultButton"

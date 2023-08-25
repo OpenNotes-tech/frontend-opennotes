@@ -110,14 +110,14 @@ export const FilterModal = () => {
 
   // Combine selected category options into one array
   const categoryOptions = {
-    mobile: MobileOptions,
     frontend: FrontendOptions,
     backend: BackendOptions,
     datascience: AIOptions,
-    cybersecurity: SecurityOptions,
-    blogs: BlogOptions,
+    mobile: MobileOptions,
     algorithms: AlgorithmsOptions,
+    cybersecurity: SecurityOptions,
     courses: CourseOptions,
+    blogs: BlogOptions,
     podcasts: PodcastOptions,
   };
 

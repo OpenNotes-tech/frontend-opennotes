@@ -1,10 +1,12 @@
 import { useEffect, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { closeDetailsModal } from "../../store/features/modalSlice";
 
 const LinkDetailsModal = () => {
-  const isDetailsModalOpen = sessionStorage.getItem("_IsDetailsModalOpen");
-  const modalValue = sessionStorage.getItem("_ModalValue");
+  const { isDetailsModalOpen, modalValue } = useSelector(
+    (state) => state.Modal
+  );
   const dispatch = useDispatch();
   const modalRef = useRef();
 
@@ -12,7 +14,7 @@ const LinkDetailsModal = () => {
   useEffect(() => {
     const handleOutsideClick = (e) => {
       if (e.target === modalRef.current) {
-        sessionStorage.setItem("_IsDetailsModalOpen", false);
+        dispatch(closeDetailsModal());
       }
     };
     if (isDetailsModalOpen) {
@@ -24,7 +26,7 @@ const LinkDetailsModal = () => {
   }, [dispatch, isDetailsModalOpen]);
 
   const handleDetailsModalToggle = () => {
-    sessionStorage.setItem("_IsDetailsModalOpen", false);
+    dispatch(closeDetailsModal());
   };
 
   return (

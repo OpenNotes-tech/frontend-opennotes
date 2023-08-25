@@ -70,8 +70,8 @@ const Hero = ({ category }) => {
                   Over 4.1 million+ high quality unique links shared by our
                   talented community.
                 </p>
-                <p class="mt-4 md:mt-0 md:ml-8 italic border-2 rounded-full backdrop-saturate-0 drop-shadow-2xl  backdrop-opacity-100 bg-opacity-100 opacity-100 backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200 backdrop-grayscale backdrop-hue-rotate-30  transition-opacity duration-300 border-white w-36 pb-[2px] items-center text-center animate-text bg-gradient-to-r from-teal-500 via-purple-500 to-orange-500 bg-clip-text text-transparent text-sm font-black">
-                  BETA version
+                <p class="font-serif italic text-base font-bold leading-relaxed text-blue-gray-900 antialiased mt-4 md:mt-0 md:ml-8 border-2 rounded-full backdrop-saturate-0 drop-shadow-2xl  backdrop-opacity-100 bg-opacity-100 opacity-100 backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200 backdrop-grayscale backdrop-hue-rotate-30  transition-opacity duration-300 border-white w-20 pb-[2px] items-center text-center animate-text bg-gradient-to-r from-[#FB0058] to-[#00B7FF] bg-clip-text text-transparent ">
+                  BETA
                 </p>
               </p>
             </div>

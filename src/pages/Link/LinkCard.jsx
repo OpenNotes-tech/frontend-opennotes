@@ -27,19 +27,31 @@ const LinkCard = ({ linkElement }) => {
     <>
       <div class="max-w-sm text-left h-[500px] flex flex-col space-y-6 bg-white border border-gray-200 rounded-2xl shadow-2xl ">
         <div className="h-1/2">
-          <img class="rounded-t-2xl" src={linkElement.photo} alt="" />
+          {linkElement.photo ? (
+            <img class="rounded-t-2xl" src={linkElement.photo} alt="" />
+          ) : (
+            <svg
+              class="w-12 h-12 text-gray-200"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-hidden="true"
+              fill="currentColor"
+              viewBox="0 0 640 512"
+            >
+              <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"></path>
+            </svg>
+          )}
           <div class="p-5">
-            <h5 class="mb-2 text-xl  capitalize font-bold truncate tracking-wide text-gray-900 ">
+            <h5 class="mb-2 font-sans text-xl font-bold leading-snug tracking-normal text-blue-gray-900 antialiased  capitalize truncate   ">
               {linkElement.title}
             </h5>
-            <p class="mb-3  font-normal text-gray-700 line-clamp-3 dark:text-gray-400">
+            <p class="mb-3 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased  line-clamp-3 ">
               Create the perfect palette or get inspired by thousands of
               beautiful color schemes.
             </p>
           </div>
         </div>
         <div className="flex flex-col w-full pb-4 space-y-4 h-1/2">
-          <div className="flex items-end flex-col md:flex-row justify-between mt-auto px-4">
+          <div className="flex flex-col xl:flex-row justify-between mt-auto space-y-4 xl:space-y-0 px-4">
             <Link
               to={linkElement.url}
               target="_blank"
@@ -66,7 +78,7 @@ const LinkCard = ({ linkElement }) => {
             </Link>
             <button
               onClick={handleDetailsModal}
-              className="flex flex-row space-x-2 transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black bg-black px-8 py-1 font-medium text-center text-white hover:border-blue-700 hover:bg-blue-700"
+              className="flex flex-row space-x-2 transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black bg-black px-8 py-1 font-medium text-center text-white hover:border-blue-600 hover:bg-blue-600"
               type="button"
             >
               <svg
@@ -88,7 +100,7 @@ const LinkCard = ({ linkElement }) => {
               <p>Details</p>
             </button>
           </div>
-          <div class="flex items-end flex-row justify-between mt-auto px-4 border-t pt-3">
+          <div class="flex items-end flex-row justify-between font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased mt-auto px-4 border-t pt-3">
             <div
               class=" flex items-center space-x-4 relative"
               data-nc-id="PostCardLikeAndComment"
@@ -127,7 +139,7 @@ const LinkCard = ({ linkElement }) => {
               >
                 <button
                   onClick={handleShareModal}
-                  className="text-neutral-6000 bg-neutral-50 transition-colors dark:text-gray-800 dark:bg-gray-100 hover:bg-teal-50 dark:hover:bg-teal-100 hover:text-teal-600 dark:hover:text-teal-500 p-[10px] rounded-full"
+                  className="text-neutral-6000 bg-neutral-50 transition-colors dark:text-gray-800 dark:bg-gray-100 hover:bg-teal-50 dark:hover:bg-teal-100 hover:text-teal-600 dark:hover:text-teal-800 p-[10px] rounded-full"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -161,7 +173,7 @@ const LinkCard = ({ linkElement }) => {
               >
                 <button
                   onClick={handleBookmarkModal}
-                  class="relative rounded-full flex items-center justify-center focus:outline-none p-[10px] text-neutral-700 bg-gray-50 dark:text-neutral-900 dark:bg-gray-100 hover:bg-blue-50 dark:hover:bg-blue-100 hover:text-blue-600 dark:hover:text-blue-500"
+                  class="relative rounded-full flex items-center justify-center focus:outline-none p-[10px] text-neutral-700 bg-gray-50 dark:text-neutral-900 dark:bg-gray-100 hover:bg-blue-50 dark:hover:bg-blue-100 hover:text-blue-600 dark:hover:text-blue-600"
                   data-nc-id="NcBookmark"
                   data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
                   title="Save to reading list"

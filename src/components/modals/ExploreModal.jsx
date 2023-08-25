@@ -5,6 +5,7 @@ import {
   openReportModal,
   openLangModal,
 } from "../../store/features/modalSlice";
+import { useEffect, useState } from "react";
 
 const ExploreModal = () => {
   const navigate = useNavigate();
@@ -29,10 +30,38 @@ const ExploreModal = () => {
     // dispatch(setPageNumber({ pageNumber: 1 }));
   };
 
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", handleInstallPrompt);
+    return () =>
+      window.removeEventListener("beforeinstallprompt", handleInstallPrompt);
+  }, []);
+
+  const handleInstallPrompt = (event) => {
+    event.preventDefault();
+    setDeferredPrompt(event);
+  };
+
+  const handleInstallClick = () => {
+    console.log(deferredPrompt);
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        setDeferredPrompt(null);
+      });
+    }
+  };
+
   return (
     <div
       id="dropdown"
-      className="md:mt-[470px] absolute right-[10px] md:right-6 lg:right-[270px] z-[999] bg-white divide-y divide-gray-100 rounded-lg md:w-[720px] lg:w-[840px] shadow-2xl"
+      className="md:mt-[515px] absolute right-[10px] md:right-6 lg:right-[270px] z-[999] bg-white divide-y divide-gray-100 rounded-lg md:w-[720px] lg:w-[840px] shadow-2xl"
     >
       <div className="flex flex-col divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
         <div className="flex flow-col md:flex-row md:justify-evenly">
@@ -369,15 +398,6 @@ const ExploreModal = () => {
                 <span>FAQ</span>
               </div>
             </Link>
-            <Link
-              role="menuitem"
-              to="/privacy-policy"
-              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
-            >
-              <div className="flex flex-none items-center space-x-2">
-                <span>Privacy Policy</span>
-              </div>
-            </Link>
             <button
               type="button"
               data-ripple-light="true"
@@ -401,6 +421,26 @@ const ExploreModal = () => {
               </div>
             </button>
             <button
+              type="button"
+              data-ripple-light="true"
+              data-dialog-target="report-dialog"
+              onClick={() => toggleReport("bug")}
+              className="w-full flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+            >
+              <div className="flex flex-none items-center space-x-2">
+                <span>Newsletter</span>
+              </div>
+            </button>
+            <Link
+              role="menuitem"
+              to="/privacy-policy"
+              className=" flex items-center text-center justify-between space-x-2 rounded py-3 px-5 lg:px-10 md:px-5 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+            >
+              <div className="flex flex-none items-center space-x-2">
+                <span>Privacy Policy</span>
+              </div>
+            </Link>
+            <button
               // role="menuitem"
               type="button"
               data-ripple-light="true"
@@ -419,8 +459,18 @@ const ExploreModal = () => {
             </button>
           </div>
         </div>
-        <div className="py-5 px-5 lg:px-10 md:px-5 text-slate-700">
-          <li className="flex flex-row justify-end space-x-6">
+        <div className="py-3 px-5 lg:px-10 md:px-5 text-slate-700">
+          <li className="flex flex-row justify-end items-center space-x-6">
+            <button target="_blank" onClick={handleInstallClick}>
+              <img
+                src={require("../../assets/images/pwa-logo.png")}
+                alt=""
+                className="w-32"
+                srcset=""
+              />
+              <span className="group"></span>
+            </button>
+
             <Link
               to={"https://instagram.com"}
               target="_blank"

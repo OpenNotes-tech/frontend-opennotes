@@ -2,20 +2,39 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <link rel="icon" href="%PUBLIC_URL%/assets/logo.png" />
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1" /> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
       content="Boootech is development & design resource discovering and bookmarking ✅ marketplace with over 10000+ resource links. Discover awesome links for backend, frontend, design, machine learning and more"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <meta name="theme-color" content="#3EC4D6" />
+    <link
+      rel="apple-touch-icon"
+      href="%PUBLIC_URL%/assets/maskable_icon_x192.png"
+    />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>Boootech - curated list of 10000+ development & design resource</title>
+    <title>
+      Boootech - curated list of 10000+ development & design resource
+    </title>
   </head>
   <body>
     <div id="root"></div>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker
+            .register("./serviceworker.js")
+            .then((reg) => console.log("Success: ", reg.scope))
+            .catch((err) => console.log("Failure: ", err));
+        });
+      }
+    </script>
   </body>
 </html>

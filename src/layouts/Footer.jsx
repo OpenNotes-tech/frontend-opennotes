@@ -1,11 +1,51 @@
 import { useDispatch } from "react-redux";
 import { openReportModal } from "../store/features/modalSlice";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+function detectBrowser() {
+  const userAgent = navigator.userAgent;
+
+  if (userAgent.includes("Chrome")) return "Google Chrome";
+  // if (userAgent.includes("Firefox")) return "Mozilla Firefox";
+  // if (userAgent.includes("Safari")) return "Apple Safari";
+  if (userAgent.includes("Edge")) return "Microsoft Edge";
+  // Add more browser detections if needed
+
+  return null;
+}
 
 const Footer = () => {
+  const browserName = detectBrowser();
   const dispatch = useDispatch();
   const handleReportModalToggle = (data) => {
     dispatch(openReportModal(data));
+  };
+
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
+
+  useEffect(() => {
+    window.addEventListener("beforeinstallprompt", handleInstallPrompt);
+    return () =>
+      window.removeEventListener("beforeinstallprompt", handleInstallPrompt);
+  }, []);
+
+  const handleInstallPrompt = (event) => {
+    event.preventDefault();
+    setDeferredPrompt(event);
+  };
+
+  const handleInstallClick = () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then((choiceResult) => {
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+        setDeferredPrompt(null);
+      });
+    }
   };
 
   return (
@@ -22,7 +62,7 @@ const Footer = () => {
               oootech
             </span>
           </Link>
-          <ul class="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+          <ul class="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-md font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <button
                 onClick={() => handleReportModalToggle("link")}
@@ -46,7 +86,7 @@ const Footer = () => {
                 href="/"
                 class="cursor-pointer relative after:absolute after:bg-gray-500 after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300 "
               >
-                Sponsor
+                Sponsor us
               </a>
             </li>
             <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
@@ -55,11 +95,21 @@ const Footer = () => {
                 onClick={() => handleReportModalToggle("admin")}
                 class="cursor-pointer relative after:absolute after:bg-gray-500 after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 hover:after:origin-bottom-left hover:after:scale-x-100 after:transition-transform after:ease-in-out after:duration-300"
               >
-                Contact
+                Contacts
               </button>
             </li>
           </ul>
           <ul className="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+            {browserName !== null ? (
+              <button onClick={handleInstallClick}>
+                <img
+                  src={require("../assets/images/pwa-logo.png")}
+                  alt=""
+                  className="w-32"
+                  srcset=""
+                />
+              </button>
+            ) : null}
             <li className="flex flex-row space-x-4 ">
               <Link
                 to={"https://instagram.com/"}

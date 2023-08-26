@@ -15,8 +15,18 @@ const LinkCard = ({ linkElement }) => {
   const handleBookmarkModal = () => {
     dispatch(openBookmarkModal());
   };
-  const handleShareModal = () => {
-    dispatch(openShareModal(linkElement));
+  const handleShareModal  = () => {
+    if (window.innerWidth <= 768 && navigator.share) { // You can adjust the width value for your needs
+      navigator.share({
+        title: linkElement.title,
+        text: linkElement.description,
+        url: linkElement.url,
+      })
+        .then(() => console.log('Shared successfully'))
+        .catch((error) => console.error('Error sharing:', error));
+    } else {
+      dispatch(openShareModal(linkElement));
+    }
   };
 
   const handleDetailsModal = () => {

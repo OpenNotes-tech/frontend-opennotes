@@ -173,22 +173,22 @@ const Sign = () => {
         </button>
         <div className="flex flex-col justify-center items-center">
           <div className="rounded-full uppercase text-xs flex flex-row bg-gray-300 mt-6 py-5  items-center justify-center w-[290px] h-[20px]">
-            <Link
+            <button
               onClick={() => setIsAuthSliderOpen(true)}
-              className={`cursor-pointer text-center rounded-full text-black px-12 py-2  font-medium  ${
+              className={`cursor-pointer uppercase text-xs text-center rounded-full text-black px-12 py-2  font-medium  ${
                 isAuthSliderOpen && "text-white bg-black"
               } `}
             >
               Sign up
-            </Link>
-            <Link
+            </button>
+            <button
               onClick={() => setIsAuthSliderOpen(false)}
-              className={`cursor-pointer text-center rounded-full text-black px-12 py-2 font-medium  ${
+              className={`cursor-pointer uppercase text-xs text-center rounded-full text-black px-12 py-2 font-medium  ${
                 !isAuthSliderOpen && "text-white bg-black"
               } `}
             >
               Log in
-            </Link>
+            </button>
           </div>
           <ul class="flex justify-center gap-2 sm:gap-5 px-4 md:px-10 pt-10">
             <li>

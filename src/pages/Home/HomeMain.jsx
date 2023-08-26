@@ -37,6 +37,7 @@ const HomeMain = () => {
   useEffect(() => {
     if (fetchResult) {
       dispatch(setLoading(true));
+
       SearchAPI.linkSearch(
         searchQuery,
         sort,

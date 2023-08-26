@@ -554,7 +554,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
         </div>
       </div>
       {showTabs && (
-        <aside className="fixed bottom-0 z-50 w-full h-16 md:hidden shadow-[0_40px_60px_2px_rgba(0.9,0.9,0.9,0.9)]">
+        <aside className="toolbarx fixed bottom-0 z-[999] w-full h-16 md:hidden shadow-[0_40px_60px_2px_rgba(0.9,0.9,0.9,0.9)]">
           <ul className="justify-center grid px-4 grid-cols-4 -ml-8 text-xs text-gray-500 font-normal h-full bg-white">
             <li>
               <Link
@@ -611,7 +611,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                   category?.split(",")[0] === undefined &&
                   "bg-blue-100 text-blue-500"
                 }`}
-                onClick={(e) => handleCategorySubmit(e, "/")}
+                onClick={(e) => handleCategorySubmit(e, "")}
                 alt="sidebar button called interview"
               >
                 <svg

@@ -28,7 +28,9 @@ const ModalMain = () => {
       {isLangModalOpen === true && <LangModal />}
       {isAuthModalOpen === true && <Sign />}
       {isFilterModalOpen === true && <FilterModal />}
-      {/* {isExploreModalOpen === true && <ExploreModal />} */}
+      <div className="md:hidden block">
+        {isExploreModalOpen === true && <ExploreModal />}
+      </div>
     </>
   );
 };

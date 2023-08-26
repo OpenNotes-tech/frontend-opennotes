@@ -1,25 +1,100 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Boootech",
+  "name": "Welcome to Boootech",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "./assets/maskable_icon_x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
     },
     {
-      "src": "logo192.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "./assets/maskable_icon_x72.png",
+      "sizes": "72x72",
+      "type": "image/png"
     },
     {
-      "src": "logo512.png",
+      "src": "./assets/maskable_icon_x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/maskable_icon_x128.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/maskable_icon_x192.png",
+      "sizes": "192x192",
       "type": "image/png",
-      "sizes": "512x512"
+      "purpose":"any"
+    },
+    {
+      "src": "./assets/maskable_icon_x384.png",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/maskable_icon_x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose":"maskable"
+    },
+    {
+      "src": "./assets/maskable_icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
     }
+    
   ],
+
+  "screenshots": [
+    {
+      "src": "./assets/screenshot_1.png",
+      "sizes": "451x320",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/screenshot_2.png",
+      "sizes": "320x607",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/screenshot_3.png",
+      "sizes": "320x607",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/screenshot_4.png",
+      "sizes": "320x607",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/screenshot_5.png",
+      "sizes": "320x607",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/screenshot_6.png",
+      "sizes": "320x607",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/screenshot_7.png",
+      "sizes": "320x607",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/screenshot_8.png",
+      "sizes": "320x607",
+      "type": "image/png"
+    }
+
+  ],
+
+  "id":"/",
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#3EC4D6",
+  "background_color": "#ffffff",
+  "description":"Boootech is development & design resource discovering and bookmarking ✅ marketplace with over 10000+ resource links. Discover awesome links for backend, frontend, design, machine learning and more"
 }

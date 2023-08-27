@@ -15,15 +15,17 @@ const LinkCard = ({ linkElement }) => {
   const handleBookmarkModal = () => {
     dispatch(openBookmarkModal());
   };
-  const handleShareModal  = () => {
-    if (window.innerWidth <= 768 && navigator.share) { // You can adjust the width value for your needs
-      navigator.share({
-        title: linkElement.title,
-        text: linkElement.description,
-        url: linkElement.url,
-      })
-        .then(() => console.log('Shared successfully'))
-        .catch((error) => console.error('Error sharing:', error));
+  const handleShareModal = () => {
+    if (window.innerWidth <= 768 && navigator.share) {
+      // You can adjust the width value for your needs
+      navigator
+        .share({
+          title: linkElement.title,
+          text: linkElement.description,
+          url: linkElement.url,
+        })
+        .then(() => console.log("Shared successfully"))
+        .catch((error) => console.error("Error sharing:", error));
     } else {
       dispatch(openShareModal(linkElement));
     }
@@ -35,13 +37,13 @@ const LinkCard = ({ linkElement }) => {
 
   return (
     <>
-      <div class="max-w-sm text-left h-[500px] flex flex-col space-y-6 bg-white border border-gray-200 rounded-2xl shadow-2xl ">
+      <div class="flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-2xl ">
         <div className="h-1/2">
           {linkElement.photo ? (
             <img class="rounded-t-2xl" src={linkElement.photo} alt="" />
           ) : (
             <svg
-              class="w-12 h-12 text-gray-200"
+              class="h-12 w-12 text-gray-200"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
               fill="currentColor"
@@ -51,22 +53,22 @@ const LinkCard = ({ linkElement }) => {
             </svg>
           )}
           <div class="p-5">
-            <h5 class="mb-2 font-sans text-xl font-bold leading-snug tracking-normal text-blue-gray-900 antialiased  capitalize truncate   ">
+            <h5 class="text-blue-gray-900 mb-2 truncate font-sans text-xl font-bold capitalize leading-snug  tracking-normal antialiased   ">
               {linkElement.title}
             </h5>
-            <p class="mb-3 font-sans text-base font-normal leading-relaxed text-gray-700 antialiased  line-clamp-3 ">
+            <p class="mb-3 line-clamp-3 font-sans text-base font-normal leading-relaxed text-gray-700  antialiased ">
               Create the perfect palette or get inspired by thousands of
               beautiful color schemes.
             </p>
           </div>
         </div>
-        <div className="flex flex-col w-full pb-4 space-y-4 h-1/2">
-          <div className="flex flex-col xl:flex-row justify-between mt-auto space-y-4 xl:space-y-0 px-4">
+        <div className="flex h-1/2 w-full flex-col space-y-4 pb-4">
+          <div className="mt-auto flex flex-col justify-between space-y-4 px-4 xl:flex-row xl:space-y-0">
             <Link
+              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-8 py-1 text-center font-medium text-black transition duration-200 ease-in-out hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700 md:py-1"
               to={linkElement.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex flex-row space-x-2 transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black px-8 py-1 md:py-1 text-center font-medium text-black hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -87,8 +89,8 @@ const LinkCard = ({ linkElement }) => {
               <p>Open</p>
             </Link>
             <button
+              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black bg-black px-8 py-1 text-center font-medium text-white transition duration-200 ease-in-out hover:border-blue-600 hover:bg-blue-600"
               onClick={handleDetailsModal}
-              className="flex flex-row space-x-2 transition duration-200 ease-in-out cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black bg-black px-8 py-1 font-medium text-center text-white hover:border-blue-600 hover:bg-blue-600"
               type="button"
             >
               <svg
@@ -110,18 +112,18 @@ const LinkCard = ({ linkElement }) => {
               <p>Details</p>
             </button>
           </div>
-          <div class="flex items-end flex-row justify-between font-sans text-base font-normal leading-relaxed text-blue-gray-900 antialiased mt-auto px-4 border-t pt-3">
+          <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
             <div
-              class=" flex items-center space-x-4 relative"
+              class=" relative flex items-center space-x-4"
               data-nc-id="PostCardLikeAndComment"
             >
               <Tippy
                 content="Like"
                 animation="shift-away"
-                className="bg-black font-medium px-1 text-white"
+                className="bg-black px-1 font-medium text-white"
               >
                 <button
-                  class=" relative min-w-[68px] flex items-center rounded-full leading-none group transition-colors px-3 h-8 text-xs focus:outline-none text-neutral-700 bg-gray-50 dark:text-neutral-900 dark:bg-gray-100 hover:bg-rose-50 dark:hover:bg-rose-100 hover:text-rose-600 dark:hover:text-rose-500"
+                  class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-neutral-700 transition-colors hover:bg-rose-50 hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-rose-100 dark:hover:text-rose-500"
                   title="Liked"
                   data-nc-id="PostCardLikeAction"
                 >
@@ -145,11 +147,11 @@ const LinkCard = ({ linkElement }) => {
               <Tippy
                 content="Share"
                 animation="shift-away"
-                className="bg-black font-medium px-1 text-white"
+                className="bg-black px-1 font-medium text-white"
               >
                 <button
                   onClick={handleShareModal}
-                  className="text-neutral-6000 bg-neutral-50 transition-colors dark:text-gray-800 dark:bg-gray-100 hover:bg-teal-50 dark:hover:bg-teal-100 hover:text-teal-600 dark:hover:text-teal-800 p-[10px] rounded-full"
+                  className="text-neutral-6000 rounded-full bg-neutral-50 p-[10px] transition-colors hover:bg-teal-50 hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-teal-100 dark:hover:text-teal-800"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -173,17 +175,17 @@ const LinkCard = ({ linkElement }) => {
               </Tippy>
             </div>
             <div
-              class="flex items-center space-x-2 text-xs text-neutral-700 dark:text-neutral-300 relative"
+              class="relative flex items-center space-x-2 text-xs text-neutral-700 dark:text-neutral-300"
               data-nc-id="PostCardSaveAction"
             >
               <Tippy
                 content="Bookmark"
                 animation="shift-away"
-                className="bg-black font-medium px-1 text-white z-[999]"
+                className="z-[999] bg-black px-1 font-medium text-white"
               >
                 <button
                   onClick={handleBookmarkModal}
-                  class="relative rounded-full flex items-center justify-center focus:outline-none p-[10px] text-neutral-700 bg-gray-50 dark:text-neutral-900 dark:bg-gray-100 hover:bg-blue-50 dark:hover:bg-blue-100 hover:text-blue-600 dark:hover:text-blue-600"
+                  class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-neutral-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-blue-100 dark:hover:text-blue-600"
                   data-nc-id="NcBookmark"
                   data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
                   title="Save to reading list"

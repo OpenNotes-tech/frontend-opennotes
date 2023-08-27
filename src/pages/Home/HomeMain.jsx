@@ -45,7 +45,7 @@ const HomeMain = () => {
         tags,
         pricing,
         parseInt(sessionStorage.getItem("_PageNumber")),
-        12
+        12,
       )
         .then((res) => {
           if (parseInt(sessionStorage.getItem("_PageNumber")) === 1) {
@@ -94,7 +94,7 @@ const HomeMain = () => {
         dispatch(setLoading(true));
         sessionStorage.setItem(
           "_PageNumber",
-          parseInt(sessionStorage.getItem("_PageNumber")) + 1
+          parseInt(sessionStorage.getItem("_PageNumber")) + 1,
         );
       }
     }

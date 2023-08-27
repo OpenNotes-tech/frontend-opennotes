@@ -18,11 +18,18 @@ import "../assets/css/darkmode.css";
 
 const Navbar = () => {
   const { loading } = useSelector((state) => state.Error);
+  const [mobileSearchBar, setMobileSearchBar] = useState(false);
   const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-  const [mobileSearchBar, setMobileSearchBar] = useState(false);
+  const [getThem, setTheme] = useState(
+    localStorage.getItem("theme") === "dark" ? true : false
+  );
+  const [darkMode, setDarkMode] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system"
+  );
+  const element = document.documentElement;
+  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -87,8 +94,57 @@ const Navbar = () => {
     };
   }, []);
 
-  const handleToggle = () => {
-    setDarkMode(!darkMode);
+  const onWindowMatch = () => {
+    if (
+      localStorage.getItem("theme") === "dark" ||
+      (!("theme" in localStorage) && darkQuery.matches)
+    ) {
+      element.classList.add("dark");
+    } else {
+      element.classList.remove("dark");
+    }
+  };
+
+  useEffect(() => {
+    switch (darkMode) {
+      case "dark":
+        element.classList.add("dark");
+        localStorage.setItem("theme", "dark");
+        break;
+      case "light":
+        element.classList.remove("dark");
+        localStorage.setItem("theme", "light");
+        break;
+      default:
+        localStorage.removeItem("theme"); // Change to "removeItem"
+        onWindowMatch();
+        break;
+    }
+  }, [darkMode]);
+
+  useEffect(() => {
+    onWindowMatch(); // Call onWindowMatch when the component mounts
+  }, []);
+
+  darkQuery.addEventListener("change", (e) => {
+    if (!("theme" in localStorage)) {
+      if (e.matches) {
+        // Use e.matches to check if it's a match
+        element.classList.add("dark");
+      } else {
+        element.classList.remove("dark");
+      }
+    }
+  });
+
+  const handleDarkMode = () => {
+    if (getThem) {
+      setDarkMode("light");
+      setTheme(false);
+    } else {
+      setDarkMode("dark"); // Change to "dark"
+      setTheme(true);
+    }
   };
 
   const handleSearch = () => {
@@ -101,7 +157,7 @@ const Navbar = () => {
         <nav
           className={`sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 md:mx-0 px-4 md:px-6 xl:px-12 ${
             scrolled
-              ? "border border-white/80 bg-white text-slate-700 shadow-md"
+              ? "border border-white/80 bg-white text-slate-700 dark:text-slate-100 dark:bg-slate-800 dark:border-slate-900 shadow-md"
               : "bg-transparent text-white"
           }  ${loading ? " pointer-events-none" : ""}`}
         >
@@ -429,8 +485,8 @@ const Navbar = () => {
                             type="checkbox"
                             class="dn"
                             id="dn"
-                            checked={darkMode}
-                            onChange={handleToggle}
+                            checked={getThem}
+                            onChange={handleDarkMode}
                           />
                           <label for="dn" class="toggle">
                             <span class="toggle__handler">

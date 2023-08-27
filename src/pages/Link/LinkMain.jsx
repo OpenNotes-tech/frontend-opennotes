@@ -13,6 +13,7 @@ import hashtags from "../../constants/tags.json";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css/skyblue";
 import { generateLinkWithQuery } from "../../components/generateLinkWithQuery";
+import clsx from "clsx";
 
 const LinkMain = ({ fetchResult, sort, category }) => {
   const dispatch = useDispatch();
@@ -25,7 +26,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
   const loading = useSelector((state) => state.Error.loading);
   const [isSortbyOpen, setSortbyOpen] = useState(false);
   const [showTabs, setShowTabs] = useState(false);
-  const [hashLoad, setHashLoad] = useState(false);
+  const [hashLoad, setHashLoad] = useState(true);
   const [getHash, setHash] = useState(hashtags.home);
 
   const handleCategorySubmit = (e, navLink) => {
@@ -357,9 +358,9 @@ const LinkMain = ({ fetchResult, sort, category }) => {
             </Splide>
           </div>
           <div className="lg:hidden h-[1px] w-full bg-gray-300 block"></div>
-          <div className="flex flex-col space-y-10 pt-4 md:pt-0">
+          <div className="flex flex-col space-y-5 pt-4 md:pt-0">
             <div
-              className={`flex flex-col md:flex-row justify-center md:justify-between space-y-4 md:space-x-3 md:space-y-0 ${
+              className={`flex flex-col md:flex-row justify-center -mb-10 md:justify-between space-y-4 md:space-x-3 md:space-y-0 ${
                 loading ? " pointer-events-none" : ""
               }`}
             >
@@ -534,20 +535,26 @@ const LinkMain = ({ fetchResult, sort, category }) => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-12 gap-y-12">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 md:gap-x-12 gap-y-12 pt-16  md:pt-10 pb-16 md:pb-10">
               {fetchResult &&
                 fetchResult.map((linkElement, index) => (
                   <LinkCard key={index} linkElement={linkElement} />
                 ))}
             </div>
+            <div
+              className={clsx("trigger", {
+                visible: loading,
+              })}
+            >
+              {parseInt(sessionStorage.getItem("_PageNumber")) !==
+                parseInt(sessionStorage.getItem("_TotalPages")) &&
+                !(!loading === true && fetchResult?.length === 0) && (
+                  <LoaderSkeleton />
+                )}
+            </div>
             {!loading === true && fetchResult?.length === 0 && (
-              <div className="flex justify-center items-center">
+              <div className="flex justify-center">
                 <IconNoResult />
-              </div>
-            )}
-            {loading === true && (
-              <div className="w-full">
-                <LoaderSkeleton />
               </div>
             )}
           </div>

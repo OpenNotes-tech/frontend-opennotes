@@ -97,7 +97,7 @@ const LinkCard = ({ linkElement }) => {
                 height="17"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="currentColor"
+                stroke="white"
                 stroke-width="1.25"
                 stroke-linecap="round"
                 stroke-linejoin="round"

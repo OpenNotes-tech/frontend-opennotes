@@ -147,11 +147,11 @@ const Sign = () => {
       data-dialog-backdrop="sign-in-dialog"
       data-dialog-backdrop-close="true"
       ref={modalRef}
-      class="raletive fixed inset-0 z-[999] grid h-screen w-screen md:place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
+      class="raletive fixed inset-0 z-[999] justify-center items-end md:items-center grid h-screen w-screen md:place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
     >
       <div
         data-dialog="sign-in-dialog"
-        class="md:relative mx-auto flex w-full sticky top-[100vh] md:top-0 h-[500px] max-w-[26rem] flex-col rounded-t-xl md:rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+        class="md:relative mx-auto flex w-full bottom-0 sticky top-[100vh] md:top-0 h-[500px] max-w-[26rem] flex-col rounded-t-xl md:rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
       >
         <button
           aria-label="Close panel"
@@ -175,7 +175,7 @@ const Sign = () => {
           <div className="rounded-full uppercase text-xs flex flex-row bg-gray-300 mt-6 py-5  items-center justify-center w-[290px] h-[20px]">
             <button
               onClick={() => setIsAuthSliderOpen(true)}
-              className={`cursor-pointer uppercase text-xs text-center rounded-full text-black px-12 py-2  font-medium  ${
+              className={`cursor-pointer uppercase text-xs text-center rounded-full text-black px-12 py-2  font-semibold  ${
                 isAuthSliderOpen && "text-white bg-black"
               } `}
             >
@@ -183,7 +183,7 @@ const Sign = () => {
             </button>
             <button
               onClick={() => setIsAuthSliderOpen(false)}
-              className={`cursor-pointer uppercase text-xs text-center rounded-full text-black px-12 py-2 font-medium  ${
+              className={`cursor-pointer uppercase text-xs text-center rounded-full text-black px-12 py-2 font-semibold  ${
                 !isAuthSliderOpen && "text-white bg-black"
               } `}
             >

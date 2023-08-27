@@ -93,6 +93,9 @@
 
   "id":"/",
   "start_url": ".",
+  "scope":".",
+  "lang": "en",
+  "orientation": "any",
   "display": "standalone",
   "theme_color": "#3EC4D6",
   "background_color": "#ffffff",

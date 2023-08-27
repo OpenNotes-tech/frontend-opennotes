@@ -51,8 +51,8 @@ const Footer = () => {
   return (
     <footer class="flex flex-row items-center justify-between -mx-4 md:-mx-0 xl:-mx-0 pb-24 md:pb-0 md:px-10 xl:px-12 shadow-xl bg-gradient-to-r from-gray-700 via-gray-900 to-black">
       <div class="w-full mx-auto py-4 md:py-8">
-        <div class="flex justify-center flex-col md:flex-row items-center space-y-10 md:space-y-0 md:justify-between">
-          <Link to={"/"} class="flex items-center">
+        <div class="flex justify-center flex-col lg:flex-row items-center space-y-10 lg:space-y-0 lg:justify-between">
+          <Link to={"/"} class="flex items-center lg:pr-4">
             <img
               src={require("../assets/images/logo.svg").default}
               class="h-8 mr-3"
@@ -62,7 +62,7 @@ const Footer = () => {
               oootech
             </span>
           </Link>
-          <ul class="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-md font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+          <ul class="grid grid-cols-2 md:flex md:flex-row gap-y-4 md:gap-y-0 space-x-5 md:space-x-4 items-center mb-6 text-md font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             <li>
               <button
                 onClick={() => handleReportModalToggle("link")}
@@ -99,7 +99,7 @@ const Footer = () => {
               </button>
             </li>
           </ul>
-          <ul className="flex flex-wrap space-x-5 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
+          <ul className="flex flex-col md:flex-row space-y-5 md:space-y-0 md:space-x-4 items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 dark:text-gray-400">
             {browserName !== null ? (
               <button onClick={handleInstallClick}>
                 <img

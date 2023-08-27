@@ -15,9 +15,8 @@ import ModalMain from "../../components/modals/ModalMain";
 import debounce from "lodash/debounce";
 
 const HomeMain = () => {
-  const { totalPages, loading } = useSelector((state) => state.Error);
+  const { loading } = useSelector((state) => state.Error);
   const [fetchResult, setFetchResult] = useState([]);
-  const [pageNumber, setPageNumber] = useState(1);
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -27,6 +26,7 @@ const HomeMain = () => {
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
   const searchQuery = queryParams.get("search_query");
+  const bottomBoundaryRef = useRef(null);
   useEffect(() => {
     sessionStorage.setItem("_TotalPages", 0);
     sessionStorage.setItem("_PageNumber", 1);
@@ -84,7 +84,7 @@ const HomeMain = () => {
     if (
       !loading &&
       window.innerHeight + document.documentElement.scrollTop + 1 >=
-        document.documentElement.scrollHeight
+        document.documentElement.scrollHeight - 200
     ) {
       if (
         !loading &&
@@ -99,7 +99,7 @@ const HomeMain = () => {
       }
     }
   };
-  const debouncedHandleScroll = debounce(handleScroll, 200);
+  const debouncedHandleScroll = debounce(handleScroll, 50);
   useEffect(() => {
     window.addEventListener("scroll", debouncedHandleScroll);
     return () => window.removeEventListener("scroll", debouncedHandleScroll);
@@ -136,16 +136,9 @@ const HomeMain = () => {
       <Hero category={category} />
       <LinkMain
         fetchResult={fetchResult}
-        setFetchResult={setFetchResult}
         sort={sort}
-        tags={tags}
-        pricing={pricing}
+        bottomBoundaryRef={bottomBoundaryRef}
         category={category}
-        searchQuery={searchQuery}
-        pageNumber={pageNumber}
-        totalPages={totalPages}
-        setTotalPages={setTotalPages}
-        setPageNumber={setPageNumber}
       />
       {(parseInt(sessionStorage.getItem("_PageNumber")) ===
         parseInt(sessionStorage.getItem("_TotalPages")) ||
@@ -153,7 +146,7 @@ const HomeMain = () => {
       <ModalMain />
       {isFilterSticky && (
         <button
-          className="fixed bottom-24 md:bottom-10 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"
+          className="fixed bottom-20 md:bottom-10 lg:bottom-20 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"
           onClick={handleScrollToTop}
         >
           <svg

@@ -61,16 +61,16 @@ const Hero = ({ category }) => {
 
         <div class="relative px-4 py-16 mx-auto  text-white max-w-7xl lg:py-16">
           <div class="flex flex-wrap text-white">
-            <div class="relative w-full px-4 mx-auto  xl:flex-grow-0 xl:flex-shrink-0">
-              <h1 class="mt-0 mb-2 text-lg font-bold text-white sm:text-5xl lg:text-4xl">
+            <div class="relative w-full px-4 mx-auto">
+              <h1 class=" mb-2 text-lg font-bold text-white md:text-2xl  lg:text-4xl">
                 Curated list of resources for designers & developers
               </h1>
-              <p class="flex flex-col md:flex-row items-center justify-center mt-0 text-base text-white sm:text-base lg:text-base">
+              <p class="flex flex-col md:flex-row items-center justify-center text-white text-sm lg:text-base">
                 <p>
                   Over 4.1 million+ high quality unique links shared by our
                   talented community.
                 </p>
-                <p class="font-serif italic text-base font-bold leading-relaxed text-blue-gray-900 antialiased mt-4 md:mt-0 md:ml-8 border-2 rounded-full backdrop-saturate-0 drop-shadow-2xl  backdrop-opacity-100 bg-opacity-100 opacity-100 backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200 backdrop-grayscale backdrop-hue-rotate-30  transition-opacity duration-300 border-white w-20 pb-[2px] items-center text-center animate-text bg-gradient-to-r from-[#FB0058] to-[#00B7FF] bg-clip-text text-transparent ">
+                <p class="font-serif italic text-base font-bold leading-relaxed text-blue-gray-900 antialiased mt-4 md:mt-0 md:ml-8 border-2 rounded-full backdrop-saturate-0 drop-shadow-2xl  backdrop-opacity-100 bg-opacity-100 opacity-100 backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200 backdrop-grayscale backdrop-hue-rotate-30  transition-opacity duration-300 border-white w-20  items-center text-center animate-text bg-gradient-to-r from-[#FB0058] to-[#00B7FF] bg-clip-text text-transparent ">
                   BETA
                 </p>
               </p>

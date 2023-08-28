@@ -15,6 +15,8 @@ import Loader from "../components/Loader";
 import Search from "../components/Search";
 import Cookies from "js-cookie";
 import "../assets/css/darkmode.css";
+import { Example } from "./Example";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const { loading } = useSelector((state) => state.Error);
@@ -23,10 +25,10 @@ const Navbar = () => {
   const [toggleProfile, setToggleProfile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [getThem, setTheme] = useState(
-    localStorage.getItem("theme") === "dark" ? true : false
+    localStorage.getItem("theme") === "dark" ? true : false,
   );
   const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system"
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system",
   );
   const element = document.documentElement;
   const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
@@ -57,12 +59,12 @@ const Navbar = () => {
 
   useEffect(
     () => handleClickOutside(toggleProfile, refProfile, setToggleProfile),
-    [toggleProfile]
+    [toggleProfile],
   );
 
   useEffect(
     () => handleClickOutside(toggleExplore, modalRef, setToggleExplore),
-    [toggleExplore]
+    [toggleExplore],
   );
 
   const Logout = () => {
@@ -151,185 +153,234 @@ const Navbar = () => {
     setMobileSearchBar(!mobileSearchBar);
   };
 
+  const dropIn = {
+    hidden: {
+      y: "-10vh",
+      opacity: 0,
+    },
+    visible: {
+      y: "0",
+      opacity: 1,
+      // transition: {
+      //   duration: 0.1,
+      //   type: "spring",
+      //   damping: 25,
+      //   stiffness: 500,
+      // },
+    },
+    exit: {
+      y: "-10vh",
+      opacity: 0,
+    },
+  };
+  const dropIn1 = {
+    hidden: {
+      y: "3vh",
+      opacity: 0,
+    },
+    visible: {
+      y: "0",
+      opacity: 1,
+      // transition: {
+      //   duration: 0.1,
+      //   type: "spring",
+      //   damping: 25,
+      //   stiffness: 500,
+      // },
+    },
+    exit: {
+      y: "3vh",
+      opacity: 0,
+    },
+  };
+
   return (
     <>
-      {!mobileSearchBar && (
-        <nav
-          className={`sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 md:mx-0 px-4 md:px-6 xl:px-12 ${
-            scrolled
-              ? "border border-white/80 bg-white text-slate-700 dark:text-slate-100 dark:bg-slate-800 dark:border-slate-900 shadow-md"
-              : "bg-transparent text-white"
-          }  ${loading ? " pointer-events-none" : ""}`}
-        >
-          {loading && <Loader />}
+      <nav
+        className={`sticky top-0 z-[99] -mx-4 flex h-16  flex-row items-center justify-between px-4 md:mx-0 md:px-6 xl:px-12 ${
+          scrolled
+            ? "border border-white/80 bg-white text-slate-700 shadow-md dark:border-slate-900 dark:bg-slate-800 dark:text-slate-100"
+            : "bg-transparent text-white"
+        }  ${loading ? " pointer-events-none" : ""}`}
+      >
+        {loading && <Loader />}
 
-          <div className="flex flex-row items-center space-x-8 md:space-x-16">
+        <div className="flex flex-row items-center space-x-8 md:space-x-16">
+          <button
+            type="button"
+            onClick={(e) => handleCategorySubmit(e, "")}
+            className="flex h-8 w-full items-center md:h-10"
+          >
+            {/* <Example /> */}
+            <img
+              className="block h-full w-full"
+              src={require("../assets/images/logo.svg").default}
+              alt="Main Logo"
+            />
+          </button>
+          {scrolled && (
+            <div className="lg:hidden">
+              <button onClick={handleSearch}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-search"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                </svg>
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="hidden w-[600px] lg:block">
+          {scrolled && (
+            <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
+          )}
+        </div>
+
+        <div className="flex flex-row items-center space-x-4 whitespace-nowrap">
+          <div ref={modalRef} className="flex flex-row items-center space-x-6 ">
             <button
               type="button"
-              onClick={(e) => handleCategorySubmit(e, "")}
-              className="flex h-8 items-center md:h-10 w-full"
+              onClick={() => setToggleExplore((oldState) => !oldState)}
+              id="dropdownDefaultButton"
+              data-dropdown-toggle="dropdown"
+              className={`raletive hidden items-center rounded-full  px-4 py-[8px] text-center text-base font-semibold  transition duration-300 ease-in-out focus:outline-none md:inline-flex  ${
+                scrolled
+                  ? "text-slate-600 hover:bg-slate-100"
+                  : "hover:backdrop-blur-4xl text-white hover:bg-white/20 hover:bg-opacity-20 hover:backdrop-saturate-200"
+              }`}
             >
-              <img
-                className="h-full block w-full"
-                src={require("../assets/images/logo.svg").default}
-                alt="Main Logo"
-              />
+              Explore{" "}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className={`lucide lucide-chevron-down ml-2.5 ${
+                  toggleExplore ? "rotate-180 transform" : ""
+                }`}
+              >
+                <path d="m6 9 6 6 6-6" />
+              </svg>
             </button>
-            {scrolled && (
-              <div className="lg:hidden">
-                <button onClick={handleSearch}>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-search"
-                  >
-                    <circle cx="11" cy="11" r="8" />
-                    <path d="m21 21-4.3-4.3" />
-                  </svg>
-                </button>
-              </div>
-            )}
+            {<ExploreModal toggleExplore={toggleExplore} />}
           </div>
-          <div className="w-[600px] hidden lg:block">
-            {scrolled && (
-              <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
-            )}
-          </div>
-
-          <div className="flex flex-row space-x-4 items-center whitespace-nowrap">
-            <div
-              ref={modalRef}
-              className="flex flex-row items-center space-x-6 "
+          <div>
+            <button
+              onClick={handleBookmarkModalToggle}
+              className={`group rounded-full px-2 py-[8px] text-center text-base font-semibold transition duration-300 ease-in-out focus:outline-none  ${
+                scrolled
+                  ? "text-slate-600 hover:bg-slate-100"
+                  : "hover:backdrop-blur-4xl text-white hover:bg-white/20 hover:bg-opacity-20 hover:backdrop-saturate-200"
+              }`}
             >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                className="lucide lucide-bookmark group-hover:fill-blue-500 " //transition duration-300 ease-in-out
+              >
+                <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <button
+              onClick={handleAuthModalToggle}
+              className={`backdrop-blur-4xl rounded-full bg-white/20 bg-opacity-20 px-4 text-center text-base font-semibold backdrop-saturate-200 transition  duration-300 ease-in-out focus:outline-none  ${
+                scrolled
+                  ? "py-[7px] text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black"
+                  : "py-[8px] text-white hover:ring-[1.1px] hover:ring-white"
+              }`}
+            >
+              Join
+            </button>
+          </div>
+          <div className="relative inline-block" ref={refProfile}>
+            <div className="relative inline-flex items-center space-x-10 self-center">
               <button
+                className={`flex flex-row items-center space-x-2 rounded-full border border-gray-300 px-2 py-1 transition duration-300 ease-in-out hover:shadow-md ${
+                  scrolled ? "bg-white" : "bg-white/80"
+                }`}
                 type="button"
-                onClick={() => setToggleExplore((oldState) => !oldState)}
-                id="dropdownDefaultButton"
-                data-dropdown-toggle="dropdown"
-                className={`raletive items-center hidden md:inline-flex  font-semibold text-base transition duration-300 ease-in-out  px-4 py-[8px] text-center rounded-full focus:outline-none  ${
-                  scrolled
-                    ? "text-slate-600 hover:bg-slate-100"
-                    : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
-                }`}
-              >
-                Explore{" "}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="22"
-                  height="22"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className={`lucide lucide-chevron-down ml-2.5 ${
-                    toggleExplore ? "transform rotate-180" : ""
-                  }`}
-                >
-                  <path d="m6 9 6 6 6-6" />
-                </svg>
-              </button>
-              {toggleExplore && <ExploreModal />}
-            </div>
-            <div>
-              <button
-                onClick={handleBookmarkModalToggle}
-                className={`group font-semibold text-base transition duration-300 ease-in-out px-2 py-[8px] text-center rounded-full focus:outline-none  ${
-                  scrolled
-                    ? "text-slate-600 hover:bg-slate-100"
-                    : "text-white hover:backdrop-blur-4xl hover:backdrop-saturate-200 hover:bg-opacity-20 hover:bg-white/20"
-                }`}
+                onClick={() => setToggleProfile((oldState) => !oldState)}
+                id="tk-dropdown-layouts-user"
+                aria-haspopup="true"
+                aria-expanded="true"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="16"
+                  height="16"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  className="lucide lucide-bookmark group-hover:fill-blue-500 " //transition duration-300 ease-in-out
+                  stroke="#1f2937"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-menu"
                 >
-                  <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
+                  <line x1="4" x2="20" y1="12" y2="12"></line>
+                  <line x1="4" x2="20" y1="6" y2="6"></line>
+                  <line x1="4" x2="20" y1="18" y2="18"></line>
                 </svg>
-              </button>
-            </div>
-            <div>
-              <button
-                onClick={handleAuthModalToggle}
-                className={`font-semibold text-base transition duration-300 ease-in-out backdrop-blur-4xl backdrop-saturate-200 bg-opacity-20 bg-white/20 px-4  text-center rounded-full focus:outline-none  ${
-                  scrolled
-                    ? "text-slate-600 ring-[1.1px] ring-slate-300 hover:ring-[1.1px] hover:ring-black py-[7px]"
-                    : "text-white hover:ring-[1.1px] hover:ring-white py-[8px]"
-                }`}
-              >
-                Join
-              </button>
-            </div>
-            <div className="relative inline-block" ref={refProfile}>
-              <div className="relative inline-flex self-center items-center space-x-10">
-                <button
-                  className={`flex flex-row items-center space-x-2 border border-gray-300 rounded-full py-1 px-2 hover:shadow-md transition duration-300 ease-in-out ${
-                    scrolled ? "bg-white" : "bg-white/80"
-                  }`}
-                  type="button"
-                  onClick={() => setToggleProfile((oldState) => !oldState)}
-                  id="tk-dropdown-layouts-user"
-                  aria-haspopup="true"
-                  aria-expanded="true"
-                >
+                <div className="bg-cover bg-center bg-no-repeat">
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
+                    width="32"
+                    height="32"
+                    className="-mr-1"
+                    viewBox="0 0 29 29"
                     fill="none"
-                    stroke="#1f2937"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    className="lucide lucide-menu"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <line x1="4" x2="20" y1="12" y2="12"></line>
-                    <line x1="4" x2="20" y1="6" y2="6"></line>
-                    <line x1="4" x2="20" y1="18" y2="18"></line>
+                    <path
+                      d="M14.08 24.2176C10.56 24.2176 7.44832 22.4154 5.632 19.712C5.67424 16.896 11.264 15.3472 14.08 15.3472C16.896 15.3472 22.4858 16.896 22.528 19.712C21.5972 21.098 20.3398 22.2339 18.8666 23.0196C17.3934 23.8053 15.7496 24.2167 14.08 24.2176ZM14.08 4.224C15.2003 4.224 16.2747 4.66903 17.0668 5.46118C17.859 6.25333 18.304 7.32773 18.304 8.448C18.304 9.56827 17.859 10.6427 17.0668 11.4348C16.2747 12.227 15.2003 12.672 14.08 12.672C12.9597 12.672 11.8853 12.227 11.0932 11.4348C10.301 10.6427 9.856 9.56827 9.856 8.448C9.856 7.32773 10.301 6.25333 11.0932 5.46118C11.8853 4.66903 12.9597 4.224 14.08 4.224ZM14.08 0C12.231 0 10.4001 0.36419 8.69182 1.07178C6.98355 1.77936 5.43139 2.81649 4.12394 4.12394C1.48342 6.76445 0 10.3458 0 14.08C0 17.8142 1.48342 21.3956 4.12394 24.0361C5.43139 25.3435 6.98355 26.3806 8.69182 27.0882C10.4001 27.7958 12.231 28.16 14.08 28.16C17.8142 28.16 21.3956 26.6766 24.0361 24.0361C26.6766 21.3956 28.16 17.8142 28.16 14.08C28.16 6.29376 21.824 0 14.08 0Z"
+                      fill="#5F5F5F"
+                    />
                   </svg>
-                  <div className="bg-center bg-cover bg-no-repeat">
-                    <svg
-                      width="32"
-                      height="32"
-                      className="-mr-1"
-                      viewBox="0 0 29 29"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M14.08 24.2176C10.56 24.2176 7.44832 22.4154 5.632 19.712C5.67424 16.896 11.264 15.3472 14.08 15.3472C16.896 15.3472 22.4858 16.896 22.528 19.712C21.5972 21.098 20.3398 22.2339 18.8666 23.0196C17.3934 23.8053 15.7496 24.2167 14.08 24.2176ZM14.08 4.224C15.2003 4.224 16.2747 4.66903 17.0668 5.46118C17.859 6.25333 18.304 7.32773 18.304 8.448C18.304 9.56827 17.859 10.6427 17.0668 11.4348C16.2747 12.227 15.2003 12.672 14.08 12.672C12.9597 12.672 11.8853 12.227 11.0932 11.4348C10.301 10.6427 9.856 9.56827 9.856 8.448C9.856 7.32773 10.301 6.25333 11.0932 5.46118C11.8853 4.66903 12.9597 4.224 14.08 4.224ZM14.08 0C12.231 0 10.4001 0.36419 8.69182 1.07178C6.98355 1.77936 5.43139 2.81649 4.12394 4.12394C1.48342 6.76445 0 10.3458 0 14.08C0 17.8142 1.48342 21.3956 4.12394 24.0361C5.43139 25.3435 6.98355 26.3806 8.69182 27.0882C10.4001 27.7958 12.231 28.16 14.08 28.16C17.8142 28.16 21.3956 26.6766 24.0361 24.0361C26.6766 21.3956 28.16 17.8142 28.16 14.08C28.16 6.29376 21.824 0 14.08 0Z"
-                        fill="#5F5F5F"
-                      />
-                    </svg>
-                  </div>
-                </button>
-              </div>
+                </div>
+              </button>
+            </div>
+            <AnimatePresence initial={false} onExitComplete={() => null}>
               {toggleProfile && (
-                <div
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
                   role="menu"
                   aria-labelledby="tk-dropdown-with-header-badges"
                   className="absolute right-0 z-10 mt-1 w-64 origin-top-right rounded shadow-2xl"
                 >
-                  <div className="divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5">
+                  <motion.div
+                    variants={dropIn1}
+                    initial="hidden"
+                    animate="visible"
+                    exit="exit"
+                    transition={{ damping: 300 }}
+                    className="divide-y divide-gray-300 rounded bg-white ring-1 ring-black ring-opacity-5"
+                  >
                     <div className="flex items-center space-x-3 p-3">
-                      <div className="bg-center bg-cover bg-no-repeat">
+                      <div className="bg-cover bg-center bg-no-repeat">
                         <img
                           src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"
                           alt="User Avatar"
@@ -343,7 +394,7 @@ const Navbar = () => {
                         >
                           John Doe
                         </Link>
-                        <p className="text-gray-700 font-normal">
+                        <p className="font-normal text-gray-700">
                           john.doe@example.com
                         </p>
                       </div>
@@ -352,7 +403,7 @@ const Navbar = () => {
                       <button
                         role="menuitem"
                         onClick={handleBookmarkModalToggle}
-                        className="w-full flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className="flex w-full items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -375,7 +426,7 @@ const Navbar = () => {
                       <Link
                         role="menuitem"
                         to="/"
-                        className=" flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className=" flex items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -400,7 +451,7 @@ const Navbar = () => {
                       <Link
                         role="menuitem"
                         to="/contacts"
-                        className="flex items-center text-center justify-between space-x-2 rounded py-2 px-3 text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                        className="flex items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -429,7 +480,7 @@ const Navbar = () => {
                             onClick={Logout}
                             type="submit"
                             role="menuitem"
-                            className="flex w-full items-center space-x-2 rounded py-2 px-3 text-left text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                            className="flex w-full items-center space-x-2 rounded px-3 py-2 text-left text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -454,7 +505,7 @@ const Navbar = () => {
                           <button
                             onClick={handleAuthModalToggle}
                             role="menuitem"
-                            className="flex w-full items-center space-x-2 rounded py-2 px-3 text-left text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                            className="flex w-full items-center space-x-2 rounded px-3 py-2 text-left text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -479,7 +530,7 @@ const Navbar = () => {
                       </div>
                     </div>
                     <div className="space-y-1 p-2">
-                      <div className="rounded py-5 px-3 text-sm font-medium ">
+                      <div className="rounded px-3 py-5 text-sm font-medium ">
                         <div class="toggleWrapper mt-[120px]">
                           <input
                             type="checkbox"
@@ -504,36 +555,52 @@ const Navbar = () => {
                         </div>
                       </div>
                     </div>
-                  </div>
-                </div>
+                  </motion.div>
+                </motion.div>
               )}
-            </div>
+            </AnimatePresence>
           </div>
-        </nav>
-      )}
-      {mobileSearchBar && (
-        <div className="sticky top-0 z-[999] flex flex-row h-16  items-center justify-between -mx-4 px-3 space-x-3 border border-white/80 bg-white text-slate-700 shadow-md">
-          {loading && <Loader />}
-          <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
-          <button onClick={handleSearch}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-x"
-            >
-              <path d="M18 6 6 18" />
-              <path d="m6 6 12 12" />
-            </svg>
-          </button>
         </div>
-      )}
+      </nav>
+      <AnimatePresence initial={false} onExitComplete={() => null}>
+        {mobileSearchBar && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="sticky top-0 z-[999] -mx-4 flex h-16  flex-row items-center justify-between space-x-3 border border-white/80 bg-white px-3 text-slate-700 shadow-md"
+          >
+            <motion.div
+              variants={dropIn}
+              initial="hidden"
+              animate="visible"
+              exit="exit"
+              transition={{ damping: 300 }}
+              className="flex flex-row items-center justify-between space-x-3"
+            >
+              {loading && <Loader />}
+              <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
+              <button onClick={handleSearch}>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-x"
+                >
+                  <path d="M18 6 6 18" />
+                  <path d="m6 6 12 12" />
+                </svg>
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };

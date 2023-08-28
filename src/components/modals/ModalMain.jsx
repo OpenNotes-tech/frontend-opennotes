@@ -21,15 +21,15 @@ const ModalMain = () => {
   } = useSelector((state) => state.Modal);
   return (
     <>
-      {isShareModalOpen === true && <ShareModal />}
-      {isBookmarkModalOpen === true && <BookmarkModal />}
-      {isDetailsModalOpen === true && <LinkDetailsModal />}
-      {isReportModalOpen === true && <UserReport />}
-      {isLangModalOpen === true && <LangModal />}
-      {isAuthModalOpen === true && <Sign />}
-      {isFilterModalOpen === true && <FilterModal />}
-      <div className="md:hidden block">
-        {isExploreModalOpen === true && <ExploreModal />}
+      {<ShareModal />}
+      {<BookmarkModal />}
+      {<LinkDetailsModal />}
+      {<UserReport />}
+      {<LangModal />}
+      {<Sign />}
+      {<FilterModal />}
+      <div className="block md:hidden">
+        {<ExploreModal />}
       </div>
     </>
   );

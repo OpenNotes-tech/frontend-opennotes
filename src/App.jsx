@@ -38,7 +38,7 @@ const App = () => {
   return (
     <BrowserRouter>
       {/* <ScrollToTop /> */}
-      <div className="bg-[#F3F4F6] ">
+      <div className="bg-[#F3F4F6] dark:bg-green-400 ">
         <Routes>
           {/* ##########################################    
                       CANDIDATE Routes    

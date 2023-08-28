@@ -1,192 +1,91 @@
-// useEffect(() => {
-//   // Load initial data
-//   loadLinkResults();
-// }, []);
+import * as React from "react";
+import { motion } from "framer-motion";
+const icon = {
+  hidden: {
+    opacity: 0,
+    pathLength: 0,
+    fill: "rgba(0, 0, 0, 1)",
+  },
+  visible: {
+    opacity: 1,
+    pathLength: 1,
+    fill: "url(#a)",
+  },
+  visible1: {
+    opacity: 1,
+    pathLength: 1,
+    fill: "url(#b)",
+  },
+  visible2: {
+    opacity: 1,
+    pathLength: 1,
+    fill: "url(#c)",
+  },
+};
 
-// const loadLinkResults = () => {
-//   if (pageNumber > totalPages) {
-//     return; // No more pages to load
-//   }
-
-//   // dispatch(setLoading(true));
-//   SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
-//     .then((res) => {
-//       setLinkResults((prevResults) => [...prevResults, ...res.data.data.body]);
-//       dispatch(setTotalPages({ totalPages: res.data.data.totalPages }));
-//       dispatch(setPageNumber({ pageNumber: pageNumber + 1 }));
-//       // dispatch(setLoading(false));
-//     })
-//     .catch((error) => {
-//       dispatch(setLoading(false));
-//       console.error("Error loading ink results:", error);
-//     })
-//     .finally(() => {
-//       dispatch(setLoading(false));
-//     });
-// };
-
-// const debounce = (func, delay) => {
-//   let timer;
-//   return function () {
-//     clearTimeout(timer);
-//     timer = setTimeout(() => func.apply(this, arguments), delay);
-//   };
-// };
-
-// const debouncedLoadLinkResults = debounce(loadLinkResults, 200); // Adjust delay as needed
-
-// const handleScroll = () => {
-//   if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 100) {
-//     debouncedLoadLinkResults();
-//   }
-// };
-
-// useEffect(() => {
-//   window.addEventListener("scroll", handleScroll);
-//   return () => {
-//     window.removeEventListener("scroll", handleScroll);
-//   };
-// }, [pageNumber, loading]);
-
-// const handleCategorySubmit = (e, navLink) => {
-//   if (e) {
-//     e.preventDefault();
-//     navigate(navLink);
-//     navLink = navLink.substring(1);
-//   }
-//   navLink = navLink.charAt(0).toUpperCase() + navLink.slice(1);
-//   dispatch(setLoading(true));
-//   dispatch(setCategoryOption(e.target.textContent.trim()));
-//   dispatch(setTotalPages({ totalPages: 1 }));
-//   dispatch(setPageNumber({ pageNumber: 1 }));
-
-//   SearchAPI.linkSearch(query, sort, navLink, tags, pricing, pageNumber, 12)
-//     .then((res) => {
-//       setLinkResults(res.data.data.body);
-//       dispatch(setSearchResult(res.data.data.body));
-//       dispatch(setTotalPages({ totalPages: res.data.data.totalPages }));
-//       dispatch(setLoading(false));
-//     })
-//     .catch((error) => {
-//       dispatch(setLoading(false));
-//       dispatch(
-//         setError({
-//           message: error?.response?.data?.message,
-//           type: "error",
-//         })
-//       );
-//     })
-//     .finally((e) => {
-//       dispatch(setLoading(false));
-//     });
-// };
-// const handleSortChange = (e, result) => {
-//   e.preventDefault();
-//   dispatch(setSortOption(result));
-//   dispatch(setLoading(true));
-//   setSortbyOpen((prevState) => !prevState);
-
-//   SearchAPI.linkSearch(query, result, category, tags, pricing, pageNumber, 12)
-//     .then((res) => {
-//       dispatch(setSearchResult(res.data.data.body));
-//       dispatch(setLoading(false));
-//       // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-//       // dispatch(
-//       //   setError({
-//       //     message: "Signed Up Successfully!",
-//       //     type: "success",
-//       //   })
-//       // );
-//     })
-//     .catch((error) => {
-//       dispatch(
-//         setError({
-//           message: error?.response?.data?.message,
-//           type: "error",
-//         })
-//       );
-//       dispatch(setLoading(false));
-//     })
-//     .finally((e) => {
-//       dispatch(setLoading(false));
-//     });
-// };
-
-// const handleTagsSubmit = () => {
-//   console.log("hello world");
-// };
-
-// const toggleDropdown = () => {
-//   setSortbyOpen((prevState) => !prevState);
-// };
-
-// const handleScrollToTop = () => {
-//   window.scrollTo({ top: 0, behavior: "smooth" });
-// };
-
-// const getWidthAndHeight = () => {
-//   if (screenSize === "sm") {
-//     return { width: "22rem", height: "5rem" };
-//   } else {
-//     return { width: "70rem", height: "5rem" };
-//   }
-// };
-
-// useEffect(() => {
-//   const handleScroll = () => {
-//     // Check if the filterRef is available before calling getBoundingClientRect
-//     if (filterRef.current) {
-//       const filterRect = filterRef.current.getBoundingClientRect();
-//       setIsFilterSticky(filterRect.top <= 0);
-//     }
-//   };
-
-//   window.addEventListener("scroll", handleScroll);
-//   return () => {
-//     window.removeEventListener("scroll", handleScroll);
-//   };
-// }, []);
-
-// useEffect(() => {
-//   setLinkResults(result);
-// }, [result]);
-
-// useEffect(() => {
-//   if (category) {
-//     setHash(hashtags[category.split(",")[0]]);
-//   }
-// }, [category]);
-
-// ###################################################
-//                 HomeMain
-// ####################################################
-// import {
-//     setSearchResult,
-//     setPagination,
-//   } from "../../store/features/searchSlice";
-// import { setLoading, setError } from "../../store/features/errorSlice";
-// import { useSelector, useDispatch } from "react-redux";
-// import { useEffect } from "react";
-// import SearchAPI from "../../utils/SearchAPI";
-
-// const { query, sort, category, tags, pageNumber, pricing } = useSelector(
-//     (state) => state.Search
-//   );
-//   const dispatch = useDispatch();
-// useEffect(() => {
-//   // Send a request to the backend here
-//   dispatch(setLoading(true));
-//   SearchAPI.linkSearch(query, sort, category, tags, pricing, pageNumber, 12)
-//     .then((res) => {
-//       dispatch(setSearchResult(res.data.data.body));
-//       // dispatch(setPagination({ totalPages: res.data.data.totalPages }));
-//       dispatch(setLoading(false));
-//     })
-//     .catch((error) => {
-//       dispatch(setError(error?.response?.data?.message));
-//       dispatch(setLoading(false));
-//     })
-//     .finally((e) => {
-//       dispatch(setLoading(false));
-//     });
-// }, []);
+export const Example = () => (
+  <>
+    <div className="mt-1 h-full w-full">
+      <motion.svg
+        initial={{ scale: 0 }}
+        animate={{ rotate: 360, scale: 1.2 }}
+        transition={{
+          type: "spring",
+          stiffness: 300,
+          damping: 110,
+        }}
+        width="32"
+        height="32"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          <linearGradient x1="95.059%" y1="50%" x2="5.575%" y2="50%" id="a">
+            <stop stop-color="#55FBDC" offset="0%" />
+            <stop stop-color="#08F" offset="100%" />
+          </linearGradient>
+          <linearGradient x1="95.059%" y1="50%" x2="5.575%" y2="50%" id="b">
+            <stop stop-color="#2ED4FF" offset="0%" />
+            <stop stop-color="#08F" offset="98.277%" />
+          </linearGradient>
+          <linearGradient x1="48.165%" y1="66.639%" x2="0%" y2="0%" id="c">
+            <stop stop-color="#4F40DC" stop-opacity=".24" offset="0%" />
+            <stop stop-color="#3525D3" offset="100%" />
+          </linearGradient>
+        </defs>
+        <g fill="none" fill-rule="evenodd">
+          <motion.path
+            d="M6 2h17a7 7 0 0 1 0 14H2V6a4 4 0 0 1 4-4z"
+            variants={icon}
+            initial="hidden"
+            animate="visible"
+            transition={{
+              default: { duration: 2, ease: "easeInOut" },
+              fill: { duration: 2, ease: [1, 0, 0.8, 1] },
+            }}
+          />
+          <motion.path
+            variants={icon}
+            initial="hidden"
+            animate="visible1"
+            transition={{
+              default: { duration: 2, ease: "easeInOut" },
+              fill: { duration: 2, ease: [1, 0, 0.8, 1] },
+            }}
+            d="M2 16h21a7 7 0 0 1 0 14H6a4 4 0 0 1-4-4V16z"
+          />
+          <motion.path
+            variants={icon}
+            initial="hidden"
+            animate="visible2"
+            transition={{
+              default: { duration: 2, ease: "easeInOut" },
+              fill: { duration: 1, ease: [1, 0, 0.8, 1] },
+            }}
+            d="M6 2h12v28H6a4 4 0 0 1-4-4V6a4 4 0 0 1 4-4z"
+            opacity=".64"
+          />
+        </g>
+      </motion.svg>
+    </div>
+  </>
+);

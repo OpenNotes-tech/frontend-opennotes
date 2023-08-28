@@ -8,10 +8,19 @@ import {
   openShareModal,
   openDetailsModal,
 } from "../../store/features/modalSlice";
+// import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
 
 const LinkCard = ({ linkElement }) => {
   const dispatch = useDispatch();
+  // let mouseX = useMotionValue(0);
+  // let mouseY = useMotionValue(0);
 
+  // function handleMouseMove({ currentTarget, clientX, clientY }) {
+  //   let { left, top } = currentTarget.getBoundingClientRect();
+
+  //   mouseX.set(clientX - left);
+  //   mouseY.set(clientY - top);
+  // }
   const handleBookmarkModal = () => {
     dispatch(openBookmarkModal());
   };
@@ -37,7 +46,22 @@ const LinkCard = ({ linkElement }) => {
 
   return (
     <>
-      <div class="flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-2xl ">
+      <div
+        // onMouseMove={handleMouseMove}
+        class=" group relative  flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-2xl "
+      >
+        {/* <motion.div
+          className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+          style={{
+            background: useMotionTemplate`
+            radial-gradient(
+              650px circle at ${mouseX}px ${mouseY}px,
+              rgba(14, 165, 233, 0.15),
+              transparent 80%
+            )
+          `,
+          }}
+        /> */}
         <div className="h-1/2">
           {linkElement.photo ? (
             <img class="rounded-t-2xl" src={linkElement.photo} alt="" />

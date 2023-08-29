@@ -52,7 +52,7 @@ const GitHub = () => {
 
   const loginWithGithub = () => {
     window.location.assign(
-      "https://github.com/login/oauth/authorize?client_id=" + GITHUB_TOKEN
+      "https://github.com/login/oauth/authorize?client_id=" + GITHUB_TOKEN,
     );
   };
 
@@ -92,7 +92,7 @@ const GitHub = () => {
             education: res?.data?.user?.education,
             experiences: res?.data?.user?.experiences,
             applications: res?.data?.user?.applications,
-          })
+          }),
         );
 
         setLoad(false);
@@ -113,7 +113,7 @@ const GitHub = () => {
     <button
       type="button"
       onClick={loginWithGithub}
-      class="px-4 py-3 flex gap-1 bg-white-dark/30 text-black shadow-none hover:bg-slate-100 bg-slate-200 rounded-md sm:gap-2"
+      class="bg-white-dark/30 flex gap-1 rounded-md bg-slate-200 px-4 py-3 text-black shadow-none hover:bg-slate-100 sm:gap-2"
     >
       <svg
         class="h-5 w-5 sm:h-6 sm:w-6"

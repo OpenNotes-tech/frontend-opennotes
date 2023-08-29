@@ -16,7 +16,6 @@ code {
     monospace;
 }
 
-
 .bar {
   content: "";
   display: inline;
@@ -55,22 +54,17 @@ code {
   }
 }
 
-.custom-h {
-  height: auto !important;
-}
 * {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 @media (display-mode: standalone), (display-mode: minimal-ui) {
-  body>#toolbarx {
-      padding: env(safe-area-inset-top) 
-          env(safe-area-inset-right) 
-          env(safe-area-inset-bottom) 
-          env(safe-area-inset-left) !important;
+  body > #toolbarx {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+      env(safe-area-inset-bottom) env(safe-area-inset-left) !important;
   }
 
   #itemInstall {
-      display: none;
+    display: none;
   }
 }

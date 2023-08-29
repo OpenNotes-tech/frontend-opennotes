@@ -51,13 +51,13 @@ const Google = () => {
     <div>
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
-        // onSuccess={responseGoogle}
-        // onFailure={responseGoogle}
+        onSuccess={responseGoogle}
+        onFailure={responseGoogle}
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            className="px-4 py-3 flex gap-1 bg-white-dark/30 text-black shadow-none hover:bg-slate-100 bg-slate-200 rounded-md sm:gap-2"
+            className="bg-white-dark/30 flex gap-1 rounded-md bg-slate-200 px-4 py-3 text-black shadow-none hover:bg-slate-100 sm:gap-2"
           >
             <svg
               class="h-5 w-5 sm:h-6 sm:w-6"

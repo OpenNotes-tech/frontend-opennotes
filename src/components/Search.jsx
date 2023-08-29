@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { generateLinkWithQuery } from "./generateLinkWithQuery";
+import { generateLinkWithQuery } from "../hooks/useGenerateQueryLink";
 import { openFilterModal } from "../store/features/modalSlice";
 import { useDispatch } from "react-redux";
 
@@ -52,13 +52,15 @@ const Search = ({ nav }) => {
     <>
       <div
         className={` w-full items-center    ${
-          nav === "dfdf" ? "max-w-2xl" : "pt-24 lg:px-20 xl:px-40"
+          nav === "navbarVersion" ? "max-w-2xl" : "pt-24 lg:px-20 xl:px-40"
         }`}
       >
         <form onSubmit={handleSubmit}>
           <div
-            className={`backdrop-blur-lg backdrop-saturate-900  bg-opacity-90   bg-white relative flex w-full items-center rounded-full border-2 border-gray-200 lg:w-auto lg:flex-1 lg:border-0 mr-8 ${
-              nav === "dfdf" ? "h-10 focus:shadow-2xl" : "h-14 shadow-md"
+            className={`backdrop-saturate-900 relative  mr-8   flex w-full items-center rounded-full border-2 border-gray-200 bg-white bg-opacity-90 backdrop-blur-lg lg:w-auto lg:flex-1 lg:border-0 ${
+              nav === "navbarVersion"
+                ? "h-10 focus:shadow-2xl"
+                : "h-14 shadow-md"
             }`}
           >
             <input
@@ -67,7 +69,7 @@ const Search = ({ nav }) => {
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
               type="search"
-              className="transition duration-300 placeholder:italic ease-in-out h-full w-full  rounded-full pl-14 pr-20 font-normal text-base text-gray-900 bg-gray-900/5 focus:bg-gray-100 focus:outline-none focus:shadow-xl"
+              className="h-full w-full rounded-full bg-gray-900/5 pl-14 pr-20  text-base font-normal text-gray-900 transition duration-300 ease-in-out placeholder:italic focus:bg-gray-100 focus:shadow-xl focus:outline-none"
               placeholder="What Are You Searching For?"
             />
 
@@ -76,8 +78,8 @@ const Search = ({ nav }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
-                className={`text-gray-400 lucide lucide-search  ${
-                  nav === "dfdf" ? "h-5 w-5" : "h-6 w-6"
+                className={`lucide lucide-search text-gray-400  ${
+                  nav === "navbarVersion" ? "h-5 w-5" : "h-6 w-6"
                 }`}
                 viewBox="0 0 24 24"
                 fill="none"
@@ -90,7 +92,7 @@ const Search = ({ nav }) => {
                 <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
               </svg>
             </button>
-            <div className="absolute right-16 w-[0.5px] bg-gray-500 h-full"></div>
+            <div className="absolute right-16 h-full w-[0.5px] bg-gray-500"></div>
             <button
               type="button"
               onClick={handleFilterToggle}
@@ -106,17 +108,17 @@ const Search = ({ nav }) => {
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className={` text-gray-400 lucide lucide-filter  ${
-                  nav === "dfdf" ? "h-5 w-5" : "h-6 w-6"
+                className={` lucide lucide-filter text-gray-400  ${
+                  nav === "navbarVersion" ? "h-5 w-5" : "h-6 w-6"
                 }`}
               >
                 <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
               </svg>
               {getFilterChange && (
-                <div className="absolute top-2 right-3">
+                <div className="absolute right-3 top-2">
                   <div className="relative flex h-2 w-2">
-                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
-                    <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                    <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
+                    <span class="relative inline-flex h-2 w-2 rounded-full bg-sky-500"></span>
                   </div>
                 </div>
               )}

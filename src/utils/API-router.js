@@ -27,26 +27,9 @@ class Request {
     return http.get(`/api/v1/user/github-login?code=${codeParam}`);
   }
 
-  //     ######  Profile   ########
-  async patchProfile(id, data) {
-    return http.patch(`/api/v1/user/profile/${id}`, data);
-  }
-
+  //     ######  Report   ########
   async postReport(data) {
     return http.post(`/api/v1/user/report/`, data);
-  }
-
-  async filterJobCompanyCandidate(term, field, limit) {
-    return http.get(
-      `/api/v1/jobs/filter?text=${term}&route=searchNews&field=${field}&limit=${limit}`
-    );
-  }
-
-  // #############################################
-  //             Upload a Media File
-  // ##############################################
-  uploadAWS(dataType) {
-    return http.get(`/api/v1/links/upload-media/${dataType}`);
   }
 }
 

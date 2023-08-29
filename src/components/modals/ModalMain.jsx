@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import Sign from "../../pages/Authentication/Sign";
 import { FilterModal } from "./FilterModal";
 import ExploreModal from "./ExploreModal";
+import { AnimatePresence } from "framer-motion";
 
 const ModalMain = () => {
   const {
@@ -17,20 +18,19 @@ const ModalMain = () => {
     isReportModalOpen,
     isAuthModalOpen,
     isFilterModalOpen,
-    isExploreModalOpen,
   } = useSelector((state) => state.Modal);
   return (
     <>
-      {<ShareModal />}
-      {<BookmarkModal />}
-      {<LinkDetailsModal />}
-      {<UserReport />}
-      {<LangModal />}
-      {<Sign />}
-      {<FilterModal />}
-      <div className="block md:hidden">
-        {<ExploreModal />}
-      </div>
+      <AnimatePresence initial={false} onExitComplete={() => null}>
+        {isDetailsModalOpen === true && <LinkDetailsModal />}
+        {isShareModalOpen === true && <ShareModal />}
+        {isBookmarkModalOpen === true && <BookmarkModal />}
+        {isLangModalOpen === true && <LangModal />}
+        {isReportModalOpen === true && <UserReport />}
+        {isAuthModalOpen === true && <Sign />}
+        {isFilterModalOpen === true && <FilterModal />}
+      </AnimatePresence>
+      <div className="block md:hidden">{<ExploreModal />}</div>
     </>
   );
 };

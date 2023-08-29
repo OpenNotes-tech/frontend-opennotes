@@ -13,10 +13,11 @@ import LinkMain from "../Link/LinkMain";
 import SearchAPI from "../../utils/SearchAPI";
 import ModalMain from "../../components/modals/ModalMain";
 import debounce from "lodash/debounce";
-
+import { motion } from "framer-motion";
 const HomeMain = () => {
   const { loading } = useSelector((state) => state.Error);
   const [fetchResult, setFetchResult] = useState([]);
+  const bottomBoundaryRef = useRef(null);
   const location = useLocation();
   const dispatch = useDispatch();
 
@@ -26,7 +27,7 @@ const HomeMain = () => {
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
   const searchQuery = queryParams.get("search_query");
-  const bottomBoundaryRef = useRef(null);
+
   useEffect(() => {
     sessionStorage.setItem("_TotalPages", 0);
     sessionStorage.setItem("_PageNumber", 1);
@@ -131,7 +132,7 @@ const HomeMain = () => {
   };
 
   return (
-    <div ref={filterRef} className="container px-4 md:px-0 mx-auto">
+    <div ref={filterRef} className="container mx-auto px-4 md:px-0">
       <Navbar />
       <Hero category={category} />
       <LinkMain
@@ -145,8 +146,9 @@ const HomeMain = () => {
         fetchResult.length === 0) && <Footer />}
       <ModalMain />
       {isFilterSticky && (
-        <button
-          className="fixed bottom-20 md:bottom-10 lg:bottom-20 right-4 bg-gray-900 p-2 rounded-full shadow-2xl text-white hover:bg-blue-500 transition duration-300 ease-in-out"
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          className="fixed bottom-20 right-4 rounded-full bg-gray-900 p-2 text-white shadow-2xl transition duration-300 ease-in-out hover:bg-blue-500 md:bottom-10 lg:bottom-20"
           onClick={handleScrollToTop}
         >
           <svg
@@ -164,7 +166,7 @@ const HomeMain = () => {
             <line x1="12" x2="12" y1="19" y2="5"></line>
             <polyline points="5 12 12 5 19 12"></polyline>
           </svg>
-        </button>
+        </motion.button>
       )}
     </div>
   );

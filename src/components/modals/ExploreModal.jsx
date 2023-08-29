@@ -1,12 +1,12 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { generateLinkWithQuery } from "../../components/generateLinkWithQuery";
+import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
 import { useDispatch, useSelector } from "react-redux";
 import {
   openReportModal,
   openLangModal,
 } from "../../store/features/modalSlice";
-import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { createDropInVariant } from "../../hooks/useAnimationVariants";
 
 const ExploreModal = ({ toggleExplore }) => {
   const navigate = useNavigate();
@@ -32,26 +32,8 @@ const ExploreModal = ({ toggleExplore }) => {
     // dispatch(setTotalPages({ totalPages: 1 }));
     // dispatch(setPageNumber({ pageNumber: 1 }));
   };
-  const dropIn = {
-    hidden: {
-      y: "3vh",
-      opacity: 0,
-    },
-    visible: {
-      y: "0",
-      opacity: 1,
-      // transition: {
-      //   duration: 0.1,
-      //   type: "spring",
-      //   damping: 25,
-      //   stiffness: 500,
-      // },
-    },
-    exit: {
-      y: "3vh",
-      opacity: 0,
-    },
-  };
+  const dropInVariant = createDropInVariant("3vh");
+
   return (
     <AnimatePresence initial={false} onExitComplete={() => null}>
       {isExploreModalOpen ||
@@ -64,7 +46,7 @@ const ExploreModal = ({ toggleExplore }) => {
             className="fixed inset-0 right-[10px] z-[999] w-full place-items-center divide-y divide-gray-100 rounded-lg  shadow-2xl   md:absolute  md:inset-auto md:right-6 md:mt-[540px] md:w-[720px] lg:right-[270px] lg:w-[840px]"
           >
             <motion.div
-              variants={dropIn}
+              variants={dropInVariant}
               initial="hidden"
               animate="visible"
               exit="exit"

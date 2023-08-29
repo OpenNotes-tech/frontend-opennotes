@@ -1,13 +1,8 @@
-import { generateLinkWithQuery } from "../components/generateLinkWithQuery";
+import { generateLinkWithQuery } from "../hooks/useGenerateQueryLink";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import ExploreModal from "../components/modals/ExploreModal";
 import { logout } from "../store/features/editProfileSlice";
-import {
-  openAuthModal,
-  openExploreModal,
-  openBookmarkModal,
-  closeExploreModal,
-} from "../store/features/modalSlice";
+import { openAuthModal, openBookmarkModal } from "../store/features/modalSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useRef, useEffect } from "react";
 import Request from "../utils/API-router";
@@ -15,36 +10,27 @@ import Loader from "../components/Loader";
 import Search from "../components/Search";
 import Cookies from "js-cookie";
 import "../assets/css/darkmode.css";
-import { Example } from "./Example";
 import { motion, AnimatePresence } from "framer-motion";
+import useDarkMode from "../hooks/useDarkMode";
+import { createDropInVariant } from "../hooks/useAnimationVariants";
 
 const Navbar = () => {
+  const dropInSearch = createDropInVariant("-10vh");
+  const dropInProfile = createDropInVariant("3vh");
+  const [isDarkMode, toggleDarkMode] = useDarkMode();
   const { loading } = useSelector((state) => state.Error);
   const [mobileSearchBar, setMobileSearchBar] = useState(false);
   const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [getThem, setTheme] = useState(
-    localStorage.getItem("theme") === "dark" ? true : false,
-  );
-  const [darkMode, setDarkMode] = useState(
-    localStorage.getItem("theme") ? localStorage.getItem("theme") : "system",
-  );
-  const element = document.documentElement;
-  const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
 
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
   const refProfile = useRef();
   const modalRef = useRef();
 
-  const handleCategorySubmit = (e, navLink) => {
-    const linkToPage = generateLinkWithQuery(location, { category: navLink });
-    navigate(linkToPage);
-  };
-
+  // ############   Click Outside Function  ###############
   const handleClickOutside = (toggleState, ref, setToggleState) => {
     const handleClick = (e) => {
       if (toggleState && ref.current && !ref.current.contains(e.target)) {
@@ -56,12 +42,10 @@ const Navbar = () => {
       document.removeEventListener("mousedown", handleClick);
     };
   };
-
   useEffect(
     () => handleClickOutside(toggleProfile, refProfile, setToggleProfile),
     [toggleProfile],
   );
-
   useEffect(
     () => handleClickOutside(toggleExplore, modalRef, setToggleExplore),
     [toggleExplore],
@@ -73,14 +57,18 @@ const Navbar = () => {
     Cookies.remove("logged_in_candidate");
     dispatch(openAuthModal());
   };
-
   const handleAuthModalToggle = () => {
     dispatch(openAuthModal());
   };
   const handleBookmarkModalToggle = () => {
     dispatch(openBookmarkModal());
   };
+  const handleCategorySubmit = (e, category) => {
+    const linkToPage = generateLinkWithQuery(location, { category: category });
+    navigate(linkToPage);
+  };
 
+  // ##########  Mobile version Searchbar & Bottom Tabs   #################
   const handleScroll = () => {
     if (window.scrollY > 0) {
       setScrolled(true);
@@ -88,111 +76,15 @@ const Navbar = () => {
       setScrolled(false);
     }
   };
-
+  const handleSearch = () => {
+    setMobileSearchBar(!mobileSearchBar);
+  };
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  const onWindowMatch = () => {
-    if (
-      localStorage.getItem("theme") === "dark" ||
-      (!("theme" in localStorage) && darkQuery.matches)
-    ) {
-      element.classList.add("dark");
-    } else {
-      element.classList.remove("dark");
-    }
-  };
-
-  useEffect(() => {
-    switch (darkMode) {
-      case "dark":
-        element.classList.add("dark");
-        localStorage.setItem("theme", "dark");
-        break;
-      case "light":
-        element.classList.remove("dark");
-        localStorage.setItem("theme", "light");
-        break;
-      default:
-        localStorage.removeItem("theme"); // Change to "removeItem"
-        onWindowMatch();
-        break;
-    }
-  }, [darkMode]);
-
-  useEffect(() => {
-    onWindowMatch(); // Call onWindowMatch when the component mounts
-  }, []);
-
-  darkQuery.addEventListener("change", (e) => {
-    if (!("theme" in localStorage)) {
-      if (e.matches) {
-        // Use e.matches to check if it's a match
-        element.classList.add("dark");
-      } else {
-        element.classList.remove("dark");
-      }
-    }
-  });
-
-  const handleDarkMode = () => {
-    if (getThem) {
-      setDarkMode("light");
-      setTheme(false);
-    } else {
-      setDarkMode("dark"); // Change to "dark"
-      setTheme(true);
-    }
-  };
-
-  const handleSearch = () => {
-    setMobileSearchBar(!mobileSearchBar);
-  };
-
-  const dropIn = {
-    hidden: {
-      y: "-10vh",
-      opacity: 0,
-    },
-    visible: {
-      y: "0",
-      opacity: 1,
-      // transition: {
-      //   duration: 0.1,
-      //   type: "spring",
-      //   damping: 25,
-      //   stiffness: 500,
-      // },
-    },
-    exit: {
-      y: "-10vh",
-      opacity: 0,
-    },
-  };
-  const dropIn1 = {
-    hidden: {
-      y: "3vh",
-      opacity: 0,
-    },
-    visible: {
-      y: "0",
-      opacity: 1,
-      // transition: {
-      //   duration: 0.1,
-      //   type: "spring",
-      //   damping: 25,
-      //   stiffness: 500,
-      // },
-    },
-    exit: {
-      y: "3vh",
-      opacity: 0,
-    },
-  };
 
   return (
     <>
@@ -242,7 +134,11 @@ const Navbar = () => {
         </div>
         <div className="hidden w-[600px] lg:block">
           {scrolled && (
-            <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
+            <Search
+              scrolled={scrolled}
+              nav={"navbarVersion"}
+              loading={loading}
+            />
           )}
         </div>
 
@@ -372,7 +268,7 @@ const Navbar = () => {
                   className="absolute right-0 z-10 mt-1 w-64 origin-top-right rounded shadow-2xl"
                 >
                   <motion.div
-                    variants={dropIn1}
+                    variants={dropInProfile}
                     initial="hidden"
                     animate="visible"
                     exit="exit"
@@ -536,8 +432,8 @@ const Navbar = () => {
                             type="checkbox"
                             class="dn"
                             id="dn"
-                            checked={getThem}
-                            onChange={handleDarkMode}
+                            checked={isDarkMode}
+                            onChange={toggleDarkMode}
                           />
                           <label for="dn" class="toggle">
                             <span class="toggle__handler">
@@ -571,7 +467,7 @@ const Navbar = () => {
             className="sticky top-0 z-[999] -mx-4 flex h-16  flex-row items-center justify-between space-x-3 border border-white/80 bg-white px-3 text-slate-700 shadow-md"
           >
             <motion.div
-              variants={dropIn}
+              variants={dropInSearch}
               initial="hidden"
               animate="visible"
               exit="exit"
@@ -579,7 +475,11 @@ const Navbar = () => {
               className="flex flex-row items-center justify-between space-x-3"
             >
               {loading && <Loader />}
-              <Search scrolled={scrolled} nav={"dfdf"} loading={loading} />
+              <Search
+                scrolled={scrolled}
+                nav={"navbarVersion"}
+                loading={loading}
+              />
               <button onClick={handleSearch}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

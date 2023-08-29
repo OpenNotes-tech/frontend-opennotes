@@ -1,36 +1,33 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import {
-  openExploreModal,
-  openBookmarkModal,
-} from "../../store/features/modalSlice";
-import LinkCard from "./LinkCard";
-import useScreenSize from "../../components/useScreenSize";
-import LoaderSkeleton from "../../components/LoaderSkeleton";
-import IconNoResult from "../../components/IconNoResult";
-import hashtags from "../../constants/tags.json";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import "@splidejs/react-splide/css/skyblue";
-import { generateLinkWithQuery } from "../../components/generateLinkWithQuery";
-import clsx from "clsx";
-// import { motion } from "framer-motion";
-import useMenuAnimation from "../../components/useMenuAnimation";
-
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import clsx from "clsx";
+
+import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
+import LoaderSkeleton from "../../components/LoaderSkeleton";
+import useMenuAnimation from "../../hooks/useMenuAnimation";
+import IconNoResult from "../../components/IconNoResult";
+import useScreenSize from "../../hooks/useScreenSize";
+import hashtags from "../../constants/tags.json";
+import LinkCard from "./LinkCard";
+
+import "@splidejs/react-splide/css/skyblue";
 
 const LinkMain = ({ fetchResult, sort, category }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const screenSize = useScreenSize();
+  const modalRef = useRef();
+
   const queryParams = new URLSearchParams(location.search);
   const hashtag = queryParams.get("hashtag");
   const loading = useSelector((state) => state.Error.loading);
   const [isSortbyOpen, setSortbyOpen] = useState(false);
+  const [getHash, setHash] = useState(hashtags.home);
   const [showTabs, setShowTabs] = useState(false);
   const [hashLoad, setHashLoad] = useState(true);
-  const [getHash, setHash] = useState(hashtags.home);
   const scope = useMenuAnimation(isSortbyOpen);
 
   let tabs = [
@@ -121,6 +118,20 @@ const LinkMain = ({ fetchResult, sort, category }) => {
     },
   ];
 
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        setSortbyOpen((state) => !state);
+      }
+    };
+    if (isSortbyOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleOutsideClick);
+    };
+  }, [isSortbyOpen]);
+
   const handleCategorySubmit = (e, navLink) => {
     const linkToPage = generateLinkWithQuery(location, { category: navLink });
     navigate(linkToPage);
@@ -135,15 +146,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
   };
 
   const toggleDropdown = () => {
-    setSortbyOpen((prevState) => !prevState);
-  };
-
-  const handleBookmarkModalToggle = () => {
-    dispatch(openBookmarkModal());
-  };
-
-  const handleExploreModalToggle = () => {
-    dispatch(openExploreModal());
+    setSortbyOpen((state) => !state);
   };
 
   const getWidthAndHeight = () => {
@@ -501,7 +504,8 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                     : getHash?.map((tag, index) => (
                         <SplideSlide key={index}>
                           <div className="flex items-center py-1">
-                            <button
+                            <motion.button
+                              whileTap={{ scale: 0.9 }}
                               onClick={(e) => handleTagsSubmit(e, tag.slice(1))}
                               className={` rounded-full px-3 py-[6px] text-center text-sm font-semibold focus:outline-none 
                 ${
@@ -513,14 +517,17 @@ const LinkMain = ({ fetchResult, sort, category }) => {
               `}
                             >
                               {tag}
-                            </button>
+                            </motion.button>
                           </div>
                         </SplideSlide>
                       ))}
                 </Splide>
               </div>
 
-              <div className=" menu flex flex-row items-center justify-center md:space-x-6 md:pb-4">
+              <div
+                ref={modalRef}
+                className=" menu flex flex-row items-center justify-center md:space-x-6 md:pb-4"
+              >
                 <div className="hidden h-[41px] w-[1px] bg-gray-300 md:block"></div>
                 <div ref={scope}>
                   <motion.button

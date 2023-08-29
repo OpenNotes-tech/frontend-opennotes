@@ -40,7 +40,7 @@ export const modalSlice = createSlice({
       state.isDetailsModalOpen = true;
     },
     closeDetailsModal: (state) => {
-      state.modalValue = null;
+      // state.modalValue = null;
       state.isDetailsModalOpen = false;
     },
     openShareModal: (state, action) => {

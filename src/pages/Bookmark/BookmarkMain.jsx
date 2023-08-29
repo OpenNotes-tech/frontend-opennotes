@@ -1,9 +1,9 @@
-import React from 'react'
-
 const BookmarkMain = () => {
   return (
-    <div>BookmarkMain</div>
-  )
-}
+    <div className="flex h-screen items-center justify-center">
+      BookmarkMain
+    </div>
+  );
+};
 
-export default BookmarkMain
+export default BookmarkMain;

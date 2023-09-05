@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { closeAuthModal } from "../../store/features/modalSlice";
 import { login, signup } from "../../store/features/editProfileSlice";
-import { setError, setLoading } from "../../store/features/errorSlice";
+import { addError, setLoading } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
 import Request from "../../utils/API-router";
@@ -72,7 +72,11 @@ const Sign = () => {
             }),
           );
           dispatch(
-            setError({ message: "Signed Up Successfully!", type: "success" }),
+            addError({
+              type: "success",
+              error: "Signed Up Successfully!",
+              id: Date.now(),
+            }),
           );
           dispatch(setLoading(false));
           // Redirect to main page after 3 seconds
@@ -85,9 +89,10 @@ const Sign = () => {
         })
         .catch((error) => {
           dispatch(
-            setError({
-              message: error?.response?.data?.message,
+            addError({
               type: "error",
+              error: error?.response?.data?.message,
+              id: Date.now(),
             }),
           );
 
@@ -105,7 +110,11 @@ const Sign = () => {
           });
           dispatch(login(res?.data?.user));
           dispatch(
-            setError({ message: "Logged In Successfully!", type: "success" }),
+            addError({
+              type: "success",
+              error: "Logged In Successfully!",
+              id: Date.now(),
+            }),
           );
           dispatch(setLoading(false));
           // Redirect to main page after 3 seconds
@@ -118,9 +127,10 @@ const Sign = () => {
         })
         .catch((error) => {
           dispatch(
-            setError({
-              message: error?.response?.data?.message,
+            addError({
               type: "error",
+              error: error?.response?.data?.message,
+              id: Date.now(),
             }),
           );
           dispatch(setLoading(false));

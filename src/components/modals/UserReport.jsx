@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setError, setLoading } from "../../store/features/errorSlice";
+import { addError, setLoading } from "../../store/features/errorSlice";
 import { closeReportModal } from "../../store/features/modalSlice";
 import Request from "../../utils/API-router";
 import { motion } from "framer-motion";
@@ -55,9 +55,10 @@ const UserReport = () => {
       Request.postReport({ message: getForm, type: getType })
         .then((res) => {
           dispatch(
-            setError({
-              message: "Successfully Submitted",
-              type: "error",
+            addError({
+              type: "success",
+              error: "Successfully Submitted!",
+              id: Date.now(),
             }),
           );
           dispatch(setLoading(false));
@@ -65,9 +66,10 @@ const UserReport = () => {
         .catch((error) => {
           dispatch(setLoading(false));
           dispatch(
-            setError({
-              message: error?.response?.data?.message,
+            addError({
               type: "error",
+              error: error?.response?.data?.message,
+              id: Date.now(),
             }),
           );
         })

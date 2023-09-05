@@ -8,6 +8,7 @@ import Sign from "../../pages/Authentication/Sign";
 import { FilterModal } from "./FilterModal";
 import { AnimatePresence } from "framer-motion";
 import ExploreMobileModal from "./ExploreMobileModal";
+import ErrorModal from "./ErrorModal";
 
 const ModalMain = () => {
   const {
@@ -32,6 +33,7 @@ const ModalMain = () => {
         {isFilterModalOpen === true && <FilterModal />}
         {isExploreModalOpen === true && <ExploreMobileModal />}
       </AnimatePresence>
+      {<ErrorModal />}
     </>
   );
 };

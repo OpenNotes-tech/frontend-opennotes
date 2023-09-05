@@ -172,7 +172,11 @@ const LinkDetailsModal = () => {
 
               <div>
                 <p className="text-lg font-semibold">Created Date:</p>
-                {modalValue.createdAt.split("T")[0]}
+                {modalValue.createdAt}
+              </div>
+              <div>
+                <p className="text-lg font-semibold">Created Date:</p>
+                {modalValue.clickCount}
               </div>
             </div>
             <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">

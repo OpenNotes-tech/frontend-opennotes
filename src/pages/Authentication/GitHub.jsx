@@ -4,19 +4,15 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import Request from "../../utils/API-router";
 import { login } from "../../store/features/editProfileSlice";
-import { setError, setLoading } from "../../store/features/errorSlice";
+import { addError, setLoading } from "../../store/features/errorSlice";
 import { closeAuthModal } from "../../store/features/modalSlice";
-const GitHub = ({ isAuthSliderOpen }) => {
+
+const GitHub = () => {
   const [rerender, setRerender] = useState(false);
   const GITHUB_TOKEN = "8f2beced15a05a04ea8a";
-  const [, setError] = useState("");
-  const [, setLoad] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
-
-  const path = "candidates"; // User part only has candidates,
-  const cook = "logged_in_candidate"; // User part only has candidates,
 
   const handleAuthModalToggle = () => {
     dispatch(closeAuthModal());
@@ -39,9 +35,10 @@ const GitHub = ({ isAuthSliderOpen }) => {
               });
               dispatch(login(res?.data?.user));
               dispatch(
-                setError({
-                  message: "Signed Up Successfully!",
+                addError({
                   type: "success",
+                  error: "Successfully Signed Up!",
+                  id: Date.now(),
                 }),
               );
               dispatch(setLoading(false));
@@ -56,14 +53,20 @@ const GitHub = ({ isAuthSliderOpen }) => {
             })
             .catch((error) => {
               console.log(error);
-              setError(error.response?.message);
-              setLoad(false);
+
+              addError({
+                type: "error",
+                error: error.response?.message,
+                id: Date.now(),
+              });
+              dispatch(setLoading(false));
             });
         } catch (error) {
           dispatch(
-            setError({
-              message: error?.response?.data?.message,
+            addError({
               type: "error",
+              error: error?.response?.data?.message,
+              id: Date.now(),
             }),
           );
 
@@ -80,58 +83,58 @@ const GitHub = ({ isAuthSliderOpen }) => {
     );
   };
 
-  const responseFacebook = (response) => {
-    Request.facebookLogin(path, {
-      userID: response.userID,
-      accessToken: response.accessToken,
-    })
-      .then((res) => {
-        Cookies.set(cook, "yes", {
-          secure: true,
-          expires: new Date(res.data.user.password),
-        });
+  // const responseFacebook = (response) => {
+  //   Request.facebookLogin(path, {
+  //     userID: response.userID,
+  //     accessToken: response.accessToken,
+  //   })
+  //     .then((res) => {
+  //       Cookies.set(cook, "yes", {
+  //         secure: true,
+  //         expires: new Date(res.data.user.password),
+  //       });
 
-        dispatch(
-          login({
-            _id: res?.data?.user?._id,
-            token: res?.data?.token,
-            fullName: res?.data?.user?.fullName,
-            email: res?.data?.user?.email,
-            skills: res?.data?.user?.skills,
-            opentoRoles: res?.data?.user?.opentoRoles,
-            country: res?.data?.user?.address?.country,
-            city: res?.data?.user?.address?.city,
-            phoneNumber: res?.data?.user?.address?.phoneNumber,
-            website: res?.data?.user?.socialLinks?.website,
-            linkedin: res?.data?.user?.socialLinks?.linkedin,
-            github: res?.data?.user?.socialLinks?.github,
-            achievement: res?.data?.user?.achievement,
-            bio: res?.data?.user?.bio,
-            salaryMax: res?.data?.user?.salaryMax,
-            salaryMin: res?.data?.user?.salaryMin,
-            photo: res?.data?.user?.photo,
-            primaryRole: res?.data?.user?.primaryRole,
-            resume: res?.data?.user?.resume,
-            yearofExperience: res?.data?.user?.yearofExperience,
-            education: res?.data?.user?.education,
-            experiences: res?.data?.user?.experiences,
-            applications: res?.data?.user?.applications,
-          }),
-        );
+  //       dispatch(
+  //         login({
+  //           _id: res?.data?.user?._id,
+  //           token: res?.data?.token,
+  //           fullName: res?.data?.user?.fullName,
+  //           email: res?.data?.user?.email,
+  //           skills: res?.data?.user?.skills,
+  //           opentoRoles: res?.data?.user?.opentoRoles,
+  //           country: res?.data?.user?.address?.country,
+  //           city: res?.data?.user?.address?.city,
+  //           phoneNumber: res?.data?.user?.address?.phoneNumber,
+  //           website: res?.data?.user?.socialLinks?.website,
+  //           linkedin: res?.data?.user?.socialLinks?.linkedin,
+  //           github: res?.data?.user?.socialLinks?.github,
+  //           achievement: res?.data?.user?.achievement,
+  //           bio: res?.data?.user?.bio,
+  //           salaryMax: res?.data?.user?.salaryMax,
+  //           salaryMin: res?.data?.user?.salaryMin,
+  //           photo: res?.data?.user?.photo,
+  //           primaryRole: res?.data?.user?.primaryRole,
+  //           resume: res?.data?.user?.resume,
+  //           yearofExperience: res?.data?.user?.yearofExperience,
+  //           education: res?.data?.user?.education,
+  //           experiences: res?.data?.user?.experiences,
+  //           applications: res?.data?.user?.applications,
+  //         }),
+  //       );
 
-        setLoad(false);
-        setError("Successfully signed up! Confirm your email.");
-        setTimeout(() => {
-          location.state?.from
-            ? navigate(location.state.from)
-            : navigate("/job");
-        }, 2000);
-      })
-      .catch((error) => {
-        setError(error.response?.message);
-        setLoad(false);
-      });
-  };
+  //       dispatch(setLoading(false));
+  //       addError("Successfully signed up! Confirm your email.");
+  //       setTimeout(() => {
+  //         location.state?.from
+  //           ? navigate(location.state.from)
+  //           : navigate("/job");
+  //       }, 2000);
+  //     })
+  //     .catch((error) => {
+  //       addError(error.response?.message);
+  //       dispatch(setLoading(false));
+  //     });
+  // };
 
   return (
     <button

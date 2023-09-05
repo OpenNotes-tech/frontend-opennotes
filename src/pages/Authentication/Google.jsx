@@ -6,7 +6,7 @@ import { gapi } from "gapi-script";
 import Cookies from "js-cookie";
 import { login } from "../../store/features/editProfileSlice";
 import Request from "../../utils/API-router";
-import { setError, setLoading } from "../../store/features/errorSlice";
+import { addError, setLoading } from "../../store/features/errorSlice";
 
 const Google = () => {
   const navigate = useNavigate();
@@ -36,13 +36,25 @@ const Google = () => {
         dispatch(login(res?.data?.user));
 
         dispatch(setLoading(false));
-        dispatch(setError("Successfully signed up!"));
+        dispatch(
+          addError({
+            type: "success",
+            error: "Successfully Signed Up!",
+            id: Date.now(),
+          }),
+        );
         setTimeout(() => {
           location.state?.from ? navigate(location.state.from) : navigate("/");
         }, 2000);
       })
       .catch((error) => {
-        dispatch(setError(error.response?.message));
+        dispatch(
+          addError({
+            type: "success",
+            error: error.response?.message,
+            id: Date.now(),
+          }),
+        );
         dispatch(setLoading(false));
       });
   };

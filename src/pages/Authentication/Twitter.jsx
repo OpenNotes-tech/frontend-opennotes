@@ -1,27 +1,23 @@
-import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import Request from "../../utils/API-router";
 import { login } from "../../store/features/editProfileSlice";
+import { addError, setLoading } from "../../store/features/errorSlice";
 
 const Twitter = () => {
-  const [, setError] = useState("");
-  const [, setLoad] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();
 
-  const path = "candidates"; // User part only has candidates, 
-  const cook = "logged_in_candidate"; // User part only has candidates, 
-
   const responseFacebook = (response) => {
-    Request.facebookLogin(path, {
+    dispatch(setLoading(true));
+    Request.facebookLogin("candidates", {
       userID: response.userID,
       accessToken: response.accessToken,
     })
       .then((res) => {
-        Cookies.set(cook, "yes", {
+        Cookies.set("logged_in_candidate", "yes", {
           secure: true,
           expires: new Date(res.data.user.password),
         });
@@ -51,11 +47,17 @@ const Twitter = () => {
             education: res?.data?.user?.education,
             experiences: res?.data?.user?.experiences,
             applications: res?.data?.user?.applications,
-          })
+          }),
         );
 
-        setLoad(false);
-        setError("Successfully signed up! Confirm your email.");
+        dispatch(
+          addError({
+            type: "success",
+            error: "Successfully signed up!",
+            id: Date.now(),
+          }),
+        );
+        dispatch(setLoading(false));
         setTimeout(() => {
           location.state?.from
             ? navigate(location.state.from)
@@ -63,8 +65,14 @@ const Twitter = () => {
         }, 2000);
       })
       .catch((error) => {
-        setError(error.response?.message);
-        setLoad(false);
+        dispatch(
+          addError({
+            type: "error",
+            error: error.response?.message,
+            id: Date.now(),
+          }),
+        );
+        dispatch(setLoading(false));
       });
   };
 
@@ -77,7 +85,7 @@ const Twitter = () => {
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}
-            className="flex items-center w-full px-5 md:px-48 lg:px-24"
+            className="flex w-full items-center px-5 md:px-48 lg:px-24"
           >
             <svg
               width="24"
@@ -96,7 +104,7 @@ const Twitter = () => {
               />
             </svg>
             <span
-              className="pl-3 text-sm md:text-base leading-none text-gray-600"
+              className="pl-3 text-sm leading-none text-gray-600 md:text-base"
               data-config-id="fb-action"
             >
               Continue with Facebook

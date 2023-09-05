@@ -3,11 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../layouts/Footer";
 import Hero from "./Hero";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setLoading,
-  setError,
-  setTotalPages,
-} from "../../store/features/errorSlice";
+import { setLoading, addError } from "../../store/features/errorSlice";
 import Navbar from "../../layouts/Navbar";
 import LinkMain from "../Link/LinkMain";
 import SearchAPI from "../../utils/SearchAPI";
@@ -86,13 +82,18 @@ const HomeMain = () => {
             ]);
           }
 
-          dispatch(setTotalPages(res.data.data.totalPages));
-          // console.log(res);
           sessionStorage.setItem("_TotalPages", res.data.data.totalPages);
           dispatch(setLoading(false));
         })
         .catch((error) => {
-          dispatch(setError(error?.response?.data?.message));
+          console.log(error.message);
+          dispatch(
+            addError({
+              type: "error",
+              error: error?.message,
+              id: Date.now(),
+            }),
+          );
           dispatch(setLoading(false));
         })
         .finally((e) => {

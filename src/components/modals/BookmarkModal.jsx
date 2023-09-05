@@ -34,7 +34,7 @@ const BookmarkModal = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
+      class="fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm "
     >
       <motion.div
         variants={dropInVariant}
@@ -43,12 +43,12 @@ const BookmarkModal = () => {
         exit="exit"
         transition={{ damping: 300 }}
         data-dialog="sign-in-dialog"
-        class="relative mx-auto flex w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md md:max-w-[30rem]"
+        class="relative mx-auto flex w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border text-neutral-700 shadow-md md:max-w-[30rem]"
       >
         <button
           aria-label="Close panel"
           onClick={handleBookmarkModalToggle}
-          class="absolute -top-3 left-[310px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 hover:text-gray-800 hover:shadow-md focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[465px] md:h-8 md:w-8"
+          class="absolute -top-3 left-[310px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 hover:text-neutral-800 hover:shadow-md focus:text-neutral-800 focus:shadow-md focus:outline-none md:left-[465px] md:h-8 md:w-8"
         >
           <svg
             stroke="currentColor"

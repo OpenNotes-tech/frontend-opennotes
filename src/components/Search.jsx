@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { generateLinkWithQuery } from "../hooks/useGenerateQueryLink";
 import { openFilterModal } from "../store/features/modalSlice";
 import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
 
 const Search = ({ nav }) => {
   const location = useLocation();
@@ -40,7 +41,7 @@ const Search = ({ nav }) => {
       category?.length > 0 ||
       pricing?.length > 0 ||
       tags?.length > 0 ||
-      hashtag?.length > 0
+      (hashtag?.length > 0 && hashtag !== "all")
     ) {
       setFilterChange(true);
     } else {
@@ -48,16 +49,20 @@ const Search = ({ nav }) => {
     }
   }, [category, tags, pricing, hashtag]);
 
+  useEffect(() => {
+    setSearchValue("");
+  }, [category]);
+
   return (
     <>
       <div
-        className={` w-full items-center    ${
+        className={`w-full items-center ${
           nav === "navbarVersion" ? "max-w-2xl" : "pt-24 lg:px-20 xl:px-40"
         }`}
       >
         <form onSubmit={handleSubmit}>
           <div
-            className={`backdrop-saturate-900 relative  mr-8   flex w-full items-center rounded-full border-2 border-gray-200 bg-white bg-opacity-90 backdrop-blur-lg lg:w-auto lg:flex-1 lg:border-0 ${
+            className={`backdrop-saturate-900 relative  mr-8   flex w-full items-center rounded-full border-2 border-neutral-200 bg-white bg-opacity-90 backdrop-blur-lg lg:w-auto lg:flex-1 lg:border-0 ${
               nav === "navbarVersion"
                 ? "h-10 focus:shadow-2xl"
                 : "h-14 shadow-md"
@@ -69,16 +74,19 @@ const Search = ({ nav }) => {
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
               type="search"
-              className="h-full w-full rounded-full bg-gray-900/5 pl-14 pr-20  text-base font-normal text-gray-900 transition duration-300 ease-in-out placeholder:italic focus:bg-gray-100 focus:shadow-xl focus:outline-none"
+              className="h-full w-full rounded-full bg-neutral-900/5 pl-14 pr-20  text-base font-normal text-neutral-900 transition duration-300 ease-in-out placeholder:italic focus:bg-neutral-100 focus:shadow-xl focus:outline-none"
               placeholder="What Are You Searching For?"
             />
-
-            <button type="submit" className="absolute left-4 mr-4">
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              type="submit"
+              className="absolute left-4 mr-4"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
-                className={`lucide lucide-search text-gray-400  ${
+                className={`lucide lucide-search text-neutral-400  ${
                   nav === "navbarVersion" ? "h-5 w-5" : "h-6 w-6"
                 }`}
                 viewBox="0 0 24 24"
@@ -91,7 +99,7 @@ const Search = ({ nav }) => {
                 <circle cx="11" cy="11" r="8"></circle>
                 <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
               </svg>
-            </button>
+            </motion.button>
             <div className="absolute right-16 h-full w-[0.5px] bg-gray-500"></div>
             <button
               type="button"
@@ -105,10 +113,10 @@ const Search = ({ nav }) => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="#6b7280"
-                stroke-width="1.5"
+                stroke-width="1.25"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className={` lucide lucide-filter text-gray-400  ${
+                className={` lucide lucide-filter text-neutral-400  ${
                   nav === "navbarVersion" ? "h-5 w-5" : "h-6 w-6"
                 }`}
               >

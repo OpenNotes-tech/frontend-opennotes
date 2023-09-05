@@ -33,7 +33,7 @@ const LangModal = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      class="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
+      class="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm "
     >
       <motion.div
         variants={dropInVariant}
@@ -42,12 +42,12 @@ const LangModal = () => {
         exit="exit"
         transition={{ damping: 300 }}
         data-dialog="sign-in-dialog"
-        class="relative mx-auto flex w-10/12 max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+        class="relative mx-auto flex w-10/12 max-w-[30rem] flex-col rounded-xl bg-white bg-clip-border text-neutral-700 shadow-md"
       >
         <button
           aria-label="Close panel"
           onClick={handleLangModalToggle}
-          class="absolute -top-3 left-[300px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 hover:text-gray-800 hover:shadow-md focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[470px] md:h-8 md:w-8"
+          class="absolute -top-3 left-[300px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 hover:text-neutral-800 hover:shadow-md focus:text-neutral-800 focus:shadow-md focus:outline-none md:left-[470px] md:h-8 md:w-8"
         >
           <svg
             stroke="currentColor"
@@ -76,12 +76,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/us.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/us.d21917ae9982e6ddb4522ce72f25de19.svg"
                     alt=""
                   />
                   <span>English - EN</span>
@@ -90,12 +90,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className="flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className="flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/es.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/es.628f10fe057a86d47f75d765dce23dac.svg"
                     alt=""
                   />
                   <span>Español - ES</span>
@@ -104,12 +104,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/de.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/de.67ea3e1e09afb41c926309de66c84d29.svg"
                     alt=""
                   />
                   <span>Deutsch - DE</span>
@@ -118,12 +118,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/il.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/il.11d095d6bd3ced58d50e8a718e73ca14.svg"
                     alt=""
                   />
                   <span>עברית - HE</span>
@@ -134,12 +134,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/cn.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/cn.ede831f04bc53cf28ca3da183a586c2e.svg"
                     alt=""
                   />
                   <span>中国人 - ZH</span>
@@ -148,12 +148,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/fr.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/fr.03e210d9c2d260a9fe7c74fb3d5226c7.svg"
                     alt=""
                   />
                   <span>Français - FR</span>
@@ -162,12 +162,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/ru.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/ru.1a25dd02f5c961746191ceea5532d1e7.svg"
                     alt=""
                   />
                   <span>Русский - RU</span>
@@ -176,12 +176,12 @@ const LangModal = () => {
               <Link
                 role="menuitem"
                 to="/profile"
-                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium text-gray-800 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+                className=" flex items-center justify-between space-x-2 rounded px-10 py-3 text-center text-sm font-medium  focus:bg-neutral-100 focus:text-neutral-800 focus:outline-none lg:hover:bg-neutral-100 lg:hover:text-neutral-800"
               >
                 <div className="flex flex-none items-center space-x-2">
                   <img
                     className="h-5 w-5"
-                    src={require("../../assets/images/sa.svg").default}
+                    src="https://cdn-opennotes.b-cdn.net/static/media/sa.bba81f588f75291e0091db58c09e6075.svg"
                     alt=""
                   />
                   <span>عربى - AR</span>

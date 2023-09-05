@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import Request from "../../utils/API-router";
 import { login } from "../../store/features/editProfileSlice";
-
-const GitHub = () => {
+import { setError, setLoading } from "../../store/features/errorSlice";
+import { closeAuthModal } from "../../store/features/modalSlice";
+const GitHub = ({ isAuthSliderOpen }) => {
   const [rerender, setRerender] = useState(false);
   const GITHUB_TOKEN = "8f2beced15a05a04ea8a";
   const [, setError] = useState("");
@@ -16,6 +17,10 @@ const GitHub = () => {
 
   const path = "candidates"; // User part only has candidates,
   const cook = "logged_in_candidate"; // User part only has candidates,
+
+  const handleAuthModalToggle = () => {
+    dispatch(closeAuthModal());
+  };
 
   useEffect(() => {
     const queryString = window.location.search;
@@ -28,13 +33,25 @@ const GitHub = () => {
           Request.githubLogin(codeParam)
             .then((res) => {
               console.log(res);
+              Cookies.set("logged_in_candidate", "yes", {
+                secure: true,
+                expires: new Date(res.data.user.password),
+              });
+              dispatch(login(res?.data?.user));
+              dispatch(
+                setError({
+                  message: "Signed Up Successfully!",
+                  type: "success",
+                }),
+              );
+              dispatch(setLoading(false));
 
-              setLoad(false);
-              setError("Successfully signed up! Confirm your email.");
+              // Redirect to main page after 3 seconds
               setTimeout(() => {
                 location.state?.from
                   ? navigate(location.state.from)
                   : navigate("/");
+                handleAuthModalToggle();
               }, 2000);
             })
             .catch((error) => {
@@ -43,7 +60,14 @@ const GitHub = () => {
               setLoad(false);
             });
         } catch (error) {
-          console.error("Error fetching access token:", error);
+          dispatch(
+            setError({
+              message: error?.response?.data?.message,
+              type: "error",
+            }),
+          );
+
+          dispatch(setLoading(false));
         }
       }
       getAccessToken();
@@ -113,7 +137,7 @@ const GitHub = () => {
     <button
       type="button"
       onClick={loginWithGithub}
-      class="bg-white-dark/30 flex gap-1 rounded-md bg-slate-200 px-4 py-3 text-black shadow-none hover:bg-slate-100 sm:gap-2"
+      class="bg-white-dark/30 flex gap-1 rounded-md bg-neutral-100 px-4 py-3 text-neutral-700 shadow-none sm:gap-2 lg:hover:bg-neutral-200 lg:hover:text-neutral-900"
     >
       <svg
         class="h-5 w-5 sm:h-6 sm:w-6"

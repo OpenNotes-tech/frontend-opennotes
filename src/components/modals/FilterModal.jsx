@@ -30,12 +30,21 @@ export const FilterModal = () => {
   const tags = queryParams.get("tags");
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
+  const [rememberFilter, setRememberFilter] = useState(false);
   const [getCategorySelector, setCategorySelector] = useState([]);
   const [getTagsSelector, setTagsSelector] = useState([]);
   const [getPricingSelector, setPricingSelector] = useState([]);
   const [routeTags, setRouteTags] = useState(tags);
   const [routeCategory, setRouteCategory] = useState(category);
   const [routePricing, setRoutePricing] = useState(pricing);
+
+  useEffect(() => {
+    if (localStorage.getItem("rememberFilter") === "true") {
+      localStorage.setItem("tags", tags);
+      localStorage.setItem("category", category);
+      localStorage.setItem("pricing", pricing);
+    }
+  }, [tags, category, pricing]);
 
   const dispatch = useDispatch();
   const modalRef = useRef();
@@ -72,6 +81,9 @@ export const FilterModal = () => {
       pricing: routePricing,
     });
     navigate(linkToPage);
+    localStorage.setItem("tags", tags);
+    localStorage.setItem("category", category);
+    localStorage.setItem("pricing", pricing);
     dispatch(closeFilterModal());
   };
   const handleCancel = () => {
@@ -148,6 +160,22 @@ export const FilterModal = () => {
 
   const dropInVariant = createDropInVariant("100vh");
 
+  // Load filter state from localStorage on component mount
+  useEffect(() => {
+    const savedFilter = localStorage.getItem("rememberFilter");
+    if (savedFilter) {
+      setRememberFilter(savedFilter === "true");
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("rememberFilter", rememberFilter);
+  }, [rememberFilter]);
+
+  const handleCheckboxChange = (event) => {
+    setRememberFilter(event.target.checked);
+  };
+
   return (
     <>
       <motion.div
@@ -155,7 +183,7 @@ export const FilterModal = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bottom-0 z-[999] flex items-center justify-center overflow-y-auto overflow-x-hidden outline-none focus:outline-none"
+        className="raletive fixed inset-0 bottom-0 z-[999] flex h-screen w-screen place-items-center items-center justify-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-60 opacity-100 outline-none backdrop-blur-sm  focus:outline-none"
       >
         <motion.div
           variants={dropInVariant}
@@ -166,9 +194,9 @@ export const FilterModal = () => {
           className="relative mx-auto w-full max-w-2xl"
         >
           {/*content*/}
-          <div className="relative flex w-full flex-col  rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
+          <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
             {/*header*/}
-            <div className="border-b border-solid border-slate-200 p-4 md:pt-4">
+            <div className="border-b border-solid border-neutral-200 p-4 md:pt-4">
               <h1 className="whitespace-nowrap text-center font-serif text-2xl font-medium">
                 Filters
               </h1>
@@ -176,7 +204,7 @@ export const FilterModal = () => {
             {/*body*/}
             <div className="grid h-auto gap-x-14 gap-y-10 px-10 py-4 md:grid-cols-2 md:px-8 ">
               <div className="px-10 md:px-0">
-                <div className="mb-3 text-sm font-semibold text-slate-800">
+                <div className="mb-3 text-sm font-semibold text-neutral-700">
                   Category
                 </div>
                 <Selector
@@ -189,7 +217,7 @@ export const FilterModal = () => {
                 />
               </div>
               <div className="px-10 md:px-0 ">
-                <div className="mb-3 text-sm font-semibold text-slate-800">
+                <div className="mb-3 text-sm font-semibold text-neutral-700">
                   Tags
                 </div>
                 <Selector
@@ -202,7 +230,7 @@ export const FilterModal = () => {
                 />
               </div>
               <div className="px-10 md:px-0">
-                <div className="mb-3 text-sm font-semibold text-slate-800">
+                <div className="mb-3 text-sm font-semibold text-neutral-700">
                   Pricing
                 </div>
                 <Selector
@@ -215,27 +243,91 @@ export const FilterModal = () => {
                 />
               </div>
             </div>
+            <div class="-ml-2.5 flex items-center justify-between px-8">
+              <div class="inline-flex items-center">
+                <label
+                  className="relative flex cursor-pointer items-center rounded-full px-3 py-[10px]"
+                  htmlFor="checkbox"
+                  data-ripple-dark="true"
+                >
+                  <input
+                    type="checkbox"
+                    className="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
+                    id="checkbox"
+                    checked={rememberFilter}
+                    onChange={handleCheckboxChange}
+                  />
+                  <span className="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-3.5 w-3.5"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      stroke="currentColor"
+                      strokeWidth="1"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </span>
+                </label>
+                <label
+                  className="cursor-pointer select-none text-neutral-700"
+                  htmlFor="checkbox"
+                >
+                  Remember my filter
+                </label>
+              </div>
+              <div class="flex ">
+                <button
+                  type="button"
+                  class="text-heading flex flex-row items-center gap-x-2 text-center text-sm  underline  hover:no-underline focus:outline-none"
+                >
+                  How filter works?{" "}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="10"
+                    height="10"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-info"
+                  >
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4" />
+                    <path d="M12 8h.01" />
+                  </svg>
+                </button>
+              </div>
+            </div>
             {/*footer*/}
-            <div className="flex flex-row items-center justify-center space-x-4 rounded-b border-t border-solid border-slate-200 px-6  py-4 md:justify-end md:py-4">
-              <button
+            <div className="flex flex-row items-center justify-center space-x-4 rounded-b border-t border-solid border-neutral-200 px-6  py-4 md:justify-end md:py-4">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={handleCancel}
-                className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black px-8 py-2 text-center font-medium text-black transition duration-200 ease-in-out hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700 md:px-8 md:py-2"
+                className="text-blneutral-700 cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 px-8 py-2 text-center font-medium transition duration-200 ease-in-out hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600 md:px-8 md:py-2"
               >
                 Cancel
-              </button>
-              <button
-                className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-black bg-black px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out hover:border-blue-700 hover:bg-blue-700"
+              </motion.button>
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 bg-neutral-700 px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out hover:border-blue-500 hover:bg-blue-500"
                 type="button"
                 onClick={handleSubmit}
               >
                 Apply
-              </button>
+              </motion.button>
             </div>
           </div>
         </motion.div>
       </motion.div>
-      {/* <div className="fixed inset-0 z-40 bg-black opacity-30"></div> */}
     </>
   );
 };

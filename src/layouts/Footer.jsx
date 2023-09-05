@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux";
 import { openReportModal } from "../store/features/modalSlice";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+const AnimatedLink = motion(Link);
 function detectBrowser() {
   const userAgent = navigator.userAgent;
 
@@ -52,66 +54,78 @@ const Footer = () => {
     <footer class="-mx-4 flex flex-row items-center justify-between bg-gradient-to-r from-gray-700 via-gray-900 to-black pb-24 shadow-xl md:-mx-0 md:px-10 md:pb-0 xl:-mx-0 xl:px-12">
       <div class="mx-auto w-full py-4 md:py-8">
         <div class="flex flex-col items-center justify-center space-y-10 lg:flex-row lg:justify-between lg:space-y-0">
-          <Link to={"/"} class="flex items-center lg:pr-4">
+          <AnimatedLink
+            whileTap={{ scale: 0.9 }}
+            to={"/"}
+            class="flex items-center lg:pr-4"
+          >
             <img
-              src={require("../assets/images/logo.svg").default}
+              src="https://cdn-opennotes.b-cdn.net/static/media/logo.708029b797f0dc11c4bb71c64fd217c5.svg"
               class="mr-3 h-8"
               alt="Flowbite Logo"
             />
-            <span class="self-center whitespace-nowrap text-2xl font-semibold dark:text-white">
+            <span class="self-center whitespace-nowrap text-2xl font-semibold text-gray-400">
               oootech
             </span>
-          </Link>
-          <ul class="text-md mb-6 grid grid-cols-2 items-center gap-y-4 space-x-5 font-medium text-gray-500 dark:text-gray-400 sm:mb-0 md:flex md:flex-row md:gap-y-0 md:space-x-4">
+          </AnimatedLink>
+          <ul class="text-md mb-6 grid grid-cols-2 items-center gap-y-4 space-x-5 font-medium text-gray-400 dark:text-gray-400 sm:mb-0 md:flex md:flex-row md:gap-y-0 md:space-x-4">
             <li>
-              <button
+              <motion.button
+                whileTap={{ scale: 0.9 }}
                 onClick={() => handleReportModalToggle("link")}
                 class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-gray-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100"
               >
                 Suggest a Link
-              </button>
+              </motion.button>
             </li>
-            <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
+            <div className="hidden h-4 w-[0.5px] bg-neutral-500 lg:block"></div>
             <li>
-              <Link
+              <AnimatedLink
+                whileTap={{ scale: 0.9 }}
                 to={"/privacy-policy"}
                 class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-gray-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100"
               >
                 Privacy Policy
-              </Link>
+              </AnimatedLink>
             </li>
-            <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
+            <div className="hidden h-4 w-[0.5px] bg-neutral-500 lg:block"></div>
             <li>
-              <a
-                href="/"
+              <AnimatedLink
+                whileTap={{ scale: 0.9 }}
+                to="/sponsor"
                 class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-gray-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100 "
               >
                 Sponsor us
-              </a>
+              </AnimatedLink>
             </li>
-            <div className="hidden h-4 w-[0.5px] bg-gray-500 lg:block"></div>
+            <div className="hidden h-4 w-[0.5px] bg-neutral-500 lg:block"></div>
             <li>
-              <button
+              <motion.button
+                whileTap={{ scale: 0.9 }}
                 onClick={() => handleReportModalToggle("admin")}
                 class="relative cursor-pointer after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-bottom-right after:scale-x-0 after:bg-gray-500 after:transition-transform after:duration-300 after:ease-in-out hover:after:origin-bottom-left hover:after:scale-x-100"
               >
                 Contacts
-              </button>
+              </motion.button>
             </li>
           </ul>
-          <ul className="mb-6 flex flex-col items-center space-y-5 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mb-0 md:flex-row md:space-x-4 md:space-y-0">
+          <ul className="mb-6 flex flex-col items-center space-y-5 text-sm font-medium text-gray-400 dark:text-gray-400 sm:mb-0 md:flex-row md:space-x-4 md:space-y-0">
             {browserName !== null ? (
-              <button onClick={handleInstallClick}>
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={handleInstallClick}
+              >
                 <img
-                  src={require("../assets/images/pwa-logo.png")}
+                  src="https://cdn-opennotes.b-cdn.net/static/media/pwa-logo.3bc31693ff00a451f9ad.png"
                   alt=""
                   className="w-32"
                   srcset=""
                 />
-              </button>
+              </motion.button>
             ) : null}
             <li className="flex flex-row space-x-4 ">
-              <Link
+              <AnimatedLink
+                whileTap={{ scale: 0.9 }}
                 to={"https://instagram.com/"}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -134,8 +148,9 @@ const Footer = () => {
                     <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
                   </svg>
                 </span>
-              </Link>
-              <Link
+              </AnimatedLink>
+              <AnimatedLink
+                whileTap={{ scale: 0.9 }}
                 to={"https://twitter.com"}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -156,8 +171,9 @@ const Footer = () => {
                     <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                   </svg>
                 </span>
-              </Link>
-              <Link
+              </AnimatedLink>
+              <AnimatedLink
+                whileTap={{ scale: 0.9 }}
                 to={"https://www.linkedin.com"}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -180,19 +196,20 @@ const Footer = () => {
                     <circle cx="4" cy="4" r="2" />
                   </svg>
                 </span>
-              </Link>
-              <Link
+              </AnimatedLink>
+              <AnimatedLink
+                whileTap={{ scale: 0.9 }}
                 to={"https://www.buymeacoffee.com"}
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <img
-                  src={require("../assets/images/bmc-logo.svg").default}
+                  src="https://cdn-opennotes.b-cdn.net/static/media/bmc-logo.3bf1216b557e32679433b64650736217.svg"
                   alt=""
                   srcset=""
                   className="h-[22px] "
                 />
-              </Link>
+              </AnimatedLink>
             </li>
           </ul>
         </div>

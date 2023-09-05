@@ -62,7 +62,7 @@ const LinkDetailsModal = () => {
         data-dialog-backdrop="sign-in-dialog"
         data-dialog-backdrop-close="true"
         ref={modalRef}
-        class="raletive fixed inset-0 z-[999]  grid   w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm transition-opacity duration-300"
+        class="raletive fixed inset-0 z-[999]  grid   w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm "
       >
         <motion.div
           variants={dropInVariant}
@@ -145,6 +145,7 @@ const LinkDetailsModal = () => {
                   </a>
                 ))}
             </div>
+
             <div className="space-x-3">
               <p>Category:</p>
               {modalValue &&
@@ -160,24 +161,22 @@ const LinkDetailsModal = () => {
             </div>
             <div className="grid grid-cols-2">
               <div>
-                <p className="text-lg font-semibold">Click Count:</p>
-                {modalValue.clickCount}
+                <p className="text-lg font-semibold">Search:</p>
+                {modalValue.searchText}
               </div>
+
               <div>
                 <p className="text-lg font-semibold">Pricing:</p>
                 {modalValue.pricing}
               </div>
-              <div>
-                <p className="text-lg font-semibold">Rating:</p>
-                {modalValue.rating}
-              </div>
+
               <div>
                 <p className="text-lg font-semibold">Created Date:</p>
                 {modalValue.createdAt.split("T")[0]}
               </div>
             </div>
             <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
-              <div
+              {/* <div
                 class=" relative flex items-center space-x-4"
                 data-nc-id="PostCardLikeAndComment"
               >
@@ -270,7 +269,7 @@ const LinkDetailsModal = () => {
                     </svg>
                   </button>
                 </Tippy>
-              </div>
+              </div> */}
             </div>
           </div>
         </motion.div>

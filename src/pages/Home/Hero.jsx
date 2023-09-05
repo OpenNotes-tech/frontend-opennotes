@@ -51,7 +51,7 @@ const Hero = ({ category }) => {
   return (
     <>
       <div
-        class="relative -mx-4 -mt-16 h-[440px] overflow-hidden  bg-cover bg-top bg-no-repeat px-4 py-16 text-center md:-mx-0 md:bg-center md:px-10 xl:px-16"
+        class="relative -mx-4 -mt-16 h-[440px] overflow-hidden bg-cover bg-top bg-no-repeat px-4 py-16 text-center md:-mx-0 md:bg-center md:px-10 xl:px-16"
         style={{
           backgroundImage: `url(${getPhoto})`,
         }}
@@ -59,26 +59,31 @@ const Hero = ({ category }) => {
         <div class="absolute inset-0 h-full w-full bg-gray-900 opacity-25"></div>
         <div class="absolute inset-0 h-64 w-full bg-gradient-to-b from-black to-transparent opacity-50"></div>
 
-        <div class="relative mx-auto max-w-7xl px-4  py-16 text-white lg:py-16">
-          <div class="flex flex-wrap text-white">
-            <div class="relative mx-auto w-full px-4">
-              <h1 class=" mb-2 text-lg font-bold text-white md:text-2xl  lg:text-4xl">
+        <div class="relative mx-auto max-w-7xl px-4 py-16 text-white lg:py-16">
+          <div class="flex flex-wrap ">
+            <div class="text-balance relative mx-auto w-full px-4">
+              <h1 class="mb-2 select-none text-lg font-bold md:text-2xl lg:select-text  lg:text-4xl">
                 Curated list of resources for designers & developers
               </h1>
-              <p class="flex flex-col items-center justify-center text-sm text-white md:flex-row lg:text-base">
+              <p class="flex flex-col items-center justify-center text-sm md:flex-row lg:text-base">
                 <p>
-                  Over 4.1 million+ high quality unique links shared by our
-                  talented community.
+                  Over{" "}
+                  <span class="relative inline-block select-none px-2 before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-pink-500 lg:select-text">
+                    <span class="relative select-none lg:select-text">
+                      4.1 million+{" "}
+                    </span>
+                  </span>{" "}
+                  high quality unique links shared by our talented community.
                 </p>
-                <p class="text-blue-gray-900 mt-4 w-20 animate-text items-center rounded-full border-2 border-white bg-opacity-100 bg-gradient-to-r from-[#FB0058] to-[#00B7FF] bg-clip-text text-center  font-serif text-base font-bold italic leading-relaxed text-transparent antialiased opacity-100  drop-shadow-2xl backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200  backdrop-grayscale backdrop-hue-rotate-30 backdrop-opacity-100 backdrop-saturate-0 transition-opacity duration-300 md:ml-8 md:mt-0 ">
+                {/* <p class="text-blue-gray-900 mt-4 w-20 animate-text items-center rounded-full border-2 border-white bg-opacity-100 bg-gradient-to-r from-[#FB0058] to-[#00B7FF] bg-clip-text text-center  font-serif text-base font-bold italic leading-relaxed text-transparent antialiased opacity-100  drop-shadow-2xl backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200  backdrop-grayscale backdrop-hue-rotate-30 backdrop-opacity-100 backdrop-saturate-0  md:ml-8 md:mt-0 ">
                   BETA
-                </p>
+                </p> */}
               </p>
             </div>
           </div>
         </div>
 
-        <div class="relative -mt-28 h-48 px-10 lg:h-64">
+        <div class="relative mx-auto -mt-28 h-48 max-w-7xl px-10 lg:h-64">
           <Search />
         </div>
       </div>

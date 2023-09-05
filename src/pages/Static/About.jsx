@@ -2,13 +2,13 @@ import Navbar from "../../layouts/Navbar";
 
 const About = () => {
   return (
-    <div className="container px-4 lg:px-0 mx-auto">
+    <div className=" mx-auto px-4 lg:px-0">
       <Navbar />
-      <div className="md:py-[105px] pb-20 md:pb-0 flex flex-wrap w-full bg-blue-50 overflow-hidden">
-        <div className="container px-4 mx-auto w-full">
-          <div className="flex items-center justify-around mb-16">
+      <div className="flex w-full flex-wrap overflow-hidden bg-blue-50 pb-20 md:py-[105px] md:pb-0">
+        <div className=" mx-auto w-full px-4">
+          <div className="mb-16 flex items-center justify-around">
             <div className="px-4">
-              <button className="flex-shrink-0 mr-2 hidden lg:block w-16 h-16 border-2 border-blue-900 text-blue-900 hover:bg-blue-100">
+              <button className="mr-2 hidden h-16 w-16 flex-shrink-0 border-2 border-blue-900 text-blue-900 hover:bg-blue-100 lg:block">
                 <svg
                   className="mx-auto"
                   width="12"
@@ -25,14 +25,14 @@ const About = () => {
               </button>
             </div>
             <div className="bg-white">
-              <div className="flex flex-wrap -mx-4">
-                <div className="w-full lg:w-3/5 px-12 lg:px-4 lg:mb-0 py-10 lg:py-20">
-                  <div className="lg:max-w-md mx-auto">
+              <div className="-mx-4 flex flex-wrap">
+                <div className="w-full px-12 py-10 lg:mb-0 lg:w-3/5 lg:px-4 lg:py-20">
+                  <div className="mx-auto lg:max-w-md">
                     <span className="text-blue-400" data-config-id="title1">
                       UI Designer
                     </span>
                     <h2
-                      className="mt-2 mb-6 text-4xl font-bold font-heading text-blue-800"
+                      className="font-heading mb-6 mt-2 text-4xl font-bold text-blue-800"
                       data-config-id="name1"
                     >
                       Sara Harris
@@ -47,7 +47,7 @@ const About = () => {
                     </p>
                     <div className="flex items-center">
                       <a
-                        className="inline-flex items-center justify-center w-12 h-12 mr-4 bg-blue-50 text-blue-500"
+                        className="mr-4 inline-flex h-12 w-12 items-center justify-center bg-blue-50 text-blue-500"
                         href="/"
                       >
                         <svg
@@ -66,7 +66,7 @@ const About = () => {
                         </svg>
                       </a>
                       <a
-                        className="inline-flex items-center justify-center w-12 h-12 mr-4 bg-blue-50 text-blue-500"
+                        className="mr-4 inline-flex h-12 w-12 items-center justify-center bg-blue-50 text-blue-500"
                         href="/"
                       >
                         <svg
@@ -85,7 +85,7 @@ const About = () => {
                         </svg>
                       </a>
                       <a
-                        className="inline-flex items-center justify-center w-12 h-12 mr-4 bg-blue-50 text-blue-500"
+                        className="mr-4 inline-flex h-12 w-12 items-center justify-center bg-blue-50 text-blue-500"
                         href="/"
                       >
                         <svg
@@ -104,7 +104,7 @@ const About = () => {
                         </svg>
                       </a>
                       <a
-                        className="inline-flex items-center justify-center w-12 h-12 mr-4 bg-blue-50 text-blue-500"
+                        className="mr-4 inline-flex h-12 w-12 items-center justify-center bg-blue-50 text-blue-500"
                         href="/"
                       >
                         <svg
@@ -121,7 +121,7 @@ const About = () => {
                         </svg>
                       </a>
                       <a
-                        className="inline-flex items-center justify-center w-12 h-12 bg-blue-50 text-blue-500"
+                        className="inline-flex h-12 w-12 items-center justify-center bg-blue-50 text-blue-500"
                         href="/"
                       >
                         <svg
@@ -140,8 +140,8 @@ const About = () => {
                     </div>
                   </div>
                 </div>
-                <div className="w-full lg:w-2/5 px-4">
-                  <div className="h-full mb-12 lg:mb-0">
+                <div className="w-full px-4 lg:w-2/5">
+                  <div className="mb-12 h-full lg:mb-0">
                     <img
                       className="h-full w-full object-cover"
                       src="https://images.unsplash.com/photo-1612282131240-6e878907d0f6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;ixlib=rb-1.2.1&amp;auto=format&amp;fit=crop&amp;w=1008&amp;q=80"
@@ -149,8 +149,8 @@ const About = () => {
                       data-config-id="image1"
                     />
                   </div>
-                  <div className="lg:hidden text-center">
-                    <button className="w-14 h-14 border-2 border-blue-900 text-blue-900">
+                  <div className="text-center lg:hidden">
+                    <button className="h-14 w-14 border-2 border-blue-900 text-blue-900">
                       <svg
                         className="mx-auto"
                         width="12"
@@ -165,7 +165,7 @@ const About = () => {
                         ></path>
                       </svg>
                     </button>
-                    <button className="w-14 h-14 border-2 border-blue-900 text-blue-900">
+                    <button className="h-14 w-14 border-2 border-blue-900 text-blue-900">
                       <svg
                         className="mx-auto"
                         width="12"
@@ -185,7 +185,7 @@ const About = () => {
               </div>
             </div>
             <div className="px-4">
-              <button className="flex-shrink-0 ml-2 hidden lg:block w-16 h-16 border-2 border-blue-900 text-blue-900 hover:bg-blue-100">
+              <button className="ml-2 hidden h-16 w-16 flex-shrink-0 border-2 border-blue-900 text-blue-900 hover:bg-blue-100 lg:block">
                 <svg
                   className="mx-auto"
                   width="12"
@@ -202,11 +202,11 @@ const About = () => {
               </button>
             </div>
           </div>
-          <div className="hidden lg:flex items-center justify-center">
-            <button className="inline-block w-3 h-3 mr-10 bg-blue-500"></button>
-            <button className="inline-block w-1 h-1 mr-10 bg-blue-300 rounded-full"></button>
-            <button className="inline-block w-1 h-1 mr-10 bg-blue-300 rounded-full"></button>
-            <button className="inline-block w-1 h-1 mr-10 bg-blue-300 rounded-full"></button>
+          <div className="hidden items-center justify-center lg:flex">
+            <button className="mr-10 inline-block h-3 w-3 bg-blue-500"></button>
+            <button className="mr-10 inline-block h-1 w-1 rounded-full bg-blue-300"></button>
+            <button className="mr-10 inline-block h-1 w-1 rounded-full bg-blue-300"></button>
+            <button className="mr-10 inline-block h-1 w-1 rounded-full bg-blue-300"></button>
           </div>
         </div>
       </div>

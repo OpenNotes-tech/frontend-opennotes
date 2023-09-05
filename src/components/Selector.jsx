@@ -16,7 +16,7 @@ const Selector = ({
   options,
   name,
   isMulti = false,
-  className = "basic-multi-select",
+  className = "basic-multi-select ",
   defaultValue,
 }) => {
   return (
@@ -27,7 +27,7 @@ const Selector = ({
       value={value}
       onChange={onChange}
       options={options}
-      className={`${className} w-full`}
+      className={`${className} w-full `}
       classNamePrefix="select"
       defaultValue={defaultValue}
       // placeholder={'default: All'}

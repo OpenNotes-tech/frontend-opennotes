@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Footer from "../../layouts/Footer";
 import Hero from "./Hero";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,12 +14,15 @@ import SearchAPI from "../../utils/SearchAPI";
 import ModalMain from "../../components/modals/ModalMain";
 import debounce from "lodash/debounce";
 import { motion } from "framer-motion";
+import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
+
 const HomeMain = () => {
   const { loading } = useSelector((state) => state.Error);
   const [fetchResult, setFetchResult] = useState([]);
   const bottomBoundaryRef = useRef(null);
   const location = useLocation();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
   const sort = queryParams.get("sortby");
@@ -33,6 +36,31 @@ const HomeMain = () => {
     sessionStorage.setItem("_PageNumber", 1);
     setFetchResult([]);
   }, [category, tags, sort, searchQuery, pricing]);
+
+  useEffect(() => {
+    if (localStorage.getItem("rememberFilter") === "true") {
+      const rememberedTags = localStorage.getItem("tags");
+      const rememberedCategory = localStorage.getItem("category");
+      const rememberedPricing = localStorage.getItem("pricing");
+
+      const queryParams = {};
+
+      if (rememberedTags !== "null") {
+        queryParams.tags = rememberedTags;
+      }
+
+      if (rememberedCategory !== "null") {
+        queryParams.category = rememberedCategory;
+      }
+
+      if (rememberedPricing !== "null") {
+        queryParams.pricing = rememberedPricing;
+      }
+
+      const linkToPage = generateLinkWithQuery(location, queryParams);
+      navigate(linkToPage);
+    }
+  }, []);
 
   // Main Fetching
   useEffect(() => {
@@ -132,43 +160,55 @@ const HomeMain = () => {
   };
 
   return (
-    <div ref={filterRef} className="container mx-auto px-4 md:px-0">
-      <Navbar />
-      <Hero category={category} />
-      <LinkMain
-        fetchResult={fetchResult}
-        sort={sort}
-        bottomBoundaryRef={bottomBoundaryRef}
-        category={category}
-      />
-      {(parseInt(sessionStorage.getItem("_PageNumber")) ===
-        parseInt(sessionStorage.getItem("_TotalPages")) ||
-        fetchResult.length === 0) && <Footer />}
-      <ModalMain />
-      {isFilterSticky && (
-        <motion.button
-          whileHover={{ scale: 1.1 }}
-          className="fixed bottom-20 right-4 rounded-full bg-gray-900 p-2 text-white shadow-2xl transition duration-300 ease-in-out hover:bg-blue-500 md:bottom-10 lg:bottom-20"
-          onClick={handleScrollToTop}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#ffffff"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="lucide lucide-arrow-up"
+    <>
+      <div
+        // animate={{
+        //   // scaleY: isAuthModalOpen ? 0.98 : 1,
+        //   // scaleX: isAuthModalOpen ? 0.97 : 1,
+        //   scale: isAuthModalOpen ? 0.99 : 1,
+        //   opacity: isAuthModalOpen ? 0.9 : 1,
+        // }}
+        // transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+        ref={filterRef}
+        className="px-4 md:px-0"
+      >
+        <Navbar />
+        <Hero category={category} />
+        <LinkMain
+          fetchResult={fetchResult}
+          sort={sort}
+          bottomBoundaryRef={bottomBoundaryRef}
+          category={category}
+        />
+        {(parseInt(sessionStorage.getItem("_PageNumber")) ===
+          parseInt(sessionStorage.getItem("_TotalPages")) ||
+          fetchResult.length === 0) && <Footer />}
+        {isFilterSticky && (
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            className="fixed bottom-20 right-4 rounded-full bg-neutral-700 p-2 text-white shadow-2xl transition duration-300 ease-in-out hover:bg-blue-500 md:bottom-10 lg:bottom-20"
+            onClick={handleScrollToTop}
           >
-            <line x1="12" x2="12" y1="19" y2="5"></line>
-            <polyline points="5 12 12 5 19 12"></polyline>
-          </svg>
-        </motion.button>
-      )}
-    </div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#ffffff"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-arrow-up"
+            >
+              <line x1="12" x2="12" y1="19" y2="5"></line>
+              <polyline points="5 12 12 5 19 12"></polyline>
+            </svg>
+          </motion.button>
+        )}
+      </div>
+      <ModalMain />
+    </>
   );
 };
 

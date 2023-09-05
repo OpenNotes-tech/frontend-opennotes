@@ -68,3 +68,9 @@ code {
     display: none;
   }
 }
+
+.body-no-scroll {
+  overflow: hidden;
+  inset-inline-end: 17px;
+  position: fixed;
+}

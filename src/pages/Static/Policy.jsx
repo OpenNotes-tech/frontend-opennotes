@@ -3,11 +3,11 @@ import Footer from "../../layouts/Footer";
 
 const Policy = () => {
   return (
-    <div className="container px-4 lg:px-0 mx-auto ">
+    <div className="container mx-auto px-4 lg:px-0 ">
       <Navbar />
       <div className="relative -mt-[5.75rem] overflow-hidden pt-[5.75rem] ">
         <div className="px-4 sm:px-6 lg:px-8">
-          <div className="relative mx-auto max-w-[37.5rem] pt-20 text-center pb-24">
+          <div className="relative mx-auto max-w-[37.5rem] pb-24 pt-20 text-center">
             <h1 className="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
               Privacy policy
             </h1>
@@ -18,7 +18,10 @@ const Policy = () => {
         </div>
         <div className="relative px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-[40rem] text-slate-600">
-            <p>
+            <p
+              className="first-letter:float-left first-letter:mr-3 first-letter:text-7xl
+              first-letter:font-bold first-letter:text-white"
+            >
               This privacy policy ("Policy") describes how JoBestLabs Inc.
               ("Tailwind", "we", "us" or "our") collects, protects and uses the
               personally identifiable information ("Personal Information") you
@@ -30,7 +33,7 @@ const Policy = () => {
               does not apply to the practices of companies that we do not own or
               control, or to individuals that we do not employ or manage.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Collection of personal information
             </h2>
             <p>
@@ -40,7 +43,7 @@ const Policy = () => {
               able to login to the Website and access any purchased JoBest
               products.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Collection of non-personal information
             </h2>
             <p>
@@ -53,7 +56,7 @@ const Policy = () => {
               pages, information you search for on our Website, access times and
               dates, and other statistics.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Purchases
             </h2>
             <p>
@@ -82,7 +85,7 @@ const Policy = () => {
               Information such as your name, street address, or credit card
               information.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Managing personal information
             </h2>
             <p>
@@ -109,7 +112,7 @@ const Policy = () => {
               incorporating your Personal Information after you update or delete
               it, but not in a manner that would identify you personally.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Use and processing of collected information
             </h2>
             <p>
@@ -145,7 +148,7 @@ const Policy = () => {
               contractual requirement, or a requirement necessary to enter into
               a contract.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Information transfer and storage
             </h2>
             <p>
@@ -160,7 +163,7 @@ const Policy = () => {
               checking the relevant sections of this document or inquire with us
               using the information provided in the Contact section.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               The rights of users
             </h2>
             <p>
@@ -188,7 +191,7 @@ const Policy = () => {
               processing is based on your consent, on a contract which you are
               part of or on pre-contractual obligations thereof.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               The right to object to processing
             </h2>
             <p>
@@ -203,7 +206,7 @@ const Policy = () => {
               processing Personal Information for direct marketing purposes, you
               may refer to the relevant sections of this document.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               How to exercise these rights
             </h2>
             <p>
@@ -214,7 +217,7 @@ const Policy = () => {
               addressed by the Owner as early as possible and always within one
               month.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Privacy of children
             </h2>
             <p>
@@ -228,7 +231,7 @@ const Policy = () => {
               child under the age of 13 has provided Personal Information to us
               through our Website, please contact us.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Newsletters
             </h2>
             <p>
@@ -238,7 +241,7 @@ const Policy = () => {
               included in these emails or by contacting us. However, you will
               continue to receive essential transactional emails.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Cookies
             </h2>
             <p>
@@ -261,7 +264,7 @@ const Policy = () => {
               Website. These companies may deliver ads that might also place
               cookies and otherwise track user behavior.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Links to other websites
             </h2>
             <p>
@@ -283,7 +286,7 @@ const Policy = () => {
               </a>
               ).
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Information security
             </h2>
             <p>
@@ -303,7 +306,7 @@ const Policy = () => {
               viewed or tampered with in transit by a third-party, despite best
               efforts.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Data breach
             </h2>
             <p>
@@ -320,7 +323,7 @@ const Policy = () => {
               the breach or if notice is otherwise required by law. When we do
               we will send you an email.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Legal disclosure
             </h2>
             <p>
@@ -334,7 +337,7 @@ const Policy = () => {
               sale of all or a portion of its assets, your user account and
               personal data will likely be among the assets transferred.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Changes and amendments
             </h2>
             <p>
@@ -345,7 +348,7 @@ const Policy = () => {
               Website after any such changes shall constitute your consent to
               such changes.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Acceptance of this policy
             </h2>
             <p>
@@ -354,7 +357,7 @@ const Policy = () => {
               bound by this Policy. If you do not agree to abide by the terms of
               this Policy, you are not authorized to use or access the Website.
             </p>
-            <h2 className="text-lg font-bold text-slate-900 pt-10 pb-4">
+            <h2 className="pb-4 pt-10 text-lg font-bold text-slate-900">
               Contacting us
             </h2>
             <p>

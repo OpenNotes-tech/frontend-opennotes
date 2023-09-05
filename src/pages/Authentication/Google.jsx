@@ -57,7 +57,7 @@ const Google = () => {
           <button
             onClick={renderProps.onClick}
             disabled={renderProps.disabled}
-            className="bg-white-dark/30 flex gap-1 rounded-md bg-slate-200 px-4 py-3 text-black shadow-none hover:bg-slate-100 sm:gap-2"
+            className="bg-white-dark/30 flex gap-1 rounded-md bg-neutral-100 px-4 py-3 text-neutral-700 shadow-none sm:gap-2 lg:hover:bg-neutral-200 lg:hover:text-neutral-900"
           >
             <svg
               class="h-5 w-5 sm:h-6 sm:w-6"

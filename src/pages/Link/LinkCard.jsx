@@ -8,7 +8,7 @@ import {
   openShareModal,
   openDetailsModal,
 } from "../../store/features/modalSlice";
-// import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { motion } from "framer-motion";
 
 const LinkCard = ({ linkElement }) => {
   const dispatch = useDispatch();
@@ -48,7 +48,7 @@ const LinkCard = ({ linkElement }) => {
     <>
       <div
         // onMouseMove={handleMouseMove}
-        class=" group relative  flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-2xl "
+        class="group relative flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-2xl "
       >
         {/* <motion.div
           className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
@@ -77,19 +77,21 @@ const LinkCard = ({ linkElement }) => {
             </svg>
           )}
           <div class="p-5">
-            <h5 class="text-blue-gray-900 mb-2 truncate font-sans text-xl font-bold capitalize leading-snug  tracking-normal antialiased   ">
+            <h3 class=" mb-2 truncate font-sans text-xl font-bold capitalize leading-snug tracking-normal text-neutral-700 antialiased">
               {linkElement.title}
-            </h5>
-            <p class="mb-3 line-clamp-3 font-sans text-base font-normal leading-relaxed text-gray-700  antialiased ">
-              Create the perfect palette or get inspired by thousands of
-              beautiful color schemes.
+            </h3>
+            <p class="mb-3 line-clamp-3 font-sans text-base font-normal leading-relaxed text-neutral-400 antialiased">
+              {linkElement.description}
             </p>
           </div>
         </div>
-        <div className="flex h-1/2 w-full flex-col space-y-4 pb-4">
+        <div className="bottom-0 flex h-1/2 w-full flex-col space-y-4 pb-4">
           <div className="mt-auto flex flex-col justify-between space-y-4 px-4 xl:flex-row xl:space-y-0">
+            {/* <div class="absolute -bottom-10 flex h-1/2 w-full items-center justify-center bg-black/20 opacity-0 -ml-4 transition-all duration-300 group-hover:bottom-0 group-hover:bg-transparent group-hover:opacity-100">
+              <button class="bg-black px-5 py-2 text-white">Add to cart</button>
+            </div> */}
             <Link
-              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-8 py-1 text-center font-medium text-black transition duration-200 ease-in-out hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700 md:py-1"
+              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1px] border-neutral-600 px-8 py-1 text-center font-medium text-neutral-600 transition duration-200 ease-in-out hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600 md:py-1"
               to={linkElement.url}
               target="_blank"
               rel="noopener noreferrer"
@@ -112,8 +114,9 @@ const LinkCard = ({ linkElement }) => {
               </svg>
               <p>Open</p>
             </Link>
-            <button
-              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black bg-black px-8 py-1 text-center font-medium text-white transition duration-200 ease-in-out hover:border-blue-600 hover:bg-blue-600"
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              className="flex flex-row items-center justify-center space-x-2 rounded-md  bg-neutral-100 px-8 py-1 text-center font-medium text-neutral-700 shadow-md transition duration-200 ease-in-out  hover:bg-blue-50 hover:text-blue-600"
               onClick={handleDetailsModal}
               type="button"
             >
@@ -123,7 +126,7 @@ const LinkCard = ({ linkElement }) => {
                 height="17"
                 viewBox="0 0 24 24"
                 fill="none"
-                stroke="white"
+                stroke="currentColor"
                 stroke-width="1.25"
                 stroke-linecap="round"
                 stroke-linejoin="round"
@@ -134,20 +137,17 @@ const LinkCard = ({ linkElement }) => {
                 <path d="M12 8h.01" />
               </svg>
               <p>Details</p>
-            </button>
+            </motion.button>
           </div>
           <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
-            <div
-              class=" relative flex items-center space-x-4"
-              data-nc-id="PostCardLikeAndComment"
-            >
+            <div class=" relative flex items-center space-x-4">
               <Tippy
                 content="Like"
                 animation="shift-away"
                 className="bg-black px-1 font-medium text-white"
               >
                 <button
-                  class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-neutral-700 transition-colors hover:bg-rose-50 hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-rose-100 dark:hover:text-rose-500"
+                  class="group relative flex h-8 min-w-[68px] items-center rounded-full bg-neutral-100 px-3 text-xs leading-none text-neutral-700 transition-colors hover:bg-rose-50 hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-rose-100 dark:hover:text-rose-500"
                   title="Liked"
                   data-nc-id="PostCardLikeAction"
                 >
@@ -175,7 +175,7 @@ const LinkCard = ({ linkElement }) => {
               >
                 <button
                   onClick={handleShareModal}
-                  className="text-neutral-6000 rounded-full bg-neutral-50 p-[10px] transition-colors hover:bg-teal-50 hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-teal-100 dark:hover:text-teal-800"
+                  className="text-neutral-6000 rounded-full bg-neutral-100 p-[10px] transition-colors hover:bg-teal-50 hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-teal-100 dark:hover:text-teal-800"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -198,10 +198,7 @@ const LinkCard = ({ linkElement }) => {
                 </button>
               </Tippy>
             </div>
-            <div
-              class="relative flex items-center space-x-2 text-xs text-neutral-700 dark:text-neutral-300"
-              data-nc-id="PostCardSaveAction"
-            >
+            <div class="relative flex items-center space-x-2 text-xs text-neutral-600 dark:text-neutral-300">
               <Tippy
                 content="Bookmark"
                 animation="shift-away"
@@ -209,10 +206,7 @@ const LinkCard = ({ linkElement }) => {
               >
                 <button
                   onClick={handleBookmarkModal}
-                  class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-neutral-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-blue-100 dark:hover:text-blue-600"
-                  data-nc-id="NcBookmark"
-                  data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
-                  title="Save to reading list"
+                  class="relative flex items-center justify-center rounded-full bg-neutral-100 p-[10px] text-neutral-600 hover:bg-blue-50 hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-blue-100 dark:hover:text-blue-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

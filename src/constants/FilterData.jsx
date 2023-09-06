@@ -267,7 +267,6 @@ export const FrontendOptions = [
   { value: "business", label: "Business", color: "#EDF2FB" },
   { value: "brand", label: "Brand", color: "#EDF2FB" },
   { value: "collection", label: "Collection", color: "#EDF2FB" },
-  { value: "antdesign", label: "Ant Design", color: "#EDF2FB" },
   { value: "neumorphism", label: "Neumorphism", color: "#EDF2FB" },
   { value: "designsystem", label: "Design System", color: "#EDF2FB" },
   { value: "claymorphism", label: "Claymorphism", color: "#EDF2FB" },
@@ -462,7 +461,6 @@ export const MobileOptions = [
   }, //GPS, map, geo data
 
   // Mobile App UI/UX Design: Navigation
-  { value: "materialdesign", label: "Material Design", color: "#B0EF8E" },
   { value: "usabilitytesting", label: "Usability Testing", color: "#B0EF8E" },
   { value: "tabbar", label: "Tab Bar", color: "#B0EF8E" },
   { value: "navigationdrawer", label: "Navigation Drawer", color: "#B0EF8E" },

@@ -31,6 +31,10 @@ class Request {
   async postReport(data) {
     return http.post(`/api/v1/user/report/`, data);
   }
+
+  async postLike(id) {
+    return http.post(`/api/v1/link/links/${id}/like`);
+  }
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export

@@ -500,7 +500,10 @@ const LinkMain = ({ fetchResult, sort, category }) => {
               className=" menu flex flex-row items-center md:justify-center md:space-x-6"
             >
               <div className="hidden h-[41px] w-[1px] bg-neutral-300 dark:bg-slate-300 md:block"></div>
-              <div ref={scope}>
+              <div
+                ref={scope}
+                className="flex flex-col items-center space-y-12"
+              >
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   id="dropdownDefaultButton"
@@ -547,10 +550,10 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                 <ul
                   style={{
                     pointerEvents: isSortbyOpen ? "auto" : "none",
-                    clipPath: "inset(10% 50% 90% 50% round 10px)",
+                    clipPath: "inset(10% 50% 90% 50% round 6px)",
                   }}
                   id="dropdown"
-                  className="shadow-3xl absolute z-[999] -ml-4 mt-2 w-1/2 rounded-md border border-neutral-300 bg-white ring-1 ring-neutral-900 ring-opacity-5 drop-shadow-xl dark:bg-slate-500 dark:ring-slate-100 md:w-44"
+                  className="shadow-3xl absolute z-[999] mt-2 w-5/6 rounded-md border border-neutral-300 bg-white ring-1 ring-neutral-900 ring-opacity-5 drop-shadow-xl dark:bg-slate-500 dark:ring-slate-100 md:-ml-4 md:w-44"
                 >
                   <div className="flex flex-col justify-center space-y-1 p-2">
                     <motion.li

@@ -9,6 +9,18 @@ import {
   openDetailsModal,
 } from "../../store/features/modalSlice";
 import { motion } from "framer-motion";
+import { setLoading, addError } from "../../store/features/errorSlice";
+import Request from "../../utils/API-router";
+
+const formatLikeCount = (count) => {
+  if (count < 1000) {
+    return count.toString();
+  } else if (count < 10000) {
+    return (count / 1000).toFixed(1) + "k";
+  } else {
+    return (count / 1000).toFixed(0) + "k";
+  }
+};
 
 const LinkCard = ({ linkElement }) => {
   const dispatch = useDispatch();
@@ -42,6 +54,42 @@ const LinkCard = ({ linkElement }) => {
 
   const handleDetailsModal = () => {
     dispatch(openDetailsModal(linkElement));
+  };
+  // console.log(linkElement)
+
+  const handleLike = () => {
+    dispatch(setLoading(true));
+
+    Request.postLike(linkElement._id)
+      .then((res) => {
+        console.log(res);
+        // if (parseInt(sessionStorage.getItem("_PageNumber")) === 1) {
+        //   // setFetchResult(res.data.data.body);
+        // } else {
+        //   // setFetchResult((prevResults) => [
+        //   //   ...prevResults,
+        //   //   ...res.data.data.body,
+        //   // ]);
+        // }
+
+        sessionStorage.setItem("_TotalPages", res.data.data.totalPages);
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        console.log(error);
+        console.log(error.message);
+        dispatch(
+          addError({
+            type: "error",
+            error: error?.message,
+            id: Date.now(),
+          }),
+        );
+        dispatch(setLoading(false));
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
   };
 
   return (
@@ -147,8 +195,9 @@ const LinkCard = ({ linkElement }) => {
                 className="bg-black px-1 font-medium text-white"
               >
                 <button
-                  class="group relative flex h-8 min-w-[68px] items-center rounded-full bg-neutral-100 px-3 text-xs leading-none text-neutral-700 transition-colors hover:bg-rose-50 hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-rose-100 dark:hover:text-rose-500"
+                  class="group relative flex h-8 min-w-[68px] items-center justify-center rounded-full bg-neutral-100 px-3 text-xs leading-none text-neutral-700 transition-colors hover:bg-rose-50 hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-rose-100 dark:hover:text-rose-500"
                   title="Liked"
+                  onClick={handleLike}
                   data-nc-id="PostCardLikeAction"
                 >
                   <svg
@@ -165,7 +214,11 @@ const LinkCard = ({ linkElement }) => {
                   >
                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                   </svg>
-                  <span class="ml-1">1.9k</span>
+                  <span class="ml-1">
+                    {formatLikeCount(linkElement.like) !== "NaNk"
+                      ? formatLikeCount(linkElement.like)
+                      : 0}
+                  </span>
                 </button>
               </Tippy>
               <Tippy

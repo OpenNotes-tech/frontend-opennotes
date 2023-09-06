@@ -1,12 +1,12 @@
 {
-    "home":["#all", "#web", "#mobile", "#desktop", "#language", "#nocode", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
-    "frontend":["#all", "#inspiration", "#illustrations", "#icons", "#mockup", "#typography", "#images", "#colors", "#websiteBuilder", "#designTools", "#UXTools", "#ProjectTools", "#WebPerformance", "#React.js", "#PWA", "#SEO"],
-    "backend":["#all", "#optimization", "#golang", "#database", "#server", "#devops", "#network", "#system design", "#production", "#computer architecture", "#microservices", "#test", "#cheatsheet"],
+    "home":["#all", "#icons", "#cheatsheet", "#performance", "#inspiration", "#nocode", "#golang", "#python", "#node.js", "#awesome", "#tailwindcss", "#react.js", "#startup"],
+    "frontend":["#all", "#inspiration", "#photos", "#icons", "#colors", "#components", "#react.js", "#vue.js", "#pwa", "#seo", "#performance", "#templates", "#library", "#design system", "#css", "#tailwindcss", "#figma"],
+    "backend":["#all", "#optimization", "#go", "#cdn", "#cloud", "#devops", "#nodejs", "#system design", "#production", "#computer architecture", "#microservices", "#test", "#redis", "#software engineer"],
     "courses":["#all", "#react.js", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js", "#django", "#flutter", "#swift", "#system design", "#performance optimization"],
     "datascience":["#all", "#nlp", "#generative model", "#cv", "#speech", "#ml", "#unsupervised learning", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
     "blogs":["#all", "#react.js", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js", "#django", "#flutter", "#swift", "#system design", "#performance optimization"],
     "cybersecurity":["#all", "#hacker", "#linux", "#cisco", "#penetration test", "#white hat", "#courses", "#blogs", "#awesome", "#golang", "#python", "#node.js", "#c++", "#javascript", "#angular.js"],
-    "mobile":["#all", "#flutter", "#swift", "#reactnative", "#kotlin", "#android", "#ios", "#performance & optimization", "#monetization", "#ui design", "#test", "#trends", "#analytics & marketing", "#news"],
+    "mobile":["#all", "#flutter", "#swift", "#react native", "#kotlin", "#android", "#ios", "#performance", "#monetization", "#ui design", "#test", "#trends", "#device features", "#multilanguage"],
     "podcasts":["#all", "#backend", "#frontend", "#mobile", "#web", "#devops", "#cyber security", "performance", "#ethical hacking", "#ai / ml / ds", "#generative ai", "#algorithms & data str", "#it business", "#news", "#database"],
-    "algorithms":["#all", "#icpc", "#faang/manga", "#resume", "#linkedin", "#interview", "#community", "#podcasts", "#blogs", "#newgrad", "#leetcode", "#courses", "#frontend", "#backend", "#mobile", "#cheatsheet"]
+    "algorithms":["#all", "#icpc", "#faang/manga", "#resume", "#linkedin", "#interview", "#awesome", "#podcasts", "#blogs", "#newgrad", "#leetcode", "#courses", "#frontend", "#backend", "#community", "#cheatsheet"]
 }

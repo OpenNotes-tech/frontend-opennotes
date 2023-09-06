@@ -12,8 +12,8 @@ const useMenuAnimation = (isOpen) => {
       "ul",
       {
         clipPath: isOpen
-          ? "inset(0% 0% 0% 0% round 10px)"
-          : "inset(10% 50% 90% 50% round 10px)",
+          ? "inset(0% 0% 0% 0% round 6px)"
+          : "inset(10% 50% 90% 50% round 6px)",
       },
       {
         type: "spring",

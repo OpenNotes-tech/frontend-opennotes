@@ -50,7 +50,11 @@ const Search = ({ nav }) => {
   }, [category, tags, pricing, hashtag]);
 
   useEffect(() => {
-    setSearchValue("");
+    // setSearchValue("");
+    // const linkToPage = generateLinkWithQuery(location, {
+    //   search_query: "",
+    // });
+    // navigate(linkToPage);
   }, [category]);
 
   return (

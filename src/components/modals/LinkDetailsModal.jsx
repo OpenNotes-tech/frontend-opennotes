@@ -76,7 +76,7 @@ const LinkDetailsModal = () => {
           <button
             aria-label="Close panel"
             onClick={handleDetailsModalToggle}
-            class="absolute -top-3 left-56 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 hover:text-gray-800 hover:shadow-md focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[790px] md:h-8 md:w-8"
+            class="absolute -top-3 left-56 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[790px] md:h-8 md:w-8 lg:hover:text-gray-800 lg:hover:shadow-md"
           >
             <svg
               stroke="currentColor"
@@ -111,7 +111,7 @@ const LinkDetailsModal = () => {
                 to={modalValue.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-4 text-center font-medium text-black transition duration-200 ease-in-out hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700 md:px-8 md:py-1"
+                className="flex h-10 cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-4 text-center font-medium text-black transition duration-200 ease-in-out md:px-8 md:py-1 lg:hover:border-blue-700 lg:hover:bg-blue-100 lg:hover:text-blue-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +190,7 @@ const LinkDetailsModal = () => {
                   className="bg-black px-1 font-medium text-white"
                 >
                   <button
-                    class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-neutral-700 transition-colors hover:bg-rose-50 hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-rose-100 dark:hover:text-rose-500"
+                    class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-neutral-700 transition-colors lg:hover:bg-rose-50 lg:hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
                     title="Liked"
                     data-nc-id="PostCardLikeAction"
                   >
@@ -218,7 +218,7 @@ const LinkDetailsModal = () => {
                 >
                   <button
                     onClick={handleShareModal}
-                    className="text-neutral-6000 rounded-full bg-neutral-50 p-[10px] transition-colors hover:bg-teal-50 hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-teal-100 dark:hover:text-teal-800"
+                    className="text-neutral-6000 rounded-full bg-neutral-50 p-[10px] transition-colors lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +252,7 @@ const LinkDetailsModal = () => {
                 >
                   <button
                     onClick={handleBookmarkModal}
-                    class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-neutral-700 hover:bg-blue-50 hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-blue-100 dark:hover:text-blue-600"
+                    class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-neutral-700 lg:hover:bg-blue-50 lg:hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
                     data-nc-id="NcBookmark"
                     data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
                     title="Save to reading list"

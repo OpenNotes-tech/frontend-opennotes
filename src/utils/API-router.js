@@ -32,8 +32,12 @@ class Request {
     return http.post(`/api/v1/user/report/`, data);
   }
 
-  async postLike(id) {
-    return http.post(`/api/v1/link/links/${id}/like`);
+  async postLike(id, action) {
+    return http.post(`/api/v1/link/links/${id}/like`, { action: action });
+  }
+
+  async postClick(id) {
+    return http.post(`/api/v1/link/links/${id}/click`);
   }
 }
 

@@ -9,9 +9,6 @@ import {
   openDetailsModal,
 } from "../../store/features/modalSlice";
 import { motion } from "framer-motion";
-import { setLoading, addError } from "../../store/features/errorSlice";
-import Request from "../../utils/API-router";
-
 const formatLikeCount = (count) => {
   if (count < 1000) {
     return count.toString();
@@ -22,7 +19,7 @@ const formatLikeCount = (count) => {
   }
 };
 
-const LinkCard = ({ linkElement }) => {
+const LinkCard = ({ linkElement, handleLike, handleClick }) => {
   const dispatch = useDispatch();
   // let mouseX = useMotionValue(0);
   // let mouseY = useMotionValue(0);
@@ -53,53 +50,23 @@ const LinkCard = ({ linkElement }) => {
   };
 
   const handleDetailsModal = () => {
+    // navigate("/details/" + linkElement._id, { state: linkElement });
     dispatch(openDetailsModal(linkElement));
   };
-  // console.log(linkElement)
 
-  const handleLike = () => {
-    dispatch(setLoading(true));
-
-    Request.postLike(linkElement._id)
-      .then((res) => {
-        console.log(res);
-        // if (parseInt(sessionStorage.getItem("_PageNumber")) === 1) {
-        //   // setFetchResult(res.data.data.body);
-        // } else {
-        //   // setFetchResult((prevResults) => [
-        //   //   ...prevResults,
-        //   //   ...res.data.data.body,
-        //   // ]);
-        // }
-
-        sessionStorage.setItem("_TotalPages", res.data.data.totalPages);
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        console.log(error);
-        console.log(error.message);
-        dispatch(
-          addError({
-            type: "error",
-            error: error?.message,
-            id: Date.now(),
-          }),
-        );
-        dispatch(setLoading(false));
-      })
-      .finally((e) => {
-        dispatch(setLoading(false));
-      });
+  const handleLinkClick = () => {
+    // navigate(linkElement.url, { replace: true });
+    handleClick(linkElement._id);
   };
 
   return (
     <>
       <div
         // onMouseMove={handleMouseMove}
-        class="group relative flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-2xl "
+        class="group relative flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-lg lg:hover:shadow-2xl"
       >
         {/* <motion.div
-          className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-hover:opacity-100"
+          className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-lg:hover:opacity-100"
           style={{
             background: useMotionTemplate`
             radial-gradient(
@@ -125,7 +92,7 @@ const LinkCard = ({ linkElement }) => {
             </svg>
           )}
           <div class="p-5">
-            <h3 class=" mb-2 truncate font-sans text-xl font-bold capitalize leading-snug tracking-normal text-neutral-700 antialiased">
+            <h3 class="mb-2 truncate font-sans text-xl font-bold capitalize leading-snug tracking-normal text-neutral-700 antialiased">
               {linkElement.title}
             </h3>
             <p class="mb-3 line-clamp-3 font-sans text-base font-normal leading-relaxed text-neutral-400 antialiased">
@@ -134,13 +101,14 @@ const LinkCard = ({ linkElement }) => {
           </div>
         </div>
         <div className="bottom-0 flex h-1/2 w-full flex-col space-y-4 pb-4">
-          <div className="mt-auto flex flex-col justify-between space-y-4 px-4 xl:flex-row xl:space-y-0">
-            {/* <div class="absolute -bottom-10 flex h-1/2 w-full items-center justify-center bg-black/20 opacity-0 -ml-4 transition-all duration-300 group-hover:bottom-0 group-hover:bg-transparent group-hover:opacity-100">
+          <div className="mt-auto flex flex-col space-y-4 px-8 2xl:flex-row 2xl:justify-between 2xl:space-x-2 2xl:space-y-0 2xl:px-4">
+            {/* <div class="absolute -bottom-10 flex h-1/2 w-full items-center justify-center bg-black/20 opacity-0 -ml-4 transition-all duration-300 group-lg:hover:bottom-0 group-lg:hover:bg-transparent group-lg:hover:opacity-100">
               <button class="bg-black px-5 py-2 text-white">Add to cart</button>
             </div> */}
             <Link
-              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1px] border-neutral-600 px-8 py-1 text-center font-medium text-neutral-600 transition duration-200 ease-in-out hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600 md:py-1"
+              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1px] border-neutral-600 px-8 py-1 text-center font-medium text-neutral-600 transition duration-200 ease-in-out md:py-1 lg:hover:border-blue-600 lg:hover:bg-blue-50 lg:hover:text-blue-600"
               to={linkElement.url}
+              onClick={handleLinkClick}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -164,7 +132,7 @@ const LinkCard = ({ linkElement }) => {
             </Link>
             <motion.button
               whileTap={{ scale: 0.9 }}
-              className="flex flex-row items-center justify-center space-x-2 rounded-md  bg-neutral-100 px-8 py-1 text-center font-medium text-neutral-700 shadow-md transition duration-200 ease-in-out  hover:bg-blue-50 hover:text-blue-600"
+              className="flex flex-row items-center justify-center space-x-2 rounded-md  bg-neutral-100 px-8 py-1 text-center font-medium text-neutral-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
               onClick={handleDetailsModal}
               type="button"
             >
@@ -192,12 +160,15 @@ const LinkCard = ({ linkElement }) => {
               <Tippy
                 content="Like"
                 animation="shift-away"
-                className="bg-black px-1 font-medium text-white"
+                className="hidden bg-black px-1 font-medium text-white lg:block"
               >
                 <button
-                  class="group relative flex h-8 min-w-[68px] items-center justify-center rounded-full bg-neutral-100 px-3 text-xs leading-none text-neutral-700 transition-colors hover:bg-rose-50 hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-rose-100 dark:hover:text-rose-500"
+                  class={`group relative flex h-8 min-w-[68px] items-center justify-center rounded-full bg-neutral-100 px-3 text-xs leading-none text-neutral-700 transition-colors focus:outline-none dark:bg-gray-100 dark:text-neutral-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500 ${
+                    linkElement.liked &&
+                    "bg-rose-50 text-rose-600 dark:bg-rose-100 dark:text-rose-600"
+                  }`}
                   title="Liked"
-                  onClick={handleLike}
+                  onClick={() => handleLike(linkElement._id)}
                   data-nc-id="PostCardLikeAction"
                 >
                   <svg
@@ -210,7 +181,9 @@ const LinkCard = ({ linkElement }) => {
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-heart"
+                    class={`lucide lucide-heart ${
+                      linkElement.liked && "fill-rose-600"
+                    }`}
                   >
                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                   </svg>
@@ -224,11 +197,11 @@ const LinkCard = ({ linkElement }) => {
               <Tippy
                 content="Share"
                 animation="shift-away"
-                className="bg-black px-1 font-medium text-white"
+                className="hidden bg-black px-1 font-medium text-white lg:block"
               >
                 <button
                   onClick={handleShareModal}
-                  className="text-neutral-6000 rounded-full bg-neutral-100 p-[10px] transition-colors hover:bg-teal-50 hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:hover:bg-teal-100 dark:hover:text-teal-800"
+                  className="text-neutral-6000 rounded-full bg-neutral-100 p-[10px] transition-colors dark:bg-gray-100 dark:text-gray-800 lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -255,11 +228,11 @@ const LinkCard = ({ linkElement }) => {
               <Tippy
                 content="Bookmark"
                 animation="shift-away"
-                className="z-[999] bg-black px-1 font-medium text-white"
+                className="z-[999] hidden bg-black px-1 font-medium text-white lg:block"
               >
                 <button
                   onClick={handleBookmarkModal}
-                  class="relative flex items-center justify-center rounded-full bg-neutral-100 p-[10px] text-neutral-600 hover:bg-blue-50 hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:hover:bg-blue-100 dark:hover:text-blue-600"
+                  class="relative flex items-center justify-center rounded-full bg-neutral-100 p-[10px] text-neutral-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 lg:hover:bg-blue-50 lg:hover:text-blue-600 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

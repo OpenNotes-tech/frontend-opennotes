@@ -17,7 +17,8 @@ import NotFound from "./pages/Static/NotFound";
 import About from "./pages/Static/About";
 import Policy from "./pages/Static/Policy";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import LinkDetails from "./pages/Link/LinkDetails";
+// import { useSelector } from "react-redux";
 const App = () => {
   // let scrollPosition = 0; // Variable to store the scroll position
   // const {
@@ -62,7 +63,8 @@ const App = () => {
           {/* ##########################################    
                       CANDIDATE Routes    
         ############################################### */}
-          <Route path="/" exact element={<HomeMain />} />
+          <Route path="/" exact element={<HomeMain />} ></Route>
+          {/* <Route path="/details/:linkId" exact element={<LinkDetails />} /> */}
           <Route path="/bookmark" exact element={<BookmarkMain />} />
           <Route path="/profile" exact element={<ProfileMain />} />
           {/* <Route exact element={<PrivateRouter />}></Route> */}

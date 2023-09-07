@@ -11,11 +11,11 @@ import ModalMain from "../../components/modals/ModalMain";
 import debounce from "lodash/debounce";
 import { motion } from "framer-motion";
 import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
+import Request from "../../utils/API-router";
 
 const HomeMain = () => {
   const { loading } = useSelector((state) => state.Error);
   const [fetchResult, setFetchResult] = useState([]);
-  const bottomBoundaryRef = useRef(null);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -73,20 +73,30 @@ const HomeMain = () => {
         12,
       )
         .then((res) => {
+          const updatedResults = res.data.data.body.map((item) => {
+            // Retrieve liked link IDs from local storage
+            const likedLinkIds =
+              JSON.parse(localStorage.getItem("likedLinkIds")) || [];
+
+            // Check if the link ID is in the likedLinkIds array and set the "liked" attribute accordingly
+            return {
+              ...item,
+              liked: likedLinkIds.includes(item._id),
+            };
+          });
+
           if (parseInt(sessionStorage.getItem("_PageNumber")) === 1) {
-            setFetchResult(res.data.data.body);
+            setFetchResult(updatedResults);
           } else {
             setFetchResult((prevResults) => [
               ...prevResults,
-              ...res.data.data.body,
+              ...updatedResults,
             ]);
           }
-
           sessionStorage.setItem("_TotalPages", res.data.data.totalPages);
           dispatch(setLoading(false));
         })
         .catch((error) => {
-          console.log(error.message);
           dispatch(
             addError({
               type: "error",
@@ -96,7 +106,7 @@ const HomeMain = () => {
           );
           dispatch(setLoading(false));
         })
-        .finally((e) => {
+        .finally(() => {
           dispatch(setLoading(false));
         });
     }
@@ -108,6 +118,81 @@ const HomeMain = () => {
     sort,
     tags,
   ]);
+
+  const handleLike = (linkId) => {
+    dispatch(setLoading(true));
+
+    // Check if the link is already liked
+    const likedLinkIds = JSON.parse(localStorage.getItem("likedLinkIds")) || [];
+    const isAlreadyLiked = likedLinkIds.includes(linkId);
+
+    // Determine the action based on whether it's already liked or not
+    const action = isAlreadyLiked ? "dislike" : "like";
+
+    // Send the action to the backend
+    Request.postLike(linkId, action)
+      .then((res) => {
+        // Assuming res.data contains updated like count for the card
+        const updatedFetchResult = fetchResult.map((item) => {
+          if (item._id === linkId) {
+            // Update the like count for the specific card and set liked based on the action
+            return {
+              ...item,
+              like: res.data.data.like,
+              liked: action === "like",
+            };
+          }
+          return item;
+        });
+
+        // Update the state with the updated fetchResult
+        setFetchResult(updatedFetchResult);
+
+        if (action === "like") {
+          // Add the link ID to local storage if it's a like action
+          likedLinkIds.push(linkId);
+        } else {
+          // Remove the link ID from local storage if it's a dislike action
+          likedLinkIds.splice(likedLinkIds.indexOf(linkId), 1);
+        }
+
+        // Update the local storage with the updated likedLinkIds
+        localStorage.setItem("likedLinkIds", JSON.stringify(likedLinkIds));
+
+        // Update the session storage or other relevant data
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        dispatch(
+          addError({
+            type: "error",
+            error: error?.message,
+            id: Date.now(),
+          }),
+        );
+        dispatch(setLoading(false));
+      });
+  };
+  const handleClick = (linkId) => {
+    dispatch(setLoading(true));
+
+    // Send the action to the backend
+    Request.postClick(linkId)
+      .then((res) => {
+        // Update the session storage or other relevant data
+        dispatch(setLoading(false));
+      })
+      .catch((error) => {
+        dispatch(
+          addError({
+            type: "error",
+            error: error?.message,
+            id: Date.now(),
+          }),
+        );
+        dispatch(setLoading(false));
+      });
+  };
 
   // Infinite Scrolling
   const handleScroll = async () => {
@@ -178,8 +263,9 @@ const HomeMain = () => {
         <LinkMain
           fetchResult={fetchResult}
           sort={sort}
-          bottomBoundaryRef={bottomBoundaryRef}
           category={category}
+          handleLike={handleLike}
+          handleClick={handleClick}
         />
         {(parseInt(sessionStorage.getItem("_PageNumber")) ===
           parseInt(sessionStorage.getItem("_TotalPages")) ||
@@ -187,7 +273,7 @@ const HomeMain = () => {
         {isFilterSticky && (
           <motion.button
             whileHover={{ scale: 1.1 }}
-            className="fixed bottom-20 right-4 rounded-full bg-neutral-700 p-2 text-white shadow-2xl transition duration-300 ease-in-out hover:bg-blue-500 md:bottom-10 lg:bottom-20"
+            className="fixed bottom-20 right-4 rounded-full bg-neutral-700 p-2 text-white shadow-2xl transition duration-300 ease-in-out md:bottom-10 lg:bottom-20 lg:hover:bg-blue-500"
             onClick={handleScrollToTop}
           >
             <svg

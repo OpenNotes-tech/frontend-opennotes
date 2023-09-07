@@ -167,13 +167,13 @@ const Sign = () => {
         exit="exit"
         transition={{ damping: 300 }}
         data-dialog="sign-in-dialog"
-        class="sticky bottom-0 top-[100vh] mx-auto flex h-[500px] w-full max-w-[26rem] flex-col rounded-t-xl bg-white bg-clip-border text-neutral-700 shadow-md md:relative md:top-0 md:rounded-xl"
+        class="sticky bottom-0 top-[100vh] mx-auto flex h-[500px] w-screen max-w-[26rem] flex-col rounded-t-xl bg-white bg-clip-border text-neutral-700 shadow-md md:relative md:top-0 md:rounded-xl"
       >
         <motion.button
           whileTap={{ scale: 0.9 }}
           aria-label="Close panel"
           onClick={handleAuthModalToggle}
-          class="absolute -top-6 left-[180px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 hover:text-neutral-800 hover:shadow-md focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:h-8  md:w-8"
+          class="absolute -top-6 left-[180px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:h-8 md:w-8 lg:hover:text-neutral-800  lg:hover:shadow-md"
         >
           <svg
             stroke="currentColor"
@@ -217,7 +217,7 @@ const Sign = () => {
             <li>
               <button
                 type="button"
-                class="flex gap-1 rounded-md bg-neutral-100 px-4 py-3 text-neutral-700 shadow-none hover:bg-neutral-200 sm:gap-2"
+                class="flex gap-1 rounded-md bg-neutral-100 px-4 py-3 text-neutral-700 shadow-none sm:gap-2 lg:hover:bg-neutral-200"
               >
                 <svg
                   class="h-5 w-5 sm:h-6 sm:w-6"
@@ -378,6 +378,7 @@ const Sign = () => {
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
                     onChange={handleInput}
+                    required
                     value={formData.email}
                     name="email"
                     type="text"
@@ -453,7 +454,7 @@ const Sign = () => {
                     >
                       <input
                         type="checkbox"
-                        class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
+                        class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 lg:hover:before:opacity-10"
                         id="checkbox"
                       />
                       <span class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
@@ -483,7 +484,7 @@ const Sign = () => {
                   <div class="flex ">
                     <button
                       type="button"
-                      class="text-heading text-sm  underline  hover:no-underline focus:outline-none"
+                      class="text-heading text-sm  underline  focus:outline-none lg:hover:no-underline"
                     >
                       Forgot password?
                     </button>

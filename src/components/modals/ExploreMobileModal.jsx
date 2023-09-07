@@ -59,7 +59,7 @@ const ExploreMobileModal = () => {
           <button
             aria-label="Close panel"
             onClick={handleExploreModalToggle}
-            class="top-18 absolute left-[180px] z-[999] hidden h-7 w-7 items-center justify-center rounded-full bg-black text-gray-600 transition duration-200 hover:text-gray-800 hover:shadow-md focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:block md:h-8  md:w-8"
+            class="top-18 absolute left-[180px] z-[999] hidden h-7 w-7 items-center justify-center rounded-full bg-black text-gray-600 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:block md:h-8 md:w-8 lg:hover:text-gray-800  lg:hover:shadow-md"
           >
             <svg
               stroke="currentColor"

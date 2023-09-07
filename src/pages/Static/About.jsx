@@ -8,7 +8,7 @@ const About = () => {
         <div className=" mx-auto w-full px-4">
           <div className="mb-16 flex items-center justify-around">
             <div className="px-4">
-              <button className="mr-2 hidden h-16 w-16 flex-shrink-0 border-2 border-blue-900 text-blue-900 hover:bg-blue-100 lg:block">
+              <button className="mr-2 hidden h-16 w-16 flex-shrink-0 border-2 border-blue-900 text-blue-900 lg:block lg:hover:bg-blue-100">
                 <svg
                   className="mx-auto"
                   width="12"
@@ -185,7 +185,7 @@ const About = () => {
               </div>
             </div>
             <div className="px-4">
-              <button className="ml-2 hidden h-16 w-16 flex-shrink-0 border-2 border-blue-900 text-blue-900 hover:bg-blue-100 lg:block">
+              <button className="ml-2 hidden h-16 w-16 flex-shrink-0 border-2 border-blue-900 text-blue-900 lg:block lg:hover:bg-blue-100">
                 <svg
                   className="mx-auto"
                   width="12"

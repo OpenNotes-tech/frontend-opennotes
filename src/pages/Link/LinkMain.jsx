@@ -14,7 +14,7 @@ import hashtags from "../../constants/tags.json";
 import LinkCard from "./LinkCard";
 import "@splidejs/react-splide/css/skyblue";
 
-const LinkMain = ({ fetchResult, sort, category }) => {
+const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const screenSize = useScreenSize();
@@ -370,39 +370,16 @@ const LinkMain = ({ fetchResult, sort, category }) => {
             <Splide
               className="flex snap-x flex-row justify-center space-x-4 text-lg text-neutral-800 dark:text-slate-300"
               options={{
-                pagination: false,
                 gap: "1rem",
+                pagination: false,
                 autoWidth: true,
                 arrows: false,
                 loop: false,
-                // gap: "1rem",
-                // autoWidth: true,
-                // arrows: false,
-                // loop: false,
-                // speed: 700,
-                // grabCursor: false,
-                // mousewheel: true,
-                // slidesPerView: 0,
-                // spaceBetween: 0,
-                // freeMode: false,
-                // shortSwipes: true,
-                // longSwipes: false,
-                // autoplay: true,
-                // pauseOnHover: false,
-                // resetProgress: false,
-                // grabCursor: true,
-                // rewind: true,
+                wheel: true,
+                // releaseWheel: true,
+                mousewheel: true,
                 height: getWidthAndHeightCategory().height,
                 width: getWidthAndHeightCategory().width,
-                // focus: "center",
-                // perPage: 6,
-                // wheel: true,
-                // releaseWheel: true,
-                // pagination: false,
-                // direction: "ltr",
-                // wheelSleep: 10,
-
-                // waitForTransition: true,
               }}
               aria-label="My Favorite Images"
             >
@@ -414,7 +391,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                       onClick={(e) =>
                         handleCategorySubmit(e, tab.id === "/" ? "" : tab.id)
                       }
-                      className={`mt-2 flex snap-center snap-normal flex-row items-center justify-center space-x-2 rounded-full px-4 py-2 first:ml-2 lg:hover:bg-neutral-200 lg:dark:hover:bg-slate-600 lg:dark:hover:text-white ${
+                      className={`mt-2 flex snap-center snap-normal flex-row items-center justify-center space-x-2 rounded-full px-4 py-2 first:ml-2 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-600 lg:dark:lg:hover:text-white ${
                         category?.split(",")[0] ===
                           (tab.id === "/" ? undefined : tab.id) &&
                         "bg-blue-100 text-blue-500"
@@ -430,40 +407,40 @@ const LinkMain = ({ fetchResult, sort, category }) => {
           </div>
           <div className="block h-[1px] w-full bg-neutral-300 dark:bg-slate-300 lg:hidden"></div>
           <div
-            className={`container mx-auto -mb-10 flex flex-col items-center justify-center space-y-4 md:flex-row md:justify-between md:space-x-3 md:space-y-0 xl:px-2 ${
+            className={`container mx-auto -mb-10 flex flex-col items-center justify-center space-y-4 md:flex-row md:justify-between md:space-x-3 md:space-y-0 xl:px-8 ${
               loading ? " pointer-events-none" : ""
             }`}
           >
             <div class="relative h-10  overflow-x-auto overflow-y-clip">
+              {/* <div className="insert-0 absolute right-0 bg-gradient-to-l from-gray-50 drop-shadow-md px-2 py-10"></div> */}
+              {/* <div className="insert-0 absolute left-0 bg-gradient-to-l from-gray-50 drop-shadow-md px-2 py-10"></div> */}
+
               <Splide
                 options={{
                   gap: "1rem",
                   autoWidth: true,
                   arrows: false,
+                  pagination: false,
                   loop: false,
-                  // speed: 700,
+                  wheel: true,
+                  releaseWheel: true,
+                  mousewheel: true,
+                  height: getWidthAndHeightTags().height,
+                  width: getWidthAndHeightTags().width,
+                  // speed:100,
+                  // dragMinThreshold:1,
                   // grabCursor: false,
-                  // mousewheel: true,
                   // slidesPerView: 0,
                   // spaceBetween: 0,
                   // freeMode: false,
                   // shortSwipes: true,
                   // longSwipes: false,
-                  // autoplay: true,
-                  // pauseOnHover: false,
                   // resetProgress: false,
-                  // grabCursor: true,
                   // rewind: true,
-                  height: getWidthAndHeightTags().height,
-                  width: getWidthAndHeightTags().width,
                   // focus: "center",
                   // perPage: 6,
-                  // wheel: true,
                   // releaseWheel: true,
-                  pagination: false,
-                  // direction: "ltr",
                   // wheelSleep: 10,
-
                   // waitForTransition: true,
                 }}
                 aria-label="My Favorite Images"
@@ -497,7 +474,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
 
             <div
               ref={modalRef}
-              className=" menu flex flex-row items-center md:justify-center md:space-x-6"
+              className="menu flex flex-row items-center md:justify-center md:space-x-6"
             >
               <div className="hidden h-[41px] w-[1px] bg-neutral-300 dark:bg-slate-300 md:block"></div>
               <div
@@ -508,7 +485,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                   whileTap={{ scale: 0.9 }}
                   id="dropdownDefaultButton"
                   data-dropdown-toggle="dropdown"
-                  className="raletive inline-flex w-full items-center justify-center whitespace-nowrap rounded-full px-[117px] py-2 text-center text-xs font-semibold uppercase text-neutral-600 ring-[1px] ring-neutral-400 hover:ring-neutral-600 focus:outline-none dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-500 md:px-5 md:py-2.5 dark:lg:hover:ring-slate-300"
+                  className="raletive inline-flex w-full items-center justify-center whitespace-nowrap rounded-full px-[117px] py-2 text-center text-xs font-semibold uppercase text-neutral-600 ring-[1px] ring-neutral-400 focus:outline-none dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-500 md:px-5 md:py-2.5 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
                   type="button"
                   onClick={toggleDropdown}
                 >
@@ -562,7 +539,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                       onClick={(e) => handleSortChange(e, "trending")}
                       className={`flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "trending" || sort === null
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:hover:bg-slate-300"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
                           : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
@@ -576,7 +553,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                       onClick={(e) => handleSortChange(e, "favorite")}
                       className={`flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "favorite"
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:hover:bg-slate-300"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
                           : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
@@ -590,7 +567,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                       onClick={(e) => handleSortChange(e, "latest")}
                       className={` flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "latest"
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:hover:bg-slate-300"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
                           : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
@@ -604,7 +581,7 @@ const LinkMain = ({ fetchResult, sort, category }) => {
                       onClick={(e) => handleSortChange(e, "oldest")}
                       className={`flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "oldest"
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:hover:bg-slate-300"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
                           : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
@@ -618,10 +595,15 @@ const LinkMain = ({ fetchResult, sort, category }) => {
             </div>
           </div>
           <div className="flex flex-col items-center space-y-5 pt-4 md:pt-0">
-            <div className="grid grid-cols-1 gap-y-12 pb-16 pt-16 md:grid-cols-2 md:gap-x-12 md:pb-10  md:pt-10 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid grid-cols-1 gap-y-12 px-8 pb-16 pt-16 md:grid-cols-2 md:gap-x-12 md:pb-10 md:pt-10 lg:grid-cols-3 xl:grid-cols-4">
               {fetchResult &&
                 fetchResult.map((linkElement, index) => (
-                  <LinkCard key={index} linkElement={linkElement} />
+                  <LinkCard
+                    key={index}
+                    linkElement={linkElement}
+                    handleLike={handleLike}
+                    handleClick={handleClick}
+                  />
                 ))}
             </div>
             <div

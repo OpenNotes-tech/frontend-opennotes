@@ -27,14 +27,14 @@ const NotFound = () => {
       </p>
       <div>
         <Link
-          className="mb-4 block rounded bg-blue-600 px-8 py-4 text-center text-xs font-semibold leading-none text-white hover:bg-blue-700 sm:mb-0 sm:mr-3 sm:inline-block"
+          className="mb-4 block rounded bg-blue-600 px-8 py-4 text-center text-xs font-semibold leading-none text-white sm:mb-0 sm:mr-3 sm:inline-block lg:hover:bg-blue-700"
           to={"/"}
           data-config-id="primary-action"
         >
           Go back to Homepage
         </Link>
         <Link
-          className="text-blueGray-500 hover:text-blueGray-800 bg-blueGray-50 hover:bg-blueGray-100 block rounded px-8 py-4 text-center text-xs font-semibold leading-none sm:inline-block"
+          className="text-blueGray-500 lg:hover:text-blueGray-800 bg-blueGray-50 lg:hover:bg-blueGray-100 block rounded px-8 py-4 text-center text-xs font-semibold leading-none sm:inline-block"
           to={location.pathname}
           data-config-id="secondary-action"
         >

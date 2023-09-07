@@ -47,7 +47,7 @@ const LangModal = () => {
         <button
           aria-label="Close panel"
           onClick={handleLangModalToggle}
-          class="absolute -top-3 left-[300px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 hover:text-neutral-800 hover:shadow-md focus:text-neutral-800 focus:shadow-md focus:outline-none md:left-[470px] md:h-8 md:w-8"
+          class="absolute -top-3 left-[300px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 focus:text-neutral-800 focus:shadow-md focus:outline-none md:left-[470px] md:h-8 md:w-8 lg:hover:text-neutral-800 lg:hover:shadow-md"
         >
           <svg
             stroke="currentColor"

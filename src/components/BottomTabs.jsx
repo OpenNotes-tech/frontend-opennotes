@@ -114,7 +114,7 @@ const BottomTabs = () => {
         <ul className="-ml-8 grid h-full grid-cols-4 justify-center bg-white px-4 text-xs font-normal text-gray-500">
           <li>
             <button
-              className={`flex w-full flex-col items-center space-y-1 rounded-tr-xl px-5 py-3 hover:bg-blue-100 ${
+              className={`flex w-full flex-col items-center space-y-1 rounded-tr-xl px-5 py-3 lg:hover:bg-blue-100 ${
                 location.pathname === "/profile" && "bg-blue-100 text-blue-500"
               }`}
               onClick={(e) => handleTabSubmit(e, "/profile")}
@@ -139,7 +139,7 @@ const BottomTabs = () => {
           </li>
           <li>
             <button
-              className={`flex w-full flex-col items-center space-y-1 rounded-t-xl px-6 py-3 hover:bg-blue-100 ${
+              className={`flex w-full flex-col items-center space-y-1 rounded-t-xl px-6 py-3 lg:hover:bg-blue-100 ${
                 location.pathname === "/bookmark" && "bg-blue-100 text-blue-500"
               }`}
               onClick={(e) => handleTabSubmit(e, "/bookmark")}
@@ -165,7 +165,7 @@ const BottomTabs = () => {
           </li>
           <li>
             <button
-              className={`flex w-full flex-col items-center space-y-1 rounded-t-xl px-3 py-3 hover:bg-blue-100 ${
+              className={`flex w-full flex-col items-center space-y-1 rounded-t-xl px-3 py-3 lg:hover:bg-blue-100 ${
                 location.pathname === "/" && "bg-blue-100 text-blue-500"
               }`}
               onClick={(e) => handleTabSubmit(e, "/")}
@@ -192,7 +192,7 @@ const BottomTabs = () => {
           </li>
           <li>
             <button
-              className={`flex w-full flex-col items-center space-y-1 rounded-tl-xl px-5 py-3 hover:bg-blue-100 ${
+              className={`flex w-full flex-col items-center space-y-1 rounded-tl-xl px-5 py-3 lg:hover:bg-blue-100 ${
                 location.pathname === "/menu" && "bg-blue-100 text-blue-500"
               }`}
               onClick={(e) => handleTabSubmit(e, "/menu")}

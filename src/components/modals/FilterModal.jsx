@@ -252,7 +252,7 @@ export const FilterModal = () => {
                 >
                   <input
                     type="checkbox"
-                    className="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10"
+                    className="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 lg:hover:before:opacity-10"
                     id="checkbox"
                     checked={rememberFilter}
                     onChange={handleCheckboxChange}
@@ -284,7 +284,7 @@ export const FilterModal = () => {
               <div class="flex ">
                 <button
                   type="button"
-                  class="text-heading flex flex-row items-center gap-x-2 text-center text-sm  underline  hover:no-underline focus:outline-none"
+                  class="text-heading flex flex-row items-center gap-x-2 text-center text-sm  underline  focus:outline-none lg:hover:no-underline"
                 >
                   How filter works?{" "}
                   <svg
@@ -312,13 +312,13 @@ export const FilterModal = () => {
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={handleCancel}
-                className="text-blneutral-700 cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 px-8 py-2 text-center font-medium transition duration-200 ease-in-out hover:border-blue-600 hover:bg-blue-50 hover:text-blue-600 md:px-8 md:py-2"
+                className="text-blneutral-700 cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 px-8 py-2 text-center font-medium transition duration-200 ease-in-out md:px-8 md:py-2 lg:hover:border-blue-600 lg:hover:bg-blue-50 lg:hover:text-blue-600"
               >
                 Cancel
               </motion.button>
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 bg-neutral-700 px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out hover:border-blue-500 hover:bg-blue-500"
+                className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 bg-neutral-700 px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out lg:hover:border-blue-500 lg:hover:bg-blue-500"
                 type="button"
                 onClick={handleSubmit}
               >

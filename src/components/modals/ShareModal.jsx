@@ -27,9 +27,8 @@ const ShareModal = () => {
   };
 
   const handleCopy = () => {
-    console.log(modalValue);
     const textField = document.createElement("textarea");
-    textField.innerText = modalValue?.url;
+    textField.innerText = `URL: ${modalValue?.url}\nDescription: ${modalValue?.description} (by boootech.link)`;
     document.body.appendChild(textField);
     textField.select();
     document.execCommand("copy");
@@ -67,7 +66,7 @@ const ShareModal = () => {
             <button
               type="button"
               onClick={handleShareModalToggle}
-              class="hover:enabled:border-gray-1000 focus:enabled:border-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md border border-none border-gray-300 bg-transparent p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30  active:scale-95"
+              class="lg:hover:enabled:border-gray-1000 focus:enabled:border-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md border border-none border-gray-300 bg-transparent p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30  active:scale-95"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -92,7 +91,7 @@ const ShareModal = () => {
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 group-hover:shadow-md sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(106, 10, 181)" }}
               >
                 <svg
@@ -122,7 +121,7 @@ const ShareModal = () => {
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 group-hover:shadow-md sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(45, 163, 222)" }}
               >
                 <svg
@@ -148,7 +147,7 @@ const ShareModal = () => {
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 group-hover:shadow-md sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(3, 182, 3)" }}
               >
                 <svg
@@ -174,7 +173,7 @@ const ShareModal = () => {
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 group-hover:shadow-md sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(29, 161, 242)" }}
               >
                 <svg
@@ -200,7 +199,7 @@ const ShareModal = () => {
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 group-hover:shadow-md sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(185, 66, 42)" }}
               >
                 <svg
@@ -229,7 +228,7 @@ const ShareModal = () => {
             </p>
             <button
               type="button"
-              class="hover:text-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30 active:scale-95"
+              class="lg:hover:text-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30 active:scale-95"
               onClick={handleCopy}
             >
               {getCopy ? (

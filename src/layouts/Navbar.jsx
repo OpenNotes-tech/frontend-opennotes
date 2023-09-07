@@ -83,7 +83,7 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={` sticky top-0 z-[99] -mx-4 flex h-16  flex-row items-center justify-between px-4 md:mx-0 md:px-6 xl:px-12 ${
+        className={` sticky top-0 z-[99] -mx-4 flex h-16  flex-row items-center justify-between px-4 md:mx-0 md:px-8 xl:px-14 ${
           scrolled
             ? "border border-white/70 bg-white text-neutral-700 shadow-md dark:border-slate-900 dark:bg-slate-800 dark:text-slate-300"
             : location.pathname === "/"
@@ -191,7 +191,7 @@ const Navbar = () => {
                 stroke-width="1.5"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className="lucide lucide-bookmark group-hover:fill-blue-500 " //transition duration-300 ease-in-out
+                className="lucide lucide-bookmark group-lg:hover:fill-blue-500 " //transition duration-300 ease-in-out
               >
                 <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
               </svg>
@@ -203,8 +203,8 @@ const Navbar = () => {
               onClick={handleAuthModalToggle}
               className={`backdrop-blur-4xl select-none rounded-full bg-white/20 bg-opacity-20 px-4 text-center text-base font-semibold backdrop-saturate-200 focus:outline-none lg:select-text  ${
                 scrolled
-                  ? "py-[7px] text-neutral-600  ring-[1px] ring-neutral-300 hover:ring-[1px] hover:ring-neutral-600 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
-                  : "py-[8px] text-white hover:ring-[1px] hover:ring-white"
+                  ? "py-[7px] text-neutral-600  ring-[1px] ring-neutral-300 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-[1px] lg:hover:ring-neutral-600 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
+                  : "py-[8px] text-white lg:hover:ring-[1px] lg:hover:ring-white"
               }`}
             >
               Join
@@ -214,7 +214,7 @@ const Navbar = () => {
             <div className="relative inline-flex items-center space-x-10 self-center">
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                className={`flex flex-row items-center space-x-2 rounded-full border border-neutral-300 px-2 py-1 hover:shadow-md ${
+                className={`flex flex-row items-center space-x-2 rounded-full border border-neutral-300 px-2 py-1 lg:hover:shadow-md ${
                   scrolled
                     ? "bg-white dark:bg-slate-600 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
                     : "bg-white/80 text-neutral-600 dark:text-slate-700"

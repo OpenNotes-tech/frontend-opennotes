@@ -63,7 +63,7 @@ function Errorbar({ type, text, id }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            class={`raletive z-[999] mr-16 mt-2 flex h-fit w-96 flex-col justify-between rounded-md border ${bgColor(
+            class={`raletive z-[999] mr-8 mt-2 flex h-fit w-56 flex-col justify-between rounded-md border md:mr-12 md:w-96 xl:mr-16 ${bgColor(
               type,
             )}`}
           >
@@ -74,8 +74,8 @@ function Errorbar({ type, text, id }) {
               exit="exit"
               transition={{ damping: 300 }}
             >
-              <div class="flex flex-wrap justify-between p-4">
-                <div class="flex w-0 flex-1">
+              <div class="flex justify-between p-2 md:p-4">
+                <div class="flex">
                   <div class="mr-3 pt-1">
                     <svg
                       width="26"
@@ -88,7 +88,9 @@ function Errorbar({ type, text, id }) {
                     </svg>
                   </div>
                   <div>
-                    <h4 class="text-md font-medium leading-6">{text}</h4>
+                    <h4 class="text-sm leading-6 md:text-base md:font-medium">
+                      {text}
+                    </h4>
                   </div>
                 </div>
                 <div>

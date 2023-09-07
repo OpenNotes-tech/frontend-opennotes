@@ -101,7 +101,7 @@ const UserReport = () => {
         <button
           aria-label="Close panel"
           onClick={handleReportModalToggle}
-          class="absolute -top-4 left-[710px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 hover:text-neutral-800 hover:shadow-md focus:text-neutral-800 focus:shadow-md focus:outline-none md:h-8 md:w-8"
+          class="absolute -top-4 left-[710px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 focus:text-neutral-800 focus:shadow-md focus:outline-none md:h-8 md:w-8 lg:hover:text-neutral-800 lg:hover:shadow-md"
         >
           <svg
             stroke="currentColor"
@@ -132,7 +132,7 @@ const UserReport = () => {
             >
               <button
                 onClick={() => setType("bug")}
-                className={`focus:ring-blue-6000 flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-0 ${
+                className={`flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-0 ${
                   getType === "bug"
                     ? "bg-blue-600 text-white dark:bg-blue-600"
                     : ""
@@ -162,7 +162,7 @@ const UserReport = () => {
               </button>
               <button
                 onClick={() => setType("link")}
-                className={`focus:ring-blue-6000 flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-0 ${
+                className={`flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-0 ${
                   getType === "link"
                     ? "bg-blue-600 text-white dark:bg-blue-600"
                     : ""
@@ -192,7 +192,7 @@ const UserReport = () => {
               </button>
               <button
                 onClick={() => setType("admin")}
-                className={`focus:ring-blue-6000 flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-0 ${
+                className={`flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-0 ${
                   getType === "admin"
                     ? "bg-blue-600 text-white dark:bg-blue-600"
                     : ""
@@ -222,7 +222,7 @@ const UserReport = () => {
               </button>
               <button
                 onClick={() => setType("other")}
-                className={`focus:ring-blue-6000 flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-0 ${
+                className={`flex cursor-pointer flex-row items-center justify-center space-x-5 whitespace-nowrap rounded-lg px-10 py-[13px] text-center shadow-lg ring-1 ring-neutral-900 ring-opacity-5 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 dark:focus:ring-offset-0 ${
                   getType === "other"
                     ? "bg-blue-600 text-white dark:bg-blue-600"
                     : ""
@@ -274,13 +274,13 @@ const UserReport = () => {
             <button
               type="button"
               onClick={handleReportModalToggle}
-              className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 px-8 py-2 text-center font-medium text-neutral-700 transition duration-200 ease-in-out hover:border-blue-700 hover:bg-blue-100 hover:text-blue-700 md:px-8 md:py-2"
+              className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 px-8 py-2 text-center font-medium text-neutral-700 transition duration-200 ease-in-out md:px-8 md:py-2 lg:hover:border-blue-700 lg:hover:bg-blue-100 lg:hover:text-blue-700"
             >
               Cancel
             </button>
             <button
               onClick={handleReportSubmit}
-              className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 bg-neutral-700 px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out hover:border-blue-700 hover:bg-blue-700"
+              className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 bg-neutral-700 px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out lg:hover:border-blue-700 lg:hover:bg-blue-700"
               type="submit"
             >
               Send

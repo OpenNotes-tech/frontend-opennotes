@@ -13,8 +13,10 @@ const Search = ({ nav }) => {
   const queryParams = new URLSearchParams(location.search);
   const tags = queryParams.get("tags");
   const pricing = queryParams.get("pricing");
+  const search_query = queryParams.get("search_query");
   const category = queryParams.get("category");
   const hashtag = queryParams.get("hashtag");
+  const sortby = queryParams.get("sortby");
 
   const [isInputFocused, setInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
@@ -26,10 +28,18 @@ const Search = ({ nav }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const linkToPage = generateLinkWithQuery(location, {
-      search_query: searchValue,
-    });
-    navigate(linkToPage);
+    if (sortby === null) {
+      const linkToPage = generateLinkWithQuery(location, {
+        search_query: searchValue,
+        sortby: "relevant",
+      });
+      navigate(linkToPage);
+    } else {
+      const linkToPage = generateLinkWithQuery(location, {
+        search_query: searchValue,
+      });
+      navigate(linkToPage);
+    }
   };
 
   const handleFilterToggle = () => {
@@ -50,12 +60,8 @@ const Search = ({ nav }) => {
   }, [category, tags, pricing, hashtag]);
 
   useEffect(() => {
-    // setSearchValue("");
-    // const linkToPage = generateLinkWithQuery(location, {
-    //   search_query: "",
-    // });
-    // navigate(linkToPage);
-  }, [category]);
+    setSearchValue(search_query ? search_query : "");
+  }, [category, tags, pricing, sortby]);
 
   return (
     <>
@@ -66,7 +72,7 @@ const Search = ({ nav }) => {
       >
         <form onSubmit={handleSubmit}>
           <div
-            className={`backdrop-saturate-900 relative  mr-8   flex w-full items-center rounded-full border-2 border-neutral-200 bg-white bg-opacity-90 backdrop-blur-lg lg:w-auto lg:flex-1 lg:border-0 ${
+            className={`backdrop-saturate-900 relative  mr-8   flex w-full items-center rounded-full border-2 border-slate-200 bg-white bg-opacity-90 backdrop-blur-lg lg:w-auto lg:flex-1 lg:border-0 ${
               nav === "navbarVersion"
                 ? "h-10 focus:shadow-2xl"
                 : "h-14 shadow-md"
@@ -78,7 +84,7 @@ const Search = ({ nav }) => {
               onFocus={() => setInputFocused(true)}
               onBlur={() => setInputFocused(false)}
               type="search"
-              className="h-full w-full rounded-full bg-neutral-900/5 pl-14 pr-20  text-base font-normal text-neutral-900 transition duration-300 ease-in-out placeholder:italic focus:bg-neutral-100 focus:shadow-xl focus:outline-none"
+              className="h-full w-full rounded-full bg-slate-900/5 pl-14 pr-20  text-base font-normal text-slate-900 transition duration-300 ease-in-out placeholder:italic focus:bg-slate-100 focus:shadow-xl focus:outline-none"
               placeholder="What Are You Searching For?"
             />
             <motion.button
@@ -90,7 +96,7 @@ const Search = ({ nav }) => {
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
-                className={`lucide lucide-search text-neutral-400  ${
+                className={`lucide lucide-search text-slate-400  ${
                   nav === "navbarVersion" ? "h-5 w-5" : "h-6 w-6"
                 }`}
                 viewBox="0 0 24 24"
@@ -120,7 +126,7 @@ const Search = ({ nav }) => {
                 stroke-width="1.25"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                className={` lucide lucide-filter text-neutral-400  ${
+                className={` lucide lucide-filter text-slate-400  ${
                   nav === "navbarVersion" ? "h-5 w-5" : "h-6 w-6"
                 }`}
               >

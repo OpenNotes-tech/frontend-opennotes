@@ -92,10 +92,10 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
             </svg>
           )}
           <div class="p-5">
-            <h3 class="mb-2 truncate font-sans text-xl font-bold capitalize leading-snug tracking-normal text-neutral-700 antialiased">
+            <h3 class="mb-2 truncate text-xl font-semibold capitalize leading-snug tracking-wide  text-slate-700 ">
               {linkElement.title}
             </h3>
-            <p class="mb-3 line-clamp-3 font-sans text-base font-normal leading-relaxed text-neutral-400 antialiased">
+            <p class="mb-3 line-clamp-3 font-slab text-sm font-light leading-relaxed text-slate-400 ">
               {linkElement.description}
             </p>
           </div>
@@ -106,7 +106,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
               <button class="bg-black px-5 py-2 text-white">Add to cart</button>
             </div> */}
             <Link
-              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1px] border-neutral-600 px-8 py-1 text-center font-medium text-neutral-600 transition duration-200 ease-in-out md:py-1 lg:hover:border-blue-600 lg:hover:bg-blue-50 lg:hover:text-blue-600"
+              className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1px] border-slate-600 px-8 py-1 text-center font-medium text-slate-600 transition duration-200 ease-in-out md:py-1 lg:hover:border-blue-600 lg:hover:bg-blue-50 lg:hover:text-blue-600"
               to={linkElement.url}
               onClick={handleLinkClick}
               target="_blank"
@@ -132,7 +132,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
             </Link>
             <motion.button
               whileTap={{ scale: 0.9 }}
-              className="flex flex-row items-center justify-center space-x-2 rounded-md  bg-neutral-100 px-8 py-1 text-center font-medium text-neutral-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
+              className="flex flex-row items-center justify-center space-x-2 rounded-md  bg-slate-100 px-8 py-1 text-center font-medium text-slate-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
               onClick={handleDetailsModal}
               type="button"
             >
@@ -155,7 +155,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
               <p>Details</p>
             </motion.button>
           </div>
-          <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
+          <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed ">
             <div class=" relative flex items-center space-x-4">
               <Tippy
                 content="Like"
@@ -163,9 +163,10 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
                 className="hidden bg-black px-1 font-medium text-white lg:block"
               >
                 <button
-                  class={`group relative flex h-8 min-w-[68px] items-center justify-center rounded-full bg-neutral-100 px-3 text-xs leading-none text-neutral-700 transition-colors focus:outline-none dark:bg-gray-100 dark:text-neutral-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500 ${
-                    linkElement.liked &&
-                    "bg-rose-50 text-rose-600 dark:bg-rose-100 dark:text-rose-600"
+                  class={`group relative flex h-8 min-w-[68px] items-center justify-center rounded-full  px-3 text-xs leading-none  transition-colors focus:outline-none ${
+                    linkElement.liked
+                      ? "bg-rose-50 text-rose-600 dark:bg-rose-100 dark:text-rose-600 lg:hover:bg-slate-100  dark:lg:hover:bg-slate-100 "
+                      : "bg-slate-100 text-slate-700 dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
                   }`}
                   title="Liked"
                   onClick={() => handleLike(linkElement._id)}
@@ -201,7 +202,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
               >
                 <button
                   onClick={handleShareModal}
-                  className="text-neutral-6000 rounded-full bg-neutral-100 p-[10px] transition-colors dark:bg-gray-100 dark:text-gray-800 lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
+                  className="text-slate-6000 rounded-full bg-slate-100 p-[10px] transition-colors dark:bg-gray-100 dark:text-gray-800 lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -224,7 +225,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
                 </button>
               </Tippy>
             </div>
-            <div class="relative flex items-center space-x-2 text-xs text-neutral-600 dark:text-neutral-300">
+            <div class="relative flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-300">
               <Tippy
                 content="Bookmark"
                 animation="shift-away"
@@ -232,7 +233,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
               >
                 <button
                   onClick={handleBookmarkModal}
-                  class="relative flex items-center justify-center rounded-full bg-neutral-100 p-[10px] text-neutral-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 lg:hover:bg-blue-50 lg:hover:text-blue-600 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
+                  class="relative flex items-center justify-center rounded-full bg-slate-100 p-[10px] text-slate-600 focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-blue-50 lg:hover:text-blue-600 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"

@@ -14,7 +14,7 @@ import { createDropInVariant } from "../../hooks/useAnimationVariants";
 import useClickOutside from "../../hooks/useClickOutside";
 
 const LinkDetails = () => {
-    const {state} = useLocation();
+  const { state } = useLocation();
   return (
     <div className="flex w-full flex-col space-y-5 px-8 py-6 md:h-[600px]  md:space-y-8">
       <div className="flex flex-row items-center justify-evenly space-x-4">
@@ -111,7 +111,7 @@ const LinkDetails = () => {
         className="bg-black px-1 font-medium text-white"
       >
         <button
-          class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-neutral-700 transition-colors lg:hover:bg-rose-50 lg:hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
+          class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-slate-700 transition-colors lg:hover:bg-rose-50 lg:hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-slate-900 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
           title="Liked"
           data-nc-id="PostCardLikeAction"
         >
@@ -139,7 +139,7 @@ const LinkDetails = () => {
       >
         <button
           onClick={handleShareModal}
-          className="text-neutral-6000 rounded-full bg-neutral-50 p-[10px] transition-colors lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
+          className="text-slate-6000 rounded-full bg-slate-50 p-[10px] transition-colors lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -163,7 +163,7 @@ const LinkDetails = () => {
       </Tippy>
     </div>
     <div
-      class="relative flex items-center space-x-2 text-xs text-neutral-700 dark:text-neutral-300"
+      class="relative flex items-center space-x-2 text-xs text-slate-700 dark:text-slate-300"
       data-nc-id="PostCardSaveAction"
     >
       <Tippy
@@ -173,7 +173,7 @@ const LinkDetails = () => {
       >
         <button
           onClick={handleBookmarkModal}
-          class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-neutral-700 lg:hover:bg-blue-50 lg:hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-neutral-900 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
+          class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-slate-700 lg:hover:bg-blue-50 lg:hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-slate-900 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
           data-nc-id="NcBookmark"
           data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
           title="Save to reading list"

@@ -43,12 +43,12 @@ const BookmarkModal = () => {
         exit="exit"
         transition={{ damping: 300 }}
         data-dialog="sign-in-dialog"
-        class="relative mx-auto flex w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border text-neutral-700 shadow-md md:max-w-[30rem]"
+        class="relative mx-auto flex w-full max-w-[20rem] flex-col rounded-xl bg-white bg-clip-border text-slate-700 shadow-md md:max-w-[30rem]"
       >
         <button
           aria-label="Close panel"
           onClick={handleBookmarkModalToggle}
-          class="absolute -top-3 left-[310px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 focus:text-neutral-800 focus:shadow-md focus:outline-none md:left-[465px] md:h-8 md:w-8 lg:hover:text-neutral-800 lg:hover:shadow-md"
+          class="absolute -top-3 left-[310px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-slate-700 transition duration-200 focus:text-slate-800 focus:shadow-md focus:outline-none md:left-[465px] md:h-8 md:w-8 lg:hover:text-slate-800 lg:hover:shadow-md"
         >
           <svg
             stroke="currentColor"

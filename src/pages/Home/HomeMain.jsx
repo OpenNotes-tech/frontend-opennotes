@@ -73,6 +73,7 @@ const HomeMain = () => {
         12,
       )
         .then((res) => {
+          console.log(res);
           const updatedResults = res.data.data.body.map((item) => {
             // Retrieve liked link IDs from local storage
             const likedLinkIds =
@@ -199,7 +200,7 @@ const HomeMain = () => {
     if (
       !loading &&
       window.innerHeight + document.documentElement.scrollTop + 1 >=
-        document.documentElement.scrollHeight - 200
+        document.documentElement.scrollHeight - 500
     ) {
       if (
         !loading &&
@@ -273,7 +274,7 @@ const HomeMain = () => {
         {isFilterSticky && (
           <motion.button
             whileHover={{ scale: 1.1 }}
-            className="fixed bottom-20 right-4 rounded-full bg-neutral-700 p-2 text-white shadow-2xl transition duration-300 ease-in-out md:bottom-10 lg:bottom-20 lg:hover:bg-blue-500"
+            className="fixed bottom-20 right-4 rounded-full bg-slate-700 p-2 text-white shadow-2xl transition duration-300 ease-in-out md:bottom-10 lg:bottom-20 lg:hover:bg-blue-500"
             onClick={handleScrollToTop}
           >
             <svg

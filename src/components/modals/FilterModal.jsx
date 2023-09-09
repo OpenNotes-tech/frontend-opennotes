@@ -196,7 +196,7 @@ export const FilterModal = () => {
           {/*content*/}
           <div className="relative flex w-full flex-col rounded-lg border-0 bg-white shadow-lg outline-none focus:outline-none">
             {/*header*/}
-            <div className="border-b border-solid border-neutral-200 p-4 md:pt-4">
+            <div className="border-b border-solid border-slate-200 p-4 md:pt-4">
               <h1 className="whitespace-nowrap text-center font-serif text-2xl font-medium">
                 Filters
               </h1>
@@ -204,7 +204,7 @@ export const FilterModal = () => {
             {/*body*/}
             <div className="grid h-auto gap-x-14 gap-y-10 px-10 py-4 md:grid-cols-2 md:px-8 ">
               <div className="px-10 md:px-0">
-                <div className="mb-3 text-sm font-semibold text-neutral-700">
+                <div className="mb-3 text-sm font-semibold text-slate-700">
                   Category
                 </div>
                 <Selector
@@ -217,7 +217,7 @@ export const FilterModal = () => {
                 />
               </div>
               <div className="px-10 md:px-0 ">
-                <div className="mb-3 text-sm font-semibold text-neutral-700">
+                <div className="mb-3 text-sm font-semibold text-slate-700">
                   Tags
                 </div>
                 <Selector
@@ -230,7 +230,7 @@ export const FilterModal = () => {
                 />
               </div>
               <div className="px-10 md:px-0">
-                <div className="mb-3 text-sm font-semibold text-neutral-700">
+                <div className="mb-3 text-sm font-semibold text-slate-700">
                   Pricing
                 </div>
                 <Selector
@@ -275,7 +275,7 @@ export const FilterModal = () => {
                   </span>
                 </label>
                 <label
-                  className="cursor-pointer select-none text-neutral-700"
+                  className="cursor-pointer select-none text-slate-700"
                   htmlFor="checkbox"
                 >
                   Remember my filter
@@ -307,18 +307,18 @@ export const FilterModal = () => {
               </div>
             </div>
             {/*footer*/}
-            <div className="flex flex-row items-center justify-center space-x-4 rounded-b border-t border-solid border-neutral-200 px-6  py-4 md:justify-end md:py-4">
+            <div className="flex flex-row items-center justify-center space-x-4 rounded-b border-t border-solid border-slate-200 px-6  py-4 md:justify-end md:py-4">
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 type="button"
                 onClick={handleCancel}
-                className="text-blneutral-700 cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 px-8 py-2 text-center font-medium transition duration-200 ease-in-out md:px-8 md:py-2 lg:hover:border-blue-600 lg:hover:bg-blue-50 lg:hover:text-blue-600"
+                className="text-blneutral-700 cursor-pointer items-center justify-center rounded-md border-[1.5px] border-slate-700 px-8 py-2 text-center font-medium transition duration-200 ease-in-out md:px-8 md:py-2 lg:hover:border-blue-600 lg:hover:bg-blue-50 lg:hover:text-blue-600"
               >
                 Cancel
               </motion.button>
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-neutral-700 bg-neutral-700 px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out lg:hover:border-blue-500 lg:hover:bg-blue-500"
+                className="cursor-pointer items-center justify-center rounded-md border-[1.5px] border-slate-700 bg-slate-700 px-8 py-2 text-center font-medium text-white transition duration-200 ease-in-out lg:hover:border-blue-500 lg:hover:bg-blue-500"
                 type="button"
                 onClick={handleSubmit}
               >

@@ -119,7 +119,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
 
   const SkeletonLoader = () => (
     <>
-      <div className="ml-5 mt-1 animate-pulse rounded-full bg-neutral-200 px-14 py-4"></div>
+      <div className="ml-5 mt-1 animate-pulse rounded-full bg-slate-200 px-14 py-4"></div>
     </>
   );
 
@@ -368,7 +368,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
             }`}
           >
             <Splide
-              className="flex snap-x flex-row justify-center space-x-4 text-lg text-neutral-800 dark:text-slate-300"
+              className="flex snap-x flex-row justify-center space-x-4 text-lg text-slate-800 dark:text-slate-300"
               options={{
                 gap: "1rem",
                 pagination: false,
@@ -391,7 +391,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                       onClick={(e) =>
                         handleCategorySubmit(e, tab.id === "/" ? "" : tab.id)
                       }
-                      className={`mt-2 flex snap-center snap-normal flex-row items-center justify-center space-x-2 rounded-full px-4 py-2 first:ml-2 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-600 lg:dark:lg:hover:text-white ${
+                      className={`mt-2 flex snap-center snap-normal flex-row items-center justify-center space-x-2 rounded-full px-4 py-2 first:ml-2 lg:hover:bg-slate-200 lg:dark:lg:hover:bg-slate-600 lg:dark:lg:hover:text-white ${
                         category?.split(",")[0] ===
                           (tab.id === "/" ? undefined : tab.id) &&
                         "bg-blue-100 text-blue-500"
@@ -405,16 +405,13 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
               ))}
             </Splide>
           </div>
-          <div className="block h-[1px] w-full bg-neutral-300 dark:bg-slate-300 lg:hidden"></div>
+          <div className="block h-[1px] w-full bg-slate-300 dark:bg-slate-300 lg:hidden"></div>
           <div
-            className={`container mx-auto -mb-10 flex flex-col items-center justify-center space-y-4 md:flex-row md:justify-between md:space-x-3 md:space-y-0 xl:px-8 ${
+            className={`container mx-auto flex flex-col items-center justify-center space-y-6 md:flex-row md:justify-between md:space-x-3 md:space-y-0 xl:px-8 ${
               loading ? " pointer-events-none" : ""
             }`}
           >
-            <div class="relative h-10  overflow-x-auto overflow-y-clip">
-              {/* <div className="insert-0 absolute right-0 bg-gradient-to-l from-gray-50 drop-shadow-md px-2 py-10"></div> */}
-              {/* <div className="insert-0 absolute left-0 bg-gradient-to-l from-gray-50 drop-shadow-md px-2 py-10"></div> */}
-
+            <div class="relative h-10 mt-3 md:mt-0 overflow-x-auto overflow-y-clip">
               <Splide
                 options={{
                   gap: "1rem",
@@ -460,7 +457,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                 ${
                   hashtag === tag.slice(1) || (hashtag === null && index === 0)
                     ? "bg-blue-50 text-blue-600 ring-[1px]  ring-blue-300 lg:hover:ring-blue-600"
-                    : "bg-white/10 text-neutral-600 ring-[1px] ring-neutral-300 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
+                    : "bg-white/10 text-slate-600 ring-[1px] ring-slate-300 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-slate-600 dark:lg:hover:ring-slate-300"
                 }
               `}
                           >
@@ -476,7 +473,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
               ref={modalRef}
               className="menu flex flex-row items-center md:justify-center md:space-x-6"
             >
-              <div className="hidden h-[41px] w-[1px] bg-neutral-300 dark:bg-slate-300 md:block"></div>
+              <div className="hidden h-[41px] w-[1px] bg-slate-300 dark:bg-slate-300 md:block"></div>
               <div
                 ref={scope}
                 className="flex flex-col items-center space-y-12"
@@ -485,7 +482,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                   whileTap={{ scale: 0.9 }}
                   id="dropdownDefaultButton"
                   data-dropdown-toggle="dropdown"
-                  className="raletive inline-flex w-full items-center justify-center whitespace-nowrap rounded-full px-[117px] py-2 text-center text-xs font-semibold uppercase text-neutral-600 ring-[1px] ring-neutral-400 focus:outline-none dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-500 md:px-5 md:py-2.5 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
+                  className="raletive inline-flex w-full items-center justify-center whitespace-nowrap rounded-full px-[117px] py-2 text-center text-xs font-semibold uppercase text-slate-600 ring-[1px] ring-slate-400 focus:outline-none dark:bg-slate-700 dark:text-slate-300 dark:ring-slate-500 md:px-5 md:py-2.5 lg:hover:ring-slate-600 dark:lg:hover:ring-slate-300"
                   type="button"
                   onClick={toggleDropdown}
                 >
@@ -530,17 +527,31 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                     clipPath: "inset(10% 50% 90% 50% round 6px)",
                   }}
                   id="dropdown"
-                  className="shadow-3xl absolute z-[999] mt-2 w-5/6 rounded-md border border-neutral-300 bg-white ring-1 ring-neutral-900 ring-opacity-5 drop-shadow-xl dark:bg-slate-500 dark:ring-slate-100 md:-ml-4 md:w-44"
+                  className="shadow-3xl absolute z-[999] mt-2 w-5/6 rounded-md border border-slate-300 bg-white ring-1 ring-slate-900 ring-opacity-5 drop-shadow-xl dark:bg-slate-500 dark:ring-slate-100 md:-ml-4 md:w-44"
                 >
                   <div className="flex flex-col justify-center space-y-1 p-2">
+                    <motion.li
+                      whileTap={{ scale: 0.9 }}
+                      role="menuitem"
+                      onClick={(e) => handleSortChange(e, "relevant")}
+                      className={`flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
+                        sort === "relevant"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-slate-200 lg:dark:lg:hover:bg-slate-300"
+                          : "text-slate-600 dark:text-slate-300 lg:hover:bg-slate-200 lg:hover:text-slate-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
+                      }`}
+                    >
+                      <div className="flex flex-none items-center space-x-2">
+                        <span>Best Match</span>
+                      </div>
+                    </motion.li>
                     <motion.li
                       whileTap={{ scale: 0.9 }}
                       role="menuitem"
                       onClick={(e) => handleSortChange(e, "trending")}
                       className={`flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "trending" || sort === null
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
-                          : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-slate-200 lg:dark:lg:hover:bg-slate-300"
+                          : "text-slate-600 dark:text-slate-300 lg:hover:bg-slate-200 lg:hover:text-slate-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
                       <div className="flex flex-none items-center space-x-2">
@@ -553,8 +564,8 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                       onClick={(e) => handleSortChange(e, "favorite")}
                       className={`flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "favorite"
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
-                          : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-slate-200 lg:dark:lg:hover:bg-slate-300"
+                          : "text-slate-600 dark:text-slate-300 lg:hover:bg-slate-200 lg:hover:text-slate-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
                       <div className="flex flex-none items-center space-x-2">
@@ -567,8 +578,8 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                       onClick={(e) => handleSortChange(e, "latest")}
                       className={` flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "latest"
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
-                          : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-slate-200 lg:dark:lg:hover:bg-slate-300"
+                          : "text-slate-600 dark:text-slate-300 lg:hover:bg-slate-200 lg:hover:text-slate-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
                       <div className="flex flex-none items-center space-x-2">
@@ -581,8 +592,8 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                       onClick={(e) => handleSortChange(e, "oldest")}
                       className={`flex cursor-pointer items-center justify-center space-x-2 rounded px-12 py-2 text-center text-sm font-medium focus:outline-none ${
                         sort === "oldest"
-                          ? "bg-blue-100 text-blue-500 lg:hover:bg-neutral-200 lg:dark:lg:hover:bg-slate-300"
-                          : "text-neutral-600 dark:text-slate-300 lg:hover:bg-neutral-200 lg:hover:text-neutral-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
+                          ? "bg-blue-100 text-blue-500 lg:hover:bg-slate-200 lg:dark:lg:hover:bg-slate-300"
+                          : "text-slate-600 dark:text-slate-300 lg:hover:bg-slate-200 lg:hover:text-slate-800 dark:lg:hover:bg-slate-300 dark:lg:hover:text-slate-500"
                       }`}
                     >
                       <div className="flex flex-none items-center space-x-2">
@@ -594,10 +605,10 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col items-center space-y-5 pt-4 md:pt-0">
-            <div className="grid grid-cols-1 gap-y-12 px-8 pb-16 pt-16 md:grid-cols-2 md:gap-x-12 md:pb-10 md:pt-10 lg:grid-cols-3 xl:grid-cols-4">
-              {fetchResult &&
-                fetchResult.map((linkElement, index) => (
+          <div className="flex flex-col items-center space-y-10 pt-10">
+            {fetchResult?.length ? (
+              <div className="grid grid-cols-1 gap-y-12 px-3 md:grid-cols-2 md:gap-x-12 md:px-8 lg:grid-cols-3 xl:grid-cols-4">
+                {fetchResult.map((linkElement, index) => (
                   <LinkCard
                     key={index}
                     linkElement={linkElement}
@@ -605,7 +616,8 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                     handleClick={handleClick}
                   />
                 ))}
-            </div>
+              </div>
+            ) : null}
             <div
               className={clsx("trigger", {
                 visible: loading,

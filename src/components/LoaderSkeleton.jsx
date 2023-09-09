@@ -1,6 +1,6 @@
 const LoaderSkeleton = () => {
   return (
-    <div className="grid grid-cols-1 gap-y-12 pb-16 md:grid-cols-2 md:gap-x-12 md:pb-10 md:pt-10 lg:grid-cols-3 xl:grid-cols-4">
+    <div className="grid grid-cols-1 gap-y-12 pb-16 md:grid-cols-2 md:gap-x-12 md:pb-10 lg:grid-cols-3 xl:grid-cols-4">
       <div
         role="status"
         class=" animate-pulse rounded-xl border border-gray-200 p-4 shadow md:p-6"

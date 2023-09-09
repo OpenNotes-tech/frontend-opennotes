@@ -78,7 +78,7 @@ const Footer = () => {
                 Suggest a Link
               </motion.button>
             </li>
-            <div className="hidden h-4 w-[0.5px] bg-neutral-500 lg:block"></div>
+            <div className="hidden h-4 w-[0.5px] bg-slate-500 lg:block"></div>
             <li>
               <AnimatedLink
                 whileTap={{ scale: 0.9 }}
@@ -88,7 +88,7 @@ const Footer = () => {
                 Privacy Policy
               </AnimatedLink>
             </li>
-            <div className="hidden h-4 w-[0.5px] bg-neutral-500 lg:block"></div>
+            <div className="hidden h-4 w-[0.5px] bg-slate-500 lg:block"></div>
             <li>
               <AnimatedLink
                 whileTap={{ scale: 0.9 }}
@@ -98,7 +98,7 @@ const Footer = () => {
                 Sponsor us
               </AnimatedLink>
             </li>
-            <div className="hidden h-4 w-[0.5px] bg-neutral-500 lg:block"></div>
+            <div className="hidden h-4 w-[0.5px] bg-slate-500 lg:block"></div>
             <li>
               <motion.button
                 whileTap={{ scale: 0.9 }}

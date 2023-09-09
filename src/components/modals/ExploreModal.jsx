@@ -38,7 +38,7 @@ const ExploreModal = ({ toggleExplore }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 right-[10px] z-[999] w-full place-items-center divide-y divide-neutral-300 rounded-lg  shadow-2xl   md:absolute  md:inset-auto md:right-6 md:mt-[540px] md:w-[720px] lg:right-[270px] lg:w-[840px]"
+          className="fixed inset-0 right-[10px] z-[999] w-full place-items-center divide-y divide-slate-300 rounded-lg  shadow-2xl   md:absolute  md:inset-auto md:right-6 md:mt-[540px] md:w-[720px] lg:right-[270px] lg:w-[840px]"
         >
           <motion.div
             variants={dropInVariant}
@@ -46,21 +46,21 @@ const ExploreModal = ({ toggleExplore }) => {
             animate="visible"
             exit="exit"
             transition={{ damping: 300 }}
-            className="flex w-full flex-col divide-y divide-neutral-300 rounded bg-white ring-1 ring-neutral-900 ring-opacity-5"
+            className="flex w-full flex-col divide-y divide-slate-300 rounded bg-white ring-1 ring-slate-900 ring-opacity-5"
           >
             <div className="grid-col grid justify-center space-y-7 md:flex md:flex-row md:justify-evenly">
               <div className="hidden w-[0.5px] bg-transparent lg:block"></div>
               <div className="items-center space-y-1 p-2">
-                <p className="text-md px-5 py-3 font-bold text-neutral-600 md:px-5 lg:px-10">
+                <p className="text-md px-5 py-3 font-bold text-slate-600 md:px-5 lg:px-10">
                   Collections
                 </p>
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "backend")}
-                  className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10  lg:hover:bg-neutral-200 ${
+                  className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10  lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "backend"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -87,10 +87,10 @@ const ExploreModal = ({ toggleExplore }) => {
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "frontend")}
-                  className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "frontend"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -118,10 +118,10 @@ const ExploreModal = ({ toggleExplore }) => {
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "mobile")}
-                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "mobile"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -146,10 +146,10 @@ const ExploreModal = ({ toggleExplore }) => {
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "datascience")}
-                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "datascience"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -181,10 +181,10 @@ const ExploreModal = ({ toggleExplore }) => {
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "algorithms")}
-                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "algorithms"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -209,10 +209,10 @@ const ExploreModal = ({ toggleExplore }) => {
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "cybersecurity")}
-                  className={`flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "cybersecurity"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -242,16 +242,16 @@ const ExploreModal = ({ toggleExplore }) => {
                   </div>
                 </motion.button>
               </div>
-              <div className="hidden w-[0.5px] bg-neutral-500 lg:block"></div>
+              <div className="hidden w-[0.5px] bg-slate-500 lg:block"></div>
               <div className="space-y-1 p-2">
-                <p className="text-md px-5 py-3 font-bold text-neutral-600 md:px-5 lg:px-10">
+                <p className="text-md px-5 py-3 font-bold text-slate-600 md:px-5 lg:px-10">
                   Discover
                 </p>
                 <AnimatedLink
                   whileTap={{ scale: 0.9 }}
                   role="menuitem"
                   to="/"
-                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>Popular Searches</span>
@@ -261,7 +261,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   whileTap={{ scale: 0.9 }}
                   role="menuitem"
                   to="/"
-                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>Curated Collections</span>
@@ -271,26 +271,26 @@ const ExploreModal = ({ toggleExplore }) => {
                   whileTap={{ scale: 0.9 }}
                   role="menuitem"
                   to="/"
-                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>Popular IT Courses</span>
                   </div>
                 </AnimatedLink>
               </div>
-              <div className="hidden w-[0.5px] bg-neutral-500 lg:block"></div>
+              <div className="hidden w-[0.5px] bg-slate-500 lg:block"></div>
               <div className="space-y-1 p-2">
-                <p className="text-md px-5 py-3 font-bold text-neutral-600 md:px-5 lg:px-10">
+                <p className="text-md px-5 py-3 font-bold text-slate-600 md:px-5 lg:px-10">
                   Community
                 </p>
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   type="button"
                   onClick={(e) => handleCategorySubmit(e, "blogs")}
-                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "blogs"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -317,10 +317,10 @@ const ExploreModal = ({ toggleExplore }) => {
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "courses")}
-                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "courses"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -345,10 +345,10 @@ const ExploreModal = ({ toggleExplore }) => {
                 <motion.button
                   whileTap={{ scale: 0.9 }}
                   onClick={(e) => handleCategorySubmit(e, "podcasts")}
-                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 ${
+                  className={`flex  w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 ${
                     category?.split(",")[0] === "podcasts"
                       ? "bg-blue-100 text-blue-500"
-                      : "text-neutral-600  lg:hover:text-neutral-700"
+                      : "text-slate-600  lg:hover:text-slate-700"
                   }`}
                 >
                   <div className="flex flex-none items-center space-x-2">
@@ -372,16 +372,16 @@ const ExploreModal = ({ toggleExplore }) => {
                   </div>
                 </motion.button>
               </div>
-              <div className="hidden w-[0.5px] bg-neutral-500 lg:block"></div>
+              <div className="hidden w-[0.5px] bg-slate-500 lg:block"></div>
               <div className="space-y-1 p-2">
-                <p className="text-md px-5 py-3 font-bold text-neutral-600 md:px-5 lg:px-10">
+                <p className="text-md px-5 py-3 font-bold text-slate-600 md:px-5 lg:px-10">
                   About
                 </p>
                 <AnimatedLink
                   whileTap={{ scale: 0.9 }}
                   role="menuitem"
                   to="/about"
-                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>About Us</span>
@@ -391,7 +391,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   whileTap={{ scale: 0.9 }}
                   role="menuitem"
                   to="/faq"
-                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>FAQ</span>
@@ -403,7 +403,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   data-ripple-light="true"
                   data-dialog-target="report-dialog"
                   onClick={() => toggleReport("bug")}
-                  className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>Report</span>
@@ -415,7 +415,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   data-ripple-light="true"
                   data-dialog-target="report-dialog"
                   onClick={() => toggleReport("link")}
-                  className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>Suggest a Link</span>
@@ -427,7 +427,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   data-ripple-light="true"
                   data-dialog-target="report-dialog"
                   onClick={() => toggleReport("bug")}
-                  className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>Newsletter</span>
@@ -437,7 +437,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   whileTap={{ scale: 0.9 }}
                   role="menuitem"
                   to="/privacy-policy"
-                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <span>Privacy Policy</span>
@@ -450,7 +450,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   data-ripple-light="true"
                   data-dialog-target="sign-in-dialog"
                   onClick={toggleLanguage}
-                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-neutral-600 focus:bg-neutral-200 focus:text-neutral-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-neutral-200 lg:hover:text-neutral-800"
+                  className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
                     <img
@@ -463,7 +463,7 @@ const ExploreModal = ({ toggleExplore }) => {
                 </motion.button>
               </div>
             </div>
-            <div className="px-5 py-4 text-neutral-700 md:px-5 lg:px-10">
+            <div className="px-5 py-4 text-slate-700 md:px-5 lg:px-10">
               <li className="flex flex-row items-center justify-end space-x-6">
                 <AnimatedLink
                   whileTap={{ scale: 0.9 }}

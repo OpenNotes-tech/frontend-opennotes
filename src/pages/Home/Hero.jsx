@@ -62,10 +62,10 @@ const Hero = ({ category }) => {
         <div class="relative mx-auto max-w-7xl px-4 py-16 text-white lg:py-16">
           <div class="flex flex-wrap ">
             <div class="text-balance relative mx-auto w-full px-4">
-              <h1 class="mb-2 select-none text-lg font-bold md:text-2xl lg:select-text lg:text-4xl">
+              <h1 class="font-slab font-semibold tracking-wide mb-2 select-none text-lg  md:text-2xl lg:select-text lg:text-4xl ">
                 Curated list of resources for designers & developers
               </h1>
-              <p class="flex flex-col items-center justify-center text-sm md:flex-row lg:text-base">
+              <p class="font-slab font-light flex flex-col items-center justify-center text-sm md:flex-row lg:text-base">
                 <p>
                   Over{" "}
                   <span class="relative inline-block select-none px-2 before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-pink-500 lg:select-text">

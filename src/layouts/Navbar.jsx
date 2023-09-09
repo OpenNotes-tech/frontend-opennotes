@@ -23,6 +23,7 @@ const Navbar = () => {
   const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [scrolledSearch, setScrolledSearch] = useState(false);
 
   const location = useLocation();
   const dispatch = useDispatch();
@@ -69,6 +70,12 @@ const Navbar = () => {
     } else {
       setScrolled(false);
     }
+
+    if (window.scrollY > 400) {
+      setScrolledSearch(true);
+    } else {
+      setScrolledSearch(false);
+    }
   };
   const handleSearch = () => {
     setMobileSearchBar(!mobileSearchBar);
@@ -85,10 +92,10 @@ const Navbar = () => {
       <nav
         className={` sticky top-0 z-[99] -mx-4 flex h-16  flex-row items-center justify-between px-4 md:mx-0 md:px-8 xl:px-14 ${
           scrolled
-            ? "border border-white/70 bg-white text-neutral-700 shadow-md dark:border-slate-900 dark:bg-slate-800 dark:text-slate-300"
+            ? "border border-white/70 bg-white text-slate-700 shadow-md dark:border-slate-900 dark:bg-slate-800 dark:text-slate-300"
             : location.pathname === "/"
             ? "bg-transparent text-white"
-            : "bg-neutral-600 dark:bg-slate-300"
+            : "bg-slate-600 dark:bg-slate-300"
         }  ${loading ? " pointer-events-none" : ""}`}
       >
         {loading && <Loader />}
@@ -102,7 +109,7 @@ const Navbar = () => {
               alt="Main Logo"
             />
           </Link>
-          {scrolled && (
+          {scrolledSearch && (
             <div className="lg:hidden">
               <motion.button onClick={handleSearch} whileTap={{ scale: 0.8 }}>
                 <svg
@@ -125,7 +132,7 @@ const Navbar = () => {
           )}
         </div>
         <div className="hidden w-[600px] lg:block">
-          {scrolled && (
+          {scrolledSearch && (
             <Search
               scrolled={scrolled}
               nav={"navbarVersion"}
@@ -147,7 +154,7 @@ const Navbar = () => {
               data-dropdown-toggle="dropdown"
               className={`raletive flex items-center justify-center rounded-full px-4 py-[8px] text-center text-base font-semibold focus:outline-none  ${
                 scrolled
-                  ? "lg:hover:bg-neutral-100 dark:lg:hover:bg-slate-600 dark:lg:hover:text-white"
+                  ? "lg:hover:bg-slate-100 dark:lg:hover:bg-slate-600 dark:lg:hover:text-white"
                   : "lg:hover:backdrop-blur-4xl lg:hover:bg-white/20 lg:hover:bg-opacity-20 lg:hover:backdrop-saturate-200"
               }`}
             >
@@ -177,7 +184,7 @@ const Navbar = () => {
               onClick={handleBookmarkModalToggle}
               className={`group rounded-full px-2 py-[8px] text-center text-base font-semibold transition duration-300 ease-in-out focus:outline-none  ${
                 scrolled
-                  ? "lg:hover:bg-neutral-100 lg:hover:text-blue-500 dark:lg:hover:bg-slate-600"
+                  ? "lg:hover:bg-slate-100 lg:hover:text-blue-500 dark:lg:hover:bg-slate-600"
                   : "lg:hover:backdrop-blur-4xl text-white lg:hover:bg-white/20 lg:hover:bg-opacity-20 lg:hover:backdrop-saturate-200"
               }`}
             >
@@ -203,7 +210,7 @@ const Navbar = () => {
               onClick={handleAuthModalToggle}
               className={`backdrop-blur-4xl select-none rounded-full bg-white/20 bg-opacity-20 px-4 text-center text-base font-semibold backdrop-saturate-200 focus:outline-none lg:select-text  ${
                 scrolled
-                  ? "py-[7px] text-neutral-600  ring-[1px] ring-neutral-300 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-[1px] lg:hover:ring-neutral-600 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
+                  ? "py-[7px] text-slate-600  ring-[1px] ring-slate-300 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-[1px] lg:hover:ring-slate-600 lg:hover:ring-slate-600 dark:lg:hover:ring-slate-300"
                   : "py-[8px] text-white lg:hover:ring-[1px] lg:hover:ring-white"
               }`}
             >
@@ -214,10 +221,10 @@ const Navbar = () => {
             <div className="relative inline-flex items-center space-x-10 self-center">
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                className={`flex flex-row items-center space-x-2 rounded-full border border-neutral-300 px-2 py-1 lg:hover:shadow-md ${
+                className={`flex flex-row items-center space-x-2 rounded-full border border-slate-300 px-2 py-1 lg:hover:shadow-md ${
                   scrolled
-                    ? "bg-white dark:bg-slate-600 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-neutral-600 dark:lg:hover:ring-slate-300"
-                    : "bg-white/80 text-neutral-600 dark:text-slate-700"
+                    ? "bg-white dark:bg-slate-600 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-slate-600 dark:lg:hover:ring-slate-300"
+                    : "bg-white/80 text-slate-600 dark:text-slate-700"
                 }`}
                 type="button"
                 onClick={() => setToggleProfile((oldState) => !oldState)}
@@ -274,7 +281,7 @@ const Navbar = () => {
                     animate="visible"
                     exit="exit"
                     transition={{ damping: 300 }}
-                    className="divide-y divide-neutral-300 rounded bg-white ring-1 ring-neutral-900 ring-opacity-5 dark:divide-slate-300 dark:bg-slate-500 dark:ring-slate-300"
+                    className="divide-y divide-slate-300 rounded bg-white ring-1 ring-slate-900 ring-opacity-5 dark:divide-slate-300 dark:bg-slate-500 dark:ring-slate-300"
                   >
                     <div className="flex items-center space-x-3 p-3">
                       <div className="bg-cover bg-center bg-no-repeat">
@@ -288,11 +295,11 @@ const Navbar = () => {
                         <AnimatedLink
                           whileTap={{ scale: 0.9 }}
                           to="/"
-                          className="select-none font-semibold text-neutral-700 dark:text-slate-200 lg:hover:text-neutral-500 dark:lg:hover:text-white"
+                          className="select-none font-semibold text-slate-700 dark:text-slate-200 lg:hover:text-slate-500 dark:lg:hover:text-white"
                         >
                           John Doe
                         </AnimatedLink>
-                        <p className="select-none font-normal text-neutral-500 dark:text-slate-300">
+                        <p className="select-none font-normal text-slate-500 dark:text-slate-300">
                           john.doe@example.com
                         </p>
                       </div>
@@ -302,7 +309,7 @@ const Navbar = () => {
                         whileTap={{ scale: 0.9 }}
                         role="menuitem"
                         onClick={handleBookmarkModalToggle}
-                        className="flex w-full items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-neutral-700 focus:bg-neutral-100 focus:text-neutral-700 focus:outline-none dark:text-slate-300 lg:hover:bg-neutral-100 lg:hover:text-neutral-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
+                        className="flex w-full items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -328,7 +335,7 @@ const Navbar = () => {
                         whileTap={{ scale: 0.9 }}
                         role="menuitem"
                         to="/"
-                        className=" flex items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-neutral-700 focus:bg-neutral-100 focus:text-neutral-700 focus:outline-none dark:text-slate-300 lg:hover:bg-neutral-100 lg:hover:text-neutral-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
+                        className=" flex items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                       >
                         <div className="flex flex-none items-center space-x-2">
                           <svg
@@ -355,7 +362,7 @@ const Navbar = () => {
                       <Link
                         role="menuitem"
                         to="/contacts"
-                        className="flex items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-neutral-700 focus:bg-neutral-100 focus:text-neutral-700 focus:outline-none dark:text-slate-300 lg:hover:bg-neutral-100 lg:hover:text-neutral-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
+                        className="flex items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                       >
                         <div className="flex flex-none select-none items-center space-x-2 lg:select-text">
                           <svg
@@ -385,7 +392,7 @@ const Navbar = () => {
                             onClick={Logout}
                             type="submit"
                             role="menuitem"
-                            className="flex w-full items-center space-x-2 rounded px-3 py-2 text-left text-sm font-medium text-neutral-700 focus:bg-neutral-100 focus:text-neutral-700 focus:outline-none dark:text-slate-300 lg:hover:bg-neutral-100 lg:hover:text-neutral-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
+                            className="flex w-full items-center space-x-2 rounded px-3 py-2 text-left text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -410,7 +417,7 @@ const Navbar = () => {
                             whileTap={{ scale: 0.9 }}
                             onClick={handleAuthModalToggle}
                             role="menuitem"
-                            className="flex w-full items-center space-x-2 rounded px-3 py-2 text-left text-sm font-medium text-neutral-700 focus:bg-neutral-100 focus:text-neutral-700 focus:outline-none dark:text-slate-300 lg:hover:bg-neutral-100 lg:hover:text-neutral-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
+                            className="flex w-full items-center space-x-2 rounded px-3 py-2 text-left text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -473,7 +480,7 @@ const Navbar = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="sticky top-0 z-[999] -mx-4 flex h-16  flex-row items-center justify-between space-x-3 border border-white/80 bg-white px-3 text-neutral-700 shadow-md"
+            className="sticky top-0 z-[999] -mx-4 flex h-16  flex-row items-center justify-between space-x-3 border border-white/80 bg-white px-3 text-slate-700 shadow-md"
           >
             <motion.div
               variants={dropInSearch}

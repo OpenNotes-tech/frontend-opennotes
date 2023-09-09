@@ -58,12 +58,12 @@ const App = () => {
   return (
     <BrowserRouter>
       {/* <ScrollToTop /> */}
-      <div className="bg-white dark:bg-slate-800 ">
+      <div className="bg-white dark:bg-slate-800">
         <Routes>
           {/* ##########################################    
                       CANDIDATE Routes    
         ############################################### */}
-          <Route path="/" exact element={<HomeMain />} ></Route>
+          <Route path="/" exact element={<HomeMain />}></Route>
           {/* <Route path="/details/:linkId" exact element={<LinkDetails />} /> */}
           <Route path="/bookmark" exact element={<BookmarkMain />} />
           <Route path="/profile" exact element={<ProfileMain />} />

@@ -28,7 +28,7 @@ const ShareModal = () => {
 
   const handleCopy = () => {
     const textField = document.createElement("textarea");
-    textField.innerText = `URL: ${modalValue?.url}\nDescription: ${modalValue?.description} (by boootech.link)`;
+    textField.innerText = modalValue?.url;
     document.body.appendChild(textField);
     textField.select();
     document.execCommand("copy");

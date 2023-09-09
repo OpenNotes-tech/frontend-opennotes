@@ -19,15 +19,20 @@ const ExploreMobileModal = () => {
   const queryParams = new URLSearchParams(location.search);
   const category = queryParams.get("category");
   const dropInVariant = createDropInVariant("100vh");
+  const [expanded, setExpanded] = useState(0);
+
   const toggleReport = (data) => {
+    dispatch(closeExploreModal());
     dispatch(openReportModal(data));
   };
 
   const toggleLanguage = () => {
+    dispatch(closeExploreModal());
     dispatch(openLangModal());
   };
 
   const handleCategorySubmit = (e, navLink) => {
+    dispatch(closeExploreModal());
     const linkToPage = generateLinkWithQuery(location, { category: navLink });
     navigate(linkToPage);
   };
@@ -36,7 +41,6 @@ const ExploreMobileModal = () => {
     dispatch(closeExploreModal());
   };
 
-  const [expanded, setExpanded] = useState(0);
   return (
     <>
       <motion.div

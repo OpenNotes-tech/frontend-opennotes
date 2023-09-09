@@ -167,13 +167,13 @@ const Sign = () => {
         exit="exit"
         transition={{ damping: 300 }}
         data-dialog="sign-in-dialog"
-        class="sticky bottom-0 top-[100vh] mx-auto flex h-[500px] w-screen max-w-[26rem] flex-col rounded-t-xl bg-white bg-clip-border text-neutral-700 shadow-md md:relative md:top-0 md:rounded-xl"
+        class="sticky bottom-0 top-[100vh] mx-auto flex h-[570px] w-screen max-w-[26rem] flex-col rounded-t-xl bg-white bg-clip-border text-slate-700 shadow-md md:relative md:top-0 md:h-[500px] md:rounded-xl"
       >
         <motion.button
           whileTap={{ scale: 0.9 }}
           aria-label="Close panel"
           onClick={handleAuthModalToggle}
-          class="absolute -top-6 left-[180px] z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-neutral-700 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:h-8 md:w-8 lg:hover:text-neutral-800  lg:hover:shadow-md"
+          class="absolute -top-6 left-[180px] z-10 hidden h-7 w-7 items-center justify-center rounded-full bg-white text-slate-700 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:inline-flex  md:h-8 md:w-8 lg:hover:text-slate-800  lg:hover:shadow-md"
         >
           <svg
             stroke="currentColor"
@@ -188,20 +188,37 @@ const Sign = () => {
             <path d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"></path>
           </svg>
         </motion.button>
+        <div className="flex items-center justify-between rounded-t-xl bg-slate-200 px-4 py-2 md:hidden">
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={handleAuthModalToggle}
+            className="text-xs font-medium text-blue-500"
+          >
+            Cancel
+          </motion.button>
+          <h3 className="text-sm font-semibold">Auth</h3>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            onClick={handleAuthModalToggle}
+            className="text-xs font-medium text-blue-500"
+          >
+            Done
+          </motion.button>
+        </div>
         <div className="flex flex-col items-center justify-center">
-          <div className="mt-6 flex h-[20px] w-[290px] flex-row items-center justify-center rounded-full  bg-neutral-200 py-5 text-xs uppercase">
+          <div className="mt-6 flex h-[20px] w-[290px] flex-row items-center justify-center rounded-full  bg-slate-200 py-5 text-xs uppercase">
             <button
               onClick={() => setIsAuthSliderOpen(true)}
-              className={`cursor-pointer rounded-full px-12 py-2 text-center text-xs font-semibold uppercase  text-neutral-700  ${
-                isAuthSliderOpen && "bg-neutral-700 text-white"
+              className={`cursor-pointer rounded-full px-12 py-2 text-center text-xs font-semibold uppercase  text-slate-700  ${
+                isAuthSliderOpen && "bg-slate-700 text-white"
               } `}
             >
               Sign up
             </button>
             <button
               onClick={() => setIsAuthSliderOpen(false)}
-              className={`cursor-pointer rounded-full px-12 py-2 text-center text-xs font-semibold uppercase text-neutral-700  ${
-                !isAuthSliderOpen && "bg-neutral-700 text-white"
+              className={`cursor-pointer rounded-full px-12 py-2 text-center text-xs font-semibold uppercase text-slate-700  ${
+                !isAuthSliderOpen && "bg-slate-700 text-white"
               } `}
             >
               Log in
@@ -217,7 +234,7 @@ const Sign = () => {
             <li>
               <button
                 type="button"
-                class="flex gap-1 rounded-md bg-neutral-100 px-4 py-3 text-neutral-700 shadow-none sm:gap-2 lg:hover:bg-neutral-200"
+                class="flex gap-1 rounded-md bg-slate-100 px-4 py-3 text-slate-700 shadow-none sm:gap-2 lg:hover:bg-slate-200"
               >
                 <svg
                   class="h-5 w-5 sm:h-6 sm:w-6"
@@ -239,8 +256,8 @@ const Sign = () => {
             </li>
           </ul>
           <div className="-mb-5 inline-flex w-full items-center justify-center px-5 text-center">
-            <hr className="my-8 h-px w-full border-0 bg-neutral-400 " />
-            <span className="absolute left-1/2 -translate-x-1/2 bg-white px-3 pb-1 font-medium text-neutral-600">
+            <hr className="my-8 h-px w-full border-0 bg-slate-400 " />
+            <span className="absolute left-1/2 -translate-x-1/2 bg-white px-3 pb-1 font-medium text-slate-600">
               or
             </span>
           </div>
@@ -254,10 +271,10 @@ const Sign = () => {
                     value={formData.email}
                     name="email"
                     type="text"
-                    className="peer h-full w-full rounded-[7px] border border-neutral-700 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-neutral-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-neutral-700 placeholder-shown:border-t-neutral-700 placeholder-shown:text-neutral-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-neutral-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
+                    className="peer h-full w-full rounded-[7px] border border-slate-700 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-slate-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-slate-700 placeholder-shown:border-t-slate-700 placeholder-shown:text-slate-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-slate-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
                     placeholder="john.doe@example.com"
                   />
-                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-neutral-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-neutral-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-neutral-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
+                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-slate-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-slate-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-slate-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
                     Email
                   </label>
                 </div>
@@ -265,7 +282,7 @@ const Sign = () => {
                   <button
                     type="button"
                     onClick={togglePasswordVisibility2}
-                    className="absolute right-3 top-2/4 grid h-5 w-5 -translate-y-2/4 place-items-center text-neutral-500"
+                    className="absolute right-3 top-2/4 grid h-5 w-5 -translate-y-2/4 place-items-center text-slate-500"
                   >
                     {passwordVisible2 ? (
                       <svg
@@ -308,11 +325,11 @@ const Sign = () => {
                     required
                     value={formData.password}
                     name="password"
-                    className="peer h-full w-full rounded-[7px] border border-neutral-700 border-t-transparent bg-transparent px-3 py-2.5 !pr-9 font-sans text-sm font-normal text-neutral-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-neutral-700 placeholder-shown:border-t-neutral-700 placeholder-shown:text-neutral-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-neutral-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
+                    className="peer h-full w-full rounded-[7px] border border-slate-700 border-t-transparent bg-transparent px-3 py-2.5 !pr-9 font-sans text-sm font-normal text-slate-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-slate-700 placeholder-shown:border-t-slate-700 placeholder-shown:text-slate-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-slate-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
                     placeholder="8-15 characters including at least 3 numbers and 1 symbol."
                     type={passwordVisible2 ? "text" : "password"}
                   />
-                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-neutral-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-neutral-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-neutral-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
+                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-slate-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-slate-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-slate-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
                     New Password
                   </label>
                 </div>
@@ -320,7 +337,7 @@ const Sign = () => {
                   <button
                     type="button"
                     onClick={togglePasswordVisibility3}
-                    className="absolute right-3 top-2/4 grid h-5 w-5 -translate-y-2/4 place-items-center text-neutral-500"
+                    className="absolute right-3 top-2/4 grid h-5 w-5 -translate-y-2/4 place-items-center text-slate-500"
                   >
                     {passwordVisible3 ? (
                       <svg
@@ -364,11 +381,11 @@ const Sign = () => {
                     required
                     value={formData.confirmPassword}
                     name="confirmPassword"
-                    className="peer h-full w-full rounded-[7px] border border-neutral-700 border-t-transparent bg-transparent px-3 py-2.5 !pr-9 font-sans text-sm font-normal text-neutral-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-neutral-700 placeholder-shown:border-t-neutral-700 placeholder-shown:text-neutral-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-neutral-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
+                    className="peer h-full w-full rounded-[7px] border border-slate-700 border-t-transparent bg-transparent px-3 py-2.5 !pr-9 font-sans text-sm font-normal text-slate-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-slate-700 placeholder-shown:border-t-slate-700 placeholder-shown:text-slate-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-slate-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
                     placeholder="8-15 characters including at least 3 numbers and 1 symbol."
                     type={passwordVisible3 ? "text" : "password"}
                   />
-                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-neutral-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-neutral-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-neutral-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
+                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-slate-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-slate-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-slate-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
                     Confirm New Password
                   </label>
                 </div>
@@ -382,10 +399,10 @@ const Sign = () => {
                     value={formData.email}
                     name="email"
                     type="text"
-                    className="peer h-full w-full rounded-[7px] border border-neutral-700 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-neutral-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-neutral-700 placeholder-shown:border-t-neutral-700 placeholder-shown:text-neutral-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-neutral-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
+                    className="peer h-full w-full rounded-[7px] border border-slate-700 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-slate-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-slate-700 placeholder-shown:border-t-slate-700 placeholder-shown:text-slate-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-slate-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
                     placeholder="john.doe@example.com"
                   />
-                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-neutral-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-neutral-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-neutral-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
+                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-slate-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-slate-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-slate-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
                     Email
                   </label>
                 </div>
@@ -393,7 +410,7 @@ const Sign = () => {
                   <button
                     type="button"
                     onClick={togglePasswordVisibility1}
-                    className="absolute right-3 top-2/4 grid h-5 w-5 -translate-y-2/4 place-items-center text-neutral-500"
+                    className="absolute right-3 top-2/4 grid h-5 w-5 -translate-y-2/4 place-items-center text-slate-500"
                   >
                     {passwordVisible1 ? (
                       <svg
@@ -433,7 +450,7 @@ const Sign = () => {
                   </button>
 
                   <input
-                    className="peer h-full w-full rounded-[7px] border border-neutral-700 border-t-transparent bg-transparent px-3 py-2.5 !pr-9 font-sans text-sm font-normal text-neutral-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-neutral-700 placeholder-shown:border-t-neutral-700 placeholder-shown:text-neutral-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-neutral-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
+                    className="peer h-full w-full rounded-[7px] border border-slate-700 border-t-transparent bg-transparent px-3 py-2.5 !pr-9 font-sans text-sm font-normal text-slate-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-slate-700 placeholder-shown:border-t-slate-700 placeholder-shown:text-slate-400 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-slate-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
                     placeholder="8-15 characters"
                     type={passwordVisible1 ? "text" : "password"}
                     onChange={handleInput}
@@ -441,7 +458,7 @@ const Sign = () => {
                     required
                     name="password"
                   />
-                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-neutral-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-neutral-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-neutral-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-neutral-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
+                  <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-slate-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-slate-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-slate-400 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
                     Password
                   </label>
                 </div>

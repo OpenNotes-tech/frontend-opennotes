@@ -1,4 +1,5 @@
 import axios from "axios";
+// import Cookies from "js-cookie";
 
 export default axios.create({
   baseURL: `http://localhost:8000/`,
@@ -7,6 +8,9 @@ export default axios.create({
   //http://localhost:8000/
   headers: {
     "Content-type": "application/json",
+    // Authorization: Cookies.get("openToken")
+    //   ? `Bearer ${Cookies.get("openToken")}`
+    //   : null,
   },
   timeout: 20000,
   withCredentials: true,

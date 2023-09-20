@@ -21,10 +21,10 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
   const modalRef = useRef();
 
   const queryParams = new URLSearchParams(location.search);
-  const hashtag = queryParams.get("hashtag");
+  const hashtag = queryParams.get("tags");
   const loading = useSelector((state) => state.Error.loading);
   const [isSortbyOpen, setSortbyOpen] = useState(false);
-  const [getHash, setHash] = useState(hashtags.home);
+  const [getHash, setHash] = useState(Object.entries(hashtags.home));
   const [showTabs, setShowTabs] = useState(false);
   const [hashLoad, setHashLoad] = useState(true);
   const scope = useMenuAnimation(isSortbyOpen);
@@ -55,7 +55,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
     navigate(linkToPage);
   };
   const handleTagsSubmit = (e, tag) => {
-    const linkToPage = generateLinkWithQuery(location, { hashtag: tag });
+    const linkToPage = generateLinkWithQuery(location, { tags: tag });
     navigate(linkToPage);
   };
 
@@ -89,9 +89,9 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
     // Simulate fetching data with a setTimeout
     const fetchData = () => {
       if (category) {
-        setHash(hashtags[category.split(",")[0]]);
+        setHash(Object.entries(hashtags[category.split(",")[0]]));
       } else {
-        setHash(hashtags.home);
+        setHash(Object.entries(hashtags.home));
       }
       setHashLoad(false); // Set loading state to false after fetching
     };
@@ -411,7 +411,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
               loading ? " pointer-events-none" : ""
             }`}
           >
-            <div class="relative h-10 mt-3 md:mt-0 overflow-x-auto overflow-y-clip">
+            <div class="relative mt-3 h-10 overflow-x-auto overflow-y-clip md:mt-0">
               <Splide
                 options={{
                   gap: "1rem",
@@ -446,22 +446,22 @@ const LinkMain = ({ fetchResult, sort, category, handleLike, handleClick }) => {
                   ? [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]?.map((_, index) => (
                       <SkeletonLoader key={index} />
                     ))
-                  : getHash?.map((tag, index) => (
+                  : getHash?.map(([key, value], index) => (
                       <SplideSlide key={index}>
                         <div className="flex items-center py-1">
                           <motion.button
                             whileTap={{ scale: 0.9 }}
                             whileHover={{ scale: 1.1 }}
-                            onClick={(e) => handleTagsSubmit(e, tag.slice(1))}
+                            onClick={(e) => handleTagsSubmit(e, value)}
                             className={`rounded-full px-3 py-[6px] text-center text-sm font-medium first:ml-2 focus:outline-none
                 ${
-                  hashtag === tag.slice(1) || (hashtag === null && index === 0)
+                  hashtag === value || (hashtag === null && index === 0)
                     ? "bg-blue-50 text-blue-600 ring-[1px]  ring-blue-300 lg:hover:ring-blue-600"
                     : "bg-white/10 text-slate-600 ring-[1px] ring-slate-300 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-slate-600 dark:lg:hover:ring-slate-300"
                 }
               `}
                           >
-                            {tag}
+                            {key}
                           </motion.button>
                         </div>
                       </SplideSlide>

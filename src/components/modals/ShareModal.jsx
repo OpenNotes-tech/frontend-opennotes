@@ -42,7 +42,7 @@ const ShareModal = () => {
 
   return (
     <motion.div
-      class="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center overflow-y-auto overflow-x-hidden bg-black bg-opacity-60 p-4 text-center opacity-100 backdrop-blur-sm "
+      class="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center  bg-black bg-opacity-60 p-4 text-center opacity-100 backdrop-blur-sm "
       role="dialog"
       ref={modalRef}
       initial={{ opacity: 0 }}
@@ -56,7 +56,7 @@ const ShareModal = () => {
         animate="visible"
         exit="exit"
         transition={{ damping: 300 }}
-        class="relative z-[9999] inline-block w-full scale-100 text-left align-middle opacity-100 sm:w-auto"
+        class="relative z-[9999] inline-block w-full scale-100 overflow-y-auto overflow-x-hidden text-left align-middle opacity-100 sm:w-auto"
       >
         <div class="xs:w-[480px] relative z-50 mx-auto w-full max-w-full overflow-hidden rounded-xl bg-white p-4 sm:w-[520px] sm:p-6 lg:p-8">
           <div class="flex items-center justify-between">
@@ -223,7 +223,7 @@ const ShareModal = () => {
             Or share with link
           </h3>
           <div class="mt-4 flex w-full items-center justify-between gap-4 rounded-lg bg-gray-100 p-2 sm:px-5 sm:py-4 md:mt-7">
-            <p class="text-gray w-3/4 select-all overflow-clip text-ellipsis  font-normal italic">
+            <p class="text-gray line-clamp-1 w-3/4 select-all overflow-clip text-ellipsis font-normal italic">
               {modalValue?.url}
             </p>
             <button

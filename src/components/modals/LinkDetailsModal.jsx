@@ -1,8 +1,22 @@
-import { useRef } from "react";
+import {
+  FrontendOptions,
+  CategoryOptions,
+  PricingOptions,
+  MobileOptions,
+  BackendOptions,
+  AIOptions,
+  SecurityOptions,
+  CourseOptions,
+  BlogOptions,
+  PodcastOptions,
+  AlgorithmsOptions,
+} from "../../constants/FilterData";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import {
   closeDetailsModal,
+  openAuthModal,
   openBookmarkModal,
   openShareModal,
 } from "../../store/features/modalSlice";
@@ -12,6 +26,7 @@ import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/shift-away.css";
 import { createDropInVariant } from "../../hooks/useAnimationVariants";
 import useClickOutside from "../../hooks/useClickOutside";
+import Cookies from "js-cookie";
 
 const LinkDetailsModal = () => {
   const dropInVariant = createDropInVariant("100vh");
@@ -20,9 +35,18 @@ const LinkDetailsModal = () => {
   );
   const dispatch = useDispatch();
   const modalRef = useRef();
+  const [showExpandButton, setShowExpandButton] = useState(false);
+  const [tagMap, setTagMap] = useState([]);
+  const containerRef = useRef(null);
+
   const handleBookmarkModal = () => {
-    dispatch(openBookmarkModal());
+    if (Cookies.get("logged_in_candidate") === "yes") {
+      dispatch(openBookmarkModal(modalValue));
+    } else {
+      dispatch(openAuthModal());
+    }
   };
+
   const handleShareModal = () => {
     if (window.innerWidth <= 768 && navigator.share) {
       // You can adjust the width value for your needs
@@ -52,6 +76,52 @@ const LinkDetailsModal = () => {
     dispatch(closeDetailsModal());
   };
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const containerWidth = container.offsetWidth;
+    const tagsWidth = Array.from(container.querySelectorAll(".tag")).reduce(
+      (acc, tag) => acc + tag.offsetWidth,
+      0,
+    );
+
+    if (tagsWidth > containerWidth) {
+      setShowExpandButton(true);
+    } else {
+      setShowExpandButton(false);
+    }
+  }, [modalValue]);
+
+  const toggleLineClamp = () => {
+    setShowExpandButton(false);
+  };
+
+  // Combine selected category options into one array
+  const categoryOptions = {
+    frontend: FrontendOptions,
+    backend: BackendOptions,
+    datascience: AIOptions,
+    mobile: MobileOptions,
+    algorithms: AlgorithmsOptions,
+    cybersecurity: SecurityOptions,
+    courses: CourseOptions,
+    blogs: BlogOptions,
+    podcasts: PodcastOptions,
+  };
+
+  useEffect(() => {
+    if (modalValue.tags) {
+      const filterDatas = Object.values(categoryOptions)?.flat();
+      const selectedOptions = filterDatas.filter((option) =>
+        modalValue.tags.includes(toString(option.value.trim())),
+      );
+      console.log(modalValue.tags);
+      console.log("selectedOptions:", selectedOptions);
+      setTagMap(selectedOptions);
+    }
+  }, []);
+
   return (
     <>
       <motion.div
@@ -62,7 +132,7 @@ const LinkDetailsModal = () => {
         data-dialog-backdrop="sign-in-dialog"
         data-dialog-backdrop-close="true"
         ref={modalRef}
-        class="raletive fixed inset-0 z-[999]  grid   w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm "
+        class="raletive fixed inset-0 z-[999] grid w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm "
       >
         <motion.div
           variants={dropInVariant}
@@ -71,12 +141,12 @@ const LinkDetailsModal = () => {
           exit="exit"
           transition={{ damping: 300 }}
           data-dialog="sign-in-dialog"
-          class="relative mx-auto flex w-full  flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md md:max-w-[50rem]"
+          class=" mx-auto flex w-screen max-w-[40rem] flex-col bg-white bg-clip-border text-gray-700 shadow-md md:rounded-xl  lg:max-w-[60rem]" //overflow-y-scroll
         >
           <button
             aria-label="Close panel"
             onClick={handleDetailsModalToggle}
-            class="absolute -top-3 left-56 z-10 inline-flex h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[790px] md:h-8 md:w-8 lg:hover:text-gray-800 lg:hover:shadow-md"
+            class="absolute -top-3 left-56 z-10 hidden h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[630px] md:inline-flex md:h-8 md:w-8 lg:left-[950px] lg:hover:text-gray-800 lg:hover:shadow-md"
           >
             <svg
               stroke="currentColor"
@@ -91,27 +161,209 @@ const LinkDetailsModal = () => {
               <path d="M289.94 256l95-95A24 24 0 00351 127l-95 95-95-95a24 24 0 00-34 34l95 95-95 95a24 24 0 1034 34l95-95 95 95a24 24 0 0034-34z"></path>
             </svg>
           </button>
-          <div className="flex w-full flex-col space-y-5 px-8 py-6 md:h-[600px]  md:space-y-8">
-            <div className="flex flex-row items-center justify-evenly space-x-4">
+          <div className="absolute  flex w-full flex-row items-center justify-between rounded-t-xl bg-slate-200 px-8 py-1 md:hidden">
+            <button
+              onClick={handleDetailsModalToggle}
+              className="text-blue-500"
+            >
+              close
+            </button>
+            <p>Details</p>
+            <button
+              onClick={handleDetailsModalToggle}
+              className="text-blue-500"
+            >
+              done
+            </button>
+          </div>
+          <div
+            ref={containerRef}
+            className="flex w-full flex-col space-y-5 px-8 py-6 md:space-y-8  lg:h-auto"
+          >
+            <div className="flex flex-row items-center justify-evenly space-x-8">
               <img
                 class="w-36 rounded-2xl md:w-52"
                 src={modalValue.photo}
                 alt=""
               />
-              <h5 class="mb-2 truncate  text-xl font-bold capitalize tracking-wide text-gray-900 ">
-                {modalValue.title}
-              </h5>
+              <div className="">
+                <h5 class="mb-2 flex flex-row justify-center truncate text-center text-xl font-bold capitalize tracking-wide text-gray-900 ">
+                  {modalValue.title}
+                </h5>
+                <p class="line-clamp-3 font-normal text-gray-700 dark:text-gray-400">
+                  {modalValue.description}
+                </p>
+              </div>
             </div>
-            <div className="flex flex-row space-x-4">
-              <p class="line-clamp-3 font-normal text-gray-700 dark:text-gray-400">
-                Create the perfect palette or get inspired by thousands of
-                beautiful color schemes.
+
+            <div className="relative  flex flex-row items-center">
+              <div
+                className={`space-x-3 ${
+                  showExpandButton ? "line-clamp-1" : ""
+                }`}
+              >
+                <p className="my-1 inline-block rounded-full px-4 py-1">
+                  <div className="flex flex-row items-center gap-x-2 text-lg capitalize">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="22"
+                      height="22"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-tag"
+                    >
+                      <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2Z" />
+                      <path d="M7 7h.01" />
+                    </svg>
+                    Tags :
+                  </div>
+                </p>
+                {modalValue &&
+                  modalValue.tags.map((linkElement, index) => (
+                    <p
+                      key={index}
+                      className="tag my-1 inline-block rounded-full border-2 px-4 py-1"
+                    >
+                      {linkElement}
+                    </p>
+                  ))}
+              </div>
+              {showExpandButton && (
+                <button className="absolute right-0 " onClick={toggleLineClamp}>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-chevrons-right"
+                  >
+                    <path d="m6 17 5-5-5-5" />
+                    <path d="m13 17 5-5-5-5" />
+                  </svg>
+                </button>
+              )}
+            </div>
+
+            <div className="space-x-3">
+              <p className="my-1 inline-block rounded-full  px-4 py-1">
+                <div className="flex flex-row items-center gap-x-2 text-lg capitalize">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-layout-grid"
+                  >
+                    <rect width="7" height="7" x="3" y="3" rx="1" />
+                    <rect width="7" height="7" x="14" y="3" rx="1" />
+                    <rect width="7" height="7" x="14" y="14" rx="1" />
+                    <rect width="7" height="7" x="3" y="14" rx="1" />
+                  </svg>
+                  Cagetory :
+                </div>
               </p>
+              {modalValue &&
+                modalValue.category.map((linkElement, index) => (
+                  <p
+                    key={index}
+                    className="my-1 inline-block rounded-full border-2 px-4 py-1 capitalize"
+                  >
+                    {linkElement}
+                  </p>
+                ))}
+            </div>
+            <div className="flex flex-row justify-evenly">
+              {/* <div>
+                <p className="text-lg font-semibold">Search:</p>
+                {modalValue.searchText}
+              </div> */}
+
+              <div className="flex flex-row items-center gap-x-2 capitalize">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-circle-dollar-sign"
+                >
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
+                  <path d="M12 18V6" />
+                </svg>
+                {modalValue.pricing}
+              </div>
+
+              <div className="flex flex-row items-center gap-x-2 capitalize">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-calendar-days"
+                >
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                  <line x1="16" x2="16" y1="2" y2="6" />
+                  <line x1="8" x2="8" y1="2" y2="6" />
+                  <line x1="3" x2="21" y1="10" y2="10" />
+                  <path d="M8 14h.01" />
+                  <path d="M12 14h.01" />
+                  <path d="M16 14h.01" />
+                  <path d="M8 18h.01" />
+                  <path d="M12 18h.01" />
+                  <path d="M16 18h.01" />
+                </svg>
+                {modalValue.createdAt.split("T")[0]}
+              </div>
+              <div className="flex flex-row items-center gap-x-2 capitalize">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-mouse-pointer-click"
+                >
+                  <path d="m9 9 5 12 1.774-5.226L21 14 9 9z" />
+                  <path d="m16.071 16.071 4.243 4.243" />
+                  <path d="m7.188 2.239.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656-2.12 2.122" />
+                </svg>
+                {modalValue.clickCount}
+              </div>
+            </div>
+            <div className="flex items-center justify-center">
               <Link
                 to={modalValue.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex h-10 cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-4 text-center font-medium text-black transition duration-200 ease-in-out md:px-8 md:py-1 lg:hover:border-blue-700 lg:hover:bg-blue-100 lg:hover:text-blue-700"
+                className="flex h-10 w-1/3 cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-4 text-center font-medium text-black transition duration-200 ease-in-out md:px-8 md:py-1 lg:hover:border-blue-700 lg:hover:bg-blue-100 lg:hover:text-blue-700"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -132,55 +384,8 @@ const LinkDetailsModal = () => {
                 <p>Open</p>
               </Link>
             </div>
-            <div className="space-x-3">
-              <p>Tags:</p>
-              {modalValue &&
-                modalValue.tags.map((linkElement, index) => (
-                  <a
-                    key={index}
-                    href="/"
-                    className="my-1 inline-block rounded-full border-2 px-4 py-1"
-                  >
-                    {linkElement}
-                  </a>
-                ))}
-            </div>
-
-            <div className="space-x-3">
-              <p>Category:</p>
-              {modalValue &&
-                modalValue.category.map((linkElement, index) => (
-                  <a
-                    key={index}
-                    href="/"
-                    className="my-1 inline-block rounded-full border-2 px-4 py-1"
-                  >
-                    {linkElement}
-                  </a>
-                ))}
-            </div>
-            <div className="grid grid-cols-2">
-              <div>
-                <p className="text-lg font-semibold">Search:</p>
-                {modalValue.searchText}
-              </div>
-
-              <div>
-                <p className="text-lg font-semibold">Pricing:</p>
-                {modalValue.pricing}
-              </div>
-
-              <div>
-                <p className="text-lg font-semibold">Created Date:</p>
-                {modalValue.createdAt}
-              </div>
-              <div>
-                <p className="text-lg font-semibold">Created Date:</p>
-                {modalValue.clickCount}
-              </div>
-            </div>
-            <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
-              {/* <div
+            <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t-2 border-slate-300 px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
+              <div
                 class=" relative flex items-center space-x-4"
                 data-nc-id="PostCardLikeAndComment"
               >
@@ -190,7 +395,7 @@ const LinkDetailsModal = () => {
                   className="bg-black px-1 font-medium text-white"
                 >
                   <button
-                    class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-slate-700 transition-colors lg:hover:bg-rose-50 lg:hover:text-rose-600 focus:outline-none dark:bg-gray-100 dark:text-slate-900 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
+                    class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-slate-700 transition-colors focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
                     title="Liked"
                     data-nc-id="PostCardLikeAction"
                   >
@@ -218,7 +423,7 @@ const LinkDetailsModal = () => {
                 >
                   <button
                     onClick={handleShareModal}
-                    className="text-slate-6000 rounded-full bg-slate-50 p-[10px] transition-colors lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:bg-gray-100 dark:text-gray-800 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
+                    className="text-slate-6000 rounded-full bg-slate-50 p-[10px] transition-colors dark:bg-gray-100 dark:text-gray-800 lg:hover:bg-teal-50 lg:hover:text-teal-600 dark:lg:hover:bg-teal-100 dark:lg:hover:text-teal-800"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -252,7 +457,7 @@ const LinkDetailsModal = () => {
                 >
                   <button
                     onClick={handleBookmarkModal}
-                    class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-slate-700 lg:hover:bg-blue-50 lg:hover:text-blue-600 focus:outline-none dark:bg-gray-100 dark:text-slate-900 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
+                    class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-slate-700 focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-blue-50 lg:hover:text-blue-600 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
                     data-nc-id="NcBookmark"
                     data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
                     title="Save to reading list"
@@ -273,7 +478,7 @@ const LinkDetailsModal = () => {
                     </svg>
                   </button>
                 </Tippy>
-              </div> */}
+              </div>
             </div>
           </div>
         </motion.div>

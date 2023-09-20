@@ -60,7 +60,7 @@ const Search = ({ nav }) => {
   }, [category, tags, pricing, hashtag]);
 
   useEffect(() => {
-    setSearchValue(search_query ? search_query : "");
+    setSearchValue(search_query ? search_query.replace(/%20/g, " ") : "");
   }, [category, tags, pricing, sortby]);
 
   return (

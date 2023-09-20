@@ -63,7 +63,9 @@ export const FilterModal = () => {
     setRouteCategory(commaSeparatedString);
   };
   const handleTagsSelector = (selectedTags) => {
-    const selectedValues = selectedTags.map((option) => option.value);
+    const selectedValues = selectedTags.map(
+      (option) => option.value.split("_")[0],
+    );
     setTagsSelector(selectedTags);
     const commaSeparatedString = selectedValues.join(",");
     setRouteTags(commaSeparatedString);
@@ -125,6 +127,8 @@ export const FilterModal = () => {
     podcasts: PodcastOptions,
   };
 
+  console.log(Object.values(categoryOptions)?.flat());
+
   // Flatten category options and prioritize the options of the first selected category
   const orderedSelectedOptions =
     routeCategory?.length > 0
@@ -152,7 +156,7 @@ export const FilterModal = () => {
     if (routeTags) {
       const selectedValues = routeTags.split(",");
       const selectedOptions = orderedSelectedOptions.filter((option) =>
-        selectedValues.includes(option.value),
+        selectedValues.includes(option.value.split("_")[0]),
       );
       setTagsSelector(selectedOptions);
     }

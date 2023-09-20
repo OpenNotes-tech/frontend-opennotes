@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Cookies from "js-cookie";
 import Request from "../../utils/API-router";
-import { login } from "../../store/features/editProfileSlice";
+import { authenticate } from "../../store/features/editProfileSlice";
 import { addError, setLoading } from "../../store/features/errorSlice";
 import { closeAuthModal } from "../../store/features/modalSlice";
 
@@ -11,29 +11,33 @@ const GitHub = () => {
   const [rerender, setRerender] = useState(false);
   const GITHUB_TOKEN = "8f2beced15a05a04ea8a";
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const location = useLocation();
-
+  const dispatch = useDispatch();
   const handleAuthModalToggle = () => {
     dispatch(closeAuthModal());
   };
 
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
+    const urlParams = new URLSearchParams(location.search);
     const codeParam = urlParams.get("code");
 
     if (codeParam && localStorage.getItem("accessToken") === null) {
+      dispatch(setLoading(true));
+
       async function getAccessToken() {
         try {
           Request.githubLogin(codeParam)
             .then((res) => {
-              console.log(res);
+              localStorage.setItem("userID", res.data.user._id);
               Cookies.set("logged_in_candidate", "yes", {
                 secure: true,
                 expires: new Date(res.data.user.password),
               });
-              dispatch(login(res?.data?.user));
+              Cookies.set("openToken", res.data.token, {
+                secure: true,
+                expires: new Date(res.data.user.password),
+              });
+              dispatch(authenticate(res?.data?.user));
               dispatch(
                 addError({
                   type: "success",
@@ -45,11 +49,9 @@ const GitHub = () => {
 
               // Redirect to main page after 3 seconds
               setTimeout(() => {
-                location.state?.from
-                  ? navigate(location.state.from)
-                  : navigate("/");
+                navigate("/");
                 handleAuthModalToggle();
-              }, 2000);
+              }, 500);
             })
             .catch((error) => {
               console.log(error);
@@ -82,59 +84,6 @@ const GitHub = () => {
       "https://github.com/login/oauth/authorize?client_id=" + GITHUB_TOKEN,
     );
   };
-
-  // const responseFacebook = (response) => {
-  //   Request.facebookLogin(path, {
-  //     userID: response.userID,
-  //     accessToken: response.accessToken,
-  //   })
-  //     .then((res) => {
-  //       Cookies.set(cook, "yes", {
-  //         secure: true,
-  //         expires: new Date(res.data.user.password),
-  //       });
-
-  //       dispatch(
-  //         login({
-  //           _id: res?.data?.user?._id,
-  //           token: res?.data?.token,
-  //           fullName: res?.data?.user?.fullName,
-  //           email: res?.data?.user?.email,
-  //           skills: res?.data?.user?.skills,
-  //           opentoRoles: res?.data?.user?.opentoRoles,
-  //           country: res?.data?.user?.address?.country,
-  //           city: res?.data?.user?.address?.city,
-  //           phoneNumber: res?.data?.user?.address?.phoneNumber,
-  //           website: res?.data?.user?.socialLinks?.website,
-  //           linkedin: res?.data?.user?.socialLinks?.linkedin,
-  //           github: res?.data?.user?.socialLinks?.github,
-  //           achievement: res?.data?.user?.achievement,
-  //           bio: res?.data?.user?.bio,
-  //           salaryMax: res?.data?.user?.salaryMax,
-  //           salaryMin: res?.data?.user?.salaryMin,
-  //           photo: res?.data?.user?.photo,
-  //           primaryRole: res?.data?.user?.primaryRole,
-  //           resume: res?.data?.user?.resume,
-  //           yearofExperience: res?.data?.user?.yearofExperience,
-  //           education: res?.data?.user?.education,
-  //           experiences: res?.data?.user?.experiences,
-  //           applications: res?.data?.user?.applications,
-  //         }),
-  //       );
-
-  //       dispatch(setLoading(false));
-  //       addError("Successfully signed up! Confirm your email.");
-  //       setTimeout(() => {
-  //         location.state?.from
-  //           ? navigate(location.state.from)
-  //           : navigate("/job");
-  //       }, 2000);
-  //     })
-  //     .catch((error) => {
-  //       addError(error.response?.message);
-  //       dispatch(setLoading(false));
-  //     });
-  // };
 
   return (
     <button

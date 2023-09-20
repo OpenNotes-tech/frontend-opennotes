@@ -17,9 +17,47 @@ import NotFound from "./pages/Static/NotFound";
 import About from "./pages/Static/About";
 import Policy from "./pages/Static/Policy";
 import { useEffect } from "react";
-import LinkDetails from "./pages/Link/LinkDetails";
+import BookmarkEmpty from "./pages/Bookmark/BookmarkEmpty";
+import FolderDetails from "./pages/Bookmark/FolderDetails";
+// import LinkDetails from "./pages/Link/LinkDetails";
 // import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading, addError } from "./store/features/errorSlice";
+import Request from "./utils/API-router";
+import { authenticate } from "./store/features/editProfileSlice";
+import Sponsor from "./pages/Static/Sponsor";
+import Cookies from "js-cookie";
+
 const App = () => {
+  const { profile } = useSelector((state) => state.UserProfile);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!profile.length && Cookies.get("logged_in_candidate") === "yes") {
+      dispatch(setLoading(true));
+
+      Request.getProfile()
+        .then((res) => {
+          dispatch(authenticate(res.data.data));
+          dispatch(setLoading(false));
+        })
+        .catch((error) => {
+          dispatch(
+            addError({
+              type: "error",
+              error: error?.message,
+              id: Date.now(),
+            }),
+          );
+          dispatch(setLoading(false));
+        })
+        .finally(() => {
+          dispatch(setLoading(false));
+        });
+    }
+  }, []);
+
   // let scrollPosition = 0; // Variable to store the scroll position
   // const {
   //   isShareModalOpen,
@@ -55,6 +93,7 @@ const App = () => {
     sessionStorage.setItem("_TotalPages", 0);
     sessionStorage.setItem("_PageNumber", 1);
   }, []);
+
   return (
     <BrowserRouter>
       {/* <ScrollToTop /> */}
@@ -65,9 +104,11 @@ const App = () => {
         ############################################### */}
           <Route path="/" exact element={<HomeMain />}></Route>
           {/* <Route path="/details/:linkId" exact element={<LinkDetails />} /> */}
-          <Route path="/bookmark" exact element={<BookmarkMain />} />
           <Route path="/profile" exact element={<ProfileMain />} />
-          {/* <Route exact element={<PrivateRouter />}></Route> */}
+          <Route path="bookmark" exact element={<BookmarkMain />}>
+            <Route index exact element={<BookmarkEmpty />} />
+            <Route path=":folderId" exact element={<FolderDetails />} />
+          </Route>
 
           {/* #########################################  
                       AUTHENTICATION  
@@ -78,6 +119,7 @@ const App = () => {
                         STATIC PAGES  
         ########################################## */}
           <Route path="/about" exact element={<About />} />
+          <Route path="/sponsor" exact element={<Sponsor />} />
           <Route exact path="/privacy-policy" element={<Policy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

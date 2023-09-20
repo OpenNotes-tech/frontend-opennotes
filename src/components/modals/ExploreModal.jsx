@@ -7,6 +7,7 @@ import {
 } from "../../store/features/modalSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { createDropInVariant } from "../../hooks/useAnimationVariants";
+import Cookies from "js-cookie";
 const AnimatedLink = motion(Link);
 
 const ExploreModal = ({ toggleExplore }) => {
@@ -38,7 +39,11 @@ const ExploreModal = ({ toggleExplore }) => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 right-[10px] z-[999] w-full place-items-center divide-y divide-slate-300 rounded-lg  shadow-2xl   md:absolute  md:inset-auto md:right-6 md:mt-[540px] md:w-[720px] lg:right-[270px] lg:w-[840px]"
+          className={`fixed inset-0 right-[10px] z-[999] w-full place-items-center divide-y divide-slate-300 rounded-lg shadow-2xl md:absolute md:inset-auto md:mt-[540px] md:w-[720px] lg:w-[840px] ${
+            Cookies.get("logged_in_candidate") === "yes"
+              ? "md:right-6 lg:right-[170px] xl:right-[200px]"
+              : "md:right-6 lg:right-[150px] xl:right-[270px]"
+          }`}
         >
           <motion.div
             variants={dropInVariant}
@@ -436,11 +441,11 @@ const ExploreModal = ({ toggleExplore }) => {
                 <AnimatedLink
                   whileTap={{ scale: 0.9 }}
                   role="menuitem"
-                  to="/privacy-policy"
+                  to="/sponsor"
                   className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">
-                    <span>Privacy Policy</span>
+                    <span>Sponsor</span>
                   </div>
                 </AnimatedLink>
                 <motion.button

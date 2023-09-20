@@ -1,6 +1,6 @@
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { closeAuthModal } from "../../store/features/modalSlice";
-import { login, signup } from "../../store/features/editProfileSlice";
+import { authenticate } from "../../store/features/editProfileSlice";
 import { addError, setLoading } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
@@ -17,7 +17,6 @@ const Sign = () => {
   const dropInVariant = createDropInVariant("100vh");
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const location = useLocation();
   const modalRef = useRef();
 
   const [passwordVisible1, setPasswordVisible1] = useState(false);
@@ -59,18 +58,16 @@ const Sign = () => {
     if (isAuthSliderOpen) {
       Request.signup(formData)
         .then((res) => {
+          localStorage.setItem("userID", res.data.user._id);
           Cookies.set("logged_in_candidate", "yes", {
             secure: true,
             expires: new Date(res.data.user.password),
           });
-          dispatch(
-            signup({
-              email: res.data.user.email,
-              fullName: res.data.user.fullName,
-              token: res.data.token,
-              _id: res.data.user._id,
-            }),
-          );
+          Cookies.set("openToken", res.data.token, {
+            secure: true,
+            expires: new Date(res.data.user.password),
+          });
+          dispatch(authenticate(res.data.user)); //TODO: also add res.data.token to the profile
           dispatch(
             addError({
               type: "success",
@@ -81,11 +78,9 @@ const Sign = () => {
           dispatch(setLoading(false));
           // Redirect to main page after 3 seconds
           setTimeout(() => {
-            location.state?.from
-              ? navigate(location.state.from)
-              : navigate("/");
+            navigate("/");
             handleAuthModalToggle();
-          }, 2000);
+          }, 500);
         })
         .catch((error) => {
           dispatch(
@@ -104,11 +99,16 @@ const Sign = () => {
     } else {
       Request.login(formData)
         .then((res) => {
+          localStorage.setItem("userID", res.data.user._id);
+          Cookies.set("openToken", res.data.token, {
+            secure: true,
+            expires: new Date(res.data.user.password),
+          });
           Cookies.set("logged_in_candidate", "yes", {
             secure: true,
             expires: new Date(res?.data?.user?.password),
           });
-          dispatch(login(res?.data?.user));
+          dispatch(authenticate(res?.data?.user));
           dispatch(
             addError({
               type: "success",
@@ -119,11 +119,9 @@ const Sign = () => {
           dispatch(setLoading(false));
           // Redirect to main page after 3 seconds
           setTimeout(() => {
-            location.state?.from
-              ? navigate(location.state.from)
-              : navigate("/");
+            navigate("/");
             handleAuthModalToggle();
-          }, 2000);
+          }, 500);
         })
         .catch((error) => {
           dispatch(

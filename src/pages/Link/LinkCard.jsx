@@ -2,13 +2,15 @@ import Tippy from "@tippyjs/react";
 import "tippy.js/dist/tippy.css";
 import "tippy.js/animations/shift-away.css";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   openBookmarkModal,
   openShareModal,
   openDetailsModal,
+  openAuthModal,
 } from "../../store/features/modalSlice";
 import { motion } from "framer-motion";
+import Cookies from "js-cookie";
 const formatLikeCount = (count) => {
   if (count < 1000) {
     return count.toString();
@@ -20,7 +22,14 @@ const formatLikeCount = (count) => {
 };
 
 const LinkCard = ({ linkElement, handleLike, handleClick }) => {
+  const userProfile = useSelector((state) => state?.UserProfile?.profile);
   const dispatch = useDispatch();
+
+  const isLinkIdInAnyFolder = userProfile?.folders?.some((folder) => {
+    const isLinkInFolder = folder.bookmarked.includes(linkElement._id);
+    return isLinkInFolder;
+  });
+
   // let mouseX = useMotionValue(0);
   // let mouseY = useMotionValue(0);
 
@@ -31,7 +40,11 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
   //   mouseY.set(clientY - top);
   // }
   const handleBookmarkModal = () => {
-    dispatch(openBookmarkModal());
+    if (Cookies.get("logged_in_candidate") === "yes") {
+      dispatch(openBookmarkModal(linkElement));
+    } else {
+      dispatch(openAuthModal());
+    }
   };
   const handleShareModal = () => {
     if (window.innerWidth <= 768 && navigator.share) {
@@ -56,12 +69,14 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
 
   const handleLinkClick = () => {
     // navigate(linkElement.url, { replace: true });
-    handleClick(linkElement._id);
+    // handleClick(linkElement._id);
   };
 
   return (
     <>
-      <div
+      <motion.div
+        whileHover={{ scale: 1.01 }}
+        transition={{ stiffness: 300, damping: 10 }}
         // onMouseMove={handleMouseMove}
         class="group relative flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-lg lg:hover:shadow-2xl"
       >
@@ -233,7 +248,11 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
               >
                 <button
                   onClick={handleBookmarkModal}
-                  class="relative flex items-center justify-center rounded-full bg-slate-100 p-[10px] text-slate-600 focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-blue-50 lg:hover:text-blue-600 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
+                  class={`relative flex items-center justify-center rounded-full bg-slate-100 p-[10px] focus:outline-none dark:bg-gray-100  lg:hover:bg-blue-50  dark:lg:hover:bg-blue-100  ${
+                    isLinkIdInAnyFolder
+                      ? "text-blue-500"
+                      : "text-slate-600 dark:text-slate-900 dark:lg:hover:text-blue-600"
+                  }`}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +264,9 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-bookmark"
+                    class={`lucide lucide-bookmark ${
+                      isLinkIdInAnyFolder ? "fill-blue-500" : ""
+                    }`}
                   >
                     <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
                   </svg>
@@ -254,7 +275,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

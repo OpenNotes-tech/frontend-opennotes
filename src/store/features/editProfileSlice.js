@@ -1,77 +1,76 @@
 import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
+
 const initialState = {
+  data: [],
   isLoggedIn: Cookies.get("logged_in_candidate"),
-  token: "",
-  _id: null,
-  fullName: "",
-  email: "",
-  address: [],
-  salaryMin: null,
-  salaryMax: null,
-  socialLinks: [],
-  photo:
-    "https://t3.ftcdn.net/jpg/03/46/83/96/360_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg",
-  achievement: "",
-  bio: "",
-  skills: [],
-  opentoRoles: [],
-  primaryRole: "",
-  yearofExperience: null,
-  resume: "",
-  education: [],
-  experiences: [],
-  applications: [],
-  bookmarkedJobs: [],
+  profile: [], // TODO: Check without localstorage code
 };
 
 export const editProfileSlice = createSlice({
   name: "UserProfile",
   initialState,
   reducers: {
+    setData: (state, action) => {
+      if (action.payload.first) {
+        state.data = action.payload.data;
+      } else {
+        state.data.push(action.payload.data);
+      }
+    },
     editUserProfile: (state, action) => {
-      state.fullName = action.payload.fullName;
-      state.email = action.payload.email;
-      state._id = action.payload._id;
-      state.token = action.payload.token;
-      state.address = action.payload.address;
-      state.socialLinks = action.payload.socialLinks;
-      state.photo = action.payload.photo;
-      state.achievement = action.payload.achievement;
-      state.bio = action.payload.bio;
-      state.skills = action.payload.skills;
-      state.opentoRoles = action.payload.opentoRoles;
-      state.primaryRole = action.payload.primaryRole;
-      state.yearofExperience = action.payload.yearofExperience;
-      state.resume = action.payload.resume;
-      state.salaryMax = action.payload.salaryMax;
-      state.salaryMin = action.payload.salaryMin;
-      state.education = action.payload.education;
-      state.experiences = action.payload.experiences;
-      state.applications = action.payload.applications;
-      state.bookmarkedJobs = action.payload.bookmarkedJobs;
+      state.profile = action.payload;
     },
-    addExperience: (state, action) => {
-      state.experiences.push(action.payload);
+    editBookmark: (state, action) => {
+      // Find the index of the folder with the matching ID
+      const folderIndex = state.profile.folders.findIndex(
+        (folder) => folder._id === action.payload._id,
+      );
+
+      if (folderIndex !== -1) {
+        // Clone the folder object to avoid mutating the state directly
+        const updatedFolder = { ...state.profile.folders[folderIndex] };
+
+        // Check if the link already exists in the bookmarked array
+        const linkId = action.payload.link;
+
+        if (updatedFolder.bookmarked.includes(linkId)) {
+          // If the link exists, remove it from the bookmarked array
+          updatedFolder.bookmarked = updatedFolder.bookmarked.filter(
+            (bookmark) => bookmark !== linkId,
+          );
+        } else {
+          // If the link doesn't exist, add it to the bookmarked array
+          updatedFolder.bookmarked.push(linkId);
+        }
+
+        // Update the folder in the state by creating a new array with the updated folder
+        state.profile.folders[folderIndex] = updatedFolder;
+      }
     },
-    deleteExperience: (state, action) => {
-      state.experiences = state.experiences.filter((exp) => {
-        return exp._id !== action.payload._id;
+    deleteFolderItem: (state, action) => {
+      state.profile.folders.push(action.payload);
+    },
+    deleteFolder: (state, action) => {
+      state.profile.folders = state.profile.folders.filter((edu) => {
+        return edu._id !== action.payload;
       });
     },
-    editExperience: (state, action) => {
-      state.experiences = state.experiences.filter((exp) => {
-        return exp._id !== action.payload._id;
-      });
-      state.experiences.push(action.payload);
-    },
-    addEducation: (state, action) => {
-      state.education.push(action.payload);
-    },
-    deleteEducation: (state, action) => {
-      state.education = state.education.filter((edu) => {
-        return edu._id !== action.payload._id;
-      });
+    editFolder: (state, action) => {
+      const folderIndex = state.profile.folders.findIndex(
+        (folder) => folder._id === action.payload._id,
+      );
+
+      if (folderIndex !== -1) {
+        // Clone the folder object to avoid mutating the state directly
+        const updatedFolder = { ...state.profile.folders[folderIndex] };
+
+        // Update the folder name
+        updatedFolder.name = action.payload.name;
+
+        // Update the folder in the state by creating a new array with the updated folder
+        state.profile.folders[folderIndex] = updatedFolder;
+      }
     },
     editEducation: (state, action) => {
       state.education = state.education.filter((edu) => {
@@ -79,98 +78,24 @@ export const editProfileSlice = createSlice({
       });
       state.education.push(action.payload);
     },
-    addApplications: (state, action) => {
-      state.applications = action.payload;
-    },
-    addSocialLinks: (state, action) => {
-      state.socialLinks = action.payload;
-    },
-    addBookmarkedJobs: (state, action) => {
-      state.bookmarkedJobs = action.payload;
-    },
-    signup: (state, action) => {
-      const { fullName, email, _id, token } = action.payload;
-      state.fullName = fullName;
-      state.email = email;
-      state._id = _id;
-      state.token = token;
-    },
-    login: (state, action) => {
+    authenticate: (state, action) => {
       state.isLoggedIn = Cookies.get("logged_in_candidate");
-      state.fullName = action.payload.fullName;
-      state.email = action.payload.email;
-      state._id = action.payload._id;
-      state.token = action.payload.token;
-      state.address = action.payload.address;
-      state.socialLinks = action.payload.socialLinks;
-      state.photo = action.payload.photo;
-      state.achievement = action.payload.achievement;
-      state.bio = action.payload.bio;
-      state.skills = action.payload.skills;
-      state.opentoRoles = action.payload.opentoRoles;
-      state.primaryRole = action.payload.primaryRole;
-      state.yearofExperience = action.payload.yearofExperience;
-      state.resume = action.payload.resume;
-      state.education = action.payload.education;
-      state.experiences = action.payload.experiences;
-      state.applications = action.payload.applications;
-      state.bookmarkedJobs = action.payload.bookmarkedJobs;
+      state.profile = action.payload;
     },
     logout: (state) => {
       state.isLoggedIn = null;
-      state.token = null;
-      state.fullName = null;
-      state.email = null;
-      state._id = null;
+      state.profile = null;
     },
-
-    // editExperience: (state, action) => {
-    //   if (action.type === "ADD") {
-    //     return { ...state, experiences: [...action.payload] };
-    //     // state.experiences = [...state.experiences, action.payload];
-    //     // state.experiences.push(action.payload);
-    //   } else if (action.type === "DELETE") {
-    //     state.experiences = state.experiences.filter((edu) => {
-    //       return edu._id !== action.payload._id;
-    //     });
-    //   } else if (action.type === "EDIT") {
-    //     state.experiences = state.experiences.filter((edu) => {
-    //       return edu._id !== action.payload._id;
-    //     });
-    //     state.experiences.push(action.payload);
-    //   }
-    // },
-
-    // editEducation: (state, action) => {
-    //   if (action.type === "ADD") {
-    //     state.education.push(action.payload);
-    //   } else if (action.type === "DELETE") {
-    //     state.education = state.education.filter((edu) => {
-    //       return edu._id !== action.payload._id;
-    //     });
-    //   } else if (action.type === "EDIT") {
-    //     state.education = state.education.filter((edu) => {
-    //       return edu._id !== action.payload._id;
-    //     });
-    //     state.education.push(action.payload);
-    //   }
-    // },
   },
 });
 
 export default editProfileSlice.reducer;
 export const {
-  editUserProfile,
-  editExperience,
-  deleteExperience,
-  addExperience,
-  editEducation,
-  deleteEducation,
-  addEducation,
-  addApplications,
-  addBookmarkedJobs,
-  addSocialLinks,
-  login,
+  deleteFolderItem,
+  editBookmark,
+  deleteFolder,
+  editFolder,
   logout,
-  signup,
+  setData,
+  authenticate,
 } = editProfileSlice.actions;

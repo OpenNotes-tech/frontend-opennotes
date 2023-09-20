@@ -703,11 +703,11 @@ const ExploreMobileModal = () => {
                       <AnimatedLink
                         whileTap={{ scale: 0.9 }}
                         role="menuitem"
-                        to="/privacy-policy"
+                        to="/sponsor"
                         className=" flex items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-gray-800   focus:bg-gray-100 focus:text-gray-900 focus:outline-none md:px-5 lg:px-10"
                       >
                         <div className="flex flex-none items-center space-x-2">
-                          <span>Privacy Policy</span>
+                          <span>Sponsor us</span>
                         </div>
                       </AnimatedLink>
                       <motion.button

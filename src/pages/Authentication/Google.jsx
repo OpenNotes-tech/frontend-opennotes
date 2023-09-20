@@ -1,16 +1,16 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { gapi } from "gapi-script";
 import Cookies from "js-cookie";
-import { login } from "../../store/features/editProfileSlice";
+import { authenticate } from "../../store/features/editProfileSlice";
 import Request from "../../utils/API-router";
 import { addError, setLoading } from "../../store/features/errorSlice";
+import { closeAuthModal } from "../../store/features/modalSlice";
 
 const Google = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -28,12 +28,17 @@ const Google = () => {
     dispatch(setLoading(true));
     Request.googleLogin({ idToken: response.tokenId })
       .then((res) => {
+        localStorage.setItem("userID", res.data.user._id);
         Cookies.set("logged_in_candidate", "yes", {
           secure: true,
           expires: new Date(res.data.user.password),
         });
+        Cookies.set("openToken", res.data.token, {
+          secure: true,
+          expires: new Date(res.data.user.password),
+        });
 
-        dispatch(login(res?.data?.user));
+        dispatch(authenticate(res?.data?.user));
 
         dispatch(setLoading(false));
         dispatch(
@@ -44,13 +49,14 @@ const Google = () => {
           }),
         );
         setTimeout(() => {
-          location.state?.from ? navigate(location.state.from) : navigate("/");
-        }, 2000);
+          navigate("/");
+          dispatch(closeAuthModal());
+        }, 500);
       })
       .catch((error) => {
         dispatch(
           addError({
-            type: "success",
+            type: "error",
             error: error.response?.message,
             id: Date.now(),
           }),
@@ -64,7 +70,7 @@ const Google = () => {
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
         onSuccess={responseGoogle}
-        onFailure={responseGoogle}
+        // onFailure={responseGoogle}
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}

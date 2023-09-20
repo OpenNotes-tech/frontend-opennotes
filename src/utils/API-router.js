@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 import http from "./backend-link";
 
 class Request {
@@ -26,8 +27,15 @@ class Request {
   async githubLogin(codeParam) {
     return http.get(`/api/v1/user/github-login?code=${codeParam}`);
   }
-
   //     ######  Report   ########
+
+  async getProfile() {
+    return http.get(
+      `/api/v1/user/profile/${localStorage.getItem(
+        "userID",
+      )}?opentoken=${Cookies.get("openToken")}`,
+    );
+  }
   async postReport(data) {
     return http.post(`/api/v1/user/report/`, data);
   }
@@ -38,6 +46,43 @@ class Request {
 
   async postClick(id) {
     return http.post(`/api/v1/link/links/${id}/click`);
+  }
+
+  async postBookmark(data) {
+    return http.post(`/api/v1/link/bookmarks`, {
+      ...data,
+      token: Cookies.get("openToken"),
+    });
+  }
+  async removeBookmark(id, data) {
+    return http.post(`/api/v1/link/${id}/unbookmark`, {
+      ...data,
+      token: Cookies.get("openToken"),
+    });
+  }
+  async postFolder(data) {
+    return http.post(`/api/v1/link/folders`, {
+      ...data,
+      token: Cookies.get("openToken"),
+    });
+  }
+  async deleteFolder(userId, folderId) {
+    return http.delete(
+      `/api/v1/link/folders/${folderId}?opentoken=${Cookies.get(
+        "openToken",
+      )}&userId=${userId}`,
+    );
+  }
+  async getFolder(id) {
+    return http.get(
+      `/api/v1/link/folders/${id}?opentoken=${Cookies.get("openToken")}`,
+    );
+  }
+  async editFolder(userId, folderId, folderName) {
+    return http.patch(
+      `/api/v1/link/folders/${folderId}?opentoken=${Cookies.get("openToken")}`,
+      { userId, folderName },
+    );
   }
 }
 

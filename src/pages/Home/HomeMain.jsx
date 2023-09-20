@@ -12,13 +12,21 @@ import debounce from "lodash/debounce";
 import { motion } from "framer-motion";
 import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
 import Request from "../../utils/API-router";
+// import { authenticate } from "../../store/features/editProfileSlice";
+import { openAuthModal } from "../../store/features/modalSlice";
 
 const HomeMain = () => {
   const { loading } = useSelector((state) => state.Error);
+  // const { profile } = useSelector((state) => state.UserProfile);
   const [fetchResult, setFetchResult] = useState([]);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  useEffect(() => {
+    if (location.search?.includes("?code=") === true) {
+      dispatch(openAuthModal());
+    }
+  }, [location.search?.includes("?code=") === true]);
 
   const queryParams = new URLSearchParams(location.search);
   const sort = queryParams.get("sortby");
@@ -58,6 +66,31 @@ const HomeMain = () => {
     }
   }, []);
 
+  // useEffect(() => {
+  //   if (Cookies.get("logged_in_candidate") === "yes") {
+  //     const rememberedTags = localStorage.getItem("tags");
+  //     const rememberedCategory = localStorage.getItem("category");
+  //     const rememberedPricing = localStorage.getItem("pricing");
+
+  //     const queryParams = {};
+
+  //     if (rememberedTags !== "null") {
+  //       queryParams.tags = rememberedTags;
+  //     }
+
+  //     if (rememberedCategory !== "null") {
+  //       queryParams.category = rememberedCategory;
+  //     }
+
+  //     if (rememberedPricing !== "null") {
+  //       queryParams.pricing = rememberedPricing;
+  //     }
+
+  //     const linkToPage = generateLinkWithQuery(location, queryParams);
+  //     navigate(linkToPage);
+  //   }
+  // }, []);
+
   // Main Fetching
   useEffect(() => {
     if (fetchResult) {
@@ -73,7 +106,6 @@ const HomeMain = () => {
         12,
       )
         .then((res) => {
-          console.log(res);
           const updatedResults = res.data.data.body.map((item) => {
             // Retrieve liked link IDs from local storage
             const likedLinkIds =
@@ -152,9 +184,23 @@ const HomeMain = () => {
         if (action === "like") {
           // Add the link ID to local storage if it's a like action
           likedLinkIds.push(linkId);
+          dispatch(
+            addError({
+              type: "success",
+              error: 'you "liked" the link!',
+              id: Date.now(),
+            }),
+          );
         } else {
           // Remove the link ID from local storage if it's a dislike action
           likedLinkIds.splice(likedLinkIds.indexOf(linkId), 1);
+          dispatch(
+            addError({
+              type: "success",
+              error: 'you "disliked" the link!',
+              id: Date.now(),
+            }),
+          );
         }
 
         // Update the local storage with the updated likedLinkIds

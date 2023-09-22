@@ -91,23 +91,23 @@ const ShareModal = () => {
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
-                style={{ backgroundColor: "rgb(106, 10, 181)" }}
+                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full bg-[#0077b5] text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
+                  width="24"
+                  height="24"
                   viewBox="0 0 24 24"
-                  stroke-width="1.5"
+                  fill="none"
                   stroke="currentColor"
-                  aria-hidden="true"
-                  class="h-6 w-6"
+                  stroke-width="1.3"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-linkedin"
                 >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
-                  ></path>
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                  <rect width="4" height="12" x="2" y="9" />
+                  <circle cx="4" cy="4" r="2" />
                 </svg>
               </Link>
               <p class="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">

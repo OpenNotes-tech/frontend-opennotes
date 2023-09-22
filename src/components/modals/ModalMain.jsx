@@ -1,14 +1,16 @@
-import BookmarkModal from "./BookmarkModal";
-import LinkDetailsModal from "./LinkDetailsModal";
-import ShareModal from "./ShareModal";
-import UserReport from "./UserReport";
-import LangModal from "./LangModal";
-import { useSelector } from "react-redux";
-import Sign from "../../pages/Authentication/Sign";
-import { FilterModal } from "./FilterModal";
 import { AnimatePresence } from "framer-motion";
-import ExploreMobileModal from "./ExploreMobileModal";
+import { useSelector } from "react-redux";
+import { Suspense, lazy } from "react";
 import ErrorModal from "./ErrorModal";
+const ExploreMobileModal = lazy(() => import("./ExploreMobileModal"));
+const Sign = lazy(() => import("../../pages/Authentication/Sign"));
+const LinkDetailsModal = lazy(() => import("./LinkDetailsModal"));
+const NewsletterModal = lazy(() => import("./NewsletterModal"));
+const BookmarkModal = lazy(() => import("./BookmarkModal"));
+const FilterModal = lazy(() => import("./FilterModal"));
+const ShareModal = lazy(() => import("./ShareModal"));
+const UserReport = lazy(() => import("./UserReport"));
+const LangModal = lazy(() => import("./LangModal"));
 
 const ModalMain = () => {
   const {
@@ -20,18 +22,23 @@ const ModalMain = () => {
     isAuthModalOpen,
     isFilterModalOpen,
     isExploreModalOpen,
+    isNewsModalOpen,
   } = useSelector((state) => state.Modal);
+
   return (
     <>
       <AnimatePresence initial={false} onExitComplete={() => null}>
-        {isDetailsModalOpen === true && <LinkDetailsModal />}
-        {isShareModalOpen === true && <ShareModal />}
-        {isBookmarkModalOpen === true && <BookmarkModal />}
-        {isLangModalOpen === true && <LangModal />}
-        {isReportModalOpen === true && <UserReport />}
-        {isAuthModalOpen === true && <Sign />}
-        {isFilterModalOpen === true && <FilterModal />}
-        {isExploreModalOpen === true && <ExploreMobileModal />}
+        <Suspense fallback={null}>
+          {isDetailsModalOpen === true && <LinkDetailsModal />}
+          {isShareModalOpen === true && <ShareModal />}
+          {isBookmarkModalOpen === true && <BookmarkModal />}
+          {isLangModalOpen === true && <LangModal />}
+          {isReportModalOpen === true && <UserReport />}
+          {isAuthModalOpen === true && <Sign />}
+          {isFilterModalOpen === true && <FilterModal />}
+          {isExploreModalOpen === true && <ExploreMobileModal />}
+          {isNewsModalOpen === true && <NewsletterModal />}
+        </Suspense>
       </AnimatePresence>
       {<ErrorModal />}
     </>

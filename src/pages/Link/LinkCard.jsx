@@ -1,16 +1,18 @@
-import Tippy from "@tippyjs/react";
-import "tippy.js/dist/tippy.css";
-import "tippy.js/animations/shift-away.css";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
+import Tippy from "@tippyjs/react";
+import Cookies from "js-cookie";
+// import { useHandleClicks } from "../../hooks/useHandleClicks";
+import "tippy.js/animations/shift-away.css";
+import "tippy.js/dist/tippy.css";
 import {
   openBookmarkModal,
   openShareModal,
   openDetailsModal,
   openAuthModal,
 } from "../../store/features/modalSlice";
-import { motion } from "framer-motion";
-import Cookies from "js-cookie";
+
 const formatLikeCount = (count) => {
   if (count < 1000) {
     return count.toString();
@@ -21,8 +23,9 @@ const formatLikeCount = (count) => {
   }
 };
 
-const LinkCard = ({ linkElement, handleLike, handleClick }) => {
+const LinkCard = ({ linkElement, handleLike }) => {
   const userProfile = useSelector((state) => state?.UserProfile?.profile);
+  // const { clickSubmit } = useHandleClicks();
   const dispatch = useDispatch();
 
   const isLinkIdInAnyFolder = userProfile?.folders?.some((folder) => {
@@ -40,7 +43,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
   //   mouseY.set(clientY - top);
   // }
   const handleBookmarkModal = () => {
-    if (Cookies.get("logged_in_candidate") === "yes") {
+    if (Cookies.get("userID") !== undefined) {
       dispatch(openBookmarkModal(linkElement));
     } else {
       dispatch(openAuthModal());
@@ -60,11 +63,6 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
     } else {
       dispatch(openShareModal(linkElement));
     }
-  };
-
-  const handleDetailsModal = () => {
-    // navigate("/details/" + linkElement._id, { state: linkElement });
-    dispatch(openDetailsModal(linkElement));
   };
 
   const handleLinkClick = () => {
@@ -148,7 +146,7 @@ const LinkCard = ({ linkElement, handleLike, handleClick }) => {
             <motion.button
               whileTap={{ scale: 0.9 }}
               className="flex flex-row items-center justify-center space-x-2 rounded-md  bg-slate-100 px-8 py-1 text-center font-medium text-slate-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
-              onClick={handleDetailsModal}
+              onClick={() => dispatch(openDetailsModal(linkElement))}
               type="button"
             >
               <svg

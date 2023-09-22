@@ -1,7 +1,7 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { deleteFolder } from "../../store/features/editProfileSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { setLoading, addError } from "../../store/features/errorSlice";
+import { deleteFolder } from "../../store/features/editProfileSlice";
 import Request from "../../utils/API-router";
 
 const FolderList = () => {

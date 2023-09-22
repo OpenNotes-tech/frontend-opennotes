@@ -6,7 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         roboto: ["Roboto", "sans-serif"],
-        jos: ["Josefin Slab", "serif"],
+        // jos: ["Josefin Slab", "serif"],
         slab: ["Roboto Slab", "serif"],
       },
       colors: {
@@ -28,10 +28,6 @@ module.exports = {
         dark_body: "#5A5A5A",
         dark_bnt_txt: "#5A5A5A",
         light_bnt_txt: "#5A5A5A",
-        // dark_bnt_txt: "#5A5A5A",
-        // dark_bnt_txt: "#5A5A5A",
-        // dark_bnt_txt: "#5A5A5A",
-        // dark_body: "#5A5A5A",
       },
       animation: {
         text: "text 5s ease infinite", //Beta text animation

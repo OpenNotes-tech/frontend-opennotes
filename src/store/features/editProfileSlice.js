@@ -2,22 +2,14 @@ import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
 const initialState = {
-  data: [],
-  isLoggedIn: Cookies.get("logged_in_candidate"),
-  profile: [], // TODO: Check without localstorage code
+  isLoggedIn: Cookies.get("userID") !== undefined,
+  profile: [],
 };
 
 export const editProfileSlice = createSlice({
   name: "UserProfile",
   initialState,
   reducers: {
-    setData: (state, action) => {
-      if (action.payload.first) {
-        state.data = action.payload.data;
-      } else {
-        state.data.push(action.payload.data);
-      }
-    },
     editUserProfile: (state, action) => {
       state.profile = action.payload;
     },
@@ -79,7 +71,7 @@ export const editProfileSlice = createSlice({
       state.education.push(action.payload);
     },
     authenticate: (state, action) => {
-      state.isLoggedIn = Cookies.get("logged_in_candidate");
+      state.isLoggedIn = Cookies.get("userID") !== undefined;
       state.profile = action.payload;
     },
     logout: (state) => {
@@ -96,6 +88,5 @@ export const {
   deleteFolder,
   editFolder,
   logout,
-  setData,
   authenticate,
 } = editProfileSlice.actions;

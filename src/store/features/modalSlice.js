@@ -8,6 +8,7 @@ const initialState = {
   isShareModalOpen: false,
   isExploreModalOpen: false,
   isFilterModalOpen: false,
+  isNewsModalOpen: false,
   modalValue: null,
 };
 
@@ -20,6 +21,12 @@ export const modalSlice = createSlice({
     },
     closeAuthModal: (state) => {
       state.isAuthModalOpen = false;
+    },
+    openNewsModal: (state) => {
+      state.isNewsModalOpen = true;
+    },
+    closeNewsModal: (state) => {
+      state.isNewsModalOpen = false;
     },
     openLangModal: (state) => {
       state.isLangModalOpen = true;
@@ -91,4 +98,6 @@ export const {
   openExploreModal,
   closeFilterModal,
   openFilterModal,
+  openNewsModal,
+  closeNewsModal,
 } = modalSlice.actions;

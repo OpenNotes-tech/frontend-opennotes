@@ -40,7 +40,7 @@ const LinkDetailsModal = () => {
   const containerRef = useRef(null);
 
   const handleBookmarkModal = () => {
-    if (Cookies.get("logged_in_candidate") === "yes") {
+    if (Cookies.get("userID") !== undefined) {
       dispatch(openBookmarkModal(modalValue));
     } else {
       dispatch(openAuthModal());

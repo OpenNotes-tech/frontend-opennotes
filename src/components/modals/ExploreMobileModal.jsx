@@ -2,12 +2,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import * as React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
+import { QueryRoute } from "../../hooks/useGenerateQueryLink";
 import { useDispatch } from "react-redux";
 import {
   openReportModal,
   closeExploreModal,
   openLangModal,
+  openNewsModal,
 } from "../../store/features/modalSlice";
 import { createDropInVariant } from "../../hooks/useAnimationVariants";
 const AnimatedLink = motion(Link);
@@ -26,6 +27,10 @@ const ExploreMobileModal = () => {
     dispatch(openReportModal(data));
   };
 
+  const toggleNewsletter = () => {
+    dispatch(openNewsModal());
+  };
+
   const toggleLanguage = () => {
     dispatch(closeExploreModal());
     dispatch(openLangModal());
@@ -33,7 +38,7 @@ const ExploreMobileModal = () => {
 
   const handleCategorySubmit = (e, navLink) => {
     dispatch(closeExploreModal());
-    const linkToPage = generateLinkWithQuery(location, { category: navLink });
+    const linkToPage = QueryRoute(location, { category: navLink });
     navigate(linkToPage);
   };
 
@@ -693,7 +698,7 @@ const ExploreMobileModal = () => {
                         type="button"
                         data-ripple-light="true"
                         data-dialog-target="report-dialog"
-                        onClick={() => toggleReport("bug")}
+                        onClick={toggleNewsletter}
                         className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-gray-800   focus:bg-gray-100 focus:text-gray-900 focus:outline-none md:px-5 lg:px-10"
                       >
                         <div className="flex flex-none items-center space-x-2">

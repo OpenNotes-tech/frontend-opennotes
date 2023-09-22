@@ -1,14 +1,13 @@
 import { useLocation, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { setLoading, addError } from "../../store/features/errorSlice";
 import { editFolder } from "../../store/features/editProfileSlice";
-import Request from "../../utils/API-router";
-import LinkCard from "../Link/LinkCard";
 import LoaderSkeleton from "../../components/LoaderSkeleton";
 import IconNoResult from "../../components/IconNoResult";
-import clsx from "clsx";
-import { motion } from "framer-motion";
+import Request from "../../utils/API-router";
+import LinkCard from "../Link/LinkCard";
 
 const FolderDetails = () => {
   const loading = useSelector((state) => state.Error.loading);
@@ -161,25 +160,24 @@ const FolderDetails = () => {
         )}
       </div>
       <div className="flex flex-col items-center space-y-10 px-4 pt-10">
-        {fetchResult?.length ? (
+        {fetchResult?.length > 0 && (
           <div className="grid grid-cols-1 gap-y-12 px-3 md:grid-cols-2 md:gap-x-12 md:px-8 lg:grid-cols-3">
             {fetchResult.map((linkElement, index) => (
               <LinkCard key={index} linkElement={linkElement} />
             ))}
           </div>
-        ) : null}
-        <div
-          className={clsx("trigger", {
-            visible: loading,
-          })}
-        >
-          {parseInt(sessionStorage.getItem("_PageNumber")) ===
-            parseInt(sessionStorage.getItem("_TotalPages")) &&
-            !(!loading === true && fetchResult?.length === 0) && (
+        )}
+
+        {loading && (
+          <div className="trigger visible">
+            {parseInt(sessionStorage.getItem("_PageNumber")) ===
+              parseInt(sessionStorage.getItem("_TotalPages")) && (
               <LoaderSkeleton />
             )}
-        </div>
-        {!loading === true && fetchResult?.length === 0 && (
+          </div>
+        )}
+
+        {!loading && fetchResult?.length === 0 && (
           <div className="flex justify-center">
             <IconNoResult />
           </div>

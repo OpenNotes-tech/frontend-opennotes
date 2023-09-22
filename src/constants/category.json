@@ -1,0 +1,52 @@
+[
+  {
+    "id": "/",
+    "label": "Home",
+    "icon": "Home"
+  },
+  {
+    "id": "frontend",
+    "label": "Frontend",
+    "icon": "Palette"
+  },
+  {
+    "id": "backend",
+    "label": "Backend",
+    "icon": "Server"
+  },
+  {
+    "id": "mobile",
+    "label": "Mobile",
+    "icon": "Smartphone"
+  },
+  {
+    "id": "courses",
+    "label": "IT Courses",
+    "icon": "GraduationCap"
+  },
+  {
+    "id": "cybersecurity",
+    "label": "Cyber Security",
+    "icon": "Fingerprint"
+  },
+  {
+    "id": "datascience",
+    "label": "AI / ML / DS",
+    "icon": "Brain"
+  },
+  {
+    "id": "algorithms",
+    "label": "Algorithms",
+    "icon": "Braces"
+  },
+  {
+    "id": "blogs",
+    "label": "Blogs",
+    "icon": "ScrollText"
+  },
+  {
+    "id": "podcasts",
+    "label": "Podcasts",
+    "icon": "Mic"
+  }
+]

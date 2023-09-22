@@ -1,14 +1,14 @@
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useEffect } from "react";
 import Cookies from "js-cookie";
-import Request from "../../utils/API-router";
-import { authenticate } from "../../store/features/editProfileSlice";
 import { addError, setLoading } from "../../store/features/errorSlice";
+import { authenticate } from "../../store/features/editProfileSlice";
 import { closeAuthModal } from "../../store/features/modalSlice";
+import Request from "../../utils/API-router";
 
 const GitHub = () => {
-  const [rerender, setRerender] = useState(false);
+  // const [rerender, setRerender] = useState(false);
   const GITHUB_TOKEN = "8f2beced15a05a04ea8a";
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,71 +24,48 @@ const GitHub = () => {
     if (codeParam && localStorage.getItem("accessToken") === null) {
       dispatch(setLoading(true));
 
-      async function getAccessToken() {
-        try {
-          Request.githubLogin(codeParam)
-            .then((res) => {
-              localStorage.setItem("userID", res.data.user._id);
-              Cookies.set("logged_in_candidate", "yes", {
-                secure: true,
-                expires: new Date(res.data.user.password),
-              });
-              Cookies.set("openToken", res.data.token, {
-                secure: true,
-                expires: new Date(res.data.user.password),
-              });
-              dispatch(authenticate(res?.data?.user));
-              dispatch(
-                addError({
-                  type: "success",
-                  error: "Successfully Signed Up!",
-                  id: Date.now(),
-                }),
-              );
-              dispatch(setLoading(false));
-
-              // Redirect to main page after 3 seconds
-              setTimeout(() => {
-                navigate("/");
-                handleAuthModalToggle();
-              }, 500);
-            })
-            .catch((error) => {
-              console.log(error);
-
-              addError({
-                type: "error",
-                error: error.response?.message,
-                id: Date.now(),
-              });
-              dispatch(setLoading(false));
-            });
-        } catch (error) {
+      Request.githubLogin(codeParam)
+        .then((res) => {
+          Cookies.set("userID", res.data.user._id, {
+            secure: true,
+            expires: new Date(res.data.user.password),
+          });
+          Cookies.set("openToken", res.data.token, {
+            secure: true,
+            expires: new Date(res.data.user.password),
+          });
+          dispatch(authenticate(res?.data?.user));
           dispatch(
             addError({
-              type: "error",
-              error: error?.response?.data?.message,
+              type: "success",
+              error: "Successfully Signed Up!",
               id: Date.now(),
             }),
           );
-
           dispatch(setLoading(false));
-        }
-      }
-      getAccessToken();
-    }
-  }, [rerender]);
 
-  const loginWithGithub = () => {
-    window.location.assign(
-      "https://github.com/login/oauth/authorize?client_id=" + GITHUB_TOKEN,
-    );
-  };
+          // Redirect to main page after 3 seconds
+          setTimeout(() => {
+            navigate("/");
+            handleAuthModalToggle();
+          }, 500);
+        })
+        .catch((error) => {
+          console.log(error);
+
+          addError({
+            type: "error",
+            error: error.response?.message,
+            id: Date.now(),
+          });
+          dispatch(setLoading(false));
+        });
+    }
+  }, []);
 
   return (
-    <button
-      type="button"
-      onClick={loginWithGithub}
+    <Link
+      to={"https://github.com/login/oauth/authorize?client_id=" + GITHUB_TOKEN}
       class="bg-white-dark/30 flex gap-1 rounded-md bg-slate-100 px-4 py-3 text-slate-700 shadow-none sm:gap-2 lg:hover:bg-slate-200 lg:hover:text-slate-900"
     >
       <svg
@@ -107,7 +84,7 @@ const GitHub = () => {
         </g>
       </svg>
       Github
-    </button>
+    </Link>
   );
 };
 

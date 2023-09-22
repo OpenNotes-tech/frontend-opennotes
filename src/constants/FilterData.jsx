@@ -4,7 +4,7 @@ export const FrontendOptions = [
 
   // Frontend UI/UX Design
   { value: "icon", label: "Icon", color: "#ABC4FF" },
-  { value: "video_clip", label: "Video", color: "#ABC4FF" },
+  { value: "video", label: "Video", color: "#ABC4FF" },
   { value: "image", label: "Picture", color: "#ABC4FF" },
   { value: "color", label: "Color", color: "#ABC4FF" },
   { value: "graphics", label: "Graphics", color: "#ABC4FF" },
@@ -17,6 +17,7 @@ export const FrontendOptions = [
   { value: "sound", label: "Sound", color: "#ABC4FF" },
   { value: "animation", label: "Animation", color: "#ABC4FF" },
   { value: "pattern", label: "Pattern", color: "#ABC4FF" },
+  { value: "shape", label: "Shape", color: "#ABC4FF" },
   { value: "blob", label: "Blob", color: "#ABC4FF" },
   { value: "wave", label: "Wave", color: "#ABC4FF" },
   { value: "emoji", label: "Emoji", color: "#ABC4FF" },
@@ -51,6 +52,7 @@ export const FrontendOptions = [
   { value: "Sections", label: "Sections", color: "#CCDBFD" },
   // AAAA
   { value: "aboutsection", label: "About", color: "#CCDBFD" },
+  { value: "404section", label: "Not Found (404)", color: "#CCDBFD" },
   { value: "accordionsection", label: "Accordion", color: "#CCDBFD" },
   { value: "alertsection", label: "Alert", color: "#CCDBFD" },
   {
@@ -198,6 +200,7 @@ export const FrontendOptions = [
   { value: "toastsection", label: "Toast", color: "#CCDBFD" },
   // VVVV
   { value: "videosection", label: "Video Section", color: "#CCDBFD" },
+  { value: "chatsection", label: "Chat UI", color: "#CCDBFD" },
 
   // Frontend Development
   { value: "accessibility", label: "Accessibility", color: "#D7E3FC" },
@@ -218,6 +221,11 @@ export const FrontendOptions = [
 
   // Frontend Library
   { value: "library", label: "Library", color: "#E2EAFC" },
+  {
+    value: "statemanagementreduxmobxzustlandjotai",
+    label: "State Management",
+    color: "#E2EAFC",
+  },
   { value: "webrtc", label: "WebRTC", color: "#E2EAFC" }, // Think of smth for this kind of libraries
   { value: "angularjs", label: "Angular.js", color: "#E2EAFC" },
   { value: "nextjs", label: "Next.js", color: "#E2EAFC" },
@@ -243,12 +251,19 @@ export const FrontendOptions = [
   { value: "adobeillustrator", label: "Adobe Illustrator", color: "#EDF2FB" }, // prototyping
   { value: "adobephotoshop", label: "Adobe Photoshop", color: "#EDF2FB" },
   { value: "adobexd", label: "Adobe XD", color: "#EDF2FB" },
+  {
+    value: "adobeaftereffects",
+    label: "Adobe After Effects",
+    color: "#EDF2FB",
+  },
+  { value: "adobepremierepro", label: "Adobe Premiere Pro", color: "#EDF2FB" },
   { value: "sketch", label: "Sketch", color: "#EDF2FB" },
   { value: "figma", label: "Figma", color: "#EDF2FB" },
   { value: "figmaplugin", label: "Figma Plugin", color: "#EDF2FB" },
   { value: "css", label: "CSS", color: "#EDF2FB" }, // ui design code
   { value: "bootstrap", label: "Bootstrap", color: "#EDF2FB" },
-  { value: "sass", label: "Sass", color: "#EDF2FB" },
+  { value: "bulma", label: "Bulma", color: "#EDF2FB" },
+  { value: "sassscss", label: "Sass", color: "#EDF2FB" },
   { value: "postcss", label: "PostCSS", color: "#EDF2FB" },
   { value: "tailwindcss", label: "TailwindCSS", color: "#EDF2FB" },
   { value: "less", label: "Less", color: "#EDF2FB" },
@@ -420,10 +435,12 @@ export const BackendOptions = [
   { value: "guide", label: "Guide", color: "#DDFFF7" },
   { value: "decoder", label: "Decoder", color: "#DDFFF7" },
   { value: "readme", label: "README", color: "#DDFFF7" },
+  { value: "payment", label: "Payment", color: "#DDFFF7" },
   { value: "startup", label: "Startup", color: "#DDFFF7" },
   { value: "code", label: "Code", color: "#DDFFF7" },
   { value: "iot", label: "IoT", color: "#DDFFF7" },
   { value: "macos", label: "MacOS", color: "#DDFFF7" },
+  { value: "linux", label: "Linux", color: "#DDFFF7" },
   { value: "windows", label: "Windows", color: "#DDFFF7" },
   { value: "interview", label: "Interview", color: "#DDFFF7" },
   { value: "search", label: "Search", color: "#DDFFF7" },
@@ -492,11 +509,10 @@ export const MobileOptions = [
   { value: "fastlane", label: "Fastlane", color: "#D0F4BA" },
   { value: "hockeyapp", label: "HockeyApp", color: "#D0F4BA" },
   { value: "singleton", label: "Singleton", color: "#D0F4BA" },
-  { value: "factorymethod", label: "Factory Method", color: "#D0F4BA" },
 
   // Mobile App Business  Monetization, Trends and Emerging Technologies, Analytics
   {
-    value: "webmobilemonitization", //webmobilemonitization
+    value: "webmobilemonitization",
     label: "Web/Mobile Monitization",
     color: "#EAF8DA",
   },
@@ -528,7 +544,7 @@ export const AIOptions = [
     color: "#E7A7C0",
   },
   {
-    value: "nlp", //naturallanguage
+    value: "naturalanguage",
     label: "Natural Language Processing",
     color: "#E7A7C0",
   },
@@ -618,63 +634,18 @@ export const AIOptions = [
 ];
 export const AlgorithmsOptions = [
   { value: "Algorithms", label: "Algorithms", isDisabled: true },
-  { value: "frontend", label: "Frontend" },
-  { value: "backend", label: "Backend" },
-  { value: "mobile", label: "Mobile" },
-  { value: "blogs", label: "Blogs" },
-  { value: "podcasts", label: "Podcasts" },
-  { value: "datascience", label: "AI / ML / DS" },
-  { value: "algorithms", label: "Algorithms" },
-  { value: "courses", label: "IT Courses" },
-  { value: "cybersecurity", label: "Cyber Security" },
 ];
 export const SecurityOptions = [
   { value: "Cyber Security", label: "Cyber Security", isDisabled: true },
-  { value: "frontend", label: "Frontend" },
-  { value: "backend", label: "Backend" },
-  { value: "mobile", label: "Mobile" },
-  { value: "blogs", label: "Blogs" },
-  { value: "podcasts", label: "Podcasts" },
-  { value: "datascience", label: "AI / ML / DS" },
-  { value: "algorithms", label: "Algorithms" },
-  { value: "courses", label: "IT Courses" },
-  { value: "cybersecurity", label: "Cyber Security" },
 ];
 export const CourseOptions = [
   { value: "IT Courses", label: "IT Courses", isDisabled: true },
-  { value: "frontend", label: "Frontend" },
-  { value: "backend", label: "Backend" },
-  { value: "mobile", label: "Mobile" },
-  { value: "blogs", label: "Blogs" },
-  { value: "podcasts", label: "Podcasts" },
-  { value: "datascience", label: "AI / ML / DS" },
-  { value: "algorithms", label: "Algorithms" },
-  { value: "courses", label: "IT Courses" },
-  { value: "cybersecurity", label: "Cyber Security" },
 ];
 export const BlogOptions = [
   { value: "Blogs", label: "Blogs", isDisabled: true },
-  { value: "frontend", label: "Frontend" },
-  { value: "backend", label: "Backend" },
-  { value: "mobile", label: "Mobile" },
-  { value: "blogs", label: "Blogs" },
-  { value: "podcasts", label: "Podcasts" },
-  { value: "datascience", label: "AI / ML / DS" },
-  { value: "algorithms", label: "Algorithms" },
-  { value: "courses", label: "IT Courses" },
-  { value: "cybersecurity", label: "Cyber Security" },
 ];
 export const PodcastOptions = [
   { value: "Podcasts", label: "Podcasts", isDisabled: true },
-  { value: "frontend", label: "Frontend" },
-  { value: "backend", label: "Backend" },
-  { value: "mobile", label: "Mobile" },
-  { value: "blogs", label: "Blogs" },
-  { value: "podcasts", label: "Podcasts" },
-  { value: "datascience", label: "AI / ML / DS" },
-  { value: "algorithms", label: "Algorithms" },
-  { value: "courses", label: "IT Courses" },
-  { value: "cybersecurity", label: "Cyber Security" },
 ];
 export const PricingOptions = [
   { value: "free", label: "Free" },

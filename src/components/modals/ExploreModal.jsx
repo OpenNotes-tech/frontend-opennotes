@@ -1,9 +1,10 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
+import { QueryRoute } from "../../hooks/useGenerateQueryLink";
 import { useDispatch } from "react-redux";
 import {
   openReportModal,
   openLangModal,
+  openNewsModal,
 } from "../../store/features/modalSlice";
 import { motion, AnimatePresence } from "framer-motion";
 import { createDropInVariant } from "../../hooks/useAnimationVariants";
@@ -25,8 +26,12 @@ const ExploreModal = ({ toggleExplore }) => {
     dispatch(openLangModal());
   };
 
+  const toggleNewsletter = () => {
+    dispatch(openNewsModal());
+  };
+
   const handleCategorySubmit = (e, navLink) => {
-    const linkToPage = generateLinkWithQuery(location, { category: navLink });
+    const linkToPage = QueryRoute(location, { category: navLink });
     navigate(linkToPage);
   };
   const dropInVariant = createDropInVariant("3vh");
@@ -40,7 +45,7 @@ const ExploreModal = ({ toggleExplore }) => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className={`fixed inset-0 right-[10px] z-[999] w-full place-items-center divide-y divide-slate-300 rounded-lg shadow-2xl md:absolute md:inset-auto md:mt-[540px] md:w-[720px] lg:w-[840px] ${
-            Cookies.get("logged_in_candidate") === "yes"
+            Cookies.get("userID") !== undefined
               ? "md:right-6 lg:right-[170px] xl:right-[200px]"
               : "md:right-6 lg:right-[150px] xl:right-[270px]"
           }`}
@@ -431,7 +436,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   type="button"
                   data-ripple-light="true"
                   data-dialog-target="report-dialog"
-                  onClick={() => toggleReport("bug")}
+                  onClick={toggleNewsletter}
                   className="flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium text-slate-600 focus:bg-slate-200 focus:text-slate-800 focus:outline-none md:px-5 lg:px-10 lg:hover:bg-slate-200 lg:hover:text-slate-800"
                 >
                   <div className="flex flex-none items-center space-x-2">

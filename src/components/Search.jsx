@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { generateLinkWithQuery } from "../hooks/useGenerateQueryLink";
+import { QueryRoute } from "../hooks/useGenerateQueryLink";
 import { openFilterModal } from "../store/features/modalSlice";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
@@ -29,13 +29,13 @@ const Search = ({ nav }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (sortby === null) {
-      const linkToPage = generateLinkWithQuery(location, {
+      const linkToPage = QueryRoute(location, {
         search_query: searchValue,
         sortby: "relevant",
       });
       navigate(linkToPage);
     } else {
-      const linkToPage = generateLinkWithQuery(location, {
+      const linkToPage = QueryRoute(location, {
         search_query: searchValue,
       });
       navigate(linkToPage);

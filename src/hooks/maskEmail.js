@@ -1,7 +1,7 @@
 import Cookies from "js-cookie";
 
 const maskEmail = (email) => {
-  if (Cookies.get("logged_in_candidate") === "yes" && email !== undefined) {
+  if (Cookies.get("userID") !== undefined && email !== undefined) {
     // Split the email address into local and domain parts
     const [localPart, domainPart] = email.split("@");
 

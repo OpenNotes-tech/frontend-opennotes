@@ -1,31 +1,33 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import ExploreModal from "../components/modals/ExploreModal";
-import { logout } from "../store/features/editProfileSlice";
-import { openAuthModal } from "../store/features/modalSlice";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { useState, useRef, useEffect } from "react";
+import Cookies from "js-cookie";
+
+import { createDropInVariant } from "../hooks/useAnimationVariants";
+import { openAuthModal } from "../store/features/modalSlice";
+import ExploreModal from "../components/modals/ExploreModal";
+import { logout } from "../store/features/editProfileSlice";
+import useDarkMode from "../hooks/useDarkMode";
+import maskEmail from "../hooks/maskEmail";
 import Request from "../utils/API-router";
 import Loader from "../components/Loader";
 import Search from "../components/Search";
-import Cookies from "js-cookie";
 import "../assets/css/darkmode.css";
-import { motion, AnimatePresence } from "framer-motion";
-import useDarkMode from "../hooks/useDarkMode";
-import { createDropInVariant } from "../hooks/useAnimationVariants";
-import maskEmail from "../hooks/maskEmail";
 const AnimatedLink = motion(Link);
 
 const Navbar = () => {
+  const { profile } = useSelector((state) => state.UserProfile);
+  const { loading } = useSelector((state) => state.Error);
+  const isAuthorized = Cookies.get("userID") !== undefined;
   const dropInSearch = createDropInVariant("-10vh");
   const dropInProfile = createDropInVariant("3vh");
-  const [isDarkMode, toggleDarkMode] = useDarkMode();
-  const { loading } = useSelector((state) => state.Error);
-  const { profile } = useSelector((state) => state.UserProfile);
   const [mobileSearchBar, setMobileSearchBar] = useState(false);
+  const [scrolledSearch, setScrolledSearch] = useState(false);
   const [toggleExplore, setToggleExplore] = useState(false);
   const [toggleProfile, setToggleProfile] = useState(false);
+  const [isDarkMode, toggleDarkMode] = useDarkMode(false);
   const [scrolled, setScrolled] = useState(false);
-  const [scrolledSearch, setScrolledSearch] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -55,22 +57,14 @@ const Navbar = () => {
   );
 
   const Logout = () => {
-    dispatch(logout());
     Request.logout();
-    Cookies.remove("logged_in_candidate");
+    dispatch(logout());
+    Cookies.remove("openToken");
+    Cookies.remove("userID");
     setToggleProfile(false);
     dispatch(openAuthModal());
   };
-  const handleAuthModalToggle = () => {
-    dispatch(openAuthModal());
-  };
-  const handleBookmarkModalToggle = () => {
-    if (Cookies.get("logged_in_candidate") === "yes") {
-      navigate("/bookmark");
-    } else {
-      dispatch(openAuthModal());
-    }
-  };
+
   // ##########  Mobile version Searchbar & Bottom Tabs   #################
   const handleScroll = () => {
     if (window.scrollY > 0) {
@@ -85,9 +79,7 @@ const Navbar = () => {
       setScrolledSearch(false);
     }
   };
-  const handleSearch = () => {
-    setMobileSearchBar(!mobileSearchBar);
-  };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -119,7 +111,10 @@ const Navbar = () => {
           </Link>
           {scrolledSearch && (
             <div className="lg:hidden">
-              <motion.button onClick={handleSearch} whileTap={{ scale: 0.8 }}>
+              <motion.button
+                onClick={() => setMobileSearchBar(!mobileSearchBar)}
+                whileTap={{ scale: 0.8 }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="20"
@@ -189,7 +184,9 @@ const Navbar = () => {
           <div>
             <motion.button
               whileTap={{ scale: 0.9 }}
-              onClick={handleBookmarkModalToggle}
+              onClick={() =>
+                isAuthorized ? navigate("/bookmark") : dispatch(openAuthModal())
+              }
               className={`group rounded-full px-2 py-[8px] text-center text-base font-semibold transition duration-300 ease-in-out focus:outline-none  ${
                 scrolled
                   ? "lg:hover:bg-slate-100 lg:hover:text-blue-500 dark:lg:hover:bg-slate-600"
@@ -212,11 +209,11 @@ const Navbar = () => {
               </svg>
             </motion.button>
           </div>
-          {Cookies.get("logged_in_candidate") === "yes" ? null : (
+          {isAuthorized ? null : (
             <div>
               <motion.button
                 whileTap={{ scale: 0.9 }}
-                onClick={handleAuthModalToggle}
+                onClick={() => dispatch(openAuthModal())}
                 className={`backdrop-blur-4xl select-none rounded-full bg-white/20 bg-opacity-20 px-4 text-center text-base font-semibold backdrop-saturate-200 focus:outline-none lg:select-text  ${
                   scrolled
                     ? "py-[7px] text-slate-600  ring-[1px] ring-slate-300 dark:text-slate-300 dark:ring-slate-500 lg:hover:ring-[1px] lg:hover:ring-slate-600 dark:lg:hover:ring-slate-300"
@@ -260,8 +257,7 @@ const Navbar = () => {
                   <line x1="4" x2="20" y1="18" y2="18"></line>
                 </svg>
 
-                {Cookies.get("logged_in_candidate") === "yes" &&
-                profile?.photo !== undefined ? (
+                {isAuthorized && profile?.photo !== undefined ? (
                   <div className="bg-cover bg-center bg-no-repeat">
                     <img
                       src={profile?.photo}
@@ -309,8 +305,7 @@ const Navbar = () => {
                   >
                     <div className="flex items-center space-x-3 p-3">
                       <div className="bg-cover bg-center bg-no-repeat">
-                        {Cookies.get("logged_in_candidate") === "yes" &&
-                        profile?.photo !== undefined ? (
+                        {isAuthorized && profile?.photo !== undefined ? (
                           <div className="bg-cover bg-center bg-no-repeat">
                             <img
                               src={profile?.photo}
@@ -343,16 +338,14 @@ const Navbar = () => {
                           to="/"
                           className="select-none font-semibold text-slate-700 dark:text-slate-200 lg:hover:text-slate-500 dark:lg:hover:text-white"
                         >
-                          {Cookies.get("logged_in_candidate") === "yes" &&
-                          profile?.fullName !== undefined ? (
+                          {isAuthorized && profile?.fullName !== undefined ? (
                             <p>{profile?.fullName}</p>
                           ) : (
                             <p>Full name</p>
                           )}
                         </AnimatedLink>
                         <p className="line-clamp-1 select-none font-normal text-slate-500 dark:text-slate-300">
-                          {Cookies.get("logged_in_candidate") === "yes" &&
-                          profile?.email !== undefined ? (
+                          {isAuthorized && profile?.email !== undefined ? (
                             <p>{maskEmail(profile?.email)}</p>
                           ) : (
                             <p>john.doe@example.com</p>
@@ -390,7 +383,7 @@ const Navbar = () => {
                       <AnimatedLink
                         whileTap={{ scale: 0.9 }}
                         role="menuitem"
-                        to="/"
+                        to="/profile"
                         className=" flex items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                       >
                         <div className="flex flex-none items-center space-x-2">
@@ -442,7 +435,7 @@ const Navbar = () => {
                       </Link>
 
                       <div>
-                        {Cookies.get("logged_in_candidate") === "yes" ? (
+                        {isAuthorized ? (
                           <motion.button
                             whileTap={{ scale: 0.9 }}
                             onClick={Logout}
@@ -471,7 +464,7 @@ const Navbar = () => {
                         ) : (
                           <motion.button
                             whileTap={{ scale: 0.9 }}
-                            onClick={handleAuthModalToggle}
+                            onClick={() => dispatch(openAuthModal())}
                             role="menuitem"
                             className="flex w-full items-center space-x-2 rounded px-3 py-2 text-left text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                           >
@@ -552,7 +545,10 @@ const Navbar = () => {
                 nav={"navbarVersion"}
                 loading={loading}
               />
-              <motion.button whileTap={{ scale: 0.8 }} onClick={handleSearch}>
+              <motion.button
+                whileTap={{ scale: 0.8 }}
+                onClick={() => setMobileSearchBar(!mobileSearchBar)}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"

@@ -16,12 +16,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import Selector from "../Selector";
 import { useLocation, useNavigate } from "react-router-dom";
-import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
+import { QueryRoute } from "../../hooks/useGenerateQueryLink";
 import { motion } from "framer-motion";
 import { createDropInVariant } from "../../hooks/useAnimationVariants";
 import useClickOutside from "../../hooks/useClickOutside";
 
-export const FilterModal = () => {
+const FilterModal = () => {
   const { isFilterModalOpen } = useSelector((state) => state.Modal);
   const location = useLocation();
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ export const FilterModal = () => {
     setRoutePricing(commaSeparatedString);
   };
   const handleSubmit = (e) => {
-    const linkToPage = generateLinkWithQuery(location, {
+    const linkToPage = QueryRoute(location, {
       tags: routeTags,
       category: routeCategory,
       pricing: routePricing,
@@ -335,3 +335,5 @@ export const FilterModal = () => {
     </>
   );
 };
+
+export default FilterModal;

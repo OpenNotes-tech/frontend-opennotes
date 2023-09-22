@@ -31,9 +31,9 @@ class Request {
 
   async getProfile() {
     return http.get(
-      `/api/v1/user/profile/${localStorage.getItem(
-        "userID",
-      )}?opentoken=${Cookies.get("openToken")}`,
+      `/api/v1/user/profile/${Cookies.get("userID")}?opentoken=${Cookies.get(
+        "openToken",
+      )}`,
     );
   }
   async postReport(data) {

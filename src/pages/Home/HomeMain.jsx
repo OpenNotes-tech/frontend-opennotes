@@ -1,32 +1,28 @@
-import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import Footer from "../../layouts/Footer";
-import Hero from "./Hero";
 import { useDispatch, useSelector } from "react-redux";
-import { setLoading, addError } from "../../store/features/errorSlice";
-import Navbar from "../../layouts/Navbar";
-import LinkMain from "../Link/LinkMain";
-import SearchAPI from "../../utils/SearchAPI";
-import ModalMain from "../../components/modals/ModalMain";
-import debounce from "lodash/debounce";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { generateLinkWithQuery } from "../../hooks/useGenerateQueryLink";
-import Request from "../../utils/API-router";
-// import { authenticate } from "../../store/features/editProfileSlice";
+import debounce from "lodash/debounce";
+
+import { setLoading, addError } from "../../store/features/errorSlice";
 import { openAuthModal } from "../../store/features/modalSlice";
+import { QueryRoute } from "../../hooks/useGenerateQueryLink";
+import { useHandleLikes } from "../../hooks/useHandleLike";
+import ModalMain from "../../components/modals/ModalMain";
+import SearchAPI from "../../utils/SearchAPI";
+import Navbar from "../../layouts/Navbar";
+import Footer from "../../layouts/Footer";
+import LinkMain from "../Link/LinkMain";
+import Hero from "./Hero";
 
 const HomeMain = () => {
   const { loading } = useSelector((state) => state.Error);
-  // const { profile } = useSelector((state) => state.UserProfile);
   const [fetchResult, setFetchResult] = useState([]);
+  const { likeSubmit } = useHandleLikes();
+
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  useEffect(() => {
-    if (location.search?.includes("?code=") === true) {
-      dispatch(openAuthModal());
-    }
-  }, [location.search?.includes("?code=") === true]);
 
   const queryParams = new URLSearchParams(location.search);
   const sort = queryParams.get("sortby");
@@ -34,6 +30,12 @@ const HomeMain = () => {
   const pricing = queryParams.get("pricing");
   const category = queryParams.get("category");
   const searchQuery = queryParams.get("search_query");
+
+  useEffect(() => {
+    if (location.search?.includes("?code=") === true) {
+      dispatch(openAuthModal());
+    }
+  }, [location.search?.includes("?code=") === true]);
 
   useEffect(() => {
     sessionStorage.setItem("_TotalPages", 0);
@@ -61,37 +63,12 @@ const HomeMain = () => {
         queryParams.pricing = rememberedPricing;
       }
 
-      const linkToPage = generateLinkWithQuery(location, queryParams);
+      const linkToPage = QueryRoute(location, queryParams);
       navigate(linkToPage);
     }
   }, []);
 
-  // useEffect(() => {
-  //   if (Cookies.get("logged_in_candidate") === "yes") {
-  //     const rememberedTags = localStorage.getItem("tags");
-  //     const rememberedCategory = localStorage.getItem("category");
-  //     const rememberedPricing = localStorage.getItem("pricing");
-
-  //     const queryParams = {};
-
-  //     if (rememberedTags !== "null") {
-  //       queryParams.tags = rememberedTags;
-  //     }
-
-  //     if (rememberedCategory !== "null") {
-  //       queryParams.category = rememberedCategory;
-  //     }
-
-  //     if (rememberedPricing !== "null") {
-  //       queryParams.pricing = rememberedPricing;
-  //     }
-
-  //     const linkToPage = generateLinkWithQuery(location, queryParams);
-  //     navigate(linkToPage);
-  //   }
-  // }, []);
-
-  // Main Fetching
+  // #######      Main Fetching       #######
   useEffect(() => {
     if (fetchResult) {
       dispatch(setLoading(true));
@@ -153,95 +130,10 @@ const HomeMain = () => {
   ]);
 
   const handleLike = (linkId) => {
-    dispatch(setLoading(true));
-
-    // Check if the link is already liked
-    const likedLinkIds = JSON.parse(localStorage.getItem("likedLinkIds")) || [];
-    const isAlreadyLiked = likedLinkIds.includes(linkId);
-
-    // Determine the action based on whether it's already liked or not
-    const action = isAlreadyLiked ? "dislike" : "like";
-
-    // Send the action to the backend
-    Request.postLike(linkId, action)
-      .then((res) => {
-        // Assuming res.data contains updated like count for the card
-        const updatedFetchResult = fetchResult.map((item) => {
-          if (item._id === linkId) {
-            // Update the like count for the specific card and set liked based on the action
-            return {
-              ...item,
-              like: res.data.data.like,
-              liked: action === "like",
-            };
-          }
-          return item;
-        });
-
-        // Update the state with the updated fetchResult
-        setFetchResult(updatedFetchResult);
-
-        if (action === "like") {
-          // Add the link ID to local storage if it's a like action
-          likedLinkIds.push(linkId);
-          dispatch(
-            addError({
-              type: "success",
-              error: 'you "liked" the link!',
-              id: Date.now(),
-            }),
-          );
-        } else {
-          // Remove the link ID from local storage if it's a dislike action
-          likedLinkIds.splice(likedLinkIds.indexOf(linkId), 1);
-          dispatch(
-            addError({
-              type: "success",
-              error: 'you "disliked" the link!',
-              id: Date.now(),
-            }),
-          );
-        }
-
-        // Update the local storage with the updated likedLinkIds
-        localStorage.setItem("likedLinkIds", JSON.stringify(likedLinkIds));
-
-        // Update the session storage or other relevant data
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        dispatch(
-          addError({
-            type: "error",
-            error: error?.message,
-            id: Date.now(),
-          }),
-        );
-        dispatch(setLoading(false));
-      });
-  };
-  const handleClick = (linkId) => {
-    dispatch(setLoading(true));
-
-    // Send the action to the backend
-    Request.postClick(linkId)
-      .then((res) => {
-        // Update the session storage or other relevant data
-        dispatch(setLoading(false));
-      })
-      .catch((error) => {
-        dispatch(
-          addError({
-            type: "error",
-            error: error?.message,
-            id: Date.now(),
-          }),
-        );
-        dispatch(setLoading(false));
-      });
+    likeSubmit(linkId, fetchResult, setFetchResult);
   };
 
-  // Infinite Scrolling
+  // #######    Infinite Scrolling   #############
   const handleScroll = async () => {
     if (
       !loading &&
@@ -267,7 +159,7 @@ const HomeMain = () => {
     return () => window.removeEventListener("scroll", debouncedHandleScroll);
   }, [loading]);
 
-  // Scroll to Top
+  // #######     Scroll to Top   #######
   const filterRef = useRef(null);
   const [isFilterSticky, setIsFilterSticky] = useState(false);
   useEffect(() => {
@@ -288,9 +180,6 @@ const HomeMain = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, [filterRef]);
-  const handleScrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
 
   return (
     <>
@@ -312,7 +201,6 @@ const HomeMain = () => {
           sort={sort}
           category={category}
           handleLike={handleLike}
-          handleClick={handleClick}
         />
         {(parseInt(sessionStorage.getItem("_PageNumber")) ===
           parseInt(sessionStorage.getItem("_TotalPages")) ||
@@ -321,7 +209,7 @@ const HomeMain = () => {
           <motion.button
             whileHover={{ scale: 1.1 }}
             className="fixed bottom-20 right-4 rounded-full bg-slate-700 p-2 text-white shadow-2xl transition duration-300 ease-in-out md:bottom-10 lg:bottom-20 lg:hover:bg-blue-500"
-            onClick={handleScrollToTop}
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

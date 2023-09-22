@@ -1,16 +1,16 @@
-import { useNavigate } from "react-router-dom";
-import { closeAuthModal } from "../../store/features/modalSlice";
-import { authenticate } from "../../store/features/editProfileSlice";
-import { addError, setLoading } from "../../store/features/errorSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
-import Request from "../../utils/API-router";
+import { motion } from "framer-motion";
 import Cookies from "js-cookie";
+import { addError, setLoading } from "../../store/features/errorSlice";
+import { createDropInVariant } from "../../hooks/useAnimationVariants";
+import { authenticate } from "../../store/features/editProfileSlice";
+import { closeAuthModal } from "../../store/features/modalSlice";
+import useClickOutside from "../../hooks/useClickOutside";
+import Request from "../../utils/API-router";
 import Google from "./Google";
 import GitHub from "./GitHub";
-import { motion } from "framer-motion";
-import { createDropInVariant } from "../../hooks/useAnimationVariants";
-import useClickOutside from "../../hooks/useClickOutside";
 
 const Sign = () => {
   const isAuthModalOpen = useSelector((state) => state.Modal.isAuthModalOpen);
@@ -24,7 +24,6 @@ const Sign = () => {
   const [passwordVisible3, setPasswordVisible3] = useState(false);
   const [isAuthSliderOpen, setIsAuthSliderOpen] = useState(true);
   const [formData, setFormData] = useState({
-    fullName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -58,16 +57,16 @@ const Sign = () => {
     if (isAuthSliderOpen) {
       Request.signup(formData)
         .then((res) => {
-          localStorage.setItem("userID", res.data.user._id);
-          Cookies.set("logged_in_candidate", "yes", {
+          Cookies.set("userID", res.data.user._id, {
             secure: true,
             expires: new Date(res.data.user.password),
           });
+
           Cookies.set("openToken", res.data.token, {
             secure: true,
             expires: new Date(res.data.user.password),
           });
-          dispatch(authenticate(res.data.user)); //TODO: also add res.data.token to the profile
+          dispatch(authenticate(res.data.user));
           dispatch(
             addError({
               type: "success",
@@ -99,14 +98,14 @@ const Sign = () => {
     } else {
       Request.login(formData)
         .then((res) => {
-          localStorage.setItem("userID", res.data.user._id);
+          // localStorage.setItem("userID", res.data.user._id);
           Cookies.set("openToken", res.data.token, {
             secure: true,
             expires: new Date(res.data.user.password),
           });
-          Cookies.set("logged_in_candidate", "yes", {
+          Cookies.set("userID", res.data.user._id, {
             secure: true,
-            expires: new Date(res?.data?.user?.password),
+            expires: new Date(res.data.user.password),
           });
           dispatch(authenticate(res?.data?.user));
           dispatch(

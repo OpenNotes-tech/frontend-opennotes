@@ -1,13 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import GoogleLogin from "react-google-login";
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { gapi } from "gapi-script";
+import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { authenticate } from "../../store/features/editProfileSlice";
-import Request from "../../utils/API-router";
 import { addError, setLoading } from "../../store/features/errorSlice";
+import { authenticate } from "../../store/features/editProfileSlice";
 import { closeAuthModal } from "../../store/features/modalSlice";
+import Request from "../../utils/API-router";
 
 const Google = () => {
   const navigate = useNavigate();
@@ -28,8 +28,7 @@ const Google = () => {
     dispatch(setLoading(true));
     Request.googleLogin({ idToken: response.tokenId })
       .then((res) => {
-        localStorage.setItem("userID", res.data.user._id);
-        Cookies.set("logged_in_candidate", "yes", {
+        Cookies.set("userID", res.data.user._id, {
           secure: true,
           expires: new Date(res.data.user.password),
         });
@@ -70,7 +69,6 @@ const Google = () => {
       <GoogleLogin
         clientId={`${process.env.REACT_APP_GOOGLE_CLIENT_ID}`}
         onSuccess={responseGoogle}
-        // onFailure={responseGoogle}
         render={(renderProps) => (
           <button
             onClick={renderProps.onClick}

@@ -1,40 +1,34 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Suspense, lazy, useEffect } from "react";
+import Cookies from "js-cookie";
 
-// Functions
-// import PrivateRouter from "./utils/PrivateRouter";
-// import ScrollToTop from "./utils/ScrollToTop";
-// Authentication Routes
-import ForgotPassword from "./pages/Authentication/ForgotPassword";
-// Home Pgage Routes
+import { setLoading, addError } from "./store/features/errorSlice";
+import { authenticate } from "./store/features/editProfileSlice";
 import HomeMain from "./pages/Home/HomeMain";
-// User Bookmark Routes
-import BookmarkMain from "./pages/Bookmark/BookmarkMain";
-// User Profile Routes
-import ProfileMain from "./pages/Profile/ProfileMain";
+import Request from "./utils/API-router";
+
+// Home/Bookmark/Profile Pgage Routes
+const ForgotPassword = lazy(() =>
+  import("./pages/Authentication/ForgotPassword"),
+);
+const FolderDetails = lazy(() => import("./pages/Bookmark/FolderDetails"));
+const BookmarkEmpty = lazy(() => import("./pages/Bookmark/BookmarkEmpty"));
+const BookmarkMain = lazy(() => import("./pages/Bookmark/BookmarkMain"));
+const ProfileMain = lazy(() => import("./pages/Profile/ProfileMain"));
 
 // Static Routes
-import NotFound from "./pages/Static/NotFound";
-import About from "./pages/Static/About";
-import Policy from "./pages/Static/Policy";
-import { useEffect } from "react";
-import BookmarkEmpty from "./pages/Bookmark/BookmarkEmpty";
-import FolderDetails from "./pages/Bookmark/FolderDetails";
-// import LinkDetails from "./pages/Link/LinkDetails";
-// import { useSelector } from "react-redux";
-
-import { useDispatch, useSelector } from "react-redux";
-import { setLoading, addError } from "./store/features/errorSlice";
-import Request from "./utils/API-router";
-import { authenticate } from "./store/features/editProfileSlice";
-import Sponsor from "./pages/Static/Sponsor";
-import Cookies from "js-cookie";
+const NotFound = lazy(() => import("./pages/Static/NotFound"));
+const Sponsor = lazy(() => import("./pages/Static/Sponsor"));
+const Policy = lazy(() => import("./pages/Static/Policy"));
+const About = lazy(() => import("./pages/Static/About"));
 
 const App = () => {
   const { profile } = useSelector((state) => state.UserProfile);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!profile.length && Cookies.get("logged_in_candidate") === "yes") {
+    if (!profile.length && Cookies.get("userID") !== undefined) {
       dispatch(setLoading(true));
 
       Request.getProfile()
@@ -56,6 +50,11 @@ const App = () => {
           dispatch(setLoading(false));
         });
     }
+  }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("_TotalPages", 0);
+    sessionStorage.setItem("_PageNumber", 1);
   }, []);
 
   // let scrollPosition = 0; // Variable to store the scroll position
@@ -89,41 +88,26 @@ const App = () => {
   //   document.body.style.setProperty("inset", `-${scrollPosition}px 0px 0px`);
   //   document.body.style.setProperty("inset-inline-end", `17px`);
   // }
-  useEffect(() => {
-    sessionStorage.setItem("_TotalPages", 0);
-    sessionStorage.setItem("_PageNumber", 1);
-  }, []);
 
   return (
     <BrowserRouter>
-      {/* <ScrollToTop /> */}
-      <div className="bg-white dark:bg-slate-800">
-        <Routes>
-          {/* ##########################################    
-                      CANDIDATE Routes    
-        ############################################### */}
-          <Route path="/" exact element={<HomeMain />}></Route>
-          {/* <Route path="/details/:linkId" exact element={<LinkDetails />} /> */}
-          <Route path="/profile" exact element={<ProfileMain />} />
-          <Route path="bookmark" exact element={<BookmarkMain />}>
-            <Route index exact element={<BookmarkEmpty />} />
-            <Route path=":folderId" exact element={<FolderDetails />} />
-          </Route>
-
-          {/* #########################################  
-                      AUTHENTICATION  
-        ############################################# */}
-          <Route path="/forgot-password" exact element={<ForgotPassword />} />
-
-          {/* ######################################   
-                        STATIC PAGES  
-        ########################################## */}
-          <Route path="/about" exact element={<About />} />
-          <Route path="/sponsor" exact element={<Sponsor />} />
-          <Route exact path="/privacy-policy" element={<Policy />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+      <Suspense fallback={null}>
+        <div className="dark:bg-slate-800">
+          <Routes>
+            <Route path="/" exact element={<HomeMain />}></Route>
+            <Route path="/profile" exact element={<ProfileMain />} />
+            <Route path="bookmark" exact element={<BookmarkMain />}>
+              <Route index exact element={<BookmarkEmpty />} />
+              <Route path=":folderId" exact element={<FolderDetails />} />
+            </Route>
+            <Route path="/forgot-password" exact element={<ForgotPassword />} />
+            <Route exact path="/privacy-policy" element={<Policy />} />
+            <Route path="/sponsor" exact element={<Sponsor />} />
+            <Route path="/about" exact element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </Suspense>
     </BrowserRouter>
   );
 };

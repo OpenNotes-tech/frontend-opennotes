@@ -1,4 +1,4 @@
-export const QueryRoute = (location, newQueryParams) => {
+export const QueryRoutes = (location, newQueryParams) => {
   const queryParams = new URLSearchParams(location.search);
 
   for (const key in newQueryParams) {

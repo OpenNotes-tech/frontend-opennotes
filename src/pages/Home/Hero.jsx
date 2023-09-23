@@ -51,40 +51,40 @@ const Hero = ({ category }) => {
   return (
     <>
       <div
-        class="relative -mx-4 -mt-16 h-[440px] overflow-hidden bg-cover bg-top bg-no-repeat px-4 py-16 text-center md:-mx-0 md:bg-center md:px-10 xl:px-16"
+        className="relative -mx-4 -mt-16 h-[440px] overflow-hidden bg-cover bg-top bg-no-repeat px-4 py-16 text-center md:-mx-0 md:bg-center md:px-10 xl:px-16"
         style={{
           backgroundImage: `url(${getPhoto})`,
         }}
       >
-        <div class="absolute inset-0 h-full w-full bg-gray-900 opacity-25"></div>
-        <div class="absolute inset-0 h-64 w-full bg-gradient-to-b from-black to-transparent opacity-50"></div>
+        <div className="absolute inset-0 h-full w-full bg-gray-900 opacity-25"></div>
+        <div className="absolute inset-0 h-64 w-full bg-gradient-to-b from-black to-transparent opacity-50"></div>
 
-        <div class="relative mx-auto max-w-7xl px-4 py-16 text-white lg:py-16">
-          <div class="flex flex-wrap ">
-            <div class="text-balance relative mx-auto w-full px-4">
-              <h1 class="mb-2 select-none font-slab text-lg font-semibold tracking-wide  md:text-2xl lg:select-text lg:text-4xl ">
+        <div className="relative mx-auto max-w-7xl px-4 py-16 text-white lg:py-16">
+          <div className="flex flex-wrap ">
+            <div className="text-balance relative mx-auto w-full px-4">
+              <h1 className="mb-2 select-none font-slab text-lg font-semibold tracking-wide  md:text-2xl lg:select-text lg:text-4xl ">
                 Curated list of resources for designers & developers
               </h1>
-              <p class="flex flex-col items-center justify-center font-slab text-sm font-light md:flex-row lg:text-base">
+              <div className="flex flex-col items-center justify-center font-slab text-sm font-light md:flex-row lg:text-base">
                 <p>
                   Over{" "}
-                  <span class="relative inline-block select-none px-2 before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-pink-500 lg:select-text">
-                    <span class="relative select-none lg:select-text">
+                  <span className="relative inline-block select-none px-2 before:absolute before:-inset-1 before:block before:-skew-y-3 before:bg-pink-500 lg:select-text">
+                    <span className="relative select-none lg:select-text">
                       4.1 million+{" "}
                     </span>
                   </span>{" "}
                   high quality unique links shared by our talented community.
                 </p>
-                {/* <p class="text-blue-gray-900 mt-4 w-20 animate-text items-center rounded-full border-2 border-white bg-opacity-100 bg-gradient-to-r from-[#FB0058] to-[#00B7FF] bg-clip-text text-center  font-serif text-base font-bold italic leading-relaxed text-transparent antialiased opacity-100  drop-shadow-2xl backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200  backdrop-grayscale backdrop-hue-rotate-30 backdrop-opacity-100 backdrop-saturate-0  md:ml-8 md:mt-0 ">
+                {/* <p className="text-blue-gray-900 mt-4 w-20 animate-text items-center rounded-full border-2 border-white bg-opacity-100 bg-gradient-to-r from-[#FB0058] to-[#00B7FF] bg-clip-text text-center  font-serif text-base font-bold italic leading-relaxed text-transparent antialiased opacity-100  drop-shadow-2xl backdrop-blur-xl backdrop-brightness-200 backdrop-contrast-200  backdrop-grayscale backdrop-hue-rotate-30 backdrop-opacity-100 backdrop-saturate-0  md:ml-8 md:mt-0 ">
                   BETA
                 </p> */}
-              </p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="relative mx-auto -mt-28 h-48 max-w-7xl px-10 lg:h-64">
-          <Search />
+        <div className="relative mx-auto -mt-28 h-48 max-w-7xl px-10 lg:h-64">
+          {<Search nav={"heroVersion"} />}
         </div>
       </div>
     </>

@@ -6,7 +6,7 @@ import debounce from "lodash/debounce";
 
 import { setLoading, addError } from "../../store/features/errorSlice";
 import { openAuthModal } from "../../store/features/modalSlice";
-import { QueryRoute } from "../../hooks/useGenerateQueryLink";
+import { QueryRoutes } from "../../hooks/useGenerateQueryLink";
 import { useHandleLikes } from "../../hooks/useHandleLike";
 import ModalMain from "../../components/modals/ModalMain";
 import SearchAPI from "../../utils/SearchAPI";
@@ -63,7 +63,7 @@ const HomeMain = () => {
         queryParams.pricing = rememberedPricing;
       }
 
-      const linkToPage = QueryRoute(location, queryParams);
+      const linkToPage = QueryRoutes(location, queryParams);
       navigate(linkToPage);
     }
   }, []);

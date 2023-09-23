@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 import Selector from "../Selector";
 import { useLocation, useNavigate } from "react-router-dom";
-import { QueryRoute } from "../../hooks/useGenerateQueryLink";
+import { QueryRoutes } from "../../hooks/useGenerateQueryLink";
 import { motion } from "framer-motion";
 import { createDropInVariant } from "../../hooks/useAnimationVariants";
 import useClickOutside from "../../hooks/useClickOutside";
@@ -77,7 +77,7 @@ const FilterModal = () => {
     setRoutePricing(commaSeparatedString);
   };
   const handleSubmit = (e) => {
-    const linkToPage = QueryRoute(location, {
+    const linkToPage = QueryRoutes(location, {
       tags: routeTags,
       category: routeCategory,
       pricing: routePricing,
@@ -247,8 +247,8 @@ const FilterModal = () => {
                 />
               </div>
             </div>
-            <div class="-ml-2.5 flex items-center justify-between px-8">
-              <div class="inline-flex items-center">
+            <div className="-ml-2.5 flex items-center justify-between px-8">
+              <div className="inline-flex items-center">
                 <label
                   className="relative flex cursor-pointer items-center rounded-full px-3 py-[10px]"
                   htmlFor="checkbox"
@@ -285,10 +285,10 @@ const FilterModal = () => {
                   Remember my filter
                 </label>
               </div>
-              <div class="flex ">
+              <div className="flex ">
                 <button
                   type="button"
-                  class="text-heading flex flex-row items-center gap-x-2 text-center text-sm  underline  focus:outline-none lg:hover:no-underline"
+                  className="text-heading flex flex-row items-center gap-x-2 text-center text-sm  underline  focus:outline-none lg:hover:no-underline"
                 >
                   How filter works?{" "}
                   <svg
@@ -298,10 +298,10 @@ const FilterModal = () => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-info"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-info"
                   >
                     <circle cx="12" cy="12" r="10" />
                     <path d="M12 16v-4" />

@@ -4,7 +4,7 @@ import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import Icon from "../../hooks/Icon"; //TODO: uninstall clsx
-import { QueryRoute } from "../../hooks/useGenerateQueryLink";
+import { QueryRoutes } from "../../hooks/useGenerateQueryLink";
 import LoaderSkeleton from "../../components/LoaderSkeleton";
 import useMenuAnimation from "../../hooks/useMenuAnimation";
 import useScreenSize from "../../hooks/useScreenSize";
@@ -46,7 +46,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
   }, [isSortbyOpen]);
 
   const handleRouteSubmit = (e, query) => {
-    const linkToPage = QueryRoute(location, query);
+    const linkToPage = QueryRoutes(location, query);
     navigate(linkToPage);
   };
   const getWidthAndHeightCategory = () => {
@@ -159,7 +159,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
               loading ? " pointer-events-none" : ""
             }`}
           >
-            <div class="relative mt-3 h-10 overflow-x-auto overflow-y-clip md:mt-0">
+            <div className="relative mt-3 h-10 overflow-x-auto overflow-y-clip md:mt-0">
               <Splide
                 options={{
                   gap: "1rem",
@@ -231,9 +231,9 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="lucide lucide-arrow-down-wide-narrow  mr-2.5"
                   >
                     <path d="m3 16 4 4 4-4" />
@@ -250,9 +250,9 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                     className="lucide lucide-chevron-down arrow ml-2.5"
                     style={{ transformOrigin: "50% 55%" }}
                   >

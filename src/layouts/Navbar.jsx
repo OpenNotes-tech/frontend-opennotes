@@ -122,10 +122,10 @@ const Navbar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-search"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-search"
                 >
                   <circle cx="11" cy="11" r="8" />
                   <path d="m21 21-4.3-4.3" />
@@ -169,9 +169,9 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className={`lucide lucide-chevron-down ml-2.5  ${
                   toggleExplore ? "rotate-180 transform" : ""
                 }`}
@@ -200,9 +200,9 @@ const Navbar = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 className="lucide lucide-bookmark group-lg:hover:fill-blue-500 " //transition duration-300 ease-in-out
               >
                 <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
@@ -262,7 +262,7 @@ const Navbar = () => {
                     <img
                       src={profile?.photo}
                       alt=""
-                      srcset=""
+                      srcSet=""
                       className="block h-8 w-8 flex-none rounded-full bg-no-repeat object-cover object-center"
                     />
                   </div>
@@ -310,7 +310,7 @@ const Navbar = () => {
                             <img
                               src={profile?.photo}
                               alt=""
-                              srcset=""
+                              srcSet=""
                               className="block h-10 w-10 flex-none rounded-full bg-contain bg-no-repeat object-cover object-center"
                             />
                           </div>
@@ -344,13 +344,13 @@ const Navbar = () => {
                             <p>Full name</p>
                           )}
                         </AnimatedLink>
-                        <p className="line-clamp-1 select-none font-normal text-slate-500 dark:text-slate-300">
+                        <div className="line-clamp-1 select-none font-normal text-slate-500 dark:text-slate-300">
                           {isAuthorized && profile?.email !== undefined ? (
                             <p>{maskEmail(profile?.email)}</p>
                           ) : (
                             <p>john.doe@example.com</p>
                           )}
-                        </p>
+                        </div>
                       </div>
                     </div>
                     <div className="space-y-1 p-2">
@@ -368,10 +368,10 @@ const Navbar = () => {
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="lucide lucide-bookmark"
+                            strokeWidth="1.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            className="lucide lucide-bookmark"
                           >
                             <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
                           </svg>
@@ -492,26 +492,26 @@ const Navbar = () => {
                     </div>
                     <div className="space-y-1 p-2">
                       <div className="rounded px-3 py-5 text-sm font-medium ">
-                        <div class="toggleWrapper mt-[120px]">
+                        <div className="toggleWrapper mt-[120px]">
                           <input
                             type="checkbox"
-                            class="dn"
+                            className="dn"
                             id="dn"
                             checked={isDarkMode}
                             onChange={toggleDarkMode}
                           />
-                          <label for="dn" class="toggle">
-                            <span class="toggle__handler">
-                              <span class="crater crater--1"></span>
-                              <span class="crater crater--2"></span>
-                              <span class="crater crater--3"></span>
+                          <label htmlFor="dn" className="toggle">
+                            <span className="toggle__handler">
+                              <span className="crater crater--1"></span>
+                              <span className="crater crater--2"></span>
+                              <span className="crater crater--3"></span>
                             </span>
-                            <span class="star star--1"></span>
-                            <span class="star star--2"></span>
-                            <span class="star star--3"></span>
-                            <span class="star star--4"></span>
-                            <span class="star star--5"></span>
-                            <span class="star star--6"></span>
+                            <span className="star star--1"></span>
+                            <span className="star star--2"></span>
+                            <span className="star star--3"></span>
+                            <span className="star star--4"></span>
+                            <span className="star star--5"></span>
+                            <span className="star star--6"></span>
                           </label>
                         </div>
                       </div>
@@ -556,10 +556,10 @@ const Navbar = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-x"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-x"
                 >
                   <path d="M18 6 6 18" />
                   <path d="m6 6 12 12" />

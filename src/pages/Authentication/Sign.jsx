@@ -155,7 +155,7 @@ const Sign = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      class="raletive fixed inset-0 z-[999] grid h-screen w-screen items-end justify-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm  md:place-items-center md:items-center"
+      className="raletive fixed inset-0 z-[999] grid h-screen w-screen items-end justify-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm  md:place-items-center md:items-center"
     >
       <motion.div
         variants={dropInVariant}
@@ -164,20 +164,20 @@ const Sign = () => {
         exit="exit"
         transition={{ damping: 300 }}
         data-dialog="sign-in-dialog"
-        class="sticky bottom-0 top-[100vh] mx-auto flex h-[570px] w-screen max-w-[26rem] flex-col rounded-t-xl bg-white bg-clip-border text-slate-700 shadow-md md:relative md:top-0 md:h-[500px] md:rounded-xl"
+        className="sticky bottom-0 top-[100vh] mx-auto flex h-[570px] w-screen max-w-[26rem] flex-col rounded-t-xl bg-white bg-clip-border text-slate-700 shadow-md md:relative md:top-0 md:h-[500px] md:rounded-xl"
       >
         <motion.button
           whileTap={{ scale: 0.9 }}
           aria-label="Close panel"
           onClick={handleAuthModalToggle}
-          class="absolute -top-6 left-[180px] z-10 hidden h-7 w-7 items-center justify-center rounded-full bg-white text-slate-700 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:inline-flex  md:h-8 md:w-8 lg:hover:text-slate-800  lg:hover:shadow-md"
+          className="absolute -top-6 left-[180px] z-10 hidden h-7 w-7 items-center justify-center rounded-full bg-white text-slate-700 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:-top-3 md:left-[405px] md:inline-flex  md:h-8 md:w-8 lg:hover:text-slate-800  lg:hover:shadow-md"
         >
           <svg
             stroke="currentColor"
             fill="currentColor"
-            stroke-width="0"
+            strokeWidth="0"
             viewBox="0 0 512 512"
-            class="text-xl"
+            className="text-xl"
             height="1em"
             width="1em"
             xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +221,7 @@ const Sign = () => {
               Log in
             </button>
           </div>
-          <ul class="flex justify-center gap-2 px-4 pt-10 sm:gap-5 md:px-10">
+          <ul className="flex justify-center gap-2 px-4 pt-10 sm:gap-5 md:px-10">
             <li>
               <Google isAuthSliderOpen={isAuthSliderOpen} />
             </li>
@@ -231,10 +231,10 @@ const Sign = () => {
             <li>
               <button
                 type="button"
-                class="flex gap-1 rounded-md bg-slate-100 px-4 py-3 text-slate-700 shadow-none sm:gap-2 lg:hover:bg-slate-200"
+                className="flex gap-1 rounded-md bg-slate-100 px-4 py-3 text-slate-700 shadow-none sm:gap-2 lg:hover:bg-slate-200"
               >
                 <svg
-                  class="h-5 w-5 sm:h-6 sm:w-6"
+                  className="h-5 w-5 sm:h-6 sm:w-6"
                   viewBox="0 0 256 209"
                   version="1.1"
                   xmlns="http://www.w3.org/2000/svg"
@@ -260,7 +260,7 @@ const Sign = () => {
           </div>
           <form className="w-full" onSubmit={handleSubmit}>
             {isAuthSliderOpen ? (
-              <div class="flex w-full flex-col gap-4 p-6">
+              <div className="flex w-full flex-col gap-4 p-6">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
                     onChange={handleInput}
@@ -388,7 +388,7 @@ const Sign = () => {
                 </div>
               </div>
             ) : (
-              <div class="flex w-full flex-col gap-4 p-6">
+              <div className="flex w-full flex-col gap-4 p-6">
                 <div className="relative h-10 w-full min-w-[200px]">
                   <input
                     onChange={handleInput}
@@ -459,26 +459,26 @@ const Sign = () => {
                     Password
                   </label>
                 </div>
-                <div class="-ml-2.5 flex items-center justify-between">
-                  <div class="inline-flex items-center">
+                <div className="-ml-2.5 flex items-center justify-between">
+                  <div className="inline-flex items-center">
                     <label
-                      class="relative flex cursor-pointer items-center rounded-full px-3 py-[10px]"
-                      for="checkbox"
+                      className="relative flex cursor-pointer items-center rounded-full px-3 py-[10px]"
+                      htmlFor="checkbox"
                       data-ripple-dark="true"
                     >
                       <input
                         type="checkbox"
-                        class="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 lg:hover:before:opacity-10"
+                        className="before:content[''] border-blue-gray-200 before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 lg:hover:before:opacity-10"
                         id="checkbox"
                       />
-                      <span class="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
+                      <span className="pointer-events-none absolute left-2/4 top-2/4 -translate-x-2/4 -translate-y-2/4 text-white opacity-0 transition-opacity peer-checked:opacity-100">
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
-                          class="h-3.5 w-3.5"
+                          className="h-3.5 w-3.5"
                           viewBox="0 0 20 20"
                           fill="currentColor"
                           stroke="currentColor"
-                          stroke-width="1"
+                          strokeWidth="1"
                         >
                           <path
                             fill-rule="evenodd"
@@ -489,16 +489,16 @@ const Sign = () => {
                       </span>
                     </label>
                     <label
-                      class="mt-px cursor-pointer select-none font-light text-gray-700"
-                      for="checkbox"
+                      className="mt-px cursor-pointer select-none font-light text-gray-700"
+                      htmlFor="checkbox"
                     >
                       Remember Me
                     </label>
                   </div>
-                  <div class="flex ">
+                  <div className="flex ">
                     <button
                       type="button"
-                      class="text-heading text-sm  underline  focus:outline-none lg:hover:no-underline"
+                      className="text-heading text-sm  underline  focus:outline-none lg:hover:no-underline"
                     >
                       Forgot password?
                     </button>
@@ -506,9 +506,9 @@ const Sign = () => {
                 </div>
               </div>
             )}
-            <div class="w-full p-6 pt-0">
+            <div className="w-full p-6 pt-0">
               <button
-                class="block w-full select-none rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hover:shadow-lg lg:hover:shadow-blue-500/40"
+                className="block w-full select-none rounded-lg bg-gradient-to-tr from-blue-600 to-blue-400 px-6 py-3 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all active:opacity-[0.85] disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none lg:hover:shadow-lg lg:hover:shadow-blue-500/40"
                 type="submit"
                 data-ripple-light="true"
               >

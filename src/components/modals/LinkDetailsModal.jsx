@@ -132,7 +132,7 @@ const LinkDetailsModal = () => {
         data-dialog-backdrop="sign-in-dialog"
         data-dialog-backdrop-close="true"
         ref={modalRef}
-        class="raletive fixed inset-0 z-[999] grid w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm "
+        className="raletive fixed inset-0 z-[999] grid w-screen place-items-center bg-black bg-opacity-60 opacity-100 backdrop-blur-sm "
       >
         <motion.div
           variants={dropInVariant}
@@ -141,19 +141,19 @@ const LinkDetailsModal = () => {
           exit="exit"
           transition={{ damping: 300 }}
           data-dialog="sign-in-dialog"
-          class=" mx-auto flex w-screen max-w-[40rem] flex-col bg-white bg-clip-border text-gray-700 shadow-md md:rounded-xl  lg:max-w-[60rem]" //overflow-y-scroll
+          className=" mx-auto flex w-screen max-w-[40rem] flex-col bg-white bg-clip-border text-gray-700 shadow-md md:rounded-xl  lg:max-w-[60rem]" //overflow-y-scroll
         >
           <button
             aria-label="Close panel"
             onClick={handleDetailsModalToggle}
-            class="absolute -top-3 left-56 z-10 hidden h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[630px] md:inline-flex md:h-8 md:w-8 lg:left-[950px] lg:hover:text-gray-800 lg:hover:shadow-md"
+            className="absolute -top-3 left-56 z-10 hidden h-7 w-7 items-center justify-center rounded-full bg-white text-gray-600 transition duration-200 focus:text-gray-800 focus:shadow-md focus:outline-none md:left-[630px] md:inline-flex md:h-8 md:w-8 lg:left-[950px] lg:hover:text-gray-800 lg:hover:shadow-md"
           >
             <svg
               stroke="currentColor"
               fill="currentColor"
-              stroke-width="0"
+              strokeWidth="0"
               viewBox="0 0 512 512"
-              class="text-xl"
+              className="text-xl"
               height="1em"
               width="1em"
               xmlns="http://www.w3.org/2000/svg"
@@ -182,15 +182,15 @@ const LinkDetailsModal = () => {
           >
             <div className="flex flex-row items-center justify-evenly space-x-8">
               <img
-                class="w-36 rounded-2xl md:w-52"
+                className="w-36 rounded-2xl md:w-52"
                 src={modalValue.photo}
                 alt=""
               />
               <div className="">
-                <h5 class="mb-2 flex flex-row justify-center truncate text-center text-xl font-bold capitalize tracking-wide text-gray-900 ">
+                <h5 className="mb-2 flex flex-row justify-center truncate text-center text-xl font-bold capitalize tracking-wide text-gray-900 ">
                   {modalValue.title}
                 </h5>
-                <p class="line-clamp-3 font-normal text-gray-700 dark:text-gray-400">
+                <p className="line-clamp-3 font-normal text-gray-700 dark:text-gray-400">
                   {modalValue.description}
                 </p>
               </div>
@@ -254,7 +254,7 @@ const LinkDetailsModal = () => {
             </div>
 
             <div className="space-x-3">
-              <p className="my-1 inline-block rounded-full  px-4 py-1">
+              <div className="my-1 inline-block rounded-full  px-4 py-1">
                 <div className="flex flex-row items-center gap-x-2 text-lg capitalize">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -263,10 +263,10 @@ const LinkDetailsModal = () => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-layout-grid"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-layout-grid"
                   >
                     <rect width="7" height="7" x="3" y="3" rx="1" />
                     <rect width="7" height="7" x="14" y="3" rx="1" />
@@ -275,7 +275,7 @@ const LinkDetailsModal = () => {
                   </svg>
                   Cagetory :
                 </div>
-              </p>
+              </div>
               {modalValue &&
                 modalValue.category.map((linkElement, index) => (
                   <p
@@ -300,10 +300,10 @@ const LinkDetailsModal = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-circle-dollar-sign"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-circle-dollar-sign"
                 >
                   <circle cx="12" cy="12" r="10" />
                   <path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8" />
@@ -320,10 +320,10 @@ const LinkDetailsModal = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-calendar-days"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-calendar-days"
                 >
                   <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
                   <line x1="16" x2="16" y1="2" y2="6" />
@@ -346,10 +346,10 @@ const LinkDetailsModal = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-mouse-pointer-click"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-mouse-pointer-click"
                 >
                   <path d="m9 9 5 12 1.774-5.226L21 14 9 9z" />
                   <path d="m16.071 16.071 4.243 4.243" />
@@ -372,10 +372,10 @@ const LinkDetailsModal = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-external-link"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-external-link"
                 >
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                   <polyline points="15 3 21 3 21 9" />
@@ -384,9 +384,9 @@ const LinkDetailsModal = () => {
                 <p>Open</p>
               </Link>
             </div>
-            <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t-2 border-slate-300 px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
+            <div className="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t-2 border-slate-300 px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
               <div
-                class=" relative flex items-center space-x-4"
+                className=" relative flex items-center space-x-4"
                 data-nc-id="PostCardLikeAndComment"
               >
                 <Tippy
@@ -395,7 +395,7 @@ const LinkDetailsModal = () => {
                   className="bg-black px-1 font-medium text-white"
                 >
                   <button
-                    class=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-slate-700 transition-colors focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
+                    className=" group relative flex h-8 min-w-[68px] items-center rounded-full bg-gray-50 px-3 text-xs leading-none text-slate-700 transition-colors focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
                     title="Liked"
                     data-nc-id="PostCardLikeAction"
                   >
@@ -406,14 +406,14 @@ const LinkDetailsModal = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-heart"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-heart"
                     >
                       <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                     </svg>
-                    <span class="ml-1">1.9k</span>
+                    <span className="ml-1">1.9k</span>
                   </button>
                 </Tippy>
                 <Tippy
@@ -432,10 +432,10 @@ const LinkDetailsModal = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-share-2"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-share-2"
                     >
                       <circle cx="18" cy="5" r="3" />
                       <circle cx="6" cy="12" r="3" />
@@ -447,7 +447,7 @@ const LinkDetailsModal = () => {
                 </Tippy>
               </div>
               <div
-                class="relative flex items-center space-x-2 text-xs text-slate-700 dark:text-slate-300"
+                className="relative flex items-center space-x-2 text-xs text-slate-700 dark:text-slate-300"
                 data-nc-id="PostCardSaveAction"
               >
                 <Tippy
@@ -457,7 +457,7 @@ const LinkDetailsModal = () => {
                 >
                   <button
                     onClick={handleBookmarkModal}
-                    class="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-slate-700 focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-blue-50 lg:hover:text-blue-600 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
+                    className="relative flex items-center justify-center rounded-full bg-gray-50 p-[10px] text-slate-700 focus:outline-none dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-blue-50 lg:hover:text-blue-600 dark:lg:hover:bg-blue-100 dark:lg:hover:text-blue-600"
                     data-nc-id="NcBookmark"
                     data-nc-bookmark-post-id="DEMO_POSTS_AUDIO_11"
                     title="Save to reading list"
@@ -469,10 +469,10 @@ const LinkDetailsModal = () => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-bookmark"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-bookmark"
                     >
                       <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" />
                     </svg>

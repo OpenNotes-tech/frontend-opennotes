@@ -66,10 +66,10 @@ const GitHub = () => {
   return (
     <Link
       to={"https://github.com/login/oauth/authorize?client_id=" + GITHUB_TOKEN}
-      class="bg-white-dark/30 flex gap-1 rounded-md bg-slate-100 px-4 py-3 text-slate-700 shadow-none sm:gap-2 lg:hover:bg-slate-200 lg:hover:text-slate-900"
+      className="bg-white-dark/30 flex gap-1 rounded-md bg-slate-100 px-4 py-3 text-slate-700 shadow-none sm:gap-2 lg:hover:bg-slate-200 lg:hover:text-slate-900"
     >
       <svg
-        class="h-5 w-5 sm:h-6 sm:w-6"
+        className="h-5 w-5 sm:h-6 sm:w-6"
         viewBox="0 0 256 250"
         version="1.1"
         xmlns="http://www.w3.org/2000/svg"

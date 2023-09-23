@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 function Errorbar({ type, text, id }) {
   const [visible, setVisible] = useState(false);
   const dispatch = useDispatch();
+
   useEffect(() => {
     setVisible(true);
     const timer = setTimeout(() => {
@@ -59,11 +60,10 @@ function Errorbar({ type, text, id }) {
       <AnimatePresence initial={false} onExitComplete={() => null}>
         {visible && (
           <motion.div
-            whileHover={{ scale: 1.1 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            class={`raletive z-[999] mr-8 mt-2 flex h-fit w-56 flex-col justify-between rounded-md border md:mr-12 md:w-96 xl:mr-16 ${bgColor(
+            className={`raletive z-[999] mr-8 mt-2 flex h-fit w-56 flex-col justify-between rounded-md border md:mr-12 md:w-96 xl:mr-16 ${bgColor(
               type,
             )}`}
           >
@@ -74,9 +74,9 @@ function Errorbar({ type, text, id }) {
               exit="exit"
               transition={{ damping: 300 }}
             >
-              <div class="flex justify-between p-2 md:p-4">
-                <div class="flex">
-                  <div class="mr-3 pt-1">
+              <div className="flex justify-between p-2 md:p-4">
+                <div className="flex">
+                  <div className="mr-3 pt-1">
                     <svg
                       width="26"
                       height="26"
@@ -88,7 +88,7 @@ function Errorbar({ type, text, id }) {
                     </svg>
                   </div>
                   <div>
-                    <h4 class="text-sm leading-6 md:text-base md:font-medium">
+                    <h4 className="text-sm leading-6 md:text-base md:font-medium">
                       {text}
                     </h4>
                   </div>
@@ -97,7 +97,7 @@ function Errorbar({ type, text, id }) {
                   <button
                     onClick={handleClose}
                     type="button"
-                    class={`rounded-md focus:outline-none focus:ring-2  ${
+                    className={`rounded-md focus:outline-none focus:ring-2  ${
                       type === "success"
                         ? "focus:ring-green-500"
                         : type === "error"
@@ -118,7 +118,7 @@ function Errorbar({ type, text, id }) {
                 </div>
               </div>
               <div
-                class={`absolute bottom-0 h-2 w-full rounded-b-md ${
+                className={`absolute bottom-0 h-2 w-full rounded-b-md ${
                   type === "success"
                     ? "shim-green"
                     : type === "error"

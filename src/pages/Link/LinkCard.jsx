@@ -76,7 +76,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
         whileHover={{ scale: 1.01 }}
         transition={{ stiffness: 300, damping: 10 }}
         // onMouseMove={handleMouseMove}
-        class="group relative flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-lg lg:hover:shadow-2xl"
+        className="group relative flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-lg lg:hover:shadow-2xl"
       >
         {/* <motion.div
           className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-lg:hover:opacity-100"
@@ -92,10 +92,10 @@ const LinkCard = ({ linkElement, handleLike }) => {
         /> */}
         <div className="h-1/2">
           {linkElement.photo ? (
-            <img class="rounded-t-2xl" src={linkElement.photo} alt="" />
+            <img className="rounded-t-2xl" src={linkElement.photo} alt="" />
           ) : (
             <svg
-              class="h-12 w-12 text-gray-200"
+              className="h-12 w-12 text-gray-200"
               xmlns="http://www.w3.org/2000/svg"
               aria-hidden="true"
               fill="currentColor"
@@ -104,19 +104,19 @@ const LinkCard = ({ linkElement, handleLike }) => {
               <path d="M480 80C480 35.82 515.8 0 560 0C604.2 0 640 35.82 640 80C640 124.2 604.2 160 560 160C515.8 160 480 124.2 480 80zM0 456.1C0 445.6 2.964 435.3 8.551 426.4L225.3 81.01C231.9 70.42 243.5 64 256 64C268.5 64 280.1 70.42 286.8 81.01L412.7 281.7L460.9 202.7C464.1 196.1 472.2 192 480 192C487.8 192 495 196.1 499.1 202.7L631.1 419.1C636.9 428.6 640 439.7 640 450.9C640 484.6 612.6 512 578.9 512H55.91C25.03 512 .0006 486.1 .0006 456.1L0 456.1z"></path>
             </svg>
           )}
-          <div class="p-5">
-            <h3 class="mb-2 truncate text-xl font-semibold capitalize leading-snug tracking-wide  text-slate-700 ">
+          <div className="p-5">
+            <h3 className="mb-2 truncate text-xl font-semibold capitalize leading-snug tracking-wide  text-slate-700 ">
               {linkElement.title}
             </h3>
-            <p class="mb-3 line-clamp-3 font-slab text-sm font-light leading-relaxed text-slate-400 ">
+            <p className="mb-3 line-clamp-3 font-slab text-sm font-light leading-relaxed text-slate-400 ">
               {linkElement.description}
             </p>
           </div>
         </div>
         <div className="bottom-0 flex h-1/2 w-full flex-col space-y-4 pb-4">
           <div className="mt-auto flex flex-col space-y-4 px-8 2xl:flex-row 2xl:justify-between 2xl:space-x-2 2xl:space-y-0 2xl:px-4">
-            {/* <div class="absolute -bottom-10 flex h-1/2 w-full items-center justify-center bg-black/20 opacity-0 -ml-4 transition-all duration-300 group-lg:hover:bottom-0 group-lg:hover:bg-transparent group-lg:hover:opacity-100">
-              <button class="bg-black px-5 py-2 text-white">Add to cart</button>
+            {/* <div className="absolute -bottom-10 flex h-1/2 w-full items-center justify-center bg-black/20 opacity-0 -ml-4 transition-all duration-300 group-lg:hover:bottom-0 group-lg:hover:bg-transparent group-lg:hover:opacity-100">
+              <button className="bg-black px-5 py-2 text-white">Add to cart</button>
             </div> */}
             <Link
               className="flex cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1px] border-slate-600 px-8 py-1 text-center font-medium text-slate-600 transition duration-200 ease-in-out md:py-1 lg:hover:border-blue-600 lg:hover:bg-blue-50 lg:hover:text-blue-600"
@@ -132,10 +132,10 @@ const LinkCard = ({ linkElement, handleLike }) => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-external-link"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-external-link"
               >
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
                 <polyline points="15 3 21 3 21 9" />
@@ -156,10 +156,10 @@ const LinkCard = ({ linkElement, handleLike }) => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="1.25"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="lucide lucide-info"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-info"
               >
                 <circle cx="12" cy="12" r="10" />
                 <path d="M12 16v-4" />
@@ -168,15 +168,15 @@ const LinkCard = ({ linkElement, handleLike }) => {
               <p>Details</p>
             </motion.button>
           </div>
-          <div class="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed ">
-            <div class=" relative flex items-center space-x-4">
+          <div className="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed ">
+            <div className=" relative flex items-center space-x-4">
               <Tippy
                 content="Like"
                 animation="shift-away"
                 className="hidden bg-black px-1 font-medium text-white lg:block"
               >
                 <button
-                  class={`group relative flex h-8 min-w-[68px] items-center justify-center rounded-full  px-3 text-xs leading-none  transition-colors focus:outline-none ${
+                  className={`group relative flex h-8 min-w-[68px] items-center justify-center rounded-full  px-3 text-xs leading-none  transition-colors focus:outline-none ${
                     linkElement.liked
                       ? "bg-rose-50 text-rose-600 dark:bg-rose-100 dark:text-rose-600 lg:hover:bg-slate-100  dark:lg:hover:bg-slate-100 "
                       : "bg-slate-100 text-slate-700 dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
@@ -192,16 +192,16 @@ const LinkCard = ({ linkElement, handleLike }) => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class={`lucide lucide-heart ${
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`lucide lucide-heart ${
                       linkElement.liked && "fill-rose-600"
                     }`}
                   >
                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
                   </svg>
-                  <span class="ml-1">
+                  <span className="ml-1">
                     {formatLikeCount(linkElement.like) !== "NaNk"
                       ? formatLikeCount(linkElement.like)
                       : 0}
@@ -224,10 +224,10 @@ const LinkCard = ({ linkElement, handleLike }) => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-share-2"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-share-2"
                   >
                     <circle cx="18" cy="5" r="3" />
                     <circle cx="6" cy="12" r="3" />
@@ -238,7 +238,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
                 </button>
               </Tippy>
             </div>
-            <div class="relative flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-300">
+            <div className="relative flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-300">
               <Tippy
                 content="Bookmark"
                 animation="shift-away"
@@ -246,7 +246,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
               >
                 <button
                   onClick={handleBookmarkModal}
-                  class={`relative flex items-center justify-center rounded-full bg-slate-100 p-[10px] focus:outline-none dark:bg-gray-100  lg:hover:bg-blue-50  dark:lg:hover:bg-blue-100  ${
+                  className={`relative flex items-center justify-center rounded-full bg-slate-100 p-[10px] focus:outline-none dark:bg-gray-100  lg:hover:bg-blue-50  dark:lg:hover:bg-blue-100  ${
                     isLinkIdInAnyFolder
                       ? "text-blue-500"
                       : "text-slate-600 dark:text-slate-900 dark:lg:hover:text-blue-600"
@@ -259,10 +259,10 @@ const LinkCard = ({ linkElement, handleLike }) => {
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class={`lucide lucide-bookmark ${
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className={`lucide lucide-bookmark ${
                       isLinkIdInAnyFolder ? "fill-blue-500" : ""
                     }`}
                   >

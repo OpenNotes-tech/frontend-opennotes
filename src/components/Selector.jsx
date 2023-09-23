@@ -1,5 +1,5 @@
-import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import Select from "react-select";
 const animatedComponents = makeAnimated();
 
 // const colorStyles = {

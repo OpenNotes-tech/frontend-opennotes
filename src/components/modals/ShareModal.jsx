@@ -42,7 +42,7 @@ const ShareModal = () => {
 
   return (
     <motion.div
-      class="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center  bg-black bg-opacity-60 p-4 text-center opacity-100 backdrop-blur-sm "
+      className="raletive fixed inset-0 z-[999] grid h-screen w-screen place-items-center  bg-black bg-opacity-60 p-4 text-center opacity-100 backdrop-blur-sm "
       role="dialog"
       ref={modalRef}
       initial={{ opacity: 0 }}
@@ -56,24 +56,24 @@ const ShareModal = () => {
         animate="visible"
         exit="exit"
         transition={{ damping: 300 }}
-        class="relative z-[9999] inline-block w-full scale-100 overflow-y-auto overflow-x-hidden text-left align-middle opacity-100 sm:w-auto"
+        className="relative z-[9999] inline-block w-full scale-100 overflow-y-auto overflow-x-hidden text-left align-middle opacity-100 sm:w-auto"
       >
-        <div class="xs:w-[480px] relative z-50 mx-auto w-full max-w-full overflow-hidden rounded-xl bg-white p-4 sm:w-[520px] sm:p-6 lg:p-8">
-          <div class="flex items-center justify-between">
-            <h3 class="md:text-md text-gray-dark text-base font-bold leading-8 md:!text-xl">
+        <div className="xs:w-[480px] relative z-50 mx-auto w-full max-w-full overflow-hidden rounded-xl bg-white p-4 sm:w-[520px] sm:p-6 lg:p-8">
+          <div className="flex items-center justify-between">
+            <h3 className="md:text-md text-gray-dark text-base font-bold leading-8 md:!text-xl">
               Share with
             </h3>
             <button
               type="button"
               onClick={handleShareModalToggle}
-              class="lg:hover:enabled:border-gray-1000 focus:enabled:border-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md border border-none border-gray-300 bg-transparent p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30  active:scale-95"
+              className="lg:hover:enabled:border-gray-1000 focus:enabled:border-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md border border-none border-gray-300 bg-transparent p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30  active:scale-95"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
                 fill="currentColor"
                 aria-hidden="true"
-                class="h-6 w-6"
+                className="h-6 w-6"
               >
                 <path
                   fill-rule="evenodd"
@@ -83,15 +83,15 @@ const ShareModal = () => {
               </svg>
             </button>
           </div>
-          <div class="mt-7 flex items-center justify-between">
-            <div class="group text-center">
+          <div className="mt-7 flex items-center justify-between">
+            <div className="group text-center">
               <Link
                 target="_blank"
                 to={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full bg-[#0077b5] text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                className="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full bg-[#0077b5] text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -100,35 +100,35 @@ const ShareModal = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.3"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-linkedin"
+                  strokeWidth="1.3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-linkedin"
                 >
                   <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                   <rect width="4" height="12" x="2" y="9" />
                   <circle cx="4" cy="4" r="2" />
                 </svg>
               </Link>
-              <p class="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
+              <p className="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
                 LinkedIn
               </p>
             </div>
-            <div class="group text-center">
+            <div className="group text-center">
               <Link
                 target="_blank"
                 to={`https://telegram.me/share/url?url=${encodeURIComponent(
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                className="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(45, 163, 222)" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  class="h-6 w-6"
+                  className="h-6 w-6"
                 >
                   <path
                     fill="currentColor"
@@ -136,25 +136,25 @@ const ShareModal = () => {
                   ></path>
                 </svg>
               </Link>
-              <p class="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
+              <p className="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
                 Telegram
               </p>
             </div>
-            <div class="group text-center">
+            <div className="group text-center">
               <Link
                 target="_blank"
                 to={`https://api.whatsapp.com/send?text=${encodeURIComponent(
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                className="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(3, 182, 3)" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  class="h-6 w-6"
+                  className="h-6 w-6"
                 >
                   <path
                     fill="currentColor"
@@ -162,25 +162,25 @@ const ShareModal = () => {
                   ></path>
                 </svg>
               </Link>
-              <p class="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
+              <p className="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
                 Whatsapp
               </p>
             </div>
-            <div class="group text-center">
+            <div className="group text-center">
               <Link
                 target="_blank"
                 to={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                className="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(29, 161, 242)" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  class="h-6 w-6"
+                  className="h-6 w-6"
                 >
                   <path
                     fill="currentColor"
@@ -188,25 +188,25 @@ const ShareModal = () => {
                   ></path>
                 </svg>
               </Link>
-              <p class="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
+              <p className="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
                 Twitter
               </p>
             </div>
-            <div class="group text-center">
+            <div className="group text-center">
               <Link
                 target="_blank"
                 to={`mailto:?subject=Check%20this%20out&body=${encodeURIComponent(
                   modalValue?.url,
                 )}`}
                 rel="noreferrer"
-                class="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
+                className="group-lg:hover:shadow-md flex h-12 w-12 items-center justify-center rounded-full text-white transition-all duration-200 sm:h-16 sm:w-16 xl:h-[72px] xl:w-[72px]"
                 style={{ backgroundColor: "rgb(185, 66, 42)" }}
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="none"
-                  class="h-6 w-6"
+                  className="h-6 w-6"
                 >
                   <path
                     fill="currentColor"
@@ -214,21 +214,21 @@ const ShareModal = () => {
                   ></path>
                 </svg>
               </Link>
-              <p class="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
+              <p className="text-gray-dark   mt-4 text-xs font-normal sm:text-sm">
                 Email
               </p>
             </div>
           </div>
-          <h3 class="md:text-h3 text-gray-dark mt-8 text-base font-bold leading-8 md:!text-xl">
+          <h3 className="md:text-h3 text-gray-dark mt-8 text-base font-bold leading-8 md:!text-xl">
             Or share with link
           </h3>
-          <div class="mt-4 flex w-full items-center justify-between gap-4 rounded-lg bg-gray-100 p-2 sm:px-5 sm:py-4 md:mt-7">
-            <p class="text-gray line-clamp-1 w-3/4 select-all overflow-clip text-ellipsis font-normal italic">
+          <div className="mt-4 flex w-full items-center justify-between gap-4 rounded-lg bg-gray-100 p-2 sm:px-5 sm:py-4 md:mt-7">
+            <p className="text-gray line-clamp-1 w-3/4 select-all overflow-clip text-ellipsis font-normal italic">
               {modalValue?.url}
             </p>
             <button
               type="button"
-              class="lg:hover:text-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30 active:scale-95"
+              className="lg:hover:text-gray-1000 inline-flex h-7 w-7 items-center justify-center rounded-md p-0.5 transition duration-200 focus:outline-none focus:!ring-0 focus:ring-gray-900/30 active:scale-95"
               onClick={handleCopy}
             >
               {getCopy ? (
@@ -239,10 +239,10 @@ const ShareModal = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="#34d399"
-                  stroke-width="1.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-check-circle"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-check-circle"
                 >
                   <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                   <polyline points="22 4 12 14.01 9 11.01" />
@@ -255,10 +255,10 @@ const ShareModal = () => {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="1.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-files"
+                  strokeWidth="1.25"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-files"
                 >
                   <path d="M15.5 2H8.6c-.4 0-.8.2-1.1.5-.3.3-.5.7-.5 1.1v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8c.4 0 .8-.2 1.1-.5.3-.3.5-.7.5-1.1V6.5L15.5 2z" />
                   <path d="M3 7.6v12.8c0 .4.2.8.5 1.1.3.3.7.5 1.1.5h9.8" />

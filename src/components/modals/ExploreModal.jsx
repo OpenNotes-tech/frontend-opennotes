@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { QueryRoute } from "../../hooks/useGenerateQueryLink";
+import { QueryRoutes } from "../../hooks/useGenerateQueryLink";
 import { useDispatch } from "react-redux";
 import {
   openReportModal,
@@ -31,7 +31,7 @@ const ExploreModal = ({ toggleExplore }) => {
   };
 
   const handleCategorySubmit = (e, navLink) => {
-    const linkToPage = QueryRoute(location, { category: navLink });
+    const linkToPage = QueryRoutes(location, { category: navLink });
     navigate(linkToPage);
   };
   const dropInVariant = createDropInVariant("3vh");
@@ -81,10 +81,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-server"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-server"
                     >
                       <rect width="20" height="8" x="2" y="2" rx="2" ry="2" />
                       <rect width="20" height="8" x="2" y="14" rx="2" ry="2" />
@@ -111,10 +111,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-palette"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-palette"
                     >
                       <circle cx="13.5" cy="6.5" r=".5" />
                       <circle cx="17.5" cy="10.5" r=".5" />
@@ -142,10 +142,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-smartphone"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-smartphone"
                     >
                       <rect width="14" height="20" x="5" y="2" rx="2" ry="2" />
                       <path d="M12 18h.01" />
@@ -170,10 +170,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-brain-circuit"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-brain-circuit"
                     >
                       <path d="M12 4.5a2.5 2.5 0 0 0-4.96-.46 2.5 2.5 0 0 0-1.98 3 2.5 2.5 0 0 0-1.32 4.24 3 3 0 0 0 .34 5.58 2.5 2.5 0 0 0 2.96 3.08 2.5 2.5 0 0 0 4.91.05L12 20V4.5Z" />
                       <path d="M16 8V5c0-1.1.9-2 2-2" />
@@ -205,10 +205,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-braces"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-braces"
                     >
                       <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1" />
                       <path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1" />
@@ -233,10 +233,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-fingerprint"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-fingerprint"
                     >
                       <path d="M2 12C2 6.5 6.5 2 12 2a10 10 0 0 1 8 4" />
                       <path d="M5 19.5C5.5 18 6 15 6 12c0-.7.12-1.37.34-2" />
@@ -311,10 +311,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.25"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-scroll-text"
+                      strokeWidth="1.25"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-scroll-text"
                     >
                       <path d="M8 21h12a2 2 0 0 0 2-2v-2H10v2a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v3h4" />
                       <path d="M19 17V5a2 2 0 0 0-2-2H4" />
@@ -341,10 +341,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-graduation-cap"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-graduation-cap"
                     >
                       <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                       <path d="M6 12v5c3 3 9 3 12 0v-5" />
@@ -369,10 +369,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-mic"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-mic"
                     >
                       <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
                       <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
@@ -514,10 +514,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-twitter group-lg:hover:text-blue-500 transition duration-300 ease-in-out"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-twitter group-lg:hover:text-blue-500 transition duration-300 ease-in-out"
                     >
                       <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z" />
                     </svg>
@@ -537,10 +537,10 @@ const ExploreModal = ({ toggleExplore }) => {
                       viewBox="0 0 24 24"
                       fill="none"
                       stroke="currentColor"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      class="lucide lucide-linkedin group-lg:hover:text-blue-400 transition duration-300 ease-in-out"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="lucide lucide-linkedin group-lg:hover:text-blue-400 transition duration-300 ease-in-out"
                     >
                       <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
                       <rect width="4" height="12" x="2" y="9" />
@@ -557,7 +557,7 @@ const ExploreModal = ({ toggleExplore }) => {
                   <img
                     src="https://cdn-opennotes.b-cdn.net/static/media/bmc-logo.f7706b66fa26661302f5.png"
                     alt=""
-                    srcset=""
+                    srcSet=""
                     className="h-[22px]"
                   />
                 </AnimatedLink>

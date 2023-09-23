@@ -1,6 +1,6 @@
 {
-  "short_name": "Boootech",
-  "name": "Welcome to Boootech",
+  "short_name": "BestLink",
+  "name": "Welcome to BestLink",
   "icons": [
     {
       "src": "./assets/maskable_icon_x48.png",
@@ -97,5 +97,5 @@
   "display": "standalone",
   "theme_color": "#3EC4D6",
   "background_color": "#ffffff",
-  "description": "Boootech is development & design resource discovering and bookmarking ✅ marketplace with over 10000+ resource links. Discover awesome links for backend, frontend, design, machine learning and more"
+  "description": "BestLink is development & design resource discovering and bookmarking ✅ marketplace with over 10000+ resource links. Discover awesome links for backend, frontend, design, machine learning and more"
 }

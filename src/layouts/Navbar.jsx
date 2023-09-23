@@ -13,7 +13,9 @@ import maskEmail from "../hooks/maskEmail";
 import Request from "../utils/API-router";
 import Loader from "../components/Loader";
 import Search from "../components/Search";
+import { Example } from "./Example";
 import "../assets/css/darkmode.css";
+import { addError, setLoading } from "../store/features/errorSlice";
 const AnimatedLink = motion(Link);
 
 const Navbar = () => {
@@ -57,12 +59,43 @@ const Navbar = () => {
   );
 
   const Logout = () => {
-    Request.logout();
-    dispatch(logout());
-    Cookies.remove("openToken");
-    Cookies.remove("userID");
-    setToggleProfile(false);
-    dispatch(openAuthModal());
+    dispatch(setLoading(true));
+
+    Request.logout()
+      .then((res) => {
+        navigate("/");
+        dispatch(
+          addError({
+            type: "success",
+            error: "Logged out Successfully!",
+            id: Date.now(),
+          }),
+        );
+        dispatch(setLoading(false));
+        dispatch(logout());
+        Cookies.remove("openToken");
+        Cookies.remove("userID");
+        setToggleProfile(false);
+
+        // Redirect to main page after 3 seconds
+        setTimeout(() => {
+          dispatch(openAuthModal());
+        }, 500);
+      })
+      .catch((error) => {
+        dispatch(
+          addError({
+            type: "error",
+            error: error?.response?.data?.message,
+            id: Date.now(),
+          }),
+        );
+
+        dispatch(setLoading(false));
+      })
+      .finally((e) => {
+        dispatch(setLoading(false));
+      });
   };
 
   // ##########  Mobile version Searchbar & Bottom Tabs   #################
@@ -102,12 +135,12 @@ const Navbar = () => {
 
         <div className="flex flex-row items-center space-x-8 md:space-x-16">
           <Link to={"/"} className="flex h-8 w-full items-center md:h-10">
-            {/* <Example /> */}
-            <img
+            <Example />
+            {/* <img
               className="block h-full w-full"
               src="https://cdn-opennotes.b-cdn.net/static/media/logo.708029b797f0dc11c4bb71c64fd217c5.svg"
               alt="Main Logo"
-            />
+            /> */}
           </Link>
           {scrolledSearch && (
             <div className="lg:hidden">

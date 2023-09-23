@@ -40,19 +40,19 @@ export const Example = () => (
       >
         <defs>
           <linearGradient x1="95.059%" y1="50%" x2="5.575%" y2="50%" id="a">
-            <stop stop-color="#55FBDC" offset="0%" />
-            <stop stop-color="#08F" offset="100%" />
+            <stop stopColor="#55FBDC" offset="0%" />
+            <stop stopColor="#08F" offset="100%" />
           </linearGradient>
           <linearGradient x1="95.059%" y1="50%" x2="5.575%" y2="50%" id="b">
-            <stop stop-color="#2ED4FF" offset="0%" />
-            <stop stop-color="#08F" offset="98.277%" />
+            <stop stopColor="#2ED4FF" offset="0%" />
+            <stop stopColor="#08F" offset="98.277%" />
           </linearGradient>
           <linearGradient x1="48.165%" y1="66.639%" x2="0%" y2="0%" id="c">
-            <stop stop-color="#4F40DC" stop-opacity=".24" offset="0%" />
-            <stop stop-color="#3525D3" offset="100%" />
+            <stop stopColor="#4F40DC" stopOpacity=".24" offset="0%" />
+            <stop stopColor="#3525D3" offset="100%" />
           </linearGradient>
         </defs>
-        <g fill="none" fill-rule="evenodd">
+        <g fill="none" fillRule="evenodd">
           <motion.path
             d="M6 2h17a7 7 0 0 1 0 14H2V6a4 4 0 0 1 4-4z"
             variants={icon}

@@ -63,7 +63,7 @@ const Footer = () => {
               alt="Flowbite Logo"
             />
             <span className="self-center whitespace-nowrap text-2xl font-semibold text-gray-400">
-              oootech
+              estLink
             </span>
           </AnimatedLink>
           <ul className="text-md mb-6 grid grid-cols-2 items-center gap-y-4 space-x-5 font-medium text-gray-400 dark:text-gray-400 sm:mb-0 md:flex md:flex-row md:gap-y-0 md:space-x-4">

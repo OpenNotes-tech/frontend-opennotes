@@ -5,14 +5,14 @@ import { deleteFolder } from "../../store/features/editProfileSlice";
 import Request from "../../utils/API-router";
 
 const FolderList = () => {
-  const { folders, _id } = useSelector((state) => state.UserProfile.profile);
+  const { profile } = useSelector((state) => state.UserProfile); //folders, _id
   let { folderId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleDeleteFolder = (id) => {
     dispatch(setLoading(true));
-    Request.deleteFolder(_id, id)
+    Request.deleteFolder(profile?._id, id)
       .then((res) => {
         dispatch(deleteFolder(id));
         dispatch(setLoading(false));
@@ -32,16 +32,16 @@ const FolderList = () => {
 
   return (
     <>
-      {folders?.length ? (
+      {profile?.folders?.length ? (
         <div className="flex flex-col py-6">
-          {folders.map((folderElement, index) => (
+          {profile?.folders.map((folderElement, index) => (
             <div
               key={index}
               className="flex flex-row items-center justify-center rounded-sm lg:hover:bg-slate-200 lg:hover:text-slate-700"
             >
               <Link
                 to={`/bookmark/${folderElement._id}`}
-                state={{ folderElement, id: _id }}
+                state={{ folderElement, id: profile?._id }}
                 className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5  lg:px-20  ${
                   folderElement._id === folderId
                     ? "bg-blue-100 text-blue-500"

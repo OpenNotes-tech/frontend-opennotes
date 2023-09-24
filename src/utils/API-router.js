@@ -15,8 +15,8 @@ class Request {
   forgotPassword(data) {
     return http.post(`/api/v1/user/forgot-password`, data);
   }
-  resetPassword(token) {
-    return http.patch(`/api/v1/user/reset-password/${token}`);
+  resetPassword(token, data) {
+    return http.patch(`/api/v1/user/reset-password/${token}`, data);
   }
   googleLogin(data) {
     return http.post(`/api/v1/user/google-login`, data);

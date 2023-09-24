@@ -19,7 +19,7 @@ const ForgotPassword = () => {
         dispatch(
           addError({
             type: "success",
-            error: "Logged In Successfully!",
+            error: "Email is sent successfully!",
             id: Date.now(),
           }),
         );

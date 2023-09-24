@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Cookies from "js-cookie";
@@ -496,12 +496,12 @@ const Sign = () => {
                     </label>
                   </div>
                   <div className="flex ">
-                    <button
-                      type="button"
+                    <Link
+                      to={"/forgot-password"}
                       className="text-heading text-sm  underline  focus:outline-none lg:hover:no-underline"
                     >
                       Forgot password?
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>

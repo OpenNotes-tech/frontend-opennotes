@@ -60,7 +60,7 @@ const Footer = () => {
             <img
               src="https://cdn-opennotes.b-cdn.net/static/media/logo.708029b797f0dc11c4bb71c64fd217c5.svg"
               className="mr-3 h-8"
-              alt="Flowbite Logo"
+              alt="Logo"
             />
             <span className="self-center whitespace-nowrap text-2xl font-semibold text-gray-400">
               estLink

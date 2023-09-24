@@ -12,6 +12,9 @@ import Request from "./utils/API-router";
 const ForgotPassword = lazy(() =>
   import("./pages/Authentication/ForgotPassword"),
 );
+const ResetPassword = lazy(() =>
+  import("./pages/Authentication/ResetPassword"),
+);
 const FolderDetails = lazy(() => import("./pages/Bookmark/FolderDetails"));
 const BookmarkEmpty = lazy(() => import("./pages/Bookmark/BookmarkEmpty"));
 const BookmarkMain = lazy(() => import("./pages/Bookmark/BookmarkMain"));
@@ -101,6 +104,7 @@ const App = () => {
               <Route path=":folderId" exact element={<FolderDetails />} />
             </Route>
             <Route path="/forgot-password" exact element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" exact element={<ResetPassword />} />
             <Route exact path="/privacy-policy" element={<Policy />} />
             <Route path="/sponsor" exact element={<Sponsor />} />
             <Route path="/about" exact element={<About />} />

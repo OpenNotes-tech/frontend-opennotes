@@ -2,7 +2,7 @@ import axios from "axios";
 // import Cookies from "js-cookie";
 
 export default axios.create({
-  baseURL: `https://opennote-b0eb7f2ec0bf.herokuapp.com/`,
+  baseURL: process.env.REACT_APP_SERVER_PORT,
   //process.env.REACT_APP_SERVER_PORT
   //https://opennote-b0eb7f2ec0bf.herokuapp.com/
   //http://localhost:8000/

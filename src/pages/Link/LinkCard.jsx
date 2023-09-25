@@ -24,11 +24,23 @@ const formatLikeCount = (count) => {
 };
 
 const LinkCard = ({ linkElement, handleLike }) => {
-  const userProfile = useSelector((state) => state?.UserProfile?.profile);
+  const { profile, isLoggedIn } = useSelector((state) => state?.UserProfile);
   // const { clickSubmit } = useHandleClicks();
   const dispatch = useDispatch();
 
-  const isLinkIdInAnyFolder = userProfile?.folders?.some((folder) => {
+  let isLiked = null;
+  if (isLoggedIn !== null) {
+    const likedFolder = profile?.folders?.find(
+      (folder) => folder.name === "liked",
+    );
+    const { bookmarked } = likedFolder;
+    isLiked = bookmarked.includes(linkElement._id);
+  } else {
+    const likedLinkIds = JSON.parse(localStorage.getItem("likedLinkIds")) || [];
+    isLiked = likedLinkIds.includes(linkElement._id);
+  }
+
+  const isLinkIdInAnyFolder = profile?.folders?.some((folder) => {
     const isLinkInFolder = folder.bookmarked.includes(linkElement._id);
     return isLinkInFolder;
   });
@@ -177,7 +189,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
               >
                 <button
                   className={`group relative flex h-8 min-w-[68px] items-center justify-center rounded-full  px-3 text-xs leading-none  transition-colors focus:outline-none ${
-                    linkElement.liked
+                    isLiked
                       ? "bg-rose-50 text-rose-600 dark:bg-rose-100 dark:text-rose-600 lg:hover:bg-slate-100  dark:lg:hover:bg-slate-100 "
                       : "bg-slate-100 text-slate-700 dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
                   }`}
@@ -196,7 +208,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     className={`lucide lucide-heart ${
-                      linkElement.liked && "fill-rose-600"
+                      isLiked && "fill-rose-600"
                     }`}
                   >
                     <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />

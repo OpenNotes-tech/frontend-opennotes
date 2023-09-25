@@ -10,6 +10,43 @@ export const editProfileSlice = createSlice({
   name: "UserProfile",
   initialState,
   reducers: {
+    clickLike: (state, action) => {
+      const { linkId, likedFolderId } = action.payload;
+
+      // Find the liked folder with the matching ID
+      const likedFolderIndex = state.profile.folders.findIndex(
+        (folder) => folder._id === likedFolderId,
+      );
+
+      if (likedFolderIndex !== -1) {
+        // Clone the liked folder object to avoid mutating the state directly
+        const likedFolder = { ...state.profile.folders[likedFolderIndex] };
+
+        // Check if the link already exists in the bookmarked array of the liked folder
+        if (likedFolder.bookmarked.includes(linkId)) {
+          // If the link exists, remove it from the bookmarked array
+          likedFolder.bookmarked = likedFolder.bookmarked.filter(
+            (bookmark) => bookmark !== linkId,
+          );
+        } else {
+          // If the link doesn't exist, add it to the bookmarked array
+          likedFolder.bookmarked.push(linkId);
+        }
+
+        // Update the liked folder in the state by creating a new array with the updated liked folder
+        state.profile.folders[likedFolderIndex] = likedFolder;
+      } else {
+        // If the liked folder doesn't exist, create it and add the link ID
+        const newLikedFolder = {
+          _id: likedFolderId, // Assign the provided likedFolderId
+          name: "liked",
+          bookmarked: [linkId], // Add the link ID to the new folder
+        };
+
+        // Push the new liked folder to the user's folders array
+        state.profile.folders.push(newLikedFolder);
+      }
+    },
     editUserProfile: (state, action) => {
       state.profile = action.payload;
     },
@@ -86,7 +123,8 @@ export const {
   deleteFolderItem,
   editBookmark,
   deleteFolder,
-  editFolder,
-  logout,
   authenticate,
+  editFolder,
+  clickLike,
+  logout,
 } = editProfileSlice.actions;

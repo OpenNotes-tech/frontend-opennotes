@@ -17,6 +17,8 @@ import Hero from "./Hero";
 
 const HomeMain = () => {
   const { loading } = useSelector((state) => state.Error);
+  const { profile } = useSelector((state) => state?.UserProfile);
+
   const [fetchResult, setFetchResult] = useState([]);
   const { likeSubmit } = useHandleLikes();
 
@@ -83,24 +85,12 @@ const HomeMain = () => {
         12,
       )
         .then((res) => {
-          const updatedResults = res.data.data.body.map((item) => {
-            // Retrieve liked link IDs from local storage
-            const likedLinkIds =
-              JSON.parse(localStorage.getItem("likedLinkIds")) || [];
-
-            // Check if the link ID is in the likedLinkIds array and set the "liked" attribute accordingly
-            return {
-              ...item,
-              liked: likedLinkIds.includes(item._id),
-            };
-          });
-
           if (parseInt(sessionStorage.getItem("_PageNumber")) === 1) {
-            setFetchResult(updatedResults);
+            setFetchResult(res.data.data.body);
           } else {
             setFetchResult((prevResults) => [
               ...prevResults,
-              ...updatedResults,
+              ...res.data.data.body,
             ]);
           }
           sessionStorage.setItem("_TotalPages", res.data.data.totalPages);
@@ -130,7 +120,7 @@ const HomeMain = () => {
   ]);
 
   const handleLike = (linkId) => {
-    likeSubmit(linkId, fetchResult, setFetchResult);
+    likeSubmit(linkId, profile?._id, fetchResult, setFetchResult);
   };
 
   // #######    Infinite Scrolling   #############

@@ -40,8 +40,8 @@ class Request {
     return http.post(`/api/v1/user/report/`, data);
   }
 
-  postLike(id, action) {
-    return http.post(`/api/v1/link/links/${id}/like`, { action: action });
+  postLike(id, data) {
+    return http.post(`/api/v1/link/links/${id}/like`, data);
   }
 
   postClick(id) {

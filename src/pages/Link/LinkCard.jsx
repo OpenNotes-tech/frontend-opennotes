@@ -24,12 +24,13 @@ const formatLikeCount = (count) => {
 };
 
 const LinkCard = ({ linkElement, handleLike }) => {
-  const { profile, isLoggedIn } = useSelector((state) => state?.UserProfile);
+  const { profile } = useSelector((state) => state?.UserProfile);
+  let isSignedIn = !!Cookies.get("openToken");
   // const { clickSubmit } = useHandleClicks();
   const dispatch = useDispatch();
 
   let isLiked = null;
-  if (isLoggedIn !== null) {
+  if (isSignedIn) {
     const likedFolder = profile?.folders?.find(
       (folder) => folder.name === "liked",
     );

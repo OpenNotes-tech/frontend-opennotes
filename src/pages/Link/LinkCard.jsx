@@ -29,8 +29,9 @@ const LinkCard = ({ linkElement, handleLike }) => {
   // const { clickSubmit } = useHandleClicks();
   const dispatch = useDispatch();
 
+
   let isLiked = null;
-  if (isSignedIn) {
+  if (isSignedIn && profile?.folders?.length) {
     const likedFolder = profile?.folders?.find(
       (folder) => folder.name === "liked",
     );

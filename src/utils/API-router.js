@@ -28,7 +28,12 @@ class Request {
     return http.get(`/api/v1/user/github-login?code=${codeParam}`);
   }
   //     ######  Report   ########
-
+  patchProfile(id, data) {
+    return http.patch(
+      `/api/v1/user/profile/${id}?opentoken=${Cookies.get("openToken")}`,
+      data,
+    );
+  }
   getProfile() {
     return http.get(
       `/api/v1/user/profile/${Cookies.get("userID")}?opentoken=${Cookies.get(
@@ -46,6 +51,9 @@ class Request {
 
   postClick(id) {
     return http.post(`/api/v1/link/links/${id}/click`);
+  }
+  getLink(id) {
+    return http.get(`/api/v1/link/links/${id}`);
   }
 
   postBookmark(data) {

@@ -29,7 +29,6 @@ const LinkCard = ({ linkElement, handleLike }) => {
   // const { clickSubmit } = useHandleClicks();
   const dispatch = useDispatch();
 
-
   let isLiked = null;
   if (isSignedIn && profile?.folders?.length) {
     const likedFolder = profile?.folders?.find(
@@ -157,11 +156,13 @@ const LinkCard = ({ linkElement, handleLike }) => {
               </svg>
               <p>Open</p>
             </Link>
-            <motion.button
-              whileTap={{ scale: 0.9 }}
+            <Link
+              // whileTap={{ scale: 0.9 }}
               className="flex flex-row items-center justify-center space-x-2 rounded-md  bg-slate-100 px-8 py-1 text-center font-medium text-slate-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
-              onClick={() => dispatch(openDetailsModal(linkElement))}
-              type="button"
+              // onClick={() => dispatch(openDetailsModal(linkElement))}
+              to={"/link-details/" + linkElement._id}
+              state={{ data: linkElement }}
+              // type="button"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -180,7 +181,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
                 <path d="M12 8h.01" />
               </svg>
               <p>Details</p>
-            </motion.button>
+            </Link>
           </div>
           <div className="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed ">
             <div className=" relative flex items-center space-x-4">

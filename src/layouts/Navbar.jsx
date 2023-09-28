@@ -18,7 +18,7 @@ import "../assets/css/darkmode.css";
 import { addError, setLoading } from "../store/features/errorSlice";
 const AnimatedLink = motion(Link);
 
-const Navbar = () => {
+const Navbar = ({setIsSidebarOpen, isSidebarOpen,}) => {
   const { profile } = useSelector((state) => state.UserProfile);
   const { loading } = useSelector((state) => state.Error);
   const isAuthorized = Cookies.get("userID") !== undefined;
@@ -30,12 +30,13 @@ const Navbar = () => {
   const [toggleProfile, setToggleProfile] = useState(false);
   const [isDarkMode, toggleDarkMode] = useDarkMode(false);
   const [scrolled, setScrolled] = useState(false);
-
+  
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const refProfile = useRef();
   const modalRef = useRef();
+  const name = location.pathname.split("/")[1].toLowerCase();
 
   // ############   Click Outside Function  ###############
   const handleClickOutside = (toggleState, ref, setToggleState) => {
@@ -134,6 +135,33 @@ const Navbar = () => {
         {loading && <Loader />}
 
         <div className="flex flex-row items-center space-x-8 md:space-x-16">
+        {name === "profile" && (
+            <Link
+              onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+              className="block md:hidden"
+              type="button"
+              data-drawer-target="drawer-navigation"
+              data-drawer-show="drawer-navigation"
+              aria-controls="drawer-navigation"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#18181b"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-menu"
+              >
+                <line x1="4" x2="20" y1="12" y2="12"></line>
+                <line x1="4" x2="20" y1="6" y2="6"></line>
+                <line x1="4" x2="20" y1="18" y2="18"></line>
+              </svg>
+            </Link>
+          )}
           <Link to={"/"} className="flex h-8 w-full items-center md:h-10">
             <Example />
             {/* <img
@@ -368,7 +396,7 @@ const Navbar = () => {
                       <div className="grow text-sm">
                         <AnimatedLink
                           whileTap={{ scale: 0.9 }}
-                          to="/"
+                          to="/profile"
                           className="select-none font-semibold text-slate-700 dark:text-slate-200 lg:hover:text-slate-500 dark:lg:hover:text-white"
                         >
                           {isAuthorized && profile?.fullName !== undefined ? (

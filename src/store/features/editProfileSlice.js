@@ -120,6 +120,7 @@ export const editProfileSlice = createSlice({
 
 export default editProfileSlice.reducer;
 export const {
+  editUserProfile,
   deleteFolderItem,
   editBookmark,
   deleteFolder,

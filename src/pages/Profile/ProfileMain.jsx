@@ -1,6 +1,5 @@
 import ProfileSidebar from "./ProfileSidebar";
 import { Outlet } from "react-router-dom";
-import BottomTabs from "../../components/BottomTabs";
 import { useSelector } from "react-redux";
 
 const ProfileMain = () => {
@@ -34,7 +33,6 @@ const ProfileMain = () => {
           </div>
         </div>
       </div>
-      {<BottomTabs />}
     </>
   );
 };

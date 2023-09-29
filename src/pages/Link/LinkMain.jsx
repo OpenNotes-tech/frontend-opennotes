@@ -8,7 +8,6 @@ import { QueryRoutes } from "../../hooks/useGenerateQueryLink";
 import LoaderSkeleton from "../../components/LoaderSkeleton";
 import useMenuAnimation from "../../hooks/useMenuAnimation";
 import useScreenSize from "../../hooks/useScreenSize";
-import BottomTabs from "../../components/BottomTabs";
 import hashtags from "../../constants/tags.json";
 import tabsData from "../../constants/category.json";
 import sortOptions from "../../constants/sort.json";
@@ -27,7 +26,6 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
   const loading = useSelector((state) => state.Error.loading);
   const [isSortbyOpen, setSortbyOpen] = useState(false);
   const [getHash, setHash] = useState(Object.entries(hashtags.home));
-  const [showTabs, setShowTabs] = useState(false);
   const [hashLoad, setHashLoad] = useState(true);
   const scope = useMenuAnimation(isSortbyOpen);
 
@@ -89,20 +87,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
     return () => clearTimeout(delay); // Clear the timeout on component unmount
   }, [category]);
 
-  const Scroll = () => {
-    if (window.scrollY > 50) {
-      setShowTabs(true);
-    } else {
-      setShowTabs(false);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener("scroll", Scroll);
-    return () => {
-      window.removeEventListener("scroll", Scroll);
-    };
-  }, []);
+  
 
   return (
     <>
@@ -323,7 +308,6 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
           </div>
         </div>
       </div>
-      {showTabs && <BottomTabs />}
     </>
   );
 };

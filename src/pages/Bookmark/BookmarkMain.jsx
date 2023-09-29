@@ -1,5 +1,4 @@
 import { Outlet } from "react-router-dom";
-import BottomTabs from "../../components/BottomTabs";
 import FolderList from "./FolderList";
 
 const BookmarkMain = () => {
@@ -16,7 +15,6 @@ const BookmarkMain = () => {
           <Outlet />
         </div>
       </div>
-      {<BottomTabs />}
     </>
   );
 };

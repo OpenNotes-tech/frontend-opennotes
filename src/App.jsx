@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { Suspense, lazy, useEffect } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
 import { setLoading, addError } from "./store/features/errorSlice";
@@ -10,6 +10,7 @@ import Request from "./utils/API-router";
 import LinkDetails from "./pages/Link/LinkDetails";
 import Navbar from "./layouts/Navbar";
 import ModalMain from "./components/modals/ModalMain";
+import BottomTabs from "./components/BottomTabs";
 
 // Home/Bookmark/Profile Pgage Routes
 const ForgotPassword = lazy(() =>
@@ -49,6 +50,8 @@ const Policy = lazy(() => import("./pages/Static/Policy"));
 const About = lazy(() => import("./pages/Static/About"));
 
 const App = () => {
+  const [showTabs, setShowTabs] = useState(false);
+
   const { profile } = useSelector((state) => state.UserProfile);
   const dispatch = useDispatch();
 
@@ -80,6 +83,21 @@ const App = () => {
   useEffect(() => {
     sessionStorage.setItem("_TotalPages", 0);
     sessionStorage.setItem("_PageNumber", 1);
+  }, []);
+
+  const Scroll = () => {
+    if (window.scrollY > 50) {
+      setShowTabs(true);
+    } else {
+      setShowTabs(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", Scroll);
+    return () => {
+      window.removeEventListener("scroll", Scroll);
+    };
   }, []);
 
   // let scrollPosition = 0; // Variable to store the scroll position
@@ -175,6 +193,7 @@ const App = () => {
             <Route path="/about" exact element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          {showTabs && <BottomTabs />}
         </div>
       </Suspense>
     </BrowserRouter>

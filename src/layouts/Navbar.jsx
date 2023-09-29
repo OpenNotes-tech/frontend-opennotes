@@ -418,10 +418,14 @@ const Navbar = () => {
                         </div>
                       </div>
                       <div className="space-y-1 p-2">
-                        <AnimatedLink
+                        <motion.button
                           whileTap={{ scale: 0.9 }}
                           role="menuitem"
-                          to={"/bookmark"}
+                          onClick={() =>
+                            isAuthorized
+                              ? navigate("/bookmark")
+                              : dispatch(openAuthModal())
+                          }
                           className="flex w-full items-center justify-between space-x-2 rounded px-3 py-2 text-center text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-700 focus:outline-none dark:text-slate-300 lg:hover:bg-slate-100 lg:hover:text-slate-700 dark:lg:hover:bg-slate-200 dark:lg:hover:text-slate-600"
                         >
                           <div className="flex flex-none items-center space-x-2">
@@ -443,7 +447,7 @@ const Navbar = () => {
                               Bookmark
                             </span>
                           </div>
-                        </AnimatedLink>
+                        </motion.button>
                         <motion.button
                           whileTap={{ scale: 0.9 }}
                           role="menuitem"

@@ -1,9 +1,11 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { motion } from "framer-motion";
-import { openExploreModal } from "../store/features/modalSlice";
+import { openAuthModal, openExploreModal } from "../store/features/modalSlice";
+import Cookies from "js-cookie";
 
 const BottomTabs = () => {
+  const isAuthorized = Cookies.get("userID") !== undefined;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,14 +13,16 @@ const BottomTabs = () => {
   return (
     <>
       <aside className="toolbarx fixed bottom-0 z-[999] h-16 w-full shadow-[0_40px_60px_2px_rgba(0.9,0.9,0.9,0.9)] md:hidden">
-        <ul className="-ml-8 grid h-full grid-cols-4 justify-center bg-white px-4 text-xs font-normal text-gray-500">
+        <ul className="grid h-full grid-cols-4 justify-center bg-white px-4 text-xs font-normal text-gray-500">
           <li>
             <motion.button
               whileTap={{ scale: 0.9 }}
               className={`flex w-full flex-col items-center space-y-1 rounded-tr-xl px-5 py-3 lg:hover:bg-blue-100 ${
                 location.pathname === "/profile" && "bg-blue-100 text-blue-500"
               }`}
-              onClick={() => navigate("/profile")}
+              onClick={() =>
+                isAuthorized ? navigate("/profile") : dispatch(openAuthModal())
+              }
               alt="sidebar button called interview"
             >
               <svg
@@ -44,7 +48,9 @@ const BottomTabs = () => {
               className={`flex w-full flex-col items-center space-y-1 rounded-t-xl px-6 py-3 lg:hover:bg-blue-100 ${
                 location.pathname === "/bookmark" && "bg-blue-100 text-blue-500"
               }`}
-              onClick={() => navigate("/bookmark")}
+              onClick={() =>
+                isAuthorized ? navigate("/bookmark") : dispatch(openAuthModal())
+              }
               alt="sidebar button called interview"
             >
               <svg

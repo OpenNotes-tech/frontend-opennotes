@@ -8,9 +8,7 @@ import { setLoading, addError } from "../../store/features/errorSlice";
 import { openAuthModal } from "../../store/features/modalSlice";
 import { QueryRoutes } from "../../hooks/useGenerateQueryLink";
 import { useHandleLikes } from "../../hooks/useHandleLike";
-import ModalMain from "../../components/modals/ModalMain";
 import SearchAPI from "../../utils/SearchAPI";
-import Navbar from "../../layouts/Navbar";
 import Footer from "../../layouts/Footer";
 import LinkMain from "../Link/LinkMain";
 import Hero from "./Hero";
@@ -184,7 +182,6 @@ const HomeMain = () => {
         ref={filterRef}
         className="px-4 md:px-0"
       >
-        <Navbar />
         <Hero category={category} />
         <LinkMain
           fetchResult={fetchResult}
@@ -219,7 +216,6 @@ const HomeMain = () => {
           </motion.button>
         )}
       </div>
-      <ModalMain />
     </>
   );
 };

@@ -24,7 +24,7 @@ const ModalMain = () => {
     isExploreModalOpen,
     isNewsModalOpen,
   } = useSelector((state) => state.Modal);
-
+  
   return (
     <>
       <Suspense fallback={null}>

@@ -9,6 +9,7 @@ const initialState = {
   isExploreModalOpen: false,
   isFilterModalOpen: false,
   isNewsModalOpen: false,
+  isProfileModalOpen: false,
   modalValue: null,
 };
 
@@ -21,6 +22,9 @@ export const modalSlice = createSlice({
     },
     closeAuthModal: (state) => {
       state.isAuthModalOpen = false;
+    },
+    openProfileModal: (state) => {
+      state.isProfileModalOpen = !state.isProfileModalOpen;
     },
     openNewsModal: (state) => {
       state.isNewsModalOpen = true;
@@ -83,6 +87,7 @@ export const modalSlice = createSlice({
 export default modalSlice.reducer;
 export const {
   openShareModal,
+  openProfileModal,
   closeShareModal,
   openAuthModal,
   closeAuthModal,

@@ -26,7 +26,6 @@ import Cookies from "js-cookie";
 import { setLoading, addError } from "../../store/features/errorSlice";
 import IconNoResult from "../../components/IconNoResult";
 import Request from "../../utils/API-router";
-import Navbar from "../../layouts/Navbar";
 
 const LinkDetails = () => {
   const { loading } = useSelector((state) => state.Error);
@@ -111,7 +110,6 @@ const LinkDetails = () => {
 
   return (
     <>
-      <Navbar />
       {modalValue !== null && !loading ? (
         <div className="flex w-full flex-col space-y-5 bg-white px-8 py-6 md:space-y-8  lg:h-auto">
           <div className="flex flex-row items-center justify-evenly space-x-8">

@@ -8,6 +8,8 @@ import { authenticate } from "./store/features/editProfileSlice";
 import HomeMain from "./pages/Home/HomeMain";
 import Request from "./utils/API-router";
 import LinkDetails from "./pages/Link/LinkDetails";
+import Navbar from "./layouts/Navbar";
+import ModalMain from "./components/modals/ModalMain";
 
 // Home/Bookmark/Profile Pgage Routes
 const ForgotPassword = lazy(() =>
@@ -21,8 +23,8 @@ const BookmarkEmpty = lazy(() => import("./pages/Bookmark/BookmarkEmpty"));
 const BookmarkMain = lazy(() => import("./pages/Bookmark/BookmarkMain"));
 const ProfileMain = lazy(() => import("./pages/Profile/ProfileMain"));
 const ProfileEmpty = lazy(() => import("./pages/Profile/ProfileEmpty"));
-const ProfileChangeInfo = lazy(() =>
-  import("./pages/Profile/ProfileChangeInfo"),
+const ProfileChangeNotification = lazy(() =>
+  import("./pages/Profile/ProfileChangeNotification"),
 );
 const ProfileChangeSocialLinks = lazy(() =>
   import("./pages/Profile/ProfileChangeSocialLinks"),
@@ -35,6 +37,9 @@ const ProfileChangeSettings = lazy(() =>
 );
 const ProfileChangeEmail = lazy(() =>
   import("./pages/Profile/ProfileChangeEmail"),
+);
+const ProfileChangeInfo = lazy(() =>
+  import("./pages/Profile/ProfileChangeInfo"),
 );
 
 // Static Routes
@@ -113,6 +118,8 @@ const App = () => {
     <BrowserRouter>
       <Suspense fallback={null}>
         <div className="dark:bg-slate-800">
+          <Navbar />
+          <ModalMain />
           <Routes>
             <Route path="/" exact element={<HomeMain />}></Route>
             <Route path="profile" exact element={<ProfileMain />}>
@@ -131,6 +138,11 @@ const App = () => {
                 path="account-settings"
                 exact
                 element={<ProfileChangeSettings />}
+              />
+              <Route
+                path="notification"
+                exact
+                element={<ProfileChangeNotification />}
               />
               <Route
                 path="update-password"

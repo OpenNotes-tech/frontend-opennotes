@@ -1,9 +1,6 @@
-import Navbar from "../../layouts/Navbar";
-
 const Sponsor = () => {
   return (
     <div className="">
-      <Navbar />
       <div className="flex flex-col space-y-40 bg-gray-800 py-32">
         <div className="flex flex-col items-center justify-center space-y-4 text-white">
           <h2

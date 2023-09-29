@@ -1,12 +1,8 @@
-import Navbar from "../../layouts/Navbar";
 import Footer from "../../layouts/Footer";
 
 const About = () => {
   return (
     <div className="flex min-h-screen flex-col overflow-hidden">
-      {/*  Navbar */}
-      <Navbar />
-
       {/*  Page content */}
       <main className="grow">
         {/*  Page sections */}
@@ -717,7 +713,6 @@ const About = () => {
       <Footer />
     </div>
     // <div className=" mx-auto px-4 lg:px-0">
-    //   <Navbar />
     //   <div className="flex w-full flex-wrap overflow-hidden bg-blue-50 pb-20 md:py-[105px] md:pb-0">
     //     <div className=" mx-auto w-full px-4">
     //       <div className="mb-16 flex items-center justify-around">

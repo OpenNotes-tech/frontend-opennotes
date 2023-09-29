@@ -1,10 +1,8 @@
-import Navbar from "../../layouts/Navbar";
 import Footer from "../../layouts/Footer";
 
 const Policy = () => {
   return (
-    <div className="container mx-auto px-4 lg:px-0 ">
-      <Navbar />
+    <div className=" px-4 lg:px-0 ">
       <div className="relative -mt-[5.75rem] overflow-hidden pt-[5.75rem] ">
         <div className="px-4 sm:px-6 lg:px-8">
           <div className="relative mx-auto max-w-[37.5rem] pb-24 pt-20 text-center">

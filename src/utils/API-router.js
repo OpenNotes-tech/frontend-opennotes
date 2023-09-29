@@ -18,6 +18,14 @@ class Request {
   resetPassword(token, data) {
     return http.patch(`/api/v1/user/reset-password/${token}`, data);
   }
+  updatePassword(data) {
+    return http.patch(
+      `/api/v1/user/update-password/${Cookies.get(
+        "userID",
+      )}?opentoken=${Cookies.get("openToken")}`,
+      data,
+    );
+  }
   googleLogin(data) {
     return http.post(`/api/v1/user/google-login`, data);
   }

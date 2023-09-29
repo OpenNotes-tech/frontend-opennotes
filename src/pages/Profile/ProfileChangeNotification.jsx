@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-const ProfileChangeResume = () => {
+const ProfileChangeNotification = () => {
   return (
-    <div className="sm:max-w-lg w-full p-10 border-[0.5px] border-gray-300 shadow-md rounded-xl z-10 mb-28">
+    <div className="z-10 mb-28 w-full rounded-xl border-[0.5px] border-gray-300 p-10 shadow-md sm:max-w-lg">
       <div className="text-center">
         <h2 className="mt-5 text-3xl font-bold text-gray-900">
           Resume Upload!
@@ -10,21 +10,21 @@ const ProfileChangeResume = () => {
       </div>
       <form className="mt-8 space-y-3">
         <div className="grid grid-cols-1 space-y-2">
-          <label className="text-sm font-bold text-gray-500 tracking-wide">
+          <label className="text-sm font-bold tracking-wide text-gray-500">
             Current Resume
           </label>
-          <div className="flex flex-row items-center justify-between w-full  lg:w-80 ">
+          <div className="flex w-full flex-row items-center justify-between  lg:w-80 ">
             <Link
               to={"https://heroicons.com/"}
               target="_blank"
-              className="text-blue-500 italic hover:text-blue-300 transition duration-300 ease-in-out"
+              className="italic text-blue-500 transition duration-300 ease-in-out hover:text-blue-300"
             >
               Abbosjon_Madiev_Report.pdf
             </Link>
             <Link
               to={"https://heroicons.com/"}
               target="_blank"
-              className="italic hover:text-blue-500 transition duration-300 ease-in-out"
+              className="italic transition duration-300 ease-in-out hover:text-blue-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -46,13 +46,13 @@ const ProfileChangeResume = () => {
           </div>
         </div>
         <div className="grid grid-cols-1 space-y-2">
-          <label className="text-sm font-bold text-gray-500 tracking-wide">
+          <label className="text-sm font-bold tracking-wide text-gray-500">
             Attach Document
           </label>
-          <div className="flex items-center justify-center w-full">
-            <label className="flex flex-col rounded-lg border-4 border-dashed items-center w-full h-80 lg:h-72  p-10 group text-center">
-              <div className="h-full w-full text-center flex flex-col items-center justify-center">
-                <div className="flex flex-auto max-h-48 -ml-20 items-center w-4/5 lg:w-3/5 lg:mx-auto -mt-10">
+          <div className="flex w-full items-center justify-center">
+            <label className="group flex h-80 w-full flex-col items-center rounded-lg border-4 border-dashed  p-10 text-center lg:h-72">
+              <div className="flex h-full w-full flex-col items-center justify-center text-center">
+                <div className="-ml-20 -mt-10 flex max-h-48 w-4/5 flex-auto items-center lg:mx-auto lg:w-3/5">
                   <img
                     className="absolute h-36 object-center "
                     src={
@@ -80,8 +80,8 @@ const ProfileChangeResume = () => {
         <div>
           <button
             type="submit"
-            className="my-5 w-full flex justify-center bg-blue-500 text-gray-100 p-4  rounded-full tracking-wide
-                                font-semibold  focus:outline-none focus:shadow-outline hover:bg-blue-600 shadow-lg cursor-pointer transition ease-in duration-200"
+            className="focus:shadow-outline my-5 flex w-full cursor-pointer justify-center rounded-full  bg-blue-500 p-4
+                                font-semibold  tracking-wide text-gray-100 shadow-lg transition duration-200 ease-in hover:bg-blue-600 focus:outline-none"
           >
             Upload
           </button>
@@ -91,4 +91,4 @@ const ProfileChangeResume = () => {
   );
 };
 
-export default ProfileChangeResume;
+export default ProfileChangeNotification;

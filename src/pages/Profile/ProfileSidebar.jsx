@@ -1,13 +1,17 @@
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+import { openProfileModal } from "../../store/features/modalSlice";
 
-const ProfileSidebar = ({ setIsSidebarOpen, isSidebarOpen }) => {
+const ProfileSidebar = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
+  const { isProfileModalOpen } = useSelector((state) => state.Modal);
   const name = location?.pathname?.split("/")[2]?.toLocaleLowerCase();
   return (
     <div className="flex w-full flex-col overflow-y-scroll md:mb-10 md:h-auto md:overflow-y-hidden md:rounded-lg md:border-[0.6px] md:border-gray-200 md:shadow-md">
       <div className="flex flex-row justify-end border-b border-gray-200 p-6 py-4 text-center md:hidden">
         <Link
-          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+          onClick={() => dispatch(openProfileModal(!isProfileModalOpen))}
           type="button"
           data-drawer-hide="drawer-navigation"
           aria-controls="drawer-navigation"
@@ -97,9 +101,9 @@ const ProfileSidebar = ({ setIsSidebarOpen, isSidebarOpen }) => {
           <li className="">
             <Link
               className={`flex items-center font-normal  ${
-                name === "resume" && "text-blue-500"
+                name === "notification" && "text-blue-500"
               }`}
-              to={"/profile/resume"}
+              to={"/profile/notification"}
             >
               <span className="mr-3">
                 <svg
@@ -108,16 +112,19 @@ const ProfileSidebar = ({ setIsSidebarOpen, isSidebarOpen }) => {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke={`${name === "resume" ? "#3b82f6" : "#18181b"}`}
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-paperclip"
+                  stroke={`${name === "notification" ? "#3b82f6" : "#18181b"}`}
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-bell-ring"
                 >
-                  <path d="m21.44 11.05-9.19 9.19a6 6 0 0 1-8.49-8.49l8.57-8.57A4 4 0 1 1 18 8.84l-8.59 8.57a2 2 0 0 1-2.83-2.83l8.49-8.48"></path>
+                  <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+                  <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+                  <path d="M4 2C2.8 3.7 2 5.7 2 8" />
+                  <path d="M22 8c0-2.3-.8-4.3-2-6" />
                 </svg>
               </span>{" "}
-              Resume
+              Notification
             </Link>
           </li>
         </ul>

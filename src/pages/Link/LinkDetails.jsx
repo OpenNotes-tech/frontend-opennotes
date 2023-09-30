@@ -44,7 +44,7 @@ const LinkDetails = () => {
   };
 
   useEffect(() => {
-    if (state && state.data) {
+    if (state.data) {
       setData(state.data);
     } else {
       dispatch(setLoading(true));

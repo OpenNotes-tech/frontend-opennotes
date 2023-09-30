@@ -9,7 +9,6 @@ import "tippy.js/dist/tippy.css";
 import {
   openBookmarkModal,
   openShareModal,
-  openDetailsModal,
   openAuthModal,
 } from "../../store/features/modalSlice";
 

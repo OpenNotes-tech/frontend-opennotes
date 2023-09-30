@@ -252,23 +252,37 @@ const UserReport = () => {
               </button>
             </div>
           </div>
-          <form className="relative w-full min-w-[200px]">
-            <textarea
-              className="peer h-full min-h-[150px] w-full rounded-[7px] border border-slate-700 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-slate-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-slate-700 placeholder-shown:border-t-slate-700 focus:border-2 focus:border-blue-600 focus:border-t-transparent focus:placeholder-slate-400 focus:outline-0 disabled:border-0 disabled:bg-slate-700"
-              placeholder={getPlaceholder}
-              value={getForm}
-              required
-              onChange={(e) => setForm(e.target.value)}
-            />
-            <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-slate-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-slate-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-slate-600 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-600 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-600 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-600 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-slate-800">
-              {getType === "bug"
-                ? "Report Bug"
-                : getType === "link"
-                ? "Suggest Link"
-                : getType === "admin"
-                ? "Write to Admin"
-                : "Other Topic"}
-            </label>
+          <form className="flex flex-col space-y-4">
+            <div className="relative h-10 w-full min-w-[200px]">
+              <input
+                className="peer h-full w-full rounded-[7px] border border-gray-800 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-gray-800 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-gray-800 placeholder-shown:border-t-gray-800 focus:border-2 focus:border-blue-500 focus:border-t-transparent focus:placeholder-gray-400 focus:outline-0 disabled:border-0 disabled:bg-gray-800"
+                placeholder="john.doe@example.com"
+                value={getForm}
+                required
+                // onChange={(e) => setForm(e.target.value)}
+              />
+              <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-gray-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-gray-800 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-gray-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-500 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-500 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-500 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-gray-900">
+                Email
+              </label>
+            </div>
+            <div className="relative w-full min-w-[200px]">
+              <textarea
+                className="peer h-full min-h-[150px] w-full rounded-[7px] border border-slate-700 border-t-transparent bg-transparent px-3 py-2.5 font-sans text-sm font-normal text-slate-700 placeholder-transparent outline outline-0 transition-all placeholder:italic placeholder-shown:border placeholder-shown:border-slate-700 placeholder-shown:border-t-slate-700 focus:border-2 focus:border-blue-600 focus:border-t-transparent focus:placeholder-slate-400 focus:outline-0 disabled:border-0 disabled:bg-slate-700"
+                placeholder={getPlaceholder}
+                value={getForm}
+                required
+                onChange={(e) => setForm(e.target.value)}
+              />
+              <label className="before:content[' '] after:content[' '] pointer-events-none absolute -top-1.5 left-0 flex h-full w-full select-none text-[11px] font-normal leading-tight text-slate-400 transition-all before:pointer-events-none before:mr-1 before:mt-[6.5px] before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-l before:border-t before:border-slate-700 before:transition-all after:pointer-events-none after:ml-1 after:mt-[6.5px] after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-r after:border-t after:border-slate-700 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-slate-600 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[11px] peer-focus:leading-tight peer-focus:text-blue-600 peer-focus:before:border-l-2 peer-focus:before:border-t-2 peer-focus:before:border-blue-600 peer-focus:after:border-r-2 peer-focus:after:border-t-2 peer-focus:after:border-blue-600 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-slate-800">
+                {getType === "bug"
+                  ? "Report Bug"
+                  : getType === "link"
+                  ? "Suggest Link"
+                  : getType === "admin"
+                  ? "Write to Admin"
+                  : "Other Topic"}
+              </label>
+            </div>
           </form>
           <div className="flex flex-row items-center justify-center space-x-4 rounded-b border-t border-solid border-slate-300  px-6 md:justify-end">
             <button

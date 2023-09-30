@@ -16,6 +16,7 @@ const BookmarkModal = () => {
   const { modalValue } = useSelector((state) => state.Modal);
   const { folders, _id } = useSelector((state) => state.UserProfile.profile);
   const [openFolderCreate, setFolderCreate] = useState(false);
+  const [isInputFocused, setInputFocused] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const isBookmarkModalOpen = useSelector(
     (state) => state.Modal.isBookmarkModalOpen,
@@ -92,6 +93,7 @@ const BookmarkModal = () => {
       (folder) => folder.name === searchValue,
     );
     if (!isLinkAlreadyBookmarked) {
+      // TODO: check if searchValue.trim is not empty
       Request.postFolder({
         userId: _id,
         folderName: searchValue,
@@ -114,9 +116,6 @@ const BookmarkModal = () => {
         });
     } else {
     }
-  };
-  const handleInputSubmit = (event) => {
-    setSearchValue(event.target.value);
   };
 
   return (
@@ -159,7 +158,7 @@ const BookmarkModal = () => {
         <div className="flex h-96 w-full items-center justify-center text-xl font-semibold">
           <div className="flex h-full w-full flex-col items-center justify-center space-y-4">
             <div>
-              <p>Save Link to...</p>
+              <p>Save link to...</p>
             </div>
             <div className="flex h-full w-full flex-col space-x-4 overflow-y-auto overflow-x-hidden">
               {folders?.length ? (
@@ -168,14 +167,13 @@ const BookmarkModal = () => {
                     <div key={index} className="inline-flex items-center">
                       <label
                         className="relative flex cursor-pointer items-center rounded-full px-3 py-[10px]"
-                        htmlFor="checkbox"
+                        htmlFor={`checkbox-${index}`}
                         data-ripple-dark="true"
                       >
                         <input
-                          key={index}
                           type="checkbox"
-                          className="before:content[''] before:bg-blue-gray-500 peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border-2 border-gray-300 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 lg:hover:before:opacity-10"
-                          id="checkbox"
+                          className="before:content[''] peer relative h-5 w-5 cursor-pointer appearance-none rounded-md border-2 border-gray-300 transition-all before:absolute before:left-2/4 before:top-2/4 before:block before:h-12 before:w-12 before:-translate-x-2/4 before:-translate-y-2/4 before:rounded-full before:bg-gray-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 lg:hover:before:opacity-10"
+                          id={`checkbox-${index}`}
                           checked={folderElement.bookmarked.includes(
                             modalValue._id,
                           )}
@@ -199,8 +197,9 @@ const BookmarkModal = () => {
                         </span>
                       </label>
                       <label
-                        className="cursor-pointer select-none text-slate-700"
-                        htmlFor="checkbox"
+                        key={index}
+                        className="text-md cursor-pointer select-none font-normal text-slate-700"
+                        htmlFor={`checkbox-${index}`}
                       >
                         {folderElement.name}
                       </label>
@@ -217,41 +216,69 @@ const BookmarkModal = () => {
               {openFolderCreate ? (
                 <div className="flex w-full flex-row items-center justify-center space-x-4">
                   <form onSubmit={handleAddFolder}>
-                    <input
-                      value={searchValue}
-                      onChange={handleInputSubmit}
-                      type="search"
-                      className="h-8 w-full rounded-md bg-slate-900/5 px-5 text-base font-normal text-slate-900 transition duration-300 ease-in-out placeholder:italic focus:bg-slate-100 focus:shadow-xl focus:outline-none"
-                      placeholder="Name"
-                    />
-                  </form>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    className="flex flex-row items-center justify-center space-x-2 rounded-lg  bg-slate-100 p-1 text-center font-medium text-slate-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
-                    onClick={() => setFolderCreate(false)}
-                    type="button"
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="22"
-                      height="22"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      className="lucide lucide-x"
+                    <div
+                      className="backdrop-saturate-900 relative flex w-full items-center rounded-full border-2 border-slate-200 bg-white bg-opacity-90 backdrop-blur-lg lg:w-auto lg:flex-1 lg:border-0
+                    "
                     >
-                      <path d="M18 6 6 18" />
-                      <path d="m6 6 12 12" />
-                    </svg>
-                  </motion.button>
+                      <input
+                        value={searchValue}
+                        onChange={(event) => setSearchValue(event.target.value)}
+                        onFocus={() => setInputFocused(true)}
+                        onBlur={() => setInputFocused(false)}
+                        type="search"
+                        className="h-[40px] w-full rounded-lg bg-slate-900/5 pl-12 pr-14 text-base font-normal text-slate-900 transition duration-300 ease-in-out placeholder:italic focus:bg-slate-100 focus:shadow-xl focus:outline-none"
+                        placeholder="Folder Name"
+                      />
+                      <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        type="submit"
+                        className="absolute left-3 mr-2"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="20"
+                          height="20"
+                          className="lucide lucide-search text-slate-400"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke={isInputFocused ? "#3b82f6" : "#6b7280"}
+                          strokeWidth="1.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <circle cx="11" cy="11" r="8"></circle>
+                          <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+                        </svg>
+                      </motion.button>
+                      <div className="absolute right-12 h-full w-[0.5px] bg-gray-500"></div>
+                      <button
+                        type="button"
+                        onClick={() => setFolderCreate(false)}
+                        className="absolute right-3 px-1 py-1"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="22"
+                          height="22"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="lucide lucide-x text-slate-400"
+                        >
+                          <path d="M18 6 6 18" />
+                          <path d="m6 6 12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  </form>
                 </div>
               ) : (
                 <motion.button
                   whileTap={{ scale: 0.9 }}
-                  className="flex flex-row items-center justify-center space-x-2 rounded-md bg-slate-100  px-8 py-1 text-center text-base text-slate-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
+                  className="flex flex-row items-center justify-center space-x-2 rounded-md bg-slate-100 px-8 py-1 text-center text-base font-normal text-slate-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
                   onClick={() => setFolderCreate(true)}
                   type="button"
                 >

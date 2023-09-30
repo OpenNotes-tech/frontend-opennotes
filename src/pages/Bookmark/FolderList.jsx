@@ -33,20 +33,20 @@ const FolderList = () => {
   return (
     <>
       {profile?.folders?.length ? (
-        <div className="flex flex-col py-6">
+        <div className="flex h-full w-full flex-col py-6">
           {profile?.folders.map((folderElement, index) => (
             <div
               key={index}
-              className="flex flex-row items-center justify-center rounded-sm lg:hover:bg-slate-200 lg:hover:text-slate-700"
+              className={`flex flex-row items-center justify-center rounded-sm px-10 lg:hover:bg-slate-200 lg:hover:text-slate-700 ${
+                folderElement._id === folderId
+                  ? "bg-blue-100 text-blue-500"
+                  : "text-slate-600"
+              }`}
             >
               <Link
                 to={`/bookmark/${folderElement._id}`}
                 state={{ folderElement, id: profile?._id }}
-                className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium focus:outline-none md:px-5  lg:px-20  ${
-                  folderElement._id === folderId
-                    ? "bg-blue-100 text-blue-500"
-                    : "text-slate-600"
-                }`}
+                className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium capitalize focus:outline-none md:px-5 `}
                 htmlFor="checkbox"
               >
                 {folderElement.name}
@@ -78,7 +78,7 @@ const FolderList = () => {
           ))}
         </div>
       ) : (
-        <div className="flex flex-row items-center justify-center">
+        <div className="flex h-full flex-row items-center justify-center">
           No Bookmark Folder
         </div>
       )}

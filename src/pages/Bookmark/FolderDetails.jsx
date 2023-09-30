@@ -16,6 +16,7 @@ const FolderDetails = () => {
   const location = useLocation();
   let { folderId } = useParams();
   const [openFolderCreate, setFolderCreate] = useState(false);
+  const [isInputFocused, setInputFocused] = useState(false);
   const [fetchResult, setFetchResult] = useState([]);
   const [searchValue, setSearchValue] = useState(
     location?.state?.folderElement?.name,
@@ -90,46 +91,70 @@ const FolderDetails = () => {
   //   return () => window.removeEventListener("scroll", debouncedHandleScroll);
   // }, [loading]);
 
-  const handleInputSubmit = (event) => {
-    setSearchValue(event.target.value);
-  };
-
   return (
     <div className="flex w-full flex-col">
       <div className="flex w-full flex-row items-center justify-center space-x-4 bg-rose-100 px-4 py-10">
         {openFolderCreate ? (
           <div className="flex w-full flex-row items-center justify-center space-x-4">
             <form onSubmit={handleEditFolder}>
-              <input
-                value={searchValue}
-                onChange={handleInputSubmit}
-                type="search"
-                className="h-8 w-full rounded-md bg-slate-900/5 px-5 text-base font-normal text-slate-900 transition duration-300 ease-in-out placeholder:italic focus:bg-slate-100 focus:shadow-xl focus:outline-none"
-                placeholder="Name"
-              />
-            </form>
-            <motion.button
-              whileTap={{ scale: 0.9 }}
-              className="flex flex-row items-center justify-center space-x-2 rounded-lg  bg-slate-100 p-1 text-center font-medium text-slate-700 shadow-md transition duration-200 ease-in-out  lg:hover:bg-blue-50 lg:hover:text-blue-600"
-              onClick={() => setFolderCreate(false)}
-              type="button"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="22"
-                height="22"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-x"
+              <div
+                className="backdrop-saturate-900 relative flex w-full items-center rounded-full border-2 border-slate-200 bg-white bg-opacity-90 backdrop-blur-lg lg:w-auto lg:flex-1 lg:border-0
+            "
               >
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-              </svg>
-            </motion.button>
+                <input
+                  value={searchValue}
+                  onChange={(event) => setSearchValue(event.target.value)}
+                  onFocus={() => setInputFocused(true)}
+                  onBlur={() => setInputFocused(false)}
+                  type="search"
+                  className="h-[40px] w-full rounded-lg bg-slate-900/5 pl-12 pr-14 text-base font-normal text-slate-900 transition duration-300 ease-in-out placeholder:italic focus:bg-slate-100 focus:shadow-xl focus:outline-none"
+                  placeholder="Folder Name"
+                />
+                <motion.button
+                  whileTap={{ scale: 0.9 }}
+                  type="submit"
+                  className="absolute left-3 mr-2"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    className="lucide lucide-search text-slate-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke={isInputFocused ? "#3b82f6" : "#6b7280"}
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+                  </svg>
+                </motion.button>
+                <div className="absolute right-12 h-full w-[0.5px] bg-gray-500"></div>
+                <button
+                  type="button"
+                  onClick={() => setFolderCreate(false)}
+                  className="absolute right-3 px-1 py-1"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-x text-slate-400"
+                  >
+                    <path d="M18 6 6 18" />
+                    <path d="m6 6 12 12" />
+                  </svg>
+                </button>
+              </div>
+            </form>
           </div>
         ) : (
           <div className="flex flex-row items-center justify-center space-x-4">
@@ -159,7 +184,7 @@ const FolderDetails = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-col items-center space-y-10 px-4 pt-10">
+      <div className="flex flex-col items-center space-y-10 px-4 py-10">
         {fetchResult?.length > 0 && (
           <div className="grid grid-cols-1 gap-y-12 px-3 md:grid-cols-2 md:gap-x-12 md:px-8 lg:grid-cols-3">
             {fetchResult.map((linkElement, index) => (
@@ -169,11 +194,8 @@ const FolderDetails = () => {
         )}
 
         {loading && (
-          <div className="trigger visible">
-            {parseInt(sessionStorage.getItem("_PageNumber")) ===
-              parseInt(sessionStorage.getItem("_TotalPages")) && (
-              <LoaderSkeleton />
-            )}
+          <div className="visible">
+            <LoaderSkeleton />
           </div>
         )}
 

@@ -5,7 +5,7 @@ export const QueryRoutes = (location, newQueryParams) => {
     if (newQueryParams.hasOwnProperty(key)) {
       const value = newQueryParams[key];
       if (value !== undefined && value !== null && value !== "") {
-        queryParams.set(key, encodeURIComponent(value));
+        queryParams.set(key, encodeURI(value));
       } else {
         // If value is empty or undefined, remove the parameter
         queryParams.delete(key);
@@ -15,7 +15,6 @@ export const QueryRoutes = (location, newQueryParams) => {
 
   const linkPath = `${location.pathname}`;
   let queryString = queryParams.toString();
-  queryString = queryString.replace(/%252C/g, ",");
 
   return `${linkPath}${queryString ? "?" + queryString : ""}`;
 };

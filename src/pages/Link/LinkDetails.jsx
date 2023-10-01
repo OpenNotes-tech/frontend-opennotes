@@ -12,6 +12,7 @@ import {
 import {
   openAuthModal,
   openBookmarkModal,
+  openReportModal,
   openShareModal,
 } from "../../store/features/modalSlice";
 import { useState, useEffect } from "react";
@@ -44,8 +45,8 @@ const LinkDetails = () => {
   };
 
   useEffect(() => {
-    if (state.data) {
-      setData(state.data);
+    if (state?.data) {
+      setData(state?.data);
     } else {
       dispatch(setLoading(true));
 
@@ -261,7 +262,28 @@ const LinkDetails = () => {
               {modalValue.clickCount}
             </div>
           </div>
-          <div className="flex items-center justify-center">
+          <div className="flex flex-row items-center justify-evenly space-x-40">
+            <Link
+              to="/"
+              className="flex h-10 w-1/3 cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-4 text-center font-medium text-black transition duration-200 ease-in-out md:px-8 md:py-1 lg:hover:border-blue-700 lg:hover:bg-blue-100 lg:hover:text-blue-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-home"
+              >
+                <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <polyline points="9 22 9 12 15 12 15 22" />
+              </svg>
+              <p>Back</p>
+            </Link>
             <Link
               to={modalValue.url}
               target="_blank"
@@ -286,6 +308,28 @@ const LinkDetails = () => {
               </svg>
               <p>Open</p>
             </Link>
+            <button
+              onClick={() => dispatch(openReportModal())}
+              className="flex h-10 w-1/3 cursor-pointer flex-row items-center justify-center space-x-2 rounded-md border-[1.5px] border-black px-4 text-center font-medium text-black transition duration-200 ease-in-out md:px-8 md:py-1 lg:hover:border-blue-700 lg:hover:bg-blue-100 lg:hover:text-blue-700"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.25"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="lucide lucide-external-link"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" x2="21" y1="14" y2="3" />
+              </svg>
+              <p>Offer Alternative Link</p>
+            </button>
           </div>
           <div className="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t-2 border-slate-300 px-4 pt-3 font-sans text-base font-normal leading-relaxed antialiased">
             <div
@@ -385,7 +429,9 @@ const LinkDetails = () => {
           </div>
         </div>
       ) : (
-        <IconNoResult />
+        <div className="flex h-screen items-center justify-center">
+          <IconNoResult />
+        </div>
       )}
     </>
   );

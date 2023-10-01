@@ -1,17 +1,18 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { motion } from "framer-motion";
 import { openFilterModal } from "../store/features/modalSlice";
+import { setSearchValue } from "../store/features/editProfileSlice";
 import { QueryRoutes } from "../hooks/useGenerateQueryLink";
 
 const Search = ({ nav }) => {
+  const { searchValue } = useSelector((state) => state.UserProfile);
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
-  const search_query = queryParams.get("search_query");
   const category = queryParams.get("category");
   const hashtag = queryParams.get("hashtag");
   const pricing = queryParams.get("pricing");
@@ -20,19 +21,18 @@ const Search = ({ nav }) => {
 
   const [getFilterChange, setFilterChange] = useState(false);
   const [isInputFocused, setInputFocused] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (sortby === null) {
       const linkToPage = QueryRoutes(location, {
-        search_query: searchValue,
+        search_query: searchValue.trim(),
         sortby: "relevant",
       });
       navigate(linkToPage);
     } else {
       const linkToPage = QueryRoutes(location, {
-        search_query: searchValue,
+        search_query: searchValue.trim(),
       });
       navigate(linkToPage);
     }
@@ -51,10 +51,6 @@ const Search = ({ nav }) => {
     }
   }, [category, tags, pricing, hashtag]);
 
-  useEffect(() => {
-    setSearchValue(search_query ? search_query.replace(/%20/g, " ") : "");
-  }, [category, tags, pricing, sortby]);
-
   return (
     <div
       className={`w-full items-center ${
@@ -69,7 +65,7 @@ const Search = ({ nav }) => {
         >
           <input
             value={searchValue}
-            onChange={(event) => setSearchValue(event.target.value)}
+            onChange={(event) => dispatch(setSearchValue(event.target.value))}
             onFocus={() => setInputFocused(true)}
             onBlur={() => setInputFocused(false)}
             type="search"

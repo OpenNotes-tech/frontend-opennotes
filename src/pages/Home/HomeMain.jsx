@@ -138,6 +138,7 @@ const HomeMain = () => {
           "_PageNumber",
           parseInt(sessionStorage.getItem("_PageNumber")) + 1,
         );
+        dispatch(setLoading(false));
       }
     }
   };

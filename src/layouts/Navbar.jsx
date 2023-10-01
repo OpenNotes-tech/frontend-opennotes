@@ -8,7 +8,7 @@ import { addError, setLoading } from "../store/features/errorSlice";
 import { createDropInVariant } from "../hooks/useAnimationVariants";
 import { openAuthModal, openProfileModal } from "../store/features/modalSlice";
 import ExploreModal from "../components/modals/ExploreModal";
-import { logout } from "../store/features/editProfileSlice";
+import { logout, setSearchValue } from "../store/features/editProfileSlice";
 import useDarkMode from "../hooks/useDarkMode";
 import maskEmail from "../hooks/maskEmail";
 import Request from "../utils/API-router";
@@ -115,6 +115,11 @@ const Navbar = () => {
     }
   };
 
+  const handleHome = () => {
+    dispatch(setSearchValue(""));
+    navigate("");
+  };
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => {
@@ -137,14 +142,17 @@ const Navbar = () => {
           {loading && <Loader />}
 
           <div className="flex flex-row items-center space-x-8 md:space-x-16">
-            <Link to={"/"} className="flex h-8 w-full items-center md:h-10">
+            <button
+              onClick={handleHome}
+              className="flex h-8 w-full items-center md:h-10"
+            >
               <Example />
               {/* <img
               className="block h-full w-full"
               src="https://cdn-opennotes.b-cdn.net/static/media/logo.708029b797f0dc11c4bb71c64fd217c5.svg"
               alt="Main Logo"
             /> */}
-            </Link>
+            </button>
             {name === "profile" && (
               <Link
                 onClick={() => dispatch(openProfileModal(!isProfileModalOpen))}

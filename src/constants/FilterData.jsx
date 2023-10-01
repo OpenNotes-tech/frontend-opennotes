@@ -228,6 +228,7 @@ export const FrontendOptions = [
   },
   { value: "webrtc", label: "WebRTC", color: "#E2EAFC" }, // Think of smth for this kind of libraries
   { value: "angularjs", label: "Angular.js", color: "#E2EAFC" },
+  { value: "wordpress", label: "Wordpress", color: "#E2EAFC" },
   { value: "nextjs", label: "Next.js", color: "#E2EAFC" },
   { value: "nuxtjs", label: "Nuxt.js", color: "#E2EAFC" },
   { value: "reactjs", label: "React.js", color: "#E2EAFC" },
@@ -634,18 +635,45 @@ export const AIOptions = [
 ];
 export const AlgorithmsOptions = [
   { value: "Algorithms", label: "Algorithms", isDisabled: true },
+  { value: "linkedin", label: "LinkedIn", color: "#93E1D8" },
+  { value: "icpc", label: "ICPC", color: "#93E1D8" },
+  { value: "resume", label: "Resume", color: "#93E1D8" },
+  { value: "interview", label: "Interview", color: "#93E1D8" },
+  { value: "faang", label: "FAANG", color: "#93E1D8" },
+  { value: "newgrad", label: "NewGrad", color: "#93E1D8" },
+  { value: "leetcode", label: "LeetCode", color: "#93E1D8" },
+  { value: "community", label: "Community", color: "#93E1D8" },
+  { value: "algorithm", label: "Algorithm", color: "#93E1D8" },
 ];
 export const SecurityOptions = [
   { value: "Cyber Security", label: "Cyber Security", isDisabled: true },
 ];
 export const CourseOptions = [
   { value: "IT Courses", label: "IT Courses", isDisabled: true },
+  { value: "frontendcourse", label: "Frontend_Course", color: "#93E1D8" },
+  { value: "backendcourse", label: "Backend_Course", color: "#93E1D8" },
+  { value: "mobilecourse", label: "Mobile_Course", color: "#93E1D8" },
+  { value: "securitycourse", label: "Security_Course", color: "#93E1D8" },
+  { value: "mlcourse", label: "ML_Course", color: "#93E1D8" },
+  { value: "algorithmcourse", label: "Algorithm_Course", color: "#93E1D8" },
 ];
 export const BlogOptions = [
   { value: "Blogs", label: "Blogs", isDisabled: true },
+  { value: "frontendblog", label: "Frontend_Blog", color: "#93E1D8" },
+  { value: "backendblog", label: "Backend_Blog", color: "#93E1D8" },
+  { value: "mobileblog", label: "Mobile_Blog", color: "#93E1D8" },
+  { value: "securityblog", label: "Security_Blog", color: "#93E1D8" },
+  { value: "mlblog", label: "ML_Blog", color: "#93E1D8" },
+  { value: "algorithmblog", label: "Algorithm_Blog", color: "#93E1D8" },
 ];
 export const PodcastOptions = [
   { value: "Podcasts", label: "Podcasts", isDisabled: true },
+  { value: "frontendpodcast", label: "Frontend_Podcast", color: "#93E1D8" },
+  { value: "backendpodcast", label: "Backend_Podcast", color: "#93E1D8" },
+  { value: "mobilepodcast", label: "Mobile_Podcast", color: "#93E1D8" },
+  { value: "securitypodcast", label: "Security_Podcast", color: "#93E1D8" },
+  { value: "mlpodcast", label: "ML_Podcast", color: "#93E1D8" },
+  { value: "algorithmpodcast", label: "Algorithm_Podcast", color: "#93E1D8" },
 ];
 export const PricingOptions = [
   { value: "free", label: "Free" },
@@ -657,10 +685,10 @@ export const CategoryOptions = [
   { value: "frontend", label: "Frontend" },
   { value: "backend", label: "Backend" },
   { value: "mobile", label: "Mobile" },
-  { value: "blogs", label: "Blogs" },
-  { value: "podcasts", label: "Podcasts" },
-  { value: "datascience", label: "AI / ML / DS" },
-  { value: "algorithms", label: "Algorithms" },
   { value: "courses", label: "IT Courses" },
   { value: "cybersecurity", label: "Cyber Security" },
+  { value: "datascience", label: "AI / ML / DS" },
+  { value: "algorithms", label: "Algorithms" },
+  { value: "blogs", label: "Blogs" },
+  { value: "podcasts", label: "Podcasts" },
 ];

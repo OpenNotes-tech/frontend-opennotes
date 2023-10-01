@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import Cookies from "js-cookie";
 
 const initialState = {
+  searchValue: "",
   isLoggedIn: Cookies.get("userID") !== undefined,
   profile: [],
 };
@@ -111,6 +112,9 @@ export const editProfileSlice = createSlice({
       state.isLoggedIn = Cookies.get("userID") !== undefined;
       state.profile = action.payload;
     },
+    setSearchValue: (state, action) => {
+      state.searchValue = action.payload;
+    },
     logout: (state) => {
       state.isLoggedIn = null;
       state.profile = null;
@@ -120,6 +124,7 @@ export const editProfileSlice = createSlice({
 
 export default editProfileSlice.reducer;
 export const {
+  setSearchValue,
   editUserProfile,
   deleteFolderItem,
   editBookmark,

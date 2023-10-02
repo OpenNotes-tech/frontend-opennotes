@@ -70,6 +70,7 @@ const LinkDetails = () => {
   }, []);
 
   const handleShareModal = () => {
+    // const shareLink = `bestlink.vercel.app/link-details/${linkElement._id}`;
     if (window.innerWidth <= 768 && navigator.share) {
       // You can adjust the width value for your needs
       navigator
@@ -314,19 +315,18 @@ const LinkDetails = () => {
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="18"
+                height="18"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="1.25"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-external-link"
+                stroke-width="1.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="lucide lucide-send"
               >
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                <polyline points="15 3 21 3 21 9" />
-                <line x1="10" x2="21" y1="14" y2="3" />
+                <path d="m22 2-7 20-4-9-9-4Z" />
+                <path d="M22 2 11 13" />
               </svg>
               <p>Offer Alternative Link</p>
             </button>

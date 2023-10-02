@@ -16,6 +16,13 @@ const FolderList = () => {
       .then((res) => {
         dispatch(deleteFolder(id));
         dispatch(setLoading(false));
+        dispatch(
+          addError({
+            type: "success",
+            error: "Deleted Folder Successfully!",
+            id: Date.now(),
+          }),
+        );
         navigate("/bookmark");
       })
       .catch((error) => {
@@ -47,7 +54,6 @@ const FolderList = () => {
                 to={`/bookmark/${folderElement._id}`}
                 state={{ folderElement, id: profile?._id }}
                 className={`flex w-full items-center justify-between space-x-2 rounded px-5 py-3 text-center text-sm font-medium capitalize focus:outline-none md:px-5 `}
-                htmlFor="checkbox"
               >
                 {folderElement.name}
               </Link>

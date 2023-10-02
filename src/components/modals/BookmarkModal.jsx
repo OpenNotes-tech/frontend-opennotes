@@ -50,6 +50,13 @@ const BookmarkModal = () => {
             editBookmark({ _id: folderElement.id, link: modalValue._id }),
           );
           dispatch(setLoading(false));
+          dispatch(
+            addError({
+              type: "success",
+              error: "Bookmarked Successfully!",
+              id: Date.now(),
+            }),
+          );
         })
         .catch((error) => {
           dispatch(
@@ -71,6 +78,13 @@ const BookmarkModal = () => {
             editBookmark({ _id: folderElement.id, link: modalValue._id }),
           );
           dispatch(setLoading(false));
+          dispatch(
+            addError({
+              type: "success",
+              error: "Removed Successfully!",
+              id: Date.now(),
+            }),
+          );
         })
         .catch((error) => {
           dispatch(
@@ -87,12 +101,12 @@ const BookmarkModal = () => {
 
   const handleAddFolder = (e) => {
     e.preventDefault();
-    dispatch(setLoading(true));
-    // Use .some() to check if any item in the bookmarked array has the same link
+
     const isLinkAlreadyBookmarked = folders?.some(
       (folder) => folder.name === searchValue,
     );
-    if (!isLinkAlreadyBookmarked) {
+    if (!isLinkAlreadyBookmarked && searchValue.trim !== "liked") {
+      dispatch(setLoading(true));
       // TODO: check if searchValue.trim is not empty
       Request.postFolder({
         userId: _id,
@@ -103,6 +117,13 @@ const BookmarkModal = () => {
           setFolderCreate(false);
           setSearchValue("");
           dispatch(setLoading(false));
+          dispatch(
+            addError({
+              type: "success",
+              error: "Created Folder Successfully!",
+              id: Date.now(),
+            }),
+          );
         })
         .catch((error) => {
           dispatch(
@@ -115,6 +136,13 @@ const BookmarkModal = () => {
           dispatch(setLoading(false));
         });
     } else {
+      dispatch(
+        addError({
+          type: "error",
+          error: "Folder name Error!",
+          id: Date.now(),
+        }),
+      );
     }
   };
 

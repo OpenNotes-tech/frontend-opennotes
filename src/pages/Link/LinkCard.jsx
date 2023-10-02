@@ -62,6 +62,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
     }
   };
   const handleShareModal = () => {
+    // const shareLink = `bestlink.vercel.app/link-details/${linkElement._id}`;
     if (window.innerWidth <= 768 && navigator.share) {
       // You can adjust the width value for your needs
       navigator
@@ -88,7 +89,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
         whileHover={{ scale: 1.01 }}
         transition={{ stiffness: 300, damping: 10 }}
         // onMouseMove={handleMouseMove}
-        className="group relative flex h-[500px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-lg lg:hover:shadow-2xl"
+        className="group relative flex h-[460px] max-w-sm flex-col space-y-6 rounded-2xl border border-gray-200 bg-white text-left shadow-lg dark:border-slate-500 dark:bg-slate-600 md:h-[430px] lg:hover:shadow-2xl"
       >
         {/* <motion.div
           className="pointer-events-none absolute -inset-px rounded-xl opacity-0 transition duration-300 group-lg:hover:opacity-100"
@@ -102,9 +103,13 @@ const LinkCard = ({ linkElement, handleLike }) => {
           `,
           }}
         /> */}
-        <div className="h-1/2">
+        <div className="h-1/2 w-full">
           {linkElement.photo ? (
-            <img className="rounded-t-2xl" src={linkElement.photo} alt="" />
+            <img
+              className="h-2/3 w-full rounded-t-2xl bg-center object-cover object-center"
+              src={linkElement.photo}
+              alt=""
+            />
           ) : (
             <svg
               className="h-12 w-12 text-gray-200"
@@ -117,16 +122,16 @@ const LinkCard = ({ linkElement, handleLike }) => {
             </svg>
           )}
           <div className="p-5">
-            <h3 className="mb-2 truncate text-xl font-semibold capitalize leading-snug tracking-wide  text-slate-700 ">
+            <h3 className="mb-2 truncate text-xl font-semibold capitalize leading-snug tracking-wide  text-slate-700 dark:text-slate-100">
               {linkElement.title}
             </h3>
-            <p className="mb-3 line-clamp-3 font-slab text-sm font-light leading-relaxed text-slate-400 ">
+            <p className="mb-3 line-clamp-3 font-slab text-sm font-light leading-relaxed text-slate-400 dark:text-slate-300">
               {linkElement.description}
             </p>
           </div>
         </div>
-        <div className="bottom-0 flex h-1/2 w-full flex-col space-y-4 pb-4">
-          <div className="mt-auto flex flex-col space-y-4 px-8 2xl:flex-row 2xl:justify-between 2xl:space-x-2 2xl:space-y-0 2xl:px-4">
+        <div className="flex h-1/2 w-full flex-col justify-end space-y-4 pb-4">
+          <div className="flex flex-col space-y-4 px-8 2xl:flex-row 2xl:justify-between 2xl:space-x-2 2xl:space-y-0 2xl:px-4">
             {/* <div className="absolute -bottom-10 flex h-1/2 w-full items-center justify-center bg-black/20 opacity-0 -ml-4 transition-all duration-300 group-lg:hover:bottom-0 group-lg:hover:bg-transparent group-lg:hover:opacity-100">
               <button className="bg-black px-5 py-2 text-white">Add to cart</button>
             </div> */}
@@ -182,15 +187,15 @@ const LinkCard = ({ linkElement, handleLike }) => {
               <p>Details</p>
             </Link>
           </div>
-          <div className="text-blue-gray-900 mt-auto flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed ">
-            <div className=" relative flex items-center space-x-4">
+          <div className="flex flex-row items-end justify-between border-t px-4 pt-3 font-sans text-base font-normal leading-relaxed text-gray-900 ">
+            <div className="flex items-center space-x-4">
               <Tippy
                 content="Like"
                 animation="shift-away"
                 className="hidden bg-black px-1 font-medium text-white lg:block"
               >
                 <button
-                  className={`group relative flex h-8 min-w-[68px] items-center justify-center rounded-full  px-3 text-xs leading-none  transition-colors focus:outline-none ${
+                  className={`group  flex h-8 min-w-[68px] items-center justify-center rounded-full  px-3 text-xs leading-none  transition-colors focus:outline-none ${
                     isLiked
                       ? "bg-rose-50 text-rose-600 dark:bg-rose-100 dark:text-rose-600 lg:hover:bg-slate-100  dark:lg:hover:bg-slate-100 "
                       : "bg-slate-100 text-slate-700 dark:bg-gray-100 dark:text-slate-900 lg:hover:bg-rose-50 lg:hover:text-rose-600 dark:lg:hover:bg-rose-100 dark:lg:hover:text-rose-500"
@@ -252,7 +257,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
                 </button>
               </Tippy>
             </div>
-            <div className="relative flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-300">
+            <div className="flex items-center space-x-2 text-xs text-slate-600 dark:text-slate-300">
               <Tippy
                 content="Bookmark"
                 animation="shift-away"
@@ -260,7 +265,7 @@ const LinkCard = ({ linkElement, handleLike }) => {
               >
                 <button
                   onClick={handleBookmarkModal}
-                  className={`relative flex items-center justify-center rounded-full bg-slate-100 p-[10px] focus:outline-none dark:bg-gray-100  lg:hover:bg-blue-50  dark:lg:hover:bg-blue-100  ${
+                  className={` flex items-center justify-center rounded-full bg-slate-100 p-[10px] focus:outline-none dark:bg-gray-100  lg:hover:bg-blue-50  dark:lg:hover:bg-blue-100  ${
                     isLinkIdInAnyFolder
                       ? "text-blue-500"
                       : "text-slate-600 dark:text-slate-900 dark:lg:hover:text-blue-600"

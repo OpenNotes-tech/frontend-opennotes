@@ -127,8 +127,6 @@ const FilterModal = () => {
     podcasts: PodcastOptions,
   };
 
-  console.log(Object.values(categoryOptions)?.flat());
-
   // Flatten category options and prioritize the options of the first selected category
   const orderedSelectedOptions =
     routeCategory?.length > 0

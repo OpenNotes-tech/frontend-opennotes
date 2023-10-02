@@ -87,8 +87,6 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
     return () => clearTimeout(delay); // Clear the timeout on component unmount
   }, [category]);
 
-  
-
   return (
     <>
       <div className="justify-center scroll-smooth">
@@ -125,7 +123,7 @@ const LinkMain = ({ fetchResult, sort, category, handleLike }) => {
                           : { category: tab.id },
                       )
                     }
-                    className={`mt-2 flex snap-center snap-normal flex-row items-center justify-center space-x-2 rounded-full px-4 py-2 first:ml-2 lg:hover:bg-slate-200 lg:dark:lg:hover:bg-slate-600 lg:dark:lg:hover:text-white ${
+                    className={`mt-2 flex snap-center snap-normal flex-row items-center justify-center space-x-2 rounded-full px-4 py-2 first:ml-2 lg:hover:bg-slate-200 dark:lg:hover:bg-slate-600 dark:lg:hover:text-white ${
                       category?.split(",")[0] ===
                         (tab.id === "/" ? undefined : tab.id) &&
                       "bg-blue-100 text-blue-500"

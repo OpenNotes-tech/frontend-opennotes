@@ -2,14 +2,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import { addError, setLoading } from "../../store/features/errorSlice";
 import { editUserProfile } from "../../store/features/editProfileSlice";
-import { BackendOptions } from "../../constants/FilterData";
+import {
+  FrontendOptions,
+  CategoryOptions,
+  PricingOptions,
+  MobileOptions,
+  BackendOptions,
+  AIOptions,
+  SecurityOptions,
+  CourseOptions,
+  BlogOptions,
+  PodcastOptions,
+  AlgorithmsOptions,
+} from "../../constants/FilterData";
 import Selector from "../../components/Selector";
 import Request from "../../utils/API-router";
 
 const ProfileChangeInfo = () => {
   const dispatch = useDispatch();
   const { profile } = useSelector((state) => state?.UserProfile);
-  const [getSkillsSelector, setSkillsSelector] = useState([]);
+  const [getCategorySelector, setCategorySelector] = useState([]);
+  const [getTagsSelector, setTagsSelector] = useState([]);
   const [formData, setFormData] = useState({
     fullName: profile?.fullName,
     email: profile?.email,
@@ -61,12 +74,33 @@ const ProfileChangeInfo = () => {
       });
   };
 
-  const handleSkillsSelector = (selectedSkills) => {
-    const selectedValues = selectedSkills.map((option) => option.value);
-    setSkillsSelector(selectedSkills);
+  const handleCategorySelector = (selectedCategory) => {
+    const selectedValues = selectedCategory.map((option) => option.value);
+    setCategorySelector(selectedCategory);
     const commaSeparatedString = selectedValues.join(",");
-    localStorage.setItem("UserSkills", commaSeparatedString);
   };
+
+  const handleTagsSelector = (selectedTags) => {
+    const selectedValues = selectedTags.map(
+      (option) => option.value.split("_")[0],
+    );
+    setTagsSelector(selectedTags);
+    const commaSeparatedString = selectedValues.join(",");
+  };
+
+  const categoryOptions = {
+    frontend: FrontendOptions,
+    backend: BackendOptions,
+    datascience: AIOptions,
+    mobile: MobileOptions,
+    algorithms: AlgorithmsOptions,
+    cybersecurity: SecurityOptions,
+    courses: CourseOptions,
+    blogs: BlogOptions,
+    podcasts: PodcastOptions,
+  };
+
+  const orderedSelectedOptions = Object.values(categoryOptions)?.flat();
 
   return (
     <>
@@ -172,7 +206,7 @@ const ProfileChangeInfo = () => {
             <img
               src={require("../../assets/images/profile-photo.jpg")}
               alt=""
-              className="-mt-2 rounded-lg"
+              className="-mt-2 h-56 w-48 rounded-lg object-cover"
             />
             <div className="">
               <label
@@ -202,12 +236,12 @@ const ProfileChangeInfo = () => {
                   Category
                 </div>
                 <Selector
-                  name="skills"
+                  name="category"
                   className="basic-multi-select"
-                  options={BackendOptions}
+                  options={CategoryOptions}
                   isMulti={true}
-                  value={getSkillsSelector}
-                  onChange={handleSkillsSelector}
+                  value={getCategorySelector}
+                  onChange={handleCategorySelector}
                 />
               </div>
             </div>
@@ -217,12 +251,12 @@ const ProfileChangeInfo = () => {
                   Tags
                 </div>
                 <Selector
-                  name="skills"
+                  name="tags"
                   className="basic-multi-select"
-                  options={BackendOptions}
+                  options={orderedSelectedOptions}
                   isMulti={true}
-                  value={getSkillsSelector}
-                  onChange={handleSkillsSelector}
+                  value={getTagsSelector}
+                  onChange={handleTagsSelector}
                 />
               </div>
             </div>

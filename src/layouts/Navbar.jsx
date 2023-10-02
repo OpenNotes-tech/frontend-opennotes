@@ -153,10 +153,10 @@ const Navbar = () => {
               alt="Main Logo"
             /> */}
             </button>
-            {name === "profile" && (
+            {(name === "profile" || name === "bookmark") && (
               <Link
                 onClick={() => dispatch(openProfileModal(!isProfileModalOpen))}
-                className="block md:hidden"
+                className="block text-slate-100 md:hidden"
                 type="button"
                 data-drawer-target="drawer-navigation"
                 data-drawer-show="drawer-navigation"
@@ -168,7 +168,7 @@ const Navbar = () => {
                   height="24"
                   viewBox="0 0 24 24"
                   fill="none"
-                  stroke="#18181b"
+                  stroke="currentColor"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
